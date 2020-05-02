@@ -5,7 +5,7 @@ class Main extends React.Component {
   render() {
     return(
       <div className="main-ui">
-        <Header className="main-header" title="공명 개발 스터디"/>
+        <Header className="main-header" title="오렌지 농장"/>
         <main>
           <StudyInfo className="left-info" />
           <Articles className="right-articles" />  
