@@ -17,7 +17,7 @@ function StudyInfo(props: ArticleProps) {
           </ul>
         </section>
         <section>
-          <h2 className="deep-orange">Github</h2>
+          <h2 className="deep-orange">GitHub</h2>
           <ul>
             <li>
               <a
