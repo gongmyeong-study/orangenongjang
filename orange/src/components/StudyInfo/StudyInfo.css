@@ -1,0 +1,24 @@
+.left-info {
+  min-width: 20em;
+}
+
+.left-info > section {
+  width: 50%;
+  border-bottom: solid gray 1px;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+}
+
+.left-info > section > ul {
+  font-size: 1.3em;
+  line-height: 1.3em;
+}
+
+/* links style */
+.VisitLink {
+    cursor: pointer;
+}
+
+.VisitLink:hover {
+  color: orange;
+}

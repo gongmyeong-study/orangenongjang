@@ -1,0 +1,34 @@
+/* web fonts */
+@import url('http://fonts.googleapis.com/earlyaccess/notosanskr.css');
+
+/* custom variables */
+:root {
+  --deep-orange: #D9493D;
+  --soft-orange: #F52423;
+}
+
+/* HTML tags */
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+main > div {
+  display: inline;
+  float: left;
+}
+
+/* classes */
+.soft-orange {
+  color: var(--soft-orange);
+}
+
+.deep-orange {
+  color: var(--deep-orange);
+}
+
+.main-ui {
+  width: 80%;
+  margin: auto;
+  font-family: 'Noto Sans KR', sans-serif;
+}
