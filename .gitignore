@@ -337,3 +337,5 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/node,react,macos,django,python,windows
+
+.idea/
