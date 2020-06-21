@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -75,12 +76,22 @@ WSGI_APPLICATION = 'nongjang.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+secret_file = os.path.join(os.path.dirname(__file__), 'secret_info.json')
+if os.path.exists(secret_file):
+    with open(secret_file) as f:
+        secret_info = json.loads(f.read())
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.mysql',
+                'NAME': secret_info['DATABASE_NAME'],
+                'USER': secret_info['DATABASE_USER'],
+                'PASSWORD': secret_info['DATABASE_PASSWORD'],
+                'HOST': secret_info['DATABASE_HOST'],
+                'PORT': secret_info['DATABASE_PORT'],
+            }
+        }
+else:
+    raise Exception("Check your 'secret_info.json' file!")
 
 
 # Password validation
