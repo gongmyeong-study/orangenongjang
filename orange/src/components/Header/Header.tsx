@@ -9,7 +9,7 @@ function Header(props: ArticleProps) {
       <header className={props.className}>
         <h1>{props.title}</h1>
         {/* 소개글 넣기 */}
-        <p>Since. 2020.04.12</p>
+        <p>Since. 2020.04.12.</p>
       </header>
     );
 }

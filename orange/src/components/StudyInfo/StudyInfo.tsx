@@ -9,11 +9,16 @@ function StudyInfo(props: ArticleProps) {
         <section>
           <h2 className="deep-orange">스터디 멤버</h2>
           <ul>
+            <strong>웹 개발 참여</strong>
             <li>다빈</li>
-            <li>민재</li>
             <li>상현</li>
-            <li>은성</li>
+            <li>영현</li>
             <li>진섭</li>
+            <br />
+            <strong>세미나 참여</strong>
+            <li>민재</li>
+            <li>은성</li>
+            <li>재연</li>
           </ul>
         </section>
         <section>
