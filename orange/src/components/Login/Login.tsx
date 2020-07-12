@@ -30,7 +30,7 @@ class Login extends Component<Props, State> {
       .then(() => {
         if (this.props.loginStatus === userStatus.SUCCESS) {
           // NOTE: just friendly logging - please remove below logging line later
-          console.log("SUCCESSFULLY LOGED IN!")
+          console.log("SUCCESSFULLY LOGGED IN!")
         }
       });
   }
