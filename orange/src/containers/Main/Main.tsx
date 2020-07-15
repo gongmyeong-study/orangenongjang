@@ -7,7 +7,7 @@ class Main extends Component {
   render() {
     return(
       <div className="main-ui">
-        <Header className="main-header" title="오렌지 농장"/>
+        <Header className="main-header" title="오렌지 안녕"/>
         <main>
           <StudyInfo className="left-info" />
           <Articles className="right-articles" />  
