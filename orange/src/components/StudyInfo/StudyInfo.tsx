@@ -10,15 +10,57 @@ function StudyInfo(props: ArticleProps) {
           <h2 className="deep-orange">스터디 멤버</h2>
           <ul>
             <strong>웹 개발 참여</strong>
-            <li>다빈</li>
-            <li>상현</li>
-            <li>영현</li>
-            <li>진섭</li>
+            <li>
+              <a 
+                className="VisitLink"
+                onClick={() => window.open("https://github.com/davin111")}
+              > 다빈
+              </a>
+            </li>
+            <li>
+              <a 
+                className="VisitLink"
+                onClick={() => window.open("https://github.com/palpitate2015")}
+              > 상현
+              </a>
+            </li>
+            <li>
+              <a 
+                className="VisitLink"
+                onClick={() => window.open("https://github.com/YeonghyeonKO")}
+              > 영현
+              </a>
+            </li>
+            <li>
+              <a 
+                className="VisitLink"
+                onClick={() => window.open("https://github.com/JSKeum")}
+              > 진섭
+              </a>
+            </li>
             <br />
             <strong>세미나 참여</strong>
-            <li>민재</li>
-            <li>은성</li>
-            <li>재연</li>
+            <li>
+              <a 
+                className="VisitLink"
+                onClick={() => window.open("https://github.com/anneKwon")}
+              > 민재
+              </a>
+            </li>
+            <li>
+              <a 
+                className="VisitLink"
+                onClick={() => window.open("https://github.com/Eunsung-k")}
+              > 은성
+              </a>
+            </li>
+            <li>
+              <a 
+                className="VisitLink"
+                onClick={() => window.open("https://github.com/jadeyyun")}
+              > 재연
+              </a>
+            </li>          
           </ul>
         </section>
         <section>
