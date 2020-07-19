@@ -82,6 +82,7 @@ secret_file = os.path.join(os.path.dirname(__file__), 'secret_info.json')
 if os.path.exists(secret_file):
     with open(secret_file) as f:
         secret_info = json.loads(f.read())
+        print(f"*** MODE: {ENV_MODE} ***")
         if ENV_MODE == 'prod':
             DATABASES = {
                 'default': {
