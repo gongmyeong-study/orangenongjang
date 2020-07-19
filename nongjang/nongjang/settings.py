@@ -79,7 +79,14 @@ WSGI_APPLICATION = 'nongjang.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 secret_file = os.path.join(os.path.dirname(__file__), 'secret_info.json')
-if os.path.exists(secret_file):
+if ENV_MODE == 'test':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+elif os.path.exists(secret_file):
     with open(secret_file) as f:
         secret_info = json.loads(f.read())
         print(f"*** MODE: {ENV_MODE} ***")
@@ -92,13 +99,6 @@ if os.path.exists(secret_file):
                     'PASSWORD': secret_info['DATABASE_PASSWORD'],
                     'HOST': secret_info['DATABASE_HOST'],
                     'PORT': secret_info['DATABASE_PORT'],
-                }
-            }
-        elif ENV_MODE == 'test':
-            DATABASES = {
-                'default': {
-                    'ENGINE': 'django.db.backends.sqlite3',
-                    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
                 }
             }
         else:
