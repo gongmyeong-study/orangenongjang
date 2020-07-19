@@ -10,6 +10,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      MODE: test 
     defaults:
       run:
         working-directory: ./nongjang
