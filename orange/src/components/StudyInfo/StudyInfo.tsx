@@ -3,6 +3,7 @@ import React from 'react';
 import { ArticleProps } from '../Article/Article';
 import './StudyInfo.css';
 
+/* eslint-disable jsx-a11y/anchor-is-valid */
 function StudyInfo(props: ArticleProps) {
     return (
       <div className={props.className}>
