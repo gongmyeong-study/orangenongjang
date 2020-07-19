@@ -94,6 +94,13 @@ if os.path.exists(secret_file):
                     'PORT': secret_info['DATABASE_PORT'],
                 }
             }
+        elif ENV_MODE == 'test':
+            DATABASES = {
+                'default': {
+                    'ENGINE': 'django.db.backends.sqlite3',
+                    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+                }
+            }
         else:
             DATABASES = {
                 'default': {
