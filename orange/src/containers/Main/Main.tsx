@@ -1,20 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import { Header, StudyInfo, Articles } from '../../components';
-import './Main.css';
-
-class Main extends Component {
-  render() {
-    return(
-      <div className="main-ui">
-        <Header className="main-header" title="오렌지 농장"/>
-        <main>
-          <StudyInfo className="left-info" />
-          <Articles className="right-articles" />  
-        </main>
-      </div>
-    );
-  }
+function Main() {
+  return <h1>Main page</h1>
 }
 
 export default Main;
