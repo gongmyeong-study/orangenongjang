@@ -47,7 +47,7 @@ function SignUpModal(props: Props) {
       </form>
       <form className="modal-content">
         <div className="container">
-          <p>오렌지 농장을 이용하기 전에 회원가입을 해주세요 🤗</p>
+          <p>오렌지 농장을 이용하기 전에 회원가입을 해주세요</p>
           <hr />
           <label htmlFor="email">
             <b>이메일 (Email)</b>
@@ -97,7 +97,7 @@ function SignUpModal(props: Props) {
               className="signupbtn"
               onClick={signUp}
             >
-              회원가입 😎
+              회원가입
             </button>
           </div>
         </div>
