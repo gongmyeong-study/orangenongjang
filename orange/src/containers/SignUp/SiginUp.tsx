@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Login } from '../../components/index';
+import { Login, SignUpModal } from '../../components/index';
 
 function SignUp() {
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const showModal = () => setShowSignUpModal(true);
+
   return (
+    <div>
     <Login />
+    <button onClick={showModal} >회원가입 </button>
+    { showSignUpModal ? <SignUpModal appearing={true} /> : null }
+    </div>
+
   );
 }
 
