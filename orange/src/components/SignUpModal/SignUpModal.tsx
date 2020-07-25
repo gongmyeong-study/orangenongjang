@@ -1,38 +1,49 @@
-import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import React, { useState, Dispatch } from "react";
+import { connect } from "react-redux";
 
+import { userActions } from "../../store/actions";
 import "./SignUpModal.css";
 
 interface Props {
-  appearing: Boolean;
+  appearing: Boolean; // for modal appearing
+  signUp: (email: string, username: string, password: string) => void; // for redux dispatch
 }
 
-function SignUpModal(props: Props = { appearing: false }) {
-  const [email, setEmail] = useState("")
-  const [passward, setPassward] = useState("")
+function SignUpModal(props: Props) {
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [passward, setPassward] = useState("");
 
   const onChangeEmail = (e: any) => {
     setEmail(e.target.value);
   };
 
+  const onChangeUserName = (e: any) => {
+    setUsername(e.target.value);
+  };
+
   const onChangePassward = (e: any) => {
     setPassward(e.target.value);
   };
-  // setAppearing(props.appearing);
+
+  const signUp = () => {
+    props.signUp(email, username, passward);
+  };
+  
   return (
     <div
       className="modal"
       style={props.appearing ? { display: "block" } : { display: "none" }}
     >
       <form>
-      <button
-        type="submit"
-        className="close"
-        title="Close Modal"
-        style={{background: "none", border: "none"}}
-      >
-        &times;
-      </button>
+        <button
+          type="submit"
+          className="close"
+          title="Close Modal"
+          style={{ background: "none", border: "none" }}
+        >
+          &times;
+        </button>
       </form>
       <form className="modal-content">
         <div className="container">
@@ -44,9 +55,18 @@ function SignUpModal(props: Props = { appearing: false }) {
           <input
             type="text"
             placeholder="haksaeng@snu.ac.kr"
-            name="email"
             required
             onChange={onChangeEmail}
+          />
+
+          <label htmlFor="email">
+            <b>이름 (Name)</b>
+          </label>
+          <input
+            type="text"
+            placeholder="Jinsup"
+            required
+            onChange={onChangeUserName}
           />
 
           <label htmlFor="psw">
@@ -55,7 +75,6 @@ function SignUpModal(props: Props = { appearing: false }) {
           <input
             type="password"
             placeholder="Enter Password"
-            name="psw"
             required
             onChange={onChangePassward}
           />
@@ -72,7 +91,12 @@ function SignUpModal(props: Props = { appearing: false }) {
 
           <div className="clearfix">
             {/* <button type="button" onClick={() => setAppearing(false)} className="cancelbtn">Cancel</button> */}
-            <button type="submit" className="signupbtn">
+            <button
+              // type="submit"
+              type="button"
+              className="signupbtn"
+              onClick={signUp}
+            >
               회원가입 😎
             </button>
           </div>
@@ -82,4 +106,9 @@ function SignUpModal(props: Props = { appearing: false }) {
   );
 }
 
-export default SignUpModal;
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  signUp: (email: string, username: string, password: string) =>
+    dispatch(userActions.signUp(email, username, password)),
+});
+
+export default connect(null, mapDispatchToProps)(SignUpModal);

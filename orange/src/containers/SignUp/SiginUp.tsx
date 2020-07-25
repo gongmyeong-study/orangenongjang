@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { Login, SignUpModal } from '../../components/index';
+import { Login, SignUpModal } from "../../components/index";
 
 function SignUp() {
   const [showSignUpModal, setShowSignUpModal] = useState(false);
@@ -8,11 +8,10 @@ function SignUp() {
 
   return (
     <div>
-    <Login />
-    <button onClick={showModal} >회원가입 </button>
-    { showSignUpModal ? <SignUpModal appearing={true} /> : null }
+      <Login />
+      <button onClick={showModal}>회원가입 </button>
+      {showSignUpModal ? <SignUpModal appearing={true} /> : null}
     </div>
-
   );
 }
 
