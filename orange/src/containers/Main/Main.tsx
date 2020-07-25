@@ -1,9 +1,4 @@
 import React from 'react';
-<<<<<<< Updated upstream
-
-function Main() {
-  return <h1>Main page</h1>
-=======
 import NecessityList from '../../components/Necessity/NecessityList'
 import { createGlobalStyle } from 'styled-components';
 import NecessityTemplate from '../../components/Necessity/NecessityTemplate';
@@ -32,7 +27,6 @@ function Main() {
       </NecessityProvider>
     </React.Fragment>
   )
->>>>>>> Stashed changes
 }
 
 export default Main;
