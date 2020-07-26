@@ -26,6 +26,21 @@ const signupSuccess = (user: any) => ({
   target: user,
 });
 
+const signupFailure = (error: any) => {
+  let actionType = null;
+  switch (error.response.status) {
+    case 409:
+      actionType = userConstants.SIGNUP_FAILURE_USERNAME;
+      break;
+    default:
+      actionType = userConstants.SIGNUP_FAILURE;
+  }
+  return {
+    type: actionType,
+    target: error,
+  };
+};
+
 export const login = (
   username: string, password: string,
 ) => (dispatch: Dispatch) => axios.put('/api/v1/user/login/', { username, password })
@@ -36,4 +51,4 @@ export const signUp = (
   email: string, username: string, password: string,
 ) => (dispatch: Dispatch) => axios.post('/api/v1/user/', { email, username, password })
   .then((res) => dispatch(signupSuccess(res.data)))
-  .catch((err) => console.log(err));
+  .catch((err) => dispatch(signupFailure(err)));

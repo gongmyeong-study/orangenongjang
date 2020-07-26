@@ -2,11 +2,14 @@ import React, { useState, Dispatch } from "react";
 import { connect } from "react-redux";
 
 import { userActions } from "../../store/actions";
+import { userStatus } from "../../constants/constants";
 import "./SignUpModal.css";
 
 interface Props {
   appearing: Boolean; // for modal appearing
-  signUp: (email: string, username: string, password: string) => void; // for redux dispatch
+  signUp: (email: string, username: string, password: string) => any; // for redux dispatch
+  me: any;
+  signupStatus: string;
 }
 
 function SignUpModal(props: Props) {
@@ -27,7 +30,17 @@ function SignUpModal(props: Props) {
   };
 
   const signUp = () => {
-    props.signUp(email, username, passward);
+    props.signUp(email, username, passward)
+    .then(() => {
+      console.log(props.signupStatus);
+      console.log(userStatus.SUCCESS);
+      if (props.signupStatus === userStatus.SUCCESS) {
+        window.alert("성공!");
+      }
+      else {
+        window.alert("실패!");
+      }
+    });
   };
   
   return (
@@ -98,6 +111,7 @@ function SignUpModal(props: Props) {
               onClick={signUp}
             >
               회원가입
+              {props.signupStatus}
             </button>
           </div>
         </div>
@@ -111,4 +125,9 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
     dispatch(userActions.signUp(email, username, password)),
 });
 
-export default connect(null, mapDispatchToProps)(SignUpModal);
+const mapStateToProps = (state: any) => ({
+  signupStatus: state.user.signupStatus,
+  me: state.user.me,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpModal);
