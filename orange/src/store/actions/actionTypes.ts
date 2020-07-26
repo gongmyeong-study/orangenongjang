@@ -3,3 +3,8 @@ export const userConstants = {
     LOGIN_FAILURE: 'LOGIN_FAILURE',
     LOGIN_FAILURE_USERNAME: 'LOGIN_FAILURE_USERNAME',
 };
+
+export const necessityConstants = {
+    CREATE_SUCCESS: 'CREATE_SUCCESS',
+    CREATE_FAILURE: 'CREATE_FAILURE',
+};

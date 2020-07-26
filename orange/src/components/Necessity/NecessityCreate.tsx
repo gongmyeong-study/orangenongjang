@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, Dispatch } from 'react';
 import styled, { css } from 'styled-components';
 import { MdAdd } from 'react-icons/md';
-import { useNecessityDispatch, useNecessityNextId } from './NecessityContext';
+import { necessityStatus } from '../../constants/constants';
+import { necessityActions } from '../../store/actions';
+import { connect } from 'react-redux';
 
 interface ICircleButtonProps {
   transition? : any;
@@ -87,28 +89,30 @@ export interface INecessity {
   done: boolean;
 };
 
-function NecessityCreate() {
+interface Props {
+  onAddNecessity: (text: string) => any;
+  createStatus: string;
+  necessities: any;
+}
+
+function NecessityCreate(props: Props) {
   const [open, setOpen] = useState(false);
   const [value, setValue ] = useState('');
-
-  const dispatch = useNecessityDispatch();
-  const nextId = useNecessityNextId();
 
   const onToggle = () => setOpen(!open);
   const onChange = (e: any) => setValue(e.target.value);
   const onSubmit = (e: any) => {
-    e.preventDefault(); // 새로고침 방지
-    dispatch({
-      type: 'CREATE',
-      Necessity: {
-        id: nextId.current,
-        text: value,
-        done: false
+    props.onAddNecessity(value)
+    .then(() => {
+      if (props.createStatus === necessityStatus.SUCCESS) {
+        console.log("CREATED!")
+      }
+      else  {
+        console.log("FAILED TO CREATE!")
       }
     });
     setValue('');
     setOpen(false);
-    nextId.current += 1;
   };
 
   return (
@@ -116,7 +120,9 @@ function NecessityCreate() {
       {open && (
         <InsertFormPositioner>
           <InsertForm>
-            <Input autoFocus placeholder="구매할 생필품을 입력 후, Enter 를 누르세요" />
+            <Input 
+            onChange={onChange}
+            onClick={onSubmit} autoFocus placeholder="구매할 생필품을 입력 후, Enter 를 누르세요" />
           </InsertForm>
         </InsertFormPositioner>
       )}
@@ -127,4 +133,15 @@ function NecessityCreate() {
   );
 }
 
-export default React.memo(NecessityCreate);
+const mapStateToProps = (state: any) => ({
+  loginStatus: state.user.loginStatus,
+  createStatus: state.necessity.createStatus,
+  necessities: state.necessity.necessities,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  onAddNecessity: (text: string) => dispatch(necessityActions.addNecessity(text)),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(NecessityCreate);

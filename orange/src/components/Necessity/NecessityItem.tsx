@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdDelete } from 'react-icons/md';
-import { useNecessityDispatch } from './NecessityContext';
 
 
 const Remove = styled.div`
@@ -73,19 +72,18 @@ const Text = styled.div<ITextProps>`
 
 
 function NecessityItem({id, done, text} : { id:number, done: boolean, text: string }) {
-  const dispatch = useNecessityDispatch();
-  const onToggle = () => dispatch({ type: 'TOGGLE', id });
-  const onRemove = () => dispatch({ type: 'REMOVE', id });  
+  // const onToggle = () => dispatch({ type: 'TOGGLE', id });
+  // const onRemove = () => dispatch({ type: 'REMOVE', id });  
   
   return (
     <NecessityItemBlock>
-      <CheckCircle done={done} onClick={onToggle}>
+      {/* <CheckCircle done={done} onClick={onToggle}>
         {done && <MdDone />}
-      </CheckCircle>
+      </CheckCircle> */}
       <Text done={done}>{text}</Text>
-      <Remove onClick={onRemove}>
+      {/* <Remove onClick={onRemove}>
         <MdDelete />
-      </Remove>
+      </Remove> */}
     </NecessityItemBlock>
   );
 }

@@ -4,7 +4,6 @@ import { createGlobalStyle } from 'styled-components';
 import NecessityTemplate from '../../components/Necessity/NecessityTemplate';
 import NecessityHead from '../../components/Necessity/NecessityHead';
 import NecessityCreate from '../../components/Necessity/NecessityCreate';
-import { NecessityProvider } from '../../components/Necessity/NecessityContext';
 
 
 const GlobalStyle = createGlobalStyle`
@@ -18,13 +17,11 @@ function Main() {
     <React.Fragment>
       <GlobalStyle />
       <h1>Main page</h1>
-      <NecessityProvider>
         <NecessityTemplate>
           <NecessityHead />
           <NecessityList />
           <NecessityCreate />
         </NecessityTemplate>
-      </NecessityProvider>
     </React.Fragment>
   )
 }

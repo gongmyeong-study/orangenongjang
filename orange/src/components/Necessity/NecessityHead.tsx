@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNecessityState } from './NecessityContext';
 
 const NecessityHeadBlock = styled.div`
   padding-top: 48px;
@@ -29,9 +28,9 @@ const NecessityHeadBlock = styled.div`
 
 
 function NecessityHead() {
-  const Necessity = useTodoState();
-  const undoneTasks = Necessity.filter(Necessity => !Necessity.done);
-  console.log(Necessity)
+  // const Necessity = useTodoState();
+  // const undoneTasks = Necessity.filter(Necessity => !Necessity.done);
+  // console.log(Necessity)
 
   const today = new Date();
   const dateString = today.toLocaleDateString('ko-KR', {
@@ -45,7 +44,7 @@ function NecessityHead() {
     <NecessityHeadBlock>
       <h1>{dateString}</h1>
   <div className="day">{dayName}</div>
-  <div className="tasks-left">구매할 것 {undoneTasks.length}개 남음</div>
+  <div className="tasks-left">구매할 것 0개 남음</div>
     </NecessityHeadBlock>
   );
 }

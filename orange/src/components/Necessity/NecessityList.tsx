@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { necessityStatus } from '../../constants/constants';
+import { necessityActions } from '../../store/actions';
 import NecessityItem from './NecessityItem';
-import { useNecessityState } from './NecessityContext';
 
 
 const NecessityListBlock = styled.div`
@@ -19,22 +21,29 @@ interface INecessityListProps {
   done: boolean;
 }
 
-function NecessityList() {
-  const Necessities = useNecessityState();
+interface Props {
+  necessities: any;
+}
+
+function NecessityList(props: Props) {
+  var necessities = props.necessities;
 
   return (
     <NecessityListBlock>
-      {Necessities.map(Necessity => (
+      {necessities.map((necessity: any) => (
         <NecessityItem
-          key={Necessity.id}
-          id={Necessity.id}
-          text={Necessity.text}
-          done={Necessity.done}
+          key={necessity.id}
+          id={necessity.id}
+          text={necessity.text}
+          done={necessity.done}
         />
       ))}
     </NecessityListBlock>
   )
 }
 
+const mapStateToProps = (state: any) => ({
+  necessities: state.necessity.necessities,
+});
 
-export default NecessityList;
+export default connect(mapStateToProps)(NecessityList);
