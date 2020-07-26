@@ -341,3 +341,6 @@ $RECYCLE.BIN/
 .idea/
 
 secret_info.json
+
+# yeonghyeon virtualenv dir
+nongjangenv/
