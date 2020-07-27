@@ -7,11 +7,11 @@ const Remove = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #dee2e6;
+    color: #F1948A;
     font-size: 24px;
     cursor: pointer;
     &:hover {
-        color: #ff6b6b;
+        color: #B03A2E;
     }
     display: none;
 `;
@@ -72,18 +72,18 @@ const Text = styled.div<ITextProps>`
 
 
 function NecessityItem({id, done, text} : { id:number, done: boolean, text: string }) {
-  // const onToggle = () => dispatch({ type: 'TOGGLE', id });
+  //const onToggle = () => dispatch({ type: 'TOGGLE', id });
   // const onRemove = () => dispatch({ type: 'REMOVE', id });  
   
   return (
     <NecessityItemBlock>
-      {/* <CheckCircle done={done} onClick={onToggle}>
+      {<CheckCircle done={done} /*onClick={onToggle}*/>
         {done && <MdDone />}
-      </CheckCircle> */}
+      </CheckCircle>}
       <Text done={done}>{text}</Text>
-      {/* <Remove onClick={onRemove}>
+      {<Remove /*onClick={onRemove}*/>
         <MdDelete />
-      </Remove> */}
+      </Remove>}
     </NecessityItemBlock>
   );
 }

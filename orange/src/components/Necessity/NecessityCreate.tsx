@@ -102,6 +102,7 @@ function NecessityCreate(props: Props) {
   const onToggle = () => setOpen(!open);
   const onChange = (e: any) => setValue(e.target.value);
   const onSubmit = (e: any) => {
+    e.preventDefault();
     props.onAddNecessity(value)
     .then(() => {
       if (props.createStatus === necessityStatus.SUCCESS) {
