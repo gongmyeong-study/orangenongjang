@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { necessityStatus } from '../../constants/constants';
-import { necessityActions } from '../../store/actions';
 import NecessityItem from './NecessityItem';
 
 
