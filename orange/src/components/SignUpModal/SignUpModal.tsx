@@ -31,18 +31,23 @@ function SignUpModal(props: Props) {
 
   const signUp = () => {
     props.signUp(email, username, passward)
-    .then(() => {
-      console.log(props.signupStatus);
-      console.log(userStatus.SUCCESS);
-      if (props.signupStatus === userStatus.SUCCESS) {
-        window.alert("성공!");
-      }
-      else {
-        window.alert("실패!");
-      }
-    });
+      .then(() => {
+        showSignUpResultAlert()
+      })
   };
-  
+
+  const showSignUpResultAlert = () => {
+    console.log(props.signupStatus);
+    /*
+    if (props.signupStatus === userStatus.SUCCESS) {
+      window.alert("성공!");
+    }
+    else {
+      window.alert("실패!");
+    }
+    */
+  }
+
   return (
     <div
       className="modal"
@@ -58,7 +63,7 @@ function SignUpModal(props: Props) {
           &times;
         </button>
       </form>
-      <form className="modal-content">
+      <form className="modal-content" onSubmit={signUp}>
         <div className="container">
           <p>오렌지 농장을 이용하기 전에 회원가입을 해주세요</p>
           <hr />
@@ -103,15 +108,12 @@ function SignUpModal(props: Props) {
           /> */}
 
           <div className="clearfix">
-            {/* <button type="button" onClick={() => setAppearing(false)} className="cancelbtn">Cancel</button> */}
             <button
-              // type="submit"
-              type="button"
+              type="submit"
               className="signupbtn"
-              onClick={signUp}
+              disabled={email==="" || passward==="" || username===""}
             >
               회원가입
-              {props.signupStatus}
             </button>
           </div>
         </div>

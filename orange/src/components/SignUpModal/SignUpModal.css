@@ -60,6 +60,11 @@
 .signupbtn {
   float: left;
   width: 50%;
+  opacity: 0.92;
+}
+
+.modal button:disabled {
+  opacity: 0.5;
 }
 
 /* Add padding to container elements */
