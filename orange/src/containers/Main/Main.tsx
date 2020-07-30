@@ -1,6 +1,10 @@
 import React from 'react';
 
-function Main() {
+interface Props {
+  history: any;
+}
+
+function Main(props: Props) {
   return <h1>Main page</h1>
 }
 
