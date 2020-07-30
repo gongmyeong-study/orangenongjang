@@ -53,7 +53,6 @@ const CheckCircle = styled.div<INecessityItemProps>`
         `}
 `;
 
-
 interface ITextProps {
   color?: string;
   done?: boolean;
@@ -72,12 +71,12 @@ const Text = styled.div<ITextProps>`
 
 
 function NecessityItem({id, done, text} : { id:number, done: boolean, text: string }) {
-  //const onToggle = () => dispatch({ type: 'TOGGLE', id });
+  //const onToggleNecessity = () => dispatch({ type: 'TOGGLE', id });
   // const onRemove = () => dispatch({ type: 'REMOVE', id });  
   
   return (
     <NecessityItemBlock>
-      {<CheckCircle done={done} /*onClick={onToggle}*/>
+      {<CheckCircle done={done} /*onClick={onToggleNecessity}*/>
         {done && <MdDone />}
       </CheckCircle>}
       <Text done={done}>{text}</Text>

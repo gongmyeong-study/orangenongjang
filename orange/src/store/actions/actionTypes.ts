@@ -7,4 +7,6 @@ export const userConstants = {
 export const necessityConstants = {
     CREATE_SUCCESS: 'CREATE_SUCCESS',
     CREATE_FAILURE: 'CREATE_FAILURE',
+    TOGGLE_SUCCESS: 'TOGGLE_SUCCESS',
+    TOGGLE_FAILURE: 'TOGGLE_FAILURE',
 };

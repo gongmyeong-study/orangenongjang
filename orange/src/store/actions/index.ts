@@ -3,7 +3,8 @@ import {
 } from './user/user';
 
 import {
-    addNecessity,
+    createNecessity,
+    toggleNecessity
 } from './necessity/necessity';
 
 export const userActions = {
@@ -11,5 +12,6 @@ export const userActions = {
 };
 
 export const necessityActions = {
-    addNecessity,
+    createNecessity,
+    toggleNecessity,
 }

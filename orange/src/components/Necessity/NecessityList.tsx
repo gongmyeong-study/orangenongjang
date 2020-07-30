@@ -14,12 +14,6 @@ const NecessityListBlock = styled.div`
 `;
 
 
-interface INecessityListProps {
-  key: number;
-  id: number;
-  text: string;
-  done: boolean;
-}
 
 interface Props {
   necessities: any;
