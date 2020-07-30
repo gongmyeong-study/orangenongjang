@@ -1,5 +1,6 @@
 import {
     login,
+    signUp
 } from './user/user';
 
 import {
@@ -9,6 +10,7 @@ import {
 
 export const userActions = {
     login,
+    signUp,
 };
 
 export const necessityActions = {
