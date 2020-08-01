@@ -18,9 +18,11 @@ export const middlewares = [thunk, routerMiddleware(history)];
 
 export const getMockStore = (initialState: any) => {
     const mockUserReducer = getMockReducer(initialState.user);
+    const mockNecessityReducer = getMockReducer(initialState.necessity);
     const rootReducer = (history: any) => combineReducers({
         router: connectRouter(history),
         user: mockUserReducer,
+        necessity: mockNecessityReducer,
     });
 
     const mockStore = createStore(rootReducer(history), applyMiddleware(...middlewares));

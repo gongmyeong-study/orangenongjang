@@ -7,6 +7,9 @@ import { getMockStore, history } from './tests/mocks';
 
 const mockStore = getMockStore({
   user: {},
+  necessity: {
+    necessities: [],
+  },
 });
 
 test('renders app with mock store', () => {
