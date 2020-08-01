@@ -1,4 +1,4 @@
-import React, { useState, Dispatch } from "react";
+import React, { Component, Dispatch } from "react";
 import { connect } from "react-redux";
 
 import { userActions } from "../../store/actions";
@@ -12,28 +12,30 @@ interface Props {
   signupStatus: string;
 }
 
-function SignUpModal(props: Props) {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [passward, setPassward] = useState("");
+interface State {
+  email: string;
+  username: string;
+  password: string;
+}
 
-  const onChangeEmail = (e: any) => {
-    setEmail(e.target.value);
-  };
+class SignUpModal extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      email: '',
+      username: '',
+      password: ''
+    };
+  }
 
-  const onChangeUserName = (e: any) => {
-    setUsername(e.target.value);
-  };
-
-  const onChangePassward = (e: any) => {
-    setPassward(e.target.value);
-  };
-
-  const signUp = () => {
-    props.signUp(email, username, passward)
+  signUp = () => {
+    this.props.signUp(this.state.email, this.state.username, this.state.password)
       .then(() => {
-        if (props.signupStatus === userStatus.SUCCESS) {
+        if (this.props.signupStatus === userStatus.SUCCESS) {
           window.alert("성공!");
+        }
+        else if (this.props.signupStatus === userStatus.FAILURE_USERNAME) {
+          window.alert("중복된 사용자 이름!");
         }
         else {
           window.alert("실패!");
@@ -41,79 +43,81 @@ function SignUpModal(props: Props) {
       })
   };
 
-  return (
-    <div
-      className="modal"
-      style={props.appearing ? { display: "block" } : { display: "none" }}
-    >
-      <form>
-        <button
-          type="submit"
-          className="close"
-          title="Close Modal"
-          style={{ background: "none", border: "none" }}
-        >
-          &times;
-        </button>
-      </form>
-      <form className="modal-content">
-        <div className="container">
-          <p>오렌지 농장을 이용하기 전에 회원가입을 해주세요</p>
-          <hr />
-          <label htmlFor="email">
-            <b>이메일 (Email)</b>
-          </label>
-          <input
-            type="text"
-            placeholder="haksaeng@snu.ac.kr"
-            required
-            onChange={onChangeEmail}
-          />
+  render() {
+    return (
+      <div
+        className="modal"
+        style={this.props.appearing ? { display: "block" } : { display: "none" }}
+      >
+        <form>
+          <button
+            type="submit"
+            className="close"
+            title="Close Modal"
+            style={{ background: "none", border: "none" }}
+          >
+            &times;
+          </button>
+        </form>
+        <form className="modal-content">
+          <div className="container">
+            <p>오렌지 농장을 이용하기 전에 회원가입을 해주세요</p>
+            <hr />
+            <label htmlFor="email">
+              <b>이메일 (Email)</b>
+            </label>
+            <input
+              type="text"
+              placeholder="haksaeng@snu.ac.kr"
+              required
+              onChange={(e) => this.setState({ email: e.target.value })}
+            />
 
-          <label htmlFor="email">
-            <b>이름 (Name)</b>
-          </label>
-          <input
-            type="text"
-            placeholder="Jinsup"
-            required
-            onChange={onChangeUserName}
-          />
+            <label htmlFor="email">
+              <b>이름 (Name)</b>
+            </label>
+            <input
+              type="text"
+              placeholder="Jinsup"
+              required
+              onChange={(e) => this.setState({ username: e.target.value })}
+            />
 
-          <label htmlFor="psw">
-            <b>비밀번호 (Password)</b>
-          </label>
-          <input
-            type="password"
-            placeholder="Enter Password"
-            required
-            onChange={onChangePassward}
-          />
+            <label htmlFor="psw">
+              <b>비밀번호 (Password)</b>
+            </label>
+            <input
+              type="password"
+              placeholder="Enter Password"
+              required
+              onChange={(e) => this.setState({ password: e.target.value })}
+            />
 
-          {/* <label htmlFor="psw-repeat">
-            <b>비밀번호 확인 (Repeat Password)</b>
-          </label>
-          <input
-            type="password"
-            placeholder="Repeat Password"
-            name="psw-repeat"
-            required
-          /> */}
+            {/* <label htmlFor="psw-repeat">
+              <b>비밀번호 확인 (Repeat Password)</b>
+            </label>
+            <input
+              type="password"
+              placeholder="Repeat Password"
+              name="psw-repeat"
+              required
+            /> */}
 
-          <div className="clearfix">
-            <button
-              type="button"
-              className="signupbtn"
-              disabled={email==="" || passward==="" || username===""}
-              onClick={signUp}
-            >
-              회원가입
-            </button>
+            <div className="clearfix">
+              <button
+                type="button"
+                className="signupbtn"
+                disabled={this.state.email==="" || this.state.password==="" || this.state.username===""}
+                onClick={this.signUp}
+              >
+                회원가입
+              </button>
+            </div>
           </div>
-        </div>
-      </form>
-    </div>
-  );
+        </form>
+      </div>
+    );
+  }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
