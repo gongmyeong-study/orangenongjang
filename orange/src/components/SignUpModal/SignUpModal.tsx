@@ -6,13 +6,14 @@ import { userStatus } from "../../constants/constants";
 import "./SignUpModal.css";
 
 interface Props {
-  appearing: Boolean; // for modal appearing
+  history: any;
   signUp: (email: string, username: string, password: string) => any; // for redux dispatch
   me: any;
   signupStatus: string;
 }
 
 interface State {
+  appearing: Boolean; // for modal appearing
   email: string;
   username: string;
   password: string;
@@ -22,6 +23,7 @@ class SignUpModal extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      appearing: true,
       email: '',
       username: '',
       password: ''
@@ -33,6 +35,8 @@ class SignUpModal extends Component<Props, State> {
       .then(() => {
         if (this.props.signupStatus === userStatus.SUCCESS) {
           window.alert("성공!");
+          this.setState({ appearing: false });
+          this.props.history.push('/main');
         }
         else if (this.props.signupStatus === userStatus.FAILURE_USERNAME) {
           window.alert("중복된 사용자 이름!");
@@ -47,7 +51,7 @@ class SignUpModal extends Component<Props, State> {
     return (
       <div
         className="modal"
-        style={this.props.appearing ? { display: "block" } : { display: "none" }}
+        style={this.state.appearing ? { display: "block" } : { display: "none" }}
       >
         <form>
           <button

@@ -14,7 +14,7 @@ function SignUp(props: Props) {
     <div>
       <Login history={props.history} />
       <button onClick={showModal}>회원가입 </button>
-      {showSignUpModal ? <SignUpModal appearing={true} /> : null}
+      {showSignUpModal ? <SignUpModal history={props.history} /> : null}
     </div>
   );
 }
