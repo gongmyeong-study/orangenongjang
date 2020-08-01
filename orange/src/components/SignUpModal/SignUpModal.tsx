@@ -2,7 +2,7 @@ import React, { useState, Dispatch } from "react";
 import { connect } from "react-redux";
 
 import { userActions } from "../../store/actions";
-import { userStatus } from "../../constants/constants";
+// import { userStatus } from "../../constants/constants";
 import "./SignUpModal.css";
 
 interface Props {
