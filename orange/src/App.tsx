@@ -17,7 +17,7 @@ function App(props: Props): JSX.Element {
           <Route exact path="/main" component={Main} history={props.history} />} />
           <Route exact path="/signup" component={SignUp} history={props.history} />} />
           <Route exact path="/info" component={Info} />
-          <Redirect exact to="/main" />
+          <Redirect exact to="/signup" />
         </Switch>
       </ConnectedRouter>
     </div>

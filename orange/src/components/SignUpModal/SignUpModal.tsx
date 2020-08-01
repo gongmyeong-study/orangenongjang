@@ -2,7 +2,7 @@ import React, { useState, Dispatch } from "react";
 import { connect } from "react-redux";
 
 import { userActions } from "../../store/actions";
-// import { userStatus } from "../../constants/constants";
+import { userStatus } from "../../constants/constants";
 import "./SignUpModal.css";
 
 interface Props {
@@ -32,21 +32,14 @@ function SignUpModal(props: Props) {
   const signUp = () => {
     props.signUp(email, username, passward)
       .then(() => {
-        showSignUpResultAlert()
+        if (props.signupStatus === userStatus.SUCCESS) {
+          window.alert("성공!");
+        }
+        else {
+          window.alert("실패!");
+        }
       })
   };
-
-  const showSignUpResultAlert = () => {
-    console.log(props.signupStatus);
-    /*
-    if (props.signupStatus === userStatus.SUCCESS) {
-      window.alert("성공!");
-    }
-    else {
-      window.alert("실패!");
-    }
-    */
-  }
 
   return (
     <div
@@ -63,7 +56,7 @@ function SignUpModal(props: Props) {
           &times;
         </button>
       </form>
-      <form className="modal-content" onSubmit={signUp}>
+      <form className="modal-content">
         <div className="container">
           <p>오렌지 농장을 이용하기 전에 회원가입을 해주세요</p>
           <hr />
@@ -109,9 +102,10 @@ function SignUpModal(props: Props) {
 
           <div className="clearfix">
             <button
-              type="submit"
+              type="button"
               className="signupbtn"
               disabled={email==="" || passward==="" || username===""}
+              onClick={signUp}
             >
               회원가입
             </button>
