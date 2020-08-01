@@ -33,8 +33,9 @@ class Login extends Component<Props, State> {
           alert("로그인에 성공하였습니다!")
           this.props.history.push('/main');
         }
-        alert("로그인에 실패하였습니다. \n이름과 비밀번호를 확인해 주세요!")
-        this.props.history.push('/main');
+        else {
+          alert("로그인에 실패하였습니다. \n이름과 비밀번호를 확인해 주세요!")
+        }
       });
   }
 
