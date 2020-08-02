@@ -12,6 +12,10 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+interface Props {
+  history: any;
+}
+
 function Main() {
   return (
     <React.Fragment>

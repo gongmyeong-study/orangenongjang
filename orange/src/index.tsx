@@ -10,9 +10,7 @@ import store, { history } from './store/store';
 
 ReactDOM.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <App history={history} />
-    </React.StrictMode>
+    <App history={history} />
   </Provider>,
   document.getElementById('root')
 );

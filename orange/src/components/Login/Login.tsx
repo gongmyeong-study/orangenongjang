@@ -6,6 +6,7 @@ import { userActions } from '../../store/actions';
 import './Login.css';
 
 interface Props {
+  history: any;
   loginStatus: string;
   onLogin: (username: string, password: string) => any;
 }
@@ -29,8 +30,11 @@ class Login extends Component<Props, State> {
     this.props.onLogin(this.state.username, this.state.password)
       .then(() => {
         if (this.props.loginStatus === userStatus.SUCCESS) {
-          // NOTE: just friendly logging - please remove below logging line later
-          console.log("SUCCESSFULLY LOGGED IN!")
+          alert("로그인에 성공하였습니다!")
+          this.props.history.push('/main');
+        }
+        else {
+          alert("로그인에 실패하였습니다. \n이름과 비밀번호를 확인해 주세요!")
         }
       });
   }

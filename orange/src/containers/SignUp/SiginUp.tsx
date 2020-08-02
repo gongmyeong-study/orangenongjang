@@ -2,15 +2,19 @@ import React, { useState } from "react";
 
 import { Login, SignUpModal } from "../../components/index";
 
-function SignUp() {
+interface Props {
+  history: any;
+}
+
+function SignUp(props: Props) {
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const showModal = () => setShowSignUpModal(true);
 
   return (
     <div>
-      <Login />
+      <Login history={props.history} />
       <button onClick={showModal}>회원가입 </button>
-      {showSignUpModal ? <SignUpModal appearing={true} /> : null}
+      {showSignUpModal ? <SignUpModal history={props.history} /> : null}
     </div>
   );
 }
