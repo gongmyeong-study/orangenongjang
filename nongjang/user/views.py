@@ -1,16 +1,16 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from board.serializers import UserSerializer
+from user.serializers import UserSerializer
+
 
 class UserViewSet(viewsets.GenericViewSet):
     serializer_class = UserSerializer
-    get_queryset = User.objects.all()
+    queryset = User.objects.all()
 
     # POST /api/v1/user/
     def create(self, request, *args, **kwargs):
@@ -25,9 +25,9 @@ class UserViewSet(viewsets.GenericViewSet):
             # Django 내부에 기본으로 정의된 User에 대해서는 create가 아닌 create_user를 사용
             # password가 자동으로 암호화되어 저장됨. database를 직접 조회해도 알 수 없는 형태로 저장됨.
             user = User.objects.create_user(username, email, password)
-        except IntegrityError: # 중복된 username
+        except IntegrityError:  # 중복된 username
             return Response(status=status.HTTP_409_CONFLICT)
-        
+
         # 가입했으니 바로 로그인 시켜주기
         login(request, user)
         # login을 하면 Response의 Cookies에 csrftoken이 발급됨
