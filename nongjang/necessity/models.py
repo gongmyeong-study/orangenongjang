@@ -3,7 +3,6 @@ from django.db import models
 
 
 class Necessity(models.Model):
-    objects = models.Manager()
     name = models.CharField(max_length=200)
     option = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=500, null=True)
