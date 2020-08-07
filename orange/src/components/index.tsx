@@ -4,6 +4,7 @@ import Articles from './Articles/Articles';
 import Login from './Login/Login';
 import NecessityItem from './Necessity/NecessityItem';
 import SignUpModal from './SignUpModal/SignUpModal';
+import NecessityCreateModal from './Necessity/NecessityCreateModal'
 
 export {
     Header,
@@ -11,5 +12,6 @@ export {
     Articles,
     Login,
     NecessityItem,
-    SignUpModal
+    SignUpModal,
+    NecessityCreateModal,
 };
