@@ -25,17 +25,15 @@ class NecessityViewSet(viewsets.GenericViewSet):
         if not name:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        if price == "":
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-            message = "가격을 입력하세요"
+        # if price == "":
+        #     return Response(status=status.HTTP_400_BAD_REQUEST)
         
         necessity, new = Necessity.objects.get_or_create(name=name, option=option, description=description, price=price)
         
         if not new:
             return Response(status=status.HTTP_409_CONFLICT)
-            message = "이미 등록한 물품입니다."
+
         else:
-            message = "입력 완료!"
             new_necessity = Necessity.objects.get(name=name, option=option, description=description, price=price)
 
 
