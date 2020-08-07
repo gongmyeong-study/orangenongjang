@@ -6,7 +6,7 @@ import { userStatus } from "../../constants/constants";
 import "./SignUpModal.css";
 
 interface Props {
-  history: any;
+  history?: any;
   signUp: (email: string, username: string, password: string) => any; // for redux dispatch
   me: any;
   signupStatus: string;

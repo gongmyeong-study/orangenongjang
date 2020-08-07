@@ -3,7 +3,6 @@ import NecessityList from '../../components/Necessity/NecessityList'
 import { createGlobalStyle } from 'styled-components';
 import NecessityTemplate from '../../components/Necessity/NecessityTemplate';
 import NecessityHead from '../../components/Necessity/NecessityHead';
-import NecessityCreate from '../../components/Necessity/NecessityCreate';
 import { NecessityCreateModal } from "../../components/index";
 
 import styled, { css } from 'styled-components';
@@ -68,7 +67,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 interface Props {
- 	history: any;
+ 	history?: any;
 }
 
 

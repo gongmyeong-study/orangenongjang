@@ -107,11 +107,11 @@
 /* The Close Button (x) */
 .close {
   position: absolute;
-  right: 35px;
-  top: 15px;
-  font-size: 40px;
+  right: 450px;
+  top: 180px;
+  font-size: 50px;
   font-weight: bold;
-  color: #f1f1f1;
+  color: #f48236;
 }
 
 .close:hover,
