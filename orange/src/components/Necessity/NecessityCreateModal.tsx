@@ -113,7 +113,7 @@ class NecessityCreateModal extends Component<Props, State> {
                 <button
                     type="button"
                     className="createbtn"
-                    disabled={this.state.name==="" || this.state.option==="" || this.state.description==="" || this.state.price===""}
+                    disabled={this.state.name===""}
                     onClick={this.create}
                 >
                     생필품 입력
@@ -128,11 +128,11 @@ class NecessityCreateModal extends Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   create: (name: string, option: string, description: string, price: string) =>
-    dispatch(necessityActions.createNecessity(name)),
+    dispatch(necessityActions.createNecessity(name, option, description, price)),
 });
 
 const mapStateToProps = (state: any) => ({
-  necessityStatus: state.necessity.necessityStatus,
+  createStatus: state.necessity.createStatus,
   me: state.user.me,
 });
 

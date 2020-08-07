@@ -67,12 +67,12 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 interface Props {
- 	history?: any;
+ 	history: any;
 }
 
 
 function Main(props: Props) {
-	const [showNecessityCreateModal, setShowNecessityCreateModal] = useState(false);
+	const [showNecessityCreateModal, setShowNecessityCreateModal] = useState(true);
 	const showModal = () => setShowNecessityCreateModal(true);
 
 	return (

@@ -24,8 +24,8 @@ const createFailure = (error: any) => {
 };
 
 export const createNecessity = (
-  name: string,
-) => (dispatch: Dispatch) => axios.post('/api/v1/necessity/', { name })
+  name: string, option: string, description: string, price: string
+) => (dispatch: Dispatch) => axios.post('/api/v1/necessity/', { name, option, description, price })
   .then((createResponse) => dispatch(createSuccess(createResponse.data)))
   .catch((createError) => dispatch(createFailure(createError)));
 
