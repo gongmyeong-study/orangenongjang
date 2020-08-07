@@ -1,3 +1,4 @@
 Django==3.0.7
 djangorestframework==3.11.0
 mysqlclient==1.4.6
+pylint-django==2.3.0
