@@ -25,13 +25,7 @@ const NecessityHeadBlock = styled.div`
   }
 `;
 
-
-
 function NecessityHead() {
-  // const Necessity = useTodoState();
-  // const undoneTasks = Necessity.filter(Necessity => !Necessity.done);
-  // console.log(Necessity)
-
   const today = new Date();
   const dateString = today.toLocaleDateString('ko-KR', {
     year: 'numeric',

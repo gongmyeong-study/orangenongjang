@@ -7,7 +7,7 @@ interface IProps {
 
 const NecessityTemplateBlock = styled.div`
     width: 512px;
-    height: 768px;
+    height: 600px;
 
     position: relative;
     // 박스 하단에 추가 버튼 위치시키기 위한 설정
@@ -19,7 +19,7 @@ const NecessityTemplateBlock = styled.div`
     margin: 0 auto;
     // 페이지 중앙에 나타나도록 설정
 
-    margin-top: 96px;
+    margin-top: 80px;
     margin-bottom: 32px;
     display: flex;
     flex-direction: column;

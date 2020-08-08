@@ -16,12 +16,13 @@ interface ICircleButtonProps {
 const CircleButton = styled.button<ICircleButtonProps>`
   	background: #38d9a9;
   	&:hover {
-  	 	 background: #63e6be;
+  	 	background: #63e6be;
   	}
   	&:active {
-   		 background: #20c997;
+		opacity: 0.2;
+   		background: #20c997;
   	}
-
+	
   	z-index: 5;
   	cursor: pointer;
   	width: 80px;
@@ -41,20 +42,6 @@ const CircleButton = styled.button<ICircleButtonProps>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-
-	transition: 0.125s all ease-in;
-	${props =>
-		props.open &&
-		css`
-		background: #ff6b6b;
-		&:hover {
-			background: #ff8787;
-		}
-		&:active {
-			background: #fa5252;
-		}
-		transform: translate(-50%, 50%) rotate(45deg);
-    `}
 `;
 
 
