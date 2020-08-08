@@ -74,7 +74,7 @@ class NecessityCreateModal extends Component<Props, State> {
                         </label>
                         <input
                             type="text"
-                            placeholder="모나리자 티슈"
+                            placeholder="오렌지"
                             required
                             onChange={(e) => this.setState({ name: e.target.value })}
                         />
@@ -84,7 +84,7 @@ class NecessityCreateModal extends Component<Props, State> {
                         </label>
                         <input
                             type="text"
-                            placeholder="200매"
+                            placeholder="발렌시아 품종"
                             required
                             onChange={(e) => this.setState({ option: e.target.value })}
                         />
@@ -94,7 +94,7 @@ class NecessityCreateModal extends Component<Props, State> {
                         </label>
                         <input
                             type="text"
-                            placeholder="책상 비치용"
+                            placeholder="식후 비타민 C 섭취용"
                             required
                             onChange={(e) => this.setState({ description: e.target.value })}
                         />
@@ -104,7 +104,7 @@ class NecessityCreateModal extends Component<Props, State> {
                         </label>
                         <input
                             type="number"
-                            placeholder="4900"
+                            placeholder="2900"
                             required
                             onChange={(e) => this.setState({ price: e.target.value })}
                         />

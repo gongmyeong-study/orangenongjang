@@ -58,8 +58,6 @@ const CircleButton = styled.button<ICircleButtonProps>`
 `;
 
 
-
-
 const GlobalStyle = createGlobalStyle`
  	body {
     	background: #e9ecef;
@@ -85,7 +83,7 @@ function Main(props: Props) {
 				<CircleButton onClick={showModal}>
 					<MdAdd />
 				</CircleButton>
-				{showNecessityCreateModal ? <NecessityCreateModal history={props.history} /> : null}
+				{showNecessityCreateModal ? [<NecessityCreateModal history={props.history} />, <CircleButton />] : null}
 			</NecessityTemplate>
 		</React.Fragment>
 	)

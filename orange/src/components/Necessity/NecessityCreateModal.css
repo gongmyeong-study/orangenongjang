@@ -3,7 +3,7 @@
 .necessity-create-modal input[type="number"]
  {
   width: 98%;
-  padding: 20px 0 20px 15px;
+  padding: 20px 0 15px 15px;
   margin: 16px 0 22px 0;
   display: inline-block;
   border: none;
@@ -11,11 +11,11 @@
 }
 
 .necessity-create-modal label {
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .necessity-create-modal input {
-  font-size: 24px;
+  font-size: 22px;
   border: none;
   border: solid 1px #ccc;
   border-radius: 8px;
@@ -39,7 +39,7 @@
   cursor: pointer;
   width: 100%;
 
-  font-size: 32px;
+  font-size: 30px;
   font-weight: bold;
 
   border: none;
