@@ -5,7 +5,7 @@ import NecessityTemplate from '../../components/Necessity/NecessityTemplate';
 import NecessityHead from '../../components/Necessity/NecessityHead';
 import { NecessityCreateModal } from "../../components/index";
 
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { MdAdd } from 'react-icons/md';
 
 interface ICircleButtonProps {

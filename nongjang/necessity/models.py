@@ -6,7 +6,7 @@ class Necessity(models.Model):
     name = models.CharField(max_length=200)
     option = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=500, null=True)
-    price = models.PositiveIntegerField(null=True)
+    price = models.CharField(max_length=100, null=True)
 
 
 class NecessityUser(models.Model):

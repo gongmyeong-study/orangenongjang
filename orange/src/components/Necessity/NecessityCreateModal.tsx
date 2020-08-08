@@ -42,8 +42,8 @@ class NecessityCreateModal extends Component<Props, State> {
                 else if (this.props.createStatus === necessityStatus.FAILURE) {
                     window.alert("이미 존재하는 생필품입니다.");
                 }
-            else {
-                window.alert("실패!");
+                else {
+                    window.alert("실패!");
             }
         })
     };

@@ -51,16 +51,16 @@ function necessityreducer (state = initialState, action: Action) {
                 createStatus: necessityStatus.FAILURE,
             };
 		
-		// 생필품 구매여부 체크
-        case necessityConstants.TOGGLE_SUCCESS:
+		// 생필품 제거
+        case necessityConstants.REMOVE_SUCCESS:
           	return {
-				  toggleStatue: necessityStatus.SUCCESS,
-				  necessities: data,
+				removeStatus: necessityStatus.SUCCESS,
+				necessities: data,
 			};
-		case necessityConstants.TOGGLE_FAILURE:
+		case necessityConstants.REMOVE_FAILURE:
 			return {
 				...state,
-				toggleStatue: necessityStatus.FAILURE,
+				removeStatus: necessityStatus.FAILURE,
 			};
 
         // case 'REMOVE':

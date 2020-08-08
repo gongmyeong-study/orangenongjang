@@ -24,12 +24,15 @@ class NecessityViewSet(viewsets.GenericViewSet):
 
         if not name:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+            print("생필품 이름을 입력하세요.")
 
-        if price.isnumeric():
-            print("숫자를 입력하세요.")
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        
-        necessity, new = Necessity.objects.get_or_create(name=name, option=option, description=description, price=price)
+        try:
+            necessity, new = Necessity.objects.get_or_create(name=name, option=option, description=description, price=price)
+        except IntegrityError:  # 중복된 username
+            return Response(status=status.HTTP_409_CONFLICT)
+
+        # necessity = Necessity.objects.get(name=name, option=option, description=description, price=price)
+        # necessity, new = Necessity.objects.get_or_create(name=name, option=option, description=description, price=price)
         
         if not new:
             return Response(status=status.HTTP_409_CONFLICT)
@@ -47,13 +50,25 @@ class NecessityViewSet(viewsets.GenericViewSet):
         # content = {"name" : "건전지", "price" : "24000"}
         # return Response(content)
 
-    # GET /api/v1/necessity/
-    # @action(detail=False, methods=['GET'])
-    # def search(self, request):
+    # PUT /api/v1/necessity/
+    # @action(detail=False, methods=['PUT'])
+    # def update(self, request):
 
 
 
     # DELETE /api/v1/necessity/
-    # @action(detail=False, methods=['DELETE'])
-    # def remove(self, request):
-    #     name = request.data.get('name')
+    @action(detail=False, methods=['DELETE'])
+    def delete(self, request):
+        name = request.data.get('name')
+        option = request.data.get('option')
+        description = request.data.get('description')
+        price = request.data.get('price')
+
+        try:
+            necessity = Necessity.objects.get(pk = pk)
+            necessity.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        except Necessity.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
