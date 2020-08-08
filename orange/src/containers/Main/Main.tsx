@@ -72,7 +72,7 @@ interface Props {
 
 
 function Main(props: Props) {
-	const [showNecessityCreateModal, setShowNecessityCreateModal] = useState(true);
+	const [showNecessityCreateModal, setShowNecessityCreateModal] = useState(false);
 	const showModal = () => setShowNecessityCreateModal(true);
 
 	return (

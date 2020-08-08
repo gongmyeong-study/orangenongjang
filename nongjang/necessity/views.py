@@ -25,8 +25,9 @@ class NecessityViewSet(viewsets.GenericViewSet):
         if not name:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        # if price == "":
-        #     return Response(status=status.HTTP_400_BAD_REQUEST)
+        if price.isnumeric():
+            print("숫자를 입력하세요.")
+            return Response(status=status.HTTP_400_BAD_REQUEST)
         
         necessity, new = Necessity.objects.get_or_create(name=name, option=option, description=description, price=price)
         
