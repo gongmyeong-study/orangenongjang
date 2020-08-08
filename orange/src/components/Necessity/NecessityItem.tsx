@@ -30,8 +30,8 @@ const NecessityItemBlock = styled.div`
 
 
 interface INecessityItemProps {
-  cursor?: any;
-  done?: boolean;
+  	cursor?: any;
+  	done?: boolean;
 }
 
 const CheckCircle = styled.div<INecessityItemProps>`
@@ -50,41 +50,40 @@ const CheckCircle = styled.div<INecessityItemProps>`
         css`
             border: 1px solid #38d9a9;
             color: #38d9a9;
-        `}
+		`
+	}
 `;
 
 interface ITextProps {
-  color?: string;
-  done?: boolean;
+  	color?: string;
+  	done?: boolean;
 }
 
 const Text = styled.div<ITextProps>`
-  flex: 1;
-  font-size: 21px;
-  color: #495057;
-  ${props =>
-    props.done &&
-    css`
-      color: #ced4da;
-    `}
+  	flex: 1;
+  	font-size: 21px;
+  	color: #495057;
+  	${props =>
+    	props.done &&
+    	css`
+      		color: #ced4da;
+		`
+	}
 `;
 
 
 function NecessityItem({id, done, text} : { id:number, done: boolean, text: string }) {
-  //const onToggleNecessity = () => dispatch({ type: 'TOGGLE', id });
-  // const onRemove = () => dispatch({ type: 'REMOVE', id });  
-  
-  return (
-    <NecessityItemBlock>
-      {<CheckCircle done={done} /*onClick={onToggleNecessity}*/>
-        {done && <MdDone />}
-      </CheckCircle>}
-      <Text done={done}>{text}</Text>
-      {<Remove /*onClick={onRemove}*/>
-        <MdDelete />
-      </Remove>}
-    </NecessityItemBlock>
-  );
+  	return (
+    	<NecessityItemBlock>
+      		<CheckCircle done={done} /*onClick={onToggleNecessity}*/>
+        		{done && <MdDone />}
+      		</CheckCircle>
+      		<Text done={done}>{text}</Text>
+      		<Remove /*onClick={onRemove}*/>
+        		<MdDelete />
+      		</Remove>
+    	</NecessityItemBlock>
+  	);
 }
   
 export default React.memo(NecessityItem);
