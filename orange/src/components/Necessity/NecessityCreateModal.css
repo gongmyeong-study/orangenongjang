@@ -1,0 +1,167 @@
+/* Full-width input fields */
+.necessity-create-modal input[type="text"],
+.necessity-create-modal input[type="number"]
+ {
+  width: 98%;
+  padding: 20px 0 15px 15px;
+  margin: 16px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+.necessity-create-modal label {
+  font-size: 22px;
+}
+
+.necessity-create-modal input {
+  font-size: 22px;
+  border: none;
+  border: solid 1px #ccc;
+  border-radius: 8px;
+}
+
+/* Add a background color when the inputs get focus */
+
+.necessity-create-modal input[type="text"]:focus,
+.necessity-create-modal input[type="number"]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for all buttons */
+.necessity-create-modal .necessity-create-clearfix > button {
+  background-color: #52BE80;
+  color: white;
+  padding: 15px 16px;
+  margin: 20px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+
+  font-size: 30px;
+  font-weight: bold;
+
+  border: none;
+  border: solid 1px #ccc;
+  border-radius: 8px;
+}
+
+.necessity-create-modal button:hover {
+  opacity: 1;
+}
+
+/* Extra styles for the cancel button */
+.necessity-create-modal .necessity-create-cancelbtn {
+  padding: 14px 20px;
+  background-color: #7DCEA0;
+}
+
+/* Float create & cancel buttons and add an equal width */
+.necessity-create-cancelbtn,
+.necessity-create-createbtn {
+  float: left;
+  width: 50%;
+  opacity: 0.92;
+}
+
+.necessity-create-modal button:disabled {
+  opacity: 0.5;
+}
+
+/* Add padding to container elements */
+.necessity-create-container {
+  padding: 16px 24px;
+}
+
+/* The Modal (background) */
+.necessity-create-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #33474e5d;
+
+  padding-top: 10px;
+
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+/* Modal Content/Box */
+.necessity-create-modal-content {
+  background-color: #fefefe;
+  margin: 8% auto 0 auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  border-radius: 12px;
+  width: 60%; /* Could be more or less, depending on screen size */
+}
+
+/* Style the horizontal ruler */
+.necessity-create-modal hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* The Close Button (x) */
+.necessity-create-close {
+  position: absolute;
+  right: 350px;
+  top: 150px;
+  font-size: 50px;
+  font-weight: bold;
+  color: #7DCEA0 ;
+}
+
+.necessity-create-close:hover,
+.necessity-create-close:focus {
+  color: #229954;
+  cursor: pointer;
+}
+
+/* Clear floats */
+.necessity-create-clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for create & cancel button on extra small screens */
+@media screen and (max-width: 440px) {
+  .necessity-create-cancelbtn,
+  .necessity-create-createbtn {
+    width: 100%;
+  }
+  .necessity-create-modal-content {
+    width: 100%;
+  }
+  .necessity-create-modal input {
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-width: 1080px) and (min-width: 440px) {
+  .necessity-create-modal-content {
+    margin: 4% auto 0 auto;
+    border: 1px solid #888;
+    border-radius: 12px;
+    width: 60%;
+  }
+
+  .necessity-create-modal .clearfix > button {
+    padding: 12px 16px;
+  }
+
+  .necessity-create-modal input[type="text"],
+  .necessity-create-modal input[type="number"] {
+    width: 96%;
+    padding: 15px 0 15px 15px;
+    margin: 16px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+  }
+}

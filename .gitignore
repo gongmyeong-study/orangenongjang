@@ -339,8 +339,9 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/node,react,macos,django,python,windows
 
 .idea/
+.vscode/
 
 secret_info.json
 
 # yeonghyeon virtualenv dir
-nongjangenv/
+venv_nongjang/

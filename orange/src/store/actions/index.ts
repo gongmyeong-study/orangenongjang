@@ -5,7 +5,6 @@ import {
 
 import {
     createNecessity,
-    toggleNecessity
 } from './necessity/necessity';
 
 export const userActions = {
@@ -15,5 +14,4 @@ export const userActions = {
 
 export const necessityActions = {
     createNecessity,
-    toggleNecessity,
 }
