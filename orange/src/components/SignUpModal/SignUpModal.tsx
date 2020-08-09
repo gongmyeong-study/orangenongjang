@@ -1,9 +1,9 @@
-import React, { Component, Dispatch } from "react";
-import { connect } from "react-redux";
+import React, { Component, Dispatch } from 'react';
+import { connect } from 'react-redux';
 
-import { userActions } from "../../store/actions";
-import { userStatus } from "../../constants/constants";
-import "./SignUpModal.css";
+import { userActions } from '../../store/actions';
+import { userStatus } from '../../constants/constants';
+import './SignUpModal.css';
 
 interface Props {
   history?: any;
@@ -13,7 +13,7 @@ interface Props {
 }
 
 interface State {
-  appearing: Boolean; // for modal appearing
+  appearing: boolean; // for modal appearing
   email: string;
   username: string;
   password: string;
@@ -26,7 +26,7 @@ class SignUpModal extends Component<Props, State> {
       appearing: true,
       email: '',
       username: '',
-      password: ''
+      password: '',
     };
   }
 
@@ -34,31 +34,29 @@ class SignUpModal extends Component<Props, State> {
     this.props.signUp(this.state.email, this.state.username, this.state.password)
       .then(() => {
         if (this.props.signupStatus === userStatus.SUCCESS) {
-          window.alert("성공!");
+          window.alert('성공!');
           this.setState({ appearing: false });
           this.props.history.push('/main');
+        } else if (this.props.signupStatus === userStatus.FAILURE_USERNAME) {
+          window.alert('중복된 사용자 이름!');
+        } else {
+          window.alert('실패!');
         }
-        else if (this.props.signupStatus === userStatus.FAILURE_USERNAME) {
-          window.alert("중복된 사용자 이름!");
-        }
-        else {
-          window.alert("실패!");
-        }
-      })
+      });
   };
 
   render() {
     return (
       <div
         className="modal"
-        style={this.state.appearing ? { display: "block" } : { display: "none" }}
+        style={this.state.appearing ? { display: 'block' } : { display: 'none' }}
       >
         <form>
           <button
             type="submit"
             className="close"
             title="Close Modal"
-            style={{ background: "none", border: "none" }}
+            style={{ background: 'none', border: 'none' }}
           >
             &times;
           </button>
@@ -111,7 +109,7 @@ class SignUpModal extends Component<Props, State> {
               <button
                 type="button"
                 className="signupbtn"
-                disabled={this.state.email==="" || this.state.password==="" || this.state.username===""}
+                disabled={this.state.email === '' || this.state.password === '' || this.state.username === ''}
                 onClick={this.signUp}
               >
                 회원가입
@@ -125,8 +123,9 @@ class SignUpModal extends Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  signUp: (email: string, username: string, password: string) =>
-    dispatch(userActions.signUp(email, username, password)),
+  signUp: (email: string, username: string, password: string) => dispatch(
+    userActions.signUp(email, username, password),
+  ),
 });
 
 const mapStateToProps = (state: any) => ({

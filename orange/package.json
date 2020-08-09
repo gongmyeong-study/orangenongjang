@@ -18,6 +18,9 @@
     "@types/styled-components": "^5.1.1",
     "axios": "^0.19.2",
     "connected-react-router": "^6.8.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-airbnb-typescript": "^9.0.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "history": "^4.7.6",
     "lodash": "4.17.19",
     "react": "^16.13.1",
@@ -35,7 +38,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint-fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
   },
   "eslintConfig": {
     "extends": "react-app"

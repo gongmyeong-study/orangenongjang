@@ -1,7 +1,7 @@
 /* Full-width input fields */
 .necessity-create-modal input[type="text"],
 .necessity-create-modal input[type="number"]
- {
+{
   width: 98%;
   padding: 20px 0 15px 15px;
   margin: 16px 0 22px 0;

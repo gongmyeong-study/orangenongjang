@@ -1,6 +1,6 @@
 // import React from 'react';
 
 export interface ArticleProps {
-    title?: string;
-    className?: string;
+  title?: string;
+  className?: string;
 }

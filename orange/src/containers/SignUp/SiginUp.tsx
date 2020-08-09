@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { Login, SignUpModal } from "../../components/index";
+import { Login, SignUpModal } from '../../components/index';
 
 interface Props {
   history?: any;
@@ -13,7 +13,14 @@ function SignUp(props: Props) {
   return (
     <div>
       <Login history={props.history} />
-      <button onClick={showModal}>회원가입 </button>
+      <button
+        onClick={showModal}
+        type="button"
+      >
+        회원가입
+        {' '}
+
+      </button>
       {showSignUpModal ? <SignUpModal history={props.history} /> : null}
     </div>
   );
