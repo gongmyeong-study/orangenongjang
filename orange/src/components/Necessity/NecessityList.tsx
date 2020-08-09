@@ -21,10 +21,8 @@ function NecessityList(props: Props) {
     <NecessityListBlock>
       {necessities.map((necessity: any) => (
         <NecessityItem
-          key={necessity.id}
-          id={necessity.id}
-          text={necessity.name}
-          done={necessity.done}
+          name={necessity.name}
+          option={necessity.option}
         />
       ))}
     </NecessityListBlock>

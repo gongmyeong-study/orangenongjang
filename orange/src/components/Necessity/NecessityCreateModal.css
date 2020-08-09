@@ -48,7 +48,7 @@
 }
 
 .necessity-create-modal button:hover {
-  opacity: 1;
+  opacity: 0.1;
 }
 
 /* Extra styles for the cancel button */
