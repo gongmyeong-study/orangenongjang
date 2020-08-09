@@ -2,7 +2,6 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdDelete } from 'react-icons/md';
 
-
 const Remove = styled.div`
     display: flex;
     align-items: center;
@@ -28,13 +27,12 @@ const NecessityItemBlock = styled.div`
     }
 `;
 
-
-interface INecessityItemProps {
-  	cursor?: any;
-  	done?: boolean;
+interface NecessityItemProps {
+  cursor?: any;
+  done?: boolean;
 }
 
-const CheckCircle = styled.div<INecessityItemProps>`
+const CheckCircle = styled.div<NecessityItemProps>`
     width: 32px;
     height: 32px;
     border-radius: 10px;
@@ -45,45 +43,42 @@ const CheckCircle = styled.div<INecessityItemProps>`
     justify-content: center;
     margin-right: 20px;
     cursor: pointer;
-    ${props => 
-        props.done &&
-        css`
+    ${(props) => props.done
+        && css`
             border: 1px solid #38d9a9;
             color: #38d9a9;
-		`
-	}
+    `
+}
 `;
 
-interface ITextProps {
-  	color?: string;
-  	done?: boolean;
+interface TextProps {
+  color?: string;
+  done?: boolean;
 }
 
-const Text = styled.div<ITextProps>`
-  	flex: 1;
-  	font-size: 21px;
-  	color: #495057;
-  	${props =>
-    	props.done &&
-    	css`
-      		color: #ced4da;
-		`
-	}
+const Text = styled.div<TextProps>`
+    flex: 1;
+    font-size: 21px;
+    color: #495057;
+    ${(props) => props.done
+        && css`
+            color: #ced4da;
+        `
+}
 `;
 
-
-function NecessityItem({id, done, text} : { id:number, done: boolean, text: string }) {
-  	return (
-    	<NecessityItemBlock>
-      		<CheckCircle done={done} /*onClick={onToggleNecessity}*/>
-        		{done && <MdDone />}
-      		</CheckCircle>
-      		<Text done={done}>{text}</Text>
-      		<Remove /*onClick={onRemove}*/>
-        		<MdDelete />
-      		</Remove>
-    	</NecessityItemBlock>
-  	);
+function NecessityItem({ id, done, text }: { id: number; done: boolean; text: string }) {
+  return (
+    <NecessityItemBlock id={`necessity-item-${id}`}>
+      <CheckCircle done={done}>
+        {done && <MdDone />}
+      </CheckCircle>
+      <Text done={done}>{text}</Text>
+      <Remove>
+        <MdDelete />
+      </Remove>
+    </NecessityItemBlock>
+  );
 }
-  
+
 export default React.memo(NecessityItem);

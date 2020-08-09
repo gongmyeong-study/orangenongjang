@@ -3,14 +3,15 @@ import React, { Component } from 'react';
 import { Header, StudyInfo, Articles } from '../../components';
 import './Info.css';
 
+// eslint-disable-next-line react/prefer-stateless-function
 class Info extends Component {
   render() {
-    return(
+    return (
       <div className="info-ui">
-        <Header className="main-header" title="오렌지 농장"/>
+        <Header className="main-header" title="오렌지 농장" />
         <main>
           <StudyInfo className="left-info" />
-          <Articles className="right-articles" />  
+          <Articles className="right-articles" />
         </main>
       </div>
     );

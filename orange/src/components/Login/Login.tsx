@@ -17,7 +17,8 @@ interface State {
 }
 
 class Login extends Component<Props, State> {
-  // NOTE: this Login Component is just for example about api call. it can be changed completely differently.
+  // NOTE: this Login Component is just for example about api call.
+  //       it can be changed completely differently.
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -30,11 +31,10 @@ class Login extends Component<Props, State> {
     this.props.onLogin(this.state.username, this.state.password)
       .then(() => {
         if (this.props.loginStatus === userStatus.SUCCESS) {
-          alert("로그인에 성공하였습니다!")
+          alert('로그인에 성공하였습니다!');
           this.props.history.push('/main');
-        }
-        else {
-          alert("로그인에 실패하였습니다. \n이름과 비밀번호를 확인해 주세요!")
+        } else {
+          alert('로그인에 실패하였습니다. \n이름과 비밀번호를 확인해 주세요!');
         }
       });
   }
@@ -42,7 +42,7 @@ class Login extends Component<Props, State> {
   render() {
     return (
       <>
-      <h1>Login</h1>
+        <h1>Login</h1>
         <div className="LoginField">
           <input
             id="username"
@@ -58,6 +58,7 @@ class Login extends Component<Props, State> {
           />
         </div>
         <button
+          type="button"
           className="LoginButton"
           disabled={!this.state.username || !this.state.password}
           onClick={() => this.clickLoginHandler()}

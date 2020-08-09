@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-interface IProps {
-    children: any;
+interface Props {
+  children: any;
 }
 
 const NecessityTemplateBlock = styled.div`
@@ -25,8 +25,8 @@ const NecessityTemplateBlock = styled.div`
     flex-direction: column;
 `;
 
-function NecessityTemplate({ children, ...props }: IProps) {
-    return <NecessityTemplateBlock {...props}>{children}</NecessityTemplateBlock>;
+function NecessityTemplate({ children }: Props) {
+  return <NecessityTemplateBlock>{children}</NecessityTemplateBlock>;
 }
 
 export default NecessityTemplate;

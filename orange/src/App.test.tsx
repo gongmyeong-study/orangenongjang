@@ -16,7 +16,7 @@ test('renders app with mock store', () => {
   const app = render(
     <Provider store={mockStore}>
       <App history={history} />
-    </Provider>
+    </Provider>,
   );
-  expect(app.container.firstChild).toHaveClass('App')
+  expect(app.container.firstChild).toHaveClass('App');
 });

@@ -2,7 +2,6 @@ import axios from 'axios';
 import { Dispatch } from 'redux';
 import { userConstants } from '../actionTypes';
 
-
 const loginSuccess = (user: any) => ({
   type: userConstants.LOGIN_SUCCESS,
   target: user,

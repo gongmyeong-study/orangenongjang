@@ -5,7 +5,6 @@ import { createBrowserHistory } from 'history';
 
 import rootReducer from './reducers/index';
 
-
 const logger = (store: any) => (next: any) => (action: any) => {
   window.console.log('[Middleware] Dispatching', action);
   const result = next(action);

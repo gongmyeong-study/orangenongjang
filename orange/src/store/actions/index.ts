@@ -1,17 +1,17 @@
 import {
-    login,
-    signUp
+  login,
+  signUp,
 } from './user/user';
 
 import {
-    createNecessity,
+  createNecessity,
 } from './necessity/necessity';
 
 export const userActions = {
-    login,
-    signUp,
+  login,
+  signUp,
 };
 
 export const necessityActions = {
-    createNecessity,
-}
+  createNecessity,
+};

@@ -3,7 +3,7 @@ import SignUp from './SignUp/SiginUp';
 import Info from './Info/Info';
 
 export {
-    Main,
-    SignUp,
-    Info
+  Main,
+  SignUp,
+  Info,
 };
