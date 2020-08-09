@@ -42,13 +42,13 @@ const removeFailure = (error: any) => {
 };
 
 export const createNecessity = (
-	name: string, option: string, description: string, price: string
+	name: string, option: string, description: string, price: number
 	) => (dispatch: Dispatch) => axios.post('/api/v1/necessity/', { name, option, description, price })
 	.then((createResponse) => dispatch(createSuccess(createResponse.data)))
 	.catch((createError) => dispatch(createFailure(createError)));
 
 export const removeNecessity = (
-	name: string, option: string, description: string, price: string
+	name: string, option: string, description: string, price: number
 	) => (dispatch: Dispatch) => axios.put('/api/v1/necessity/', { name, option, description, price })
 	.then((removeResponse) => dispatch(removeSuccess(removeResponse.data)))
 	.catch((removeError) => dispatch(removeFailure(removeError)));

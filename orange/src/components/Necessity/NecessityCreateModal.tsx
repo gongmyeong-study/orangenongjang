@@ -6,7 +6,7 @@ import "./NecessityCreateModal.css";
 
 interface Props {
     history?: any;
-    create: (name: string, option: string, description: string, price: string) => any; // for redux dispatch
+    create: (name: string, option: string, description: string, price: number) => any; // for redux dispatch
     me: any;
     createStatus: string;
 }
@@ -16,7 +16,7 @@ interface State {
     name: string, 
     option: string, 
     description: string, 
-    price: string,
+    price: number,
 }
 
 class NecessityCreateModal extends Component<Props, State> {
@@ -27,13 +27,14 @@ class NecessityCreateModal extends Component<Props, State> {
         name: '',
         option: '',
         description: '',
-        price: '',
+        price: 0,
         };
     }
 
     create = () => {
         this.props.create(this.state.name, this.state.option, this.state.description, this.state.price)
             .then(() => {
+                console.log(this.props.createStatus)
                 if (this.props.createStatus === necessityStatus.SUCCESS) {
                     window.alert("입력 완료!");
                     this.setState({ appearing: false });
@@ -106,7 +107,7 @@ class NecessityCreateModal extends Component<Props, State> {
                             type="number"
                             placeholder="2900"
                             required
-                            onChange={(e) => this.setState({ price: e.target.value })}
+                            onChange={(e) => this.setState({ price: parseInt(e.target.value) })}
                         />
 
                         <div className="necessity-create-clearfix">
@@ -127,7 +128,7 @@ class NecessityCreateModal extends Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-    create: (name: string, option: string, description: string, price: string) => 
+    create: (name: string, option: string, description: string, price: number) => 
         dispatch(necessityActions.createNecessity(name, option, description, price)),
 });
 

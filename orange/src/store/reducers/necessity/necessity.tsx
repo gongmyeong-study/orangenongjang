@@ -9,28 +9,7 @@ type Action = {
 
 const initialState = {
     createStatus: necessityStatus.NONE,
-    necessities: [
-        {
-          id: 1,
-          text: '크리넥스 티슈',
-          done: true
-        },
-        {
-          id: 2,
-          text: '섬유유연제',
-          done: true
-        },
-        {
-            id: 3,
-          text: '삼다수 2L',
-          done: false
-        },
-        {
-            id: 4,
-          text: 'AAA 건전지',
-          done: false
-        }
-    ],
+    necessities: [],
 };
 
 

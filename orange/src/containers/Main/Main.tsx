@@ -23,7 +23,7 @@ const CircleButton = styled.button<ICircleButtonProps>`
    		background: #20c997;
   	}
 	
-  	z-index: 5;
+  	z-index: 0;
   	cursor: pointer;
   	width: 80px;
  	height: 80px;
@@ -70,7 +70,7 @@ function Main(props: Props) {
 				<CircleButton onClick={showModal}>
 					<MdAdd />
 				</CircleButton>
-				{showNecessityCreateModal ? [<NecessityCreateModal history={props.history} />, <CircleButton />] : null}
+				{showNecessityCreateModal ? <NecessityCreateModal history={props.history} /> : null}
 			</NecessityTemplate>
 		</React.Fragment>
 	)
