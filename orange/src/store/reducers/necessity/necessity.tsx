@@ -2,8 +2,8 @@ import { necessityConstants } from '../../actions/actionTypes';
 import { necessityStatus } from '../../../constants/constants';
 
 type Action = {
-  actiontype: string;
-  actiontarget: any;
+  type: string;
+  target: any;
 };
 
 const initialState = {
@@ -12,8 +12,8 @@ const initialState = {
 };
 
 function necessityreducer(state = initialState, action: Action) {
-  const data = action.actiontarget;
-  switch (action.actiontype) {
+  const data = action.target;
+  switch (action.type) {
     // 생필품 추가
     case necessityConstants.CREATE_SUCCESS:
       return {
