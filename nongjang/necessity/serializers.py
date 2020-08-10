@@ -26,13 +26,29 @@ class NecessitySerializer(serializers.ModelSerializer):
         return necessity_user.count
 
 class NecessityUserLogSerializer(serializers.ModelSerializer):
-  
+    user = serializers.SerializerMethodField()
+    necessity = serializers.SerializerMethodField()
+    
     class Meta:
         model = NecessityUserLog
         fields = (
             'id',
-            'user_id',
-            'necessity_id',
+            'user',
+            'necessity',
             'activity_category',
             'created_at',
         )
+
+    def get_user(self, log):
+        try:
+            user = User.objects.get(id=log.user_id)
+        except NecessityUser.DoesNotExist:
+            return "Unknown user"
+        return user.username
+
+    def get_necessity(self, log):
+        try:
+            necessity = Necessity.objects.get(id=log.necessity_id)
+        except NecessityUser.DoesNotExist:
+            return "Unknown necessity"
+        return necessity.name
