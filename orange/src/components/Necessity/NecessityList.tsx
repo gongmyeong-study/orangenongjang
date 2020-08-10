@@ -23,6 +23,8 @@ function NecessityList(props: Props) {
         <NecessityItem
           name={necessity.name}
           option={necessity.option}
+          price={necessity.price}
+          count={necessity.count}
         />
       ))}
     </NecessityListBlock>

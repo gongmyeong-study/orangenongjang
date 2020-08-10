@@ -62,13 +62,23 @@ const Text = styled.div`
 }
 `;
 
-function NecessityItem({ name, option }: { name: string; option: string }) {
+function NecessityItem({
+  name, option, price, count,
+}: { name: string; option: string; price: number; count: number }) {
   return (
     <NecessityItemBlock>
       <Text>
         {name}
         <span className="option">
           {option}
+          {' '}
+          /
+          {' '}
+          {price}
+          {' '}
+          /
+          {' '}
+          {count}
           {/* {if option != '' return {option} else ''} */}
         </span>
       </Text>

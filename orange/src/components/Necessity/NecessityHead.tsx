@@ -38,11 +38,6 @@ function NecessityHead() {
     <NecessityHeadBlock>
       <h1>{dateString}</h1>
       <div className="day">{dayName}</div>
-      <div className="tasks-left">
-        구매할 것
-        {}
-        개 남음
-      </div>
     </NecessityHeadBlock>
   );
 }
