@@ -47,6 +47,7 @@ class NecessityViewSet(viewsets.GenericViewSet):
 
     # GET /api/v1/necessity/
     def retreive(self, request):
+        print(request)
         user = request.user
         necessities = Necessity.objects.filter(users__user=user)
 

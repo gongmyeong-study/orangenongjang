@@ -24,7 +24,6 @@ function NecessityList(props: Props) {
           name={necessity.name}
           option={necessity.option}
           price={necessity.price}
-          count={necessity.count}
         />
       ))}
     </NecessityListBlock>

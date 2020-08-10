@@ -46,7 +46,6 @@ function necessityreducer(state = initialState, action: Action) {
       };
     case necessityConstants.REMOVE_FAILURE:
       return {
-        ...state,
         removeStatus: necessityStatus.FAILURE,
       };
 

@@ -63,8 +63,8 @@ const Text = styled.div`
 `;
 
 function NecessityItem({
-  name, option, price, count,
-}: { name: string; option: string; price: number; count: number }) {
+  name, option, price,
+}: { name: string; option: string; price: number }) {
   return (
     <NecessityItemBlock>
       <Text>
@@ -75,10 +75,6 @@ function NecessityItem({
           /
           {' '}
           {price}
-          {' '}
-          /
-          {' '}
-          {count}
           {/* {if option != '' return {option} else ''} */}
         </span>
       </Text>
