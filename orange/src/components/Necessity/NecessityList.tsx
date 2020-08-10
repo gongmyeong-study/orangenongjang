@@ -23,7 +23,7 @@ function NecessityList(props: Props) {
         <NecessityItem
           key={necessity.id}
           id={necessity.id}
-          text={necessity.text}
+          text={necessity.name}
           done={necessity.done}
         />
       ))}
