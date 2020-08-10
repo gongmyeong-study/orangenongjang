@@ -82,5 +82,5 @@ class NecessityViewSet(viewsets.GenericViewSet):
             logs = NecessityUserLog.objects.all()
             return Response(log_serializer(logs, many=True).data, status=status.HTTP_200_OK)
 
-        except Necessity.DoesNotExist:
+        except NecessityUserLog.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
