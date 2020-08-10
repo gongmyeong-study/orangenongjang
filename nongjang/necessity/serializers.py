@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
-from necessity.models import Necessity, NecessityUser
+from necessity.models import Necessity, NecessityUser, NecessityUserLog
 
 
 class NecessitySerializer(serializers.ModelSerializer):
@@ -24,3 +24,15 @@ class NecessitySerializer(serializers.ModelSerializer):
         except NecessityUser.DoesNotExist:
             return 0
         return necessity_user.count
+
+class NecessityUserLogSerializer(serializers.ModelSerializer):
+  
+    class Meta:
+        model = NecessityUserLog
+        fields = (
+            'id',
+            'user_id',
+            'necessity_id',
+            'activity_category',
+            'created_at',
+        )
