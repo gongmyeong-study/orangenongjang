@@ -14,7 +14,6 @@ const initialState = {
 function necessityreducer(state = initialState, action: Action) {
   const data = action.target;
   switch (action.type) {
-<<<<<<< HEAD
     // 생필품 호출
     case necessityConstants.GET_SUCCESS:
       return {
@@ -27,8 +26,6 @@ function necessityreducer(state = initialState, action: Action) {
         getStatus: necessityStatus.FAILURE,
       };
 
-=======
->>>>>>> 3c610a8d4aeadc3189e5338b77ed614d6feacb69
     // 생필품 추가
     case necessityConstants.CREATE_SUCCESS:
       return {

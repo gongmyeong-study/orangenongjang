@@ -21,6 +21,8 @@ function NecessityList(props: Props) {
     <NecessityListBlock>
       {necessities.map((necessity: any) => (
         <NecessityItem
+          key={necessity.id}
+          id={necessity.id}
           name={necessity.name}
           option={necessity.option}
           price={necessity.price}

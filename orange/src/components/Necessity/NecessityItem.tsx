@@ -63,19 +63,14 @@ const Text = styled.div`
 `;
 
 function NecessityItem({
-  name, option, price,
-}: { name: string; option: string; price: number }) {
+  id, name, option, price,
+}: { id: number; name: string; option: string; price: number }) {
   return (
-    <NecessityItemBlock>
+    <NecessityItemBlock id={`necessity-item-${id}`}>
       <Text>
-        {name}
+        {`${name}`}
         <span className="option">
-          {option}
-          {' '}
-          /
-          {' '}
-          {price}
-          {/* {if option != '' return {option} else ''} */}
+          {` ${option} / ${price}원 `}
         </span>
       </Text>
       <Remove>
