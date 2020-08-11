@@ -5,8 +5,8 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from necessity.serializers import NecessitySerializer
-from necessity.models import Necessity, NecessityUser, NecessityCounter
+from necessity.serializers import NecessitySerializer, NecessityUserLogSerializer
+from necessity.models import Necessity, NecessityUser, NecessityCounter, NecessityUserLog
 
 from user.serializers import UserSerializer
 
@@ -42,6 +42,10 @@ class NecessityViewSet(viewsets.GenericViewSet):
         except IntegrityError:
             return Response(status=status.HTTP_409_CONFLICT)
 
+        # create log when user create necessity
+        CREATE = NecessityUserLog.CREATE
+        NecessityUserLog.objects.create(user=user, necessity=necessity, activity_category=CREATE)
+
         # if name, obtion in  # 생필품 이름과 옵션(사이즈)가 같으면 중복 에러
         #     return Response(status=status.HTTP_409_CONFLICT)
 
@@ -70,3 +74,13 @@ class NecessityViewSet(viewsets.GenericViewSet):
         except Necessity.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+    # GET /api/v1/necessity/log/
+    @action(methods=['get'], detail=False)
+    def log(self, request):
+        log_serializer = NecessityUserLogSerializer
+        try:
+            logs = NecessityUserLog.objects.all()
+            return Response(log_serializer(logs, many=True).data, status=status.HTTP_200_OK)
+
+        except NecessityUserLog.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
