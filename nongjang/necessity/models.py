@@ -24,3 +24,20 @@ class NecessityCounter(models.Model):
     count = models.PositiveIntegerField(default=0)
 
 
+class NecessityUserLog(models.Model):
+    CREATE = 'CREATE'
+    UPDATE = 'UPDATE'
+    DELETE = 'DELETE'
+    CHANGE = 'CHANGE'
+
+    ACTIVITY_CATEGORY = (
+        (CREATE, 'Create'),
+        (UPDATE, 'Update'),
+        (DELETE, 'Delete'),
+        (CHANGE, 'Change'),
+    )
+
+    activity_category = models.CharField(max_length=50, choices=ACTIVITY_CATEGORY, default=CHANGE)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    necessity = models.ForeignKey(Necessity, on_delete=models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
