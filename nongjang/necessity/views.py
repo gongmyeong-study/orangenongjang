@@ -53,7 +53,7 @@ class NecessityViewSet(viewsets.GenericViewSet):
 
 
     # GET /api/v1/necessity/
-    def retreive(self, request):
+    def list(self, request):
         print(request)
 
         user = request.user
