@@ -59,7 +59,7 @@ class NecessityCreateModal extends Component<Props, State> {
           <button
             className="necessity-create-close"
             onClick={() => this.props.restoreModal}
-            type="button"
+            type="submit"
             title="Close Modal"
             style={{ background: 'none', border: 'none' }}
           >
