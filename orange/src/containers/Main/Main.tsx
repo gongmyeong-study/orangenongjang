@@ -62,7 +62,8 @@ function Main(props: Props): ReactElement {
   };
 
   useEffect(() => {
-    props.get();
+    const unmounted = false;
+    if (!unmounted) { props.get(); }
   });
 
   return (
