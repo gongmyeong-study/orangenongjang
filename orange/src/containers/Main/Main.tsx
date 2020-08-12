@@ -61,9 +61,13 @@ function Main(props: Props): ReactElement {
     setShowNecessityCreateModal(false);
   };
 
+  // useEffect(() => {
+  //   const unmounted = false;
+  //   if (!unmounted) { props.get(); }
+  // });
+
   useEffect(() => {
-    const unmounted = false;
-    if (!unmounted) { props.get(); }
+    props.get();
   });
 
   return (
