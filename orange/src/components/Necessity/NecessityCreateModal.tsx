@@ -41,8 +41,6 @@ class NecessityCreateModal extends Component<Props, State> {
           window.alert('입력 완료!');
 
           this.props.restoreModal();
-
-          this.setState({ appearing: false });
         } else if (this.props.createStatus === necessityStatus.FAILURE) {
           window.alert('이미 존재하는 생필품입니다.');
         } else {
