@@ -30,9 +30,11 @@ const createSuccess = (necessities: any) => ({
 const createFailure = (error: any) => {
   let actionType = null;
   switch (error.response.status) {
+    case 409:
+      actionType = necessityConstants.CREATE_FAILURE_NAME;
+      break;
     default:
       actionType = necessityConstants.CREATE_FAILURE;
-      break;
   }
   return {
     type: actionType,
@@ -74,13 +76,3 @@ export const removeNecessity = () => (dispatch: Dispatch) => axios.delete('/api/
 export const getNecessity = () => (dispatch: Dispatch) => axios.get('/api/v1/necessity/')
   .then((getResponse) => dispatch(getSuccess(getResponse.data)))
   .catch((getError) => dispatch(getFailure(getError)));
-
-// export const GET_NECESSITY = 'GET_NECESSITY';
-
-// export function getNecessity() {
-//   const request = axios.get('/api/v1/necessity/');
-//   return {
-//     type: GET_NECESSITY,
-//     payload: request,
-//   };
-// }

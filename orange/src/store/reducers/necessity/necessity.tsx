@@ -17,6 +17,7 @@ function necessityreducer(state = initialState, action: Action) {
     // 생필품 호출
     case necessityConstants.GET_SUCCESS:
       return {
+        ...state,
         getStatus: necessityStatus.SUCCESS,
         necessities: data,
       };
@@ -29,6 +30,7 @@ function necessityreducer(state = initialState, action: Action) {
     // 생필품 추가
     case necessityConstants.CREATE_SUCCESS:
       return {
+        ...state,
         createStatus: necessityStatus.SUCCESS,
         necessities: data,
       };
@@ -41,11 +43,13 @@ function necessityreducer(state = initialState, action: Action) {
     // 생필품 제거
     case necessityConstants.REMOVE_SUCCESS:
       return {
+        ...state,
         removeStatus: necessityStatus.SUCCESS,
         necessities: data,
       };
     case necessityConstants.REMOVE_FAILURE:
       return {
+        ...state,
         removeStatus: necessityStatus.FAILURE,
       };
 

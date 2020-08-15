@@ -61,11 +61,6 @@ function Main(props: Props): ReactElement {
     setShowNecessityCreateModal(false);
   };
 
-  // useEffect(() => {
-  //   const unmounted = false;
-  //   if (!unmounted) { props.get(); }
-  // });
-
   useEffect(() => {
     props.get();
   });
@@ -90,8 +85,6 @@ function Main(props: Props): ReactElement {
     </>
   );
 }
-
-// export default Main;
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   get: (): void => dispatch(

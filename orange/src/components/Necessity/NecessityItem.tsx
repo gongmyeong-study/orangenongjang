@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { MdDelete } from 'react-icons/md';
 
-const Remove = styled.div`
+const NecessityItemRemove = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,35 +21,11 @@ const NecessityItemBlock = styled.div`
     padding-top: 12px;
     padding-bottom: 12px;
     &:hover {
-        ${Remove}{
+        ${NecessityItemRemove}{
             display: initial;
         }
     }
 `;
-
-interface NecessityItemProps {
-  cursor?: any;
-  done?: boolean;
-}
-
-// const CheckCircle = styled.div<NecessityItemProps>`
-//     width: 32px;
-//     height: 32px;
-//     border-radius: 10px;
-//     border: 1px solid #ced4da;
-//     font-size: 24px;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     margin-right: 20px;
-//     cursor: pointer;
-//     ${(props) => props.done
-//         && css`
-//             border: 1px solid #38d9a9;
-//             color: #38d9a9;
-//     `
-// }
-// `;
 
 const Text = styled.div`
     flex: 1;
@@ -73,9 +49,9 @@ function NecessityItem({
           {` ${option} / ${price}원 `}
         </span>
       </Text>
-      <Remove>
+      <NecessityItemRemove>
         <MdDelete />
-      </Remove>
+      </NecessityItemRemove>
     </NecessityItemBlock>
   );
 }
