@@ -40,10 +40,7 @@ class NecessityViewSet(viewsets.GenericViewSet):
 
         # create log when user create necessity
         CREATE = NecessityUserLog.CREATE
-        try:
-            NecessityUserLog.objects.create(user=user, necessity=necessity, activity_category=CREATE)
-        except IntegrityError:
-            return Response(status=status.HTTP_409_CONFLICT)
+        NecessityUserLog.objects.create(user=user, necessity=necessity, activity_category=CREATE)
 
         necessities = Necessity.objects.filter(users__user=user)
 

@@ -8,6 +8,8 @@ type Action = {
 
 const initialState = {
   createStatus: necessityStatus.NONE,
+  getStatus: necessityStatus.NONE,
+  removeStatus: necessityStatus.NONE,
   necessities: [],
 };
 
@@ -38,6 +40,11 @@ function necessityreducer(state = initialState, action: Action) {
       return {
         ...state,
         createStatus: necessityStatus.FAILURE,
+      };
+    case necessityConstants.CREATE_FAILURE_NAME:
+      return {
+        ...state,
+        createStatus: necessityStatus.FAILURE_NAME,
       };
 
     // 생필품 제거
