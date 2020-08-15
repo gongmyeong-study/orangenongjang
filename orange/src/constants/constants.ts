@@ -11,4 +11,5 @@ export const necessityStatus = {
   WAITING: 'WAITING',
   SUCCESS: 'SUCCESS',
   FAILURE: 'FAILURE',
+  FAILURE_NAME: 'FAILURE_NAME',
 };

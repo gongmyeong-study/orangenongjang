@@ -1,11 +1,15 @@
-import React, { useState, ReactElement } from 'react';
+import React, {
+  useState, useEffect, ReactElement, Dispatch,
+} from 'react';
 import { History } from 'history';
 import styled, { createGlobalStyle } from 'styled-components';
 import { MdAdd } from 'react-icons/md';
+import { connect } from 'react-redux';
 import NecessityList from '../../components/Necessity/NecessityList';
 import NecessityTemplate from '../../components/Necessity/NecessityTemplate';
 import NecessityHead from '../../components/Necessity/NecessityHead';
 import { NecessityCreateModal } from '../../components/index';
+import { necessityActions } from '../../store/actions';
 
 const CircleButton = styled.button`
     background: #38d9a9;
@@ -46,11 +50,20 @@ const GlobalStyle = createGlobalStyle`
 
 interface Props {
   history: History;
+  get(): void;
 }
 
 function Main(props: Props): ReactElement {
   const [showNecessityCreateModal, setShowNecessityCreateModal] = useState(false);
   const showModal = (): void => setShowNecessityCreateModal(true);
+
+  const restoreModal = () => {
+    setShowNecessityCreateModal(false);
+  };
+
+  useEffect(() => {
+    props.get();
+  });
 
   return (
     <>
@@ -62,10 +75,21 @@ function Main(props: Props): ReactElement {
         <CircleButton onClick={showModal}>
           <MdAdd />
         </CircleButton>
-        {showNecessityCreateModal ? <NecessityCreateModal history={props.history} /> : null}
+        {showNecessityCreateModal ? (
+          <NecessityCreateModal
+            history={props.history}
+            restoreModal={restoreModal}
+          />
+        ) : null}
       </NecessityTemplate>
     </>
   );
 }
 
-export default Main;
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  get: (): void => dispatch(
+    necessityActions.getNecessity(),
+  ),
+});
+
+export default connect(null, mapDispatchToProps)(Main);

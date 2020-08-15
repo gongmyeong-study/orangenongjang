@@ -33,10 +33,6 @@ class NecessityViewSet(viewsets.GenericViewSet):
 
         necessity, created = Necessity.objects.get_or_create(name=name, option=option, description=description, price=price)
 
-
-        # necessity = Necessity.objects.get(name=name, option=option, description=description, price=price)
-        # necessity, new = Necessity.objects.get_or_create(name=name, option=option, description=description, price=price)
-
         try:
             NecessityUser.objects.create(user=user, necessity=necessity)
         except IntegrityError:
@@ -46,21 +42,20 @@ class NecessityViewSet(viewsets.GenericViewSet):
         CREATE = NecessityUserLog.CREATE
         NecessityUserLog.objects.create(user=user, necessity=necessity, activity_category=CREATE)
 
-        # if name, obtion in  # 생필품 이름과 옵션(사이즈)가 같으면 중복 에러
-        #     return Response(status=status.HTTP_409_CONFLICT)
-
         necessities = Necessity.objects.filter(users__user=user)
-        # SELECT necessity.* FROM necessity INNER JOIN necessityuser ON (necessity.id = necessityuser.necessity_id)
-        #          WHERE necessityuser.user_id = {login한 이 유저의 id}
 
         return Response(self.get_serializer(necessities, many=True).data, status=status.HTTP_201_CREATED)
-        
-        # content = {"name" : "건전지", "price" : "24000"}
-        # return Response(content)
 
-    # PUT /api/v1/necessity/
-    # @action(detail=False, methods=['PUT'])
-    # def update(self, request):
+
+    # GET /api/v1/necessity/
+    def list(self, request):
+        user = request.user
+        necessities = Necessity.objects.filter(users__user=user)
+
+        if not user.is_authenticated:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        return Response(self.get_serializer(necessities, many=True).data)
 
 
 

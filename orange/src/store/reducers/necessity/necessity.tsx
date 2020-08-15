@@ -8,15 +8,31 @@ type Action = {
 
 const initialState = {
   createStatus: necessityStatus.NONE,
+  getStatus: necessityStatus.NONE,
+  removeStatus: necessityStatus.NONE,
   necessities: [],
 };
 
 function necessityreducer(state = initialState, action: Action) {
   const data = action.target;
   switch (action.type) {
+    // 생필품 호출
+    case necessityConstants.GET_SUCCESS:
+      return {
+        ...state,
+        getStatus: necessityStatus.SUCCESS,
+        necessities: data,
+      };
+    case necessityConstants.GET_FAILURE:
+      return {
+        ...state,
+        getStatus: necessityStatus.FAILURE,
+      };
+
     // 생필품 추가
     case necessityConstants.CREATE_SUCCESS:
       return {
+        ...state,
         createStatus: necessityStatus.SUCCESS,
         necessities: data,
       };
@@ -25,10 +41,16 @@ function necessityreducer(state = initialState, action: Action) {
         ...state,
         createStatus: necessityStatus.FAILURE,
       };
+    case necessityConstants.CREATE_FAILURE_NAME:
+      return {
+        ...state,
+        createStatus: necessityStatus.FAILURE_NAME,
+      };
 
-      // 생필품 제거
+    // 생필품 제거
     case necessityConstants.REMOVE_SUCCESS:
       return {
+        ...state,
         removeStatus: necessityStatus.SUCCESS,
         necessities: data,
       };
@@ -37,9 +59,6 @@ function necessityreducer(state = initialState, action: Action) {
         ...state,
         removeStatus: necessityStatus.FAILURE,
       };
-
-      // case 'REMOVE':
-      //     return state.filter(Necessity => Necessity.id !== action.id);
 
     default:
       return { ...state };

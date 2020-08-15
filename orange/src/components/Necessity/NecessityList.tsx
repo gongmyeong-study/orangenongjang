@@ -23,8 +23,9 @@ function NecessityList(props: Props) {
         <NecessityItem
           key={necessity.id}
           id={necessity.id}
-          text={necessity.name}
-          done={necessity.done}
+          name={necessity.name}
+          option={necessity.option}
+          price={necessity.price}
         />
       ))}
     </NecessityListBlock>

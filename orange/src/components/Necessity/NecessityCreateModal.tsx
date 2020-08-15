@@ -10,6 +10,7 @@ interface Props {
   create: (name: string, option: string, description: string, price: number) => any;
   me: any;
   createStatus: string;
+  restoreModal: any;
 }
 
 interface State {
@@ -38,9 +39,8 @@ class NecessityCreateModal extends Component<Props, State> {
         console.log(this.props.createStatus);
         if (this.props.createStatus === necessityStatus.SUCCESS) {
           window.alert('입력 완료!');
-          this.setState({ appearing: false });
-          this.props.history.push('/main');
-        } else if (this.props.createStatus === necessityStatus.FAILURE) {
+          this.props.restoreModal();
+        } else if (this.props.createStatus === necessityStatus.FAILURE_NAME) {
           window.alert('이미 존재하는 생필품입니다.');
         } else {
           window.alert('실패!');
@@ -56,8 +56,9 @@ class NecessityCreateModal extends Component<Props, State> {
       >
         <form>
           <button
-            type="submit"
             className="necessity-create-close"
+            onClick={() => this.props.restoreModal}
+            type="submit"
             title="Close Modal"
             style={{ background: 'none', border: 'none' }}
           >

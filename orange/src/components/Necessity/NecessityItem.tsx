@@ -1,13 +1,13 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
-import { MdDone, MdDelete } from 'react-icons/md';
+import styled from 'styled-components';
+import { MdDelete } from 'react-icons/md';
 
-const Remove = styled.div`
+const NecessityItemRemove = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     color: #F1948A;
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
     &:hover {
         color: #B03A2E;
@@ -21,62 +21,37 @@ const NecessityItemBlock = styled.div`
     padding-top: 12px;
     padding-bottom: 12px;
     &:hover {
-        ${Remove}{
+        ${NecessityItemRemove}{
             display: initial;
         }
     }
 `;
 
-interface NecessityItemProps {
-  cursor?: any;
-  done?: boolean;
-}
-
-const CheckCircle = styled.div<NecessityItemProps>`
-    width: 32px;
-    height: 32px;
-    border-radius: 10px;
-    border: 1px solid #ced4da;
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 20px;
-    cursor: pointer;
-    ${(props) => props.done
-        && css`
-            border: 1px solid #38d9a9;
-            color: #38d9a9;
-    `
-}
-`;
-
-interface TextProps {
-  color?: string;
-  done?: boolean;
-}
-
-const Text = styled.div<TextProps>`
+const Text = styled.div`
     flex: 1;
     font-size: 21px;
     color: #495057;
-    ${(props) => props.done
-        && css`
-            color: #ced4da;
-        `
+    .option {
+      color: #868e96;
+      font-size: 12px;
+    }
 }
 `;
 
-function NecessityItem({ id, done, text }: { id: number; done: boolean; text: string }) {
+function NecessityItem({
+  id, name, option, price,
+}: { id: number; name: string; option: string; price: number }) {
   return (
     <NecessityItemBlock id={`necessity-item-${id}`}>
-      <CheckCircle done={done}>
-        {done && <MdDone />}
-      </CheckCircle>
-      <Text done={done}>{text}</Text>
-      <Remove>
+      <Text>
+        {`${name}`}
+        <span className="option">
+          {` ${option} / ${price}원 `}
+        </span>
+      </Text>
+      <NecessityItemRemove>
         <MdDelete />
-      </Remove>
+      </NecessityItemRemove>
     </NecessityItemBlock>
   );
 }

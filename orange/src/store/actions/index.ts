@@ -5,6 +5,7 @@ import {
 
 import {
   createNecessity,
+  getNecessity,
 } from './necessity/necessity';
 
 export const userActions = {
@@ -14,4 +15,5 @@ export const userActions = {
 
 export const necessityActions = {
   createNecessity,
+  getNecessity,
 };
