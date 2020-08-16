@@ -1,9 +1,9 @@
-import Main from './Main/Main';
+import MainPage from './MainPage/MainPage';
 import SignUp from './SignUp/SiginUp';
-import Info from './Info/Info';
+import InfoPage from './InfoPage/InfoPage';
 
 export {
-  Main,
+  InfoPage,
+  MainPage,
   SignUp,
-  Info,
 };

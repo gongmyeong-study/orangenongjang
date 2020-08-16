@@ -2,7 +2,8 @@ import React from 'react';
 import { ConnectedRouter } from 'connected-react-router';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
-import { Main, SignUp, Info } from './containers';
+import { Header } from './components';
+import { MainPage, SignUp, InfoPage } from './containers';
 import './App.css';
 
 interface Props {
@@ -12,11 +13,12 @@ interface Props {
 function App(props: Props): JSX.Element {
   return (
     <div className="App">
+      <Header history={props.history} />
       <ConnectedRouter history={props.history}>
         <Switch>
-          <Route exact path="/main" component={Main} history={props.history} />
+          <Route exact path="/" component={MainPage} history={props.history} />
           <Route exact path="/signup" component={SignUp} history={props.history} />
-          <Route exact path="/info" component={Info} />
+          <Route exact path="/info" component={InfoPage} />
           <Redirect exact to="/signup" />
         </Switch>
       </ConnectedRouter>

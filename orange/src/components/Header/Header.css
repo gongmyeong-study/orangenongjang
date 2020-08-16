@@ -1,6 +1,8 @@
 .main-header {
-  text-align: center;
-  margin-top: 6em;
-  margin-bottom: 6em;
+  display: flex;
 }
-  
+
+li {
+  margin-left: 5%;
+  margin-right: 5%;
+}

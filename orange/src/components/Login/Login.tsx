@@ -32,7 +32,7 @@ class Login extends Component<Props, State> {
       .then(() => {
         if (this.props.loginStatus === userStatus.SUCCESS) {
           alert('로그인에 성공하였습니다!');
-          this.props.history.push('/main');
+          this.props.history.push('/');
         } else {
           alert('로그인에 실패하였습니다. \n이름과 비밀번호를 확인해 주세요!');
         }
