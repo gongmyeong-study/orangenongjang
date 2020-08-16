@@ -57,3 +57,16 @@ class UserViewSet(viewsets.GenericViewSet):
             logout(request)
             return Response()
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    # GET /api/v1/user/{pk}/
+    def retrieve(self, request, pk=None):
+        if pk == 'me':
+            user = request.user
+            if not request.user.is_authenticated:
+                return Response(status=status.HTTP_403_FORBIDDEN)
+        else:
+            try:
+                user = User.objects.get(id=pk)
+            except User.DoesNotExist:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(self.get_serializer(user).data)

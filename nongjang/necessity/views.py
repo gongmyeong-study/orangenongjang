@@ -23,7 +23,6 @@ class NecessityViewSet(viewsets.GenericViewSet):
     # POST /api/v1/necessity/
     def create(self, request, *args, **kwargs):
         user = request.user
-
         if not user.is_authenticated:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
@@ -33,10 +32,10 @@ class NecessityViewSet(viewsets.GenericViewSet):
         price = request.data.get('price')
 
         if not name:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-            print("생필품 이름을 입력하세요.")
+            return Response({'error': "생필품 이름을 입력하세요."}, status=status.HTTP_400_BAD_REQUEST)
 
-        necessity, created = Necessity.objects.get_or_create(name=name, option=option, description=description, price=price)
+        necessity, created = Necessity.objects.get_or_create(name=name, option=option,
+                                                             description=description, price=price)
 
         try:
             NecessityUser.objects.create(user=user, necessity=necessity)
@@ -44,24 +43,21 @@ class NecessityViewSet(viewsets.GenericViewSet):
             return Response(status=status.HTTP_409_CONFLICT)
 
         # create log when user create necessity
-        CREATE = NecessityUserLog.CREATE
-        NecessityUserLog.objects.create(user=user, necessity=necessity, activity_category=CREATE)
+        NecessityUserLog.objects.create(user=user, necessity=necessity, activity_category=NecessityUserLog.CREATE)
 
         necessities = Necessity.objects.filter(users__user=user)
 
         return Response(self.get_serializer(necessities, many=True).data, status=status.HTTP_201_CREATED)
 
-
     # GET /api/v1/necessity/
     def list(self, request):
         user = request.user
-        necessities = Necessity.objects.filter(users__user=user)
-
         if not user.is_authenticated:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
-        return Response(self.get_serializer(necessities, many=True).data)
+        necessities = Necessity.objects.filter(users__user=user)
 
+        return Response(self.get_serializer(necessities, many=True).data)
 
     # DELETE /api/v1/necessity/{necessity_id}/
     def destroy(self, request, pk=None):

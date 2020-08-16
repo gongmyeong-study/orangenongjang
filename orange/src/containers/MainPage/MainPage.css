@@ -1,0 +1,22 @@
+.main-tabs {
+    margin-top: 5%;
+    display: flex;
+}
+
+.main-tab {
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 1%;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 1cm;
+    background-color: white;
+}
+.main-tab:hover {
+    background-color: green;
+    color: white;
+}
+.main-tab:active {
+    background-color: blue;
+    color: white;
+}

@@ -1,12 +1,11 @@
 import React from 'react';
 
-import { ArticleProps } from '../Article/Article';
 import './StudyInfo.css';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
-function StudyInfo(props: ArticleProps) {
+function StudyInfo() {
   return (
-    <div className={props.className}>
+    <div className="study-info">
       <section>
         <h2 className="deep-orange">스터디 멤버</h2>
         <ul>
@@ -18,15 +17,6 @@ function StudyInfo(props: ArticleProps) {
             >
               {' '}
               다빈
-            </a>
-          </li>
-          <li>
-            <a
-              className="VisitLink"
-              onClick={() => window.open('https://github.com/palpitate2015')}
-            >
-              {' '}
-              상현
             </a>
           </li>
           <li>
@@ -56,6 +46,15 @@ function StudyInfo(props: ArticleProps) {
             >
               {' '}
               민재
+            </a>
+          </li>
+          <li>
+            <a
+              className="VisitLink"
+              onClick={() => window.open('https://github.com/palpitate2015')}
+            >
+              {' '}
+              상현
             </a>
           </li>
           <li>

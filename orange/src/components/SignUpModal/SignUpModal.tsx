@@ -36,7 +36,7 @@ class SignUpModal extends Component<Props, State> {
         if (this.props.signupStatus === userStatus.SUCCESS) {
           window.alert('성공!');
           this.setState({ appearing: false });
-          this.props.history.push('/main');
+          this.props.history.push('/');
         } else if (this.props.signupStatus === userStatus.FAILURE_USERNAME) {
           window.alert('중복된 사용자 이름!');
         } else {

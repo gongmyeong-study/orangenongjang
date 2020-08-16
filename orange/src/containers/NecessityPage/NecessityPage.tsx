@@ -1,14 +1,13 @@
 import React, {
   useState, useEffect, ReactElement, Dispatch,
 } from 'react';
-import { History } from 'history';
 import styled, { createGlobalStyle } from 'styled-components';
 import { MdAdd } from 'react-icons/md';
 import { connect } from 'react-redux';
-import NecessityList from '../../components/Necessity/NecessityList';
-import NecessityTemplate from '../../components/Necessity/NecessityTemplate';
-import NecessityHead from '../../components/Necessity/NecessityHead';
-import { NecessityCreateModal } from '../../components/index';
+
+import {
+  NecessityCreateModal, NecessityHead, NecessityList, NecessityTemplate,
+} from '../../components';
 import { necessityActions } from '../../store/actions';
 
 const CircleButton = styled.button`
@@ -49,11 +48,11 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 interface Props {
-  history: History;
+  history: any;
   get(): void;
 }
 
-function Main(props: Props): ReactElement {
+function NecessityPage(props: Props): ReactElement {
   const [showNecessityCreateModal, setShowNecessityCreateModal] = useState(false);
   const showModal = (): void => setShowNecessityCreateModal(true);
 
@@ -68,7 +67,6 @@ function Main(props: Props): ReactElement {
   return (
     <>
       <GlobalStyle />
-      <h1>Main page</h1>
       <NecessityTemplate>
         <NecessityHead />
         <NecessityList />
@@ -92,4 +90,4 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   ),
 });
 
-export default connect(null, mapDispatchToProps)(Main);
+export default connect(null, mapDispatchToProps)(NecessityPage);

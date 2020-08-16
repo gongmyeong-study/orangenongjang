@@ -1,17 +1,21 @@
 import Header from './Header/Header';
-import StudyInfo from './StudyInfo/StudyInfo';
-import Articles from './Articles/Articles';
 import Login from './Login/Login';
-import NecessityItem from './Necessity/NecessityItem';
-import SignUpModal from './SignUpModal/SignUpModal';
 import NecessityCreateModal from './Necessity/NecessityCreateModal';
+import NecessityHead from './Necessity/NecessityHead';
+import NecessityItem from './Necessity/NecessityItem';
+import NecessityList from './Necessity/NecessityList';
+import NecessityTemplate from './Necessity/NecessityTemplate';
+import SignUpModal from './SignUpModal/SignUpModal';
+import StudyInfo from './StudyInfo/StudyInfo';
 
 export {
   Header,
-  StudyInfo,
-  Articles,
   Login,
-  NecessityItem,
-  SignUpModal,
   NecessityCreateModal,
+  NecessityHead,
+  NecessityItem,
+  NecessityList,
+  NecessityTemplate,
+  SignUpModal,
+  StudyInfo,
 };

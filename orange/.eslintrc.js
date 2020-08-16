@@ -25,7 +25,7 @@ module.exports = {
       'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
       'react/destructuring-assignment': 0,
       'prefer-destructuring': 1,
-      'react/prefer-stateless-function': 1,
+      'react/prefer-stateless-function': 0,
       'import/no-extraneous-dependencies': [2, { devDependencies: ['**/test.tsx', '**/test.ts'] }],
       '@typescript-eslint/explicit-function-return-type': 0,
       '@typescript-eslint/no-explicit-any': 0,
