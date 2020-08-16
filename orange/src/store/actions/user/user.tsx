@@ -52,9 +52,9 @@ export const login = (
   .then((res) => dispatch(loginSuccess(res.data)))
   .catch((err) => dispatch(loginFailure(err)));
 
-const logoutSuccess = (user: any) => ({
+const logoutSuccess = () => ({
   type: userConstants.LOGOUT_SUCCESS,
-  target: userConstants,
+  target: null,
 });
 
 const logoutFailure = (error: any) => ({
@@ -63,12 +63,12 @@ const logoutFailure = (error: any) => ({
 });
 
 export const logout = () => (dispatch: Dispatch) => axios.get('/api/v1/user/logout/')
-  .then((res) => dispatch(logoutSuccess(res.data)))
+  .then(() => dispatch(logoutSuccess()))
   .catch((err) => dispatch(logoutFailure(err)));
 
 const getMeSuccess = (user: any) => ({
   type: userConstants.GET_ME_SUCCESS,
-  target: userConstants,
+  target: user,
 });
 
 const getMeFailure = (error: any) => ({
