@@ -58,4 +58,3 @@ class NecessityUserLogSerializer(serializers.ModelSerializer):
             "id": necessity.id,
             "name": necessity.name
         }
-    
