@@ -3,13 +3,12 @@ import React, { useState } from 'react';
 import { Login, SignUpModal } from '../../components/index';
 
 interface Props {
-  history?: any;
+  history: any;
 }
 
-function SignUp(props: Props) {
+function IntroPage(props: Props) {
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const showModal = () => setShowSignUpModal(true);
-
   return (
     <div>
       <Login history={props.history} />
@@ -19,11 +18,10 @@ function SignUp(props: Props) {
       >
         회원가입
         {' '}
-
       </button>
       {showSignUpModal ? <SignUpModal history={props.history} /> : null}
     </div>
   );
 }
 
-export default SignUp;
+export default IntroPage;

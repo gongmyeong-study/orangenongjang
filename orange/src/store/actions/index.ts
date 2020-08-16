@@ -1,6 +1,8 @@
 import {
-  login,
   signUp,
+  login,
+  logout,
+  getMe,
 } from './user/user';
 
 import {
@@ -9,8 +11,10 @@ import {
 } from './necessity/necessity';
 
 export const userActions = {
-  login,
   signUp,
+  login,
+  logout,
+  getMe,
 };
 
 export const necessityActions = {

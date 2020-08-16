@@ -1,9 +1,9 @@
 import MainPage from './MainPage/MainPage';
-import SignUp from './SignUp/SiginUp';
+import IntroPage from './IntroPage/IntroPage';
 import InfoPage from './InfoPage/InfoPage';
 
 export {
   InfoPage,
+  IntroPage,
   MainPage,
-  SignUp,
 };
