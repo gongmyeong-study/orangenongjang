@@ -78,16 +78,4 @@ class MainPage extends Component<Props, State> {
   }
 }
 
-// const mapStateToProps = (state: any) => ({
-
-// });
-
-// const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-//     onSearchPaper: (searchWord) => dispatch(paperActions.searchPaper(searchWord)),
-//     onSearchCollection: (searchWord, pageNum) => dispatch(
-//         collectionActions.searchCollection(searchWord, pageNum),
-//     ),
-//     onSearchUser: (searchWord, pageNum) => dispatch(userActions.searchUser(searchWord, pageNum)),
-// });
-
 export default MainPage;
