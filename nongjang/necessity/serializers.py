@@ -42,13 +42,20 @@ class NecessityUserLogSerializer(serializers.ModelSerializer):
     def get_user(self, log):
         try:
             user = User.objects.get(id=log.user_id)
-        except NecessityUser.DoesNotExist:
+        except User.DoesNotExist:
             return "Unknown user"
-        return user.username
+        return {
+            "id": user.id,
+            "username": user.username,
+        }
 
     def get_necessity(self, log):
         try:
             necessity = Necessity.objects.get(id=log.necessity_id)
-        except NecessityUser.DoesNotExist:
+        except Necessity.DoesNotExist:
             return "Unknown necessity"
-        return necessity.name
+        return {
+            "id": necessity.id,
+            "name": necessity.name
+        }
+    
