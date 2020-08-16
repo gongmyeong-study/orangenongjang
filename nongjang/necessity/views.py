@@ -15,6 +15,11 @@ class NecessityViewSet(viewsets.GenericViewSet):
     queryset = Necessity.objects.all()
     serializer_class = NecessitySerializer
 
+    def get_serializer_class(self, *args, **kwargs):
+        if self.action == 'log':
+            return NecessityUserLogSerializer
+        return self.serializer_class
+
     # POST /api/v1/necessity/
     def create(self, request, *args, **kwargs):
         user = request.user
@@ -58,7 +63,6 @@ class NecessityViewSet(viewsets.GenericViewSet):
         return Response(self.get_serializer(necessities, many=True).data)
 
 
-
     # DELETE /api/v1/necessity/{necessity_id}/
     def destroy(self, request, pk=None):
         try:
@@ -72,10 +76,7 @@ class NecessityViewSet(viewsets.GenericViewSet):
     # GET /api/v1/necessity/log/
     @action(methods=['get'], detail=False)
     def log(self, request):
-        log_serializer = NecessityUserLogSerializer
-        try:
-            logs = NecessityUserLog.objects.all()
-            return Response(log_serializer(logs, many=True).data, status=status.HTTP_200_OK)
-
-        except NecessityUserLog.DoesNotExist:
+        logs = NecessityUserLog.objects.all()
+        if not logs.exists():
             return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(self.get_serializer(logs, many=True).data)
