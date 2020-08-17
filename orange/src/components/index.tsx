@@ -2,9 +2,9 @@ import Header from './Header/Header';
 import Login from './Login/Login';
 import NecessityCreateModal from './Necessity/NecessityCreateModal/NecessityCreateModal';
 import NecessityHead from './Necessity/NecessityHead/NecessityHead';
-import NecessityItem from './Necessity/NecessityItem';
-import NecessityList from './Necessity/NecessityList';
-import NecessityTemplate from './Necessity/NecessityTemplate';
+import NecessityItem from './Necessity/NecessityItem/NecessityItem';
+import NecessityList from './Necessity/NecessityList/NecessityList';
+import NecessityTemplate from './Necessity/NecessityTemplate/NecessityTemplate';
 import SignUpModal from './SignUpModal/SignUpModal';
 import StudyInfo from './StudyInfo/StudyInfo';
 
