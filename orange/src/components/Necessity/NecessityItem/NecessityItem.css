@@ -1,0 +1,39 @@
+.necessity-item-block {
+    display: flex;
+    align-items: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.necessity-item-block:hover {
+    display: flex;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.necessity-item-block .necessity-remove-button > button {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: #F1948A;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.necessity-item-block .necessity-remove-button:hover{
+    display: flex;
+    cursor: pointer;
+    font-weight: bold;
+    color: #B03A2E;
+}
+
+.necessity-text {
+    flex: 1;
+    font-size: 21px;
+    color: #495057;
+}
+
+.necessity-option {
+      color: #868e96;
+      font-size: 12px;
+}
