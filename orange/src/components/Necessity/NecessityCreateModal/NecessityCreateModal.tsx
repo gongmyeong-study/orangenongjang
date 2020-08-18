@@ -1,8 +1,8 @@
 import React, { Component, Dispatch } from 'react';
 import { History } from 'history';
 import { connect } from 'react-redux';
-import { necessityActions } from '../../store/actions';
-import { necessityStatus } from '../../constants/constants';
+import { necessityActions } from '../../../store/actions';
+import { necessityStatus } from '../../../constants/constants';
 import './NecessityCreateModal.css';
 
 interface Props {
