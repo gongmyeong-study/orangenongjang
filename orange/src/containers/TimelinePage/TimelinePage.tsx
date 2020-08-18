@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import { LogList } from '../../components/index';
+import { LogList } from '../../components';
+import { necessityUserLogStatus } from '../../constants/constants';
 
 interface Props {
-  history?: any;
+  history: any;
 }
 
 interface State {
   logs: any[];
-  getLogAPISuccess: boolean;
+  getLogStatus: string;
 }
 
 class TimelinePage extends Component<Props, State> {
@@ -17,7 +18,7 @@ class TimelinePage extends Component<Props, State> {
     super(props);
     this.state = {
       logs: [],
-      getLogAPISuccess: false,
+      getLogStatus: necessityUserLogStatus.NONE,
     };
   }
 
@@ -25,19 +26,19 @@ class TimelinePage extends Component<Props, State> {
     axios.get('/api/v1/necessity/log/')
       .then((res) => {
         if (res.status === 200) {
-          this.setState({ logs: res.data, getLogAPISuccess: true });
+          this.setState({ logs: res.data, getLogStatus: necessityUserLogStatus.SUCCESS });
         }
       });
   }
 
   render() {
-    const { logs, getLogAPISuccess } = this.state;
+    const { logs, getLogStatus } = this.state;
     const logList = logs.map((log) => <LogList key={log.id} logs={log} />);
 
     return (
       <div className="timeline-page">
         타임라인 페이지
-        {getLogAPISuccess ? logList : null}
+        {getLogStatus === necessityUserLogStatus.SUCCESS ? logList : null}
       </div>
     );
   }
