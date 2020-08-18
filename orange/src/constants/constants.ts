@@ -13,3 +13,9 @@ export const necessityStatus = {
   FAILURE: 'FAILURE',
   FAILURE_NAME: 'FAILURE_NAME',
 };
+
+export const necessityUserLogStatus = {
+  NONE: 'NONE',
+  SUCCESS: 'SUCCESS',
+  FAILURE: 'FAILURE',
+};

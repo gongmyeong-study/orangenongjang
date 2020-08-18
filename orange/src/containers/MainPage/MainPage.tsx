@@ -29,7 +29,7 @@ class MainPage extends Component<Props, State> {
         body = <WorkPage />;
         break;
       case 2:
-        body = <TimelinePage />;
+        body = <TimelinePage history={this.props.history} />;
         break;
       case 3:
         body = <StatisticsPage />;
