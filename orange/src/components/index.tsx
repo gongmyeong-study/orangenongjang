@@ -7,6 +7,7 @@ import NecessityList from './Necessity/NecessityList/NecessityList';
 import NecessityTemplate from './Necessity/NecessityTemplate/NecessityTemplate';
 import SignUpModal from './SignUpModal/SignUpModal';
 import StudyInfo from './StudyInfo/StudyInfo';
+import LogList from './LogList/LogList';
 
 export {
   Header,
@@ -18,4 +19,5 @@ export {
   NecessityTemplate,
   SignUpModal,
   StudyInfo,
+  LogList,
 };
