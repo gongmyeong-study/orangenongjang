@@ -11,6 +11,7 @@ interface Props {
   loginStatus: string;
   logoutStatus: string;
   getMeStatus: string;
+  me: any;
   onGetMe: () => any;
   onLogout: () => any;
 }
@@ -39,6 +40,8 @@ class Header extends Component<Props> {
       // if logged-in, there should be logout button
       logoutButton = (
         <li>
+          {this.props.me.username}
+          님 안녕하세요!&nbsp;&nbsp;
           <button
             className="logout-button"
             type="button"
@@ -87,6 +90,7 @@ const mapStateToProps = (state: any) => ({
   getMeStatus: state.user.getMeStatus,
   loginStatus: state.user.loginStatus,
   logoutStatus: state.user.logoutStatus,
+  me: state.user.me,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
