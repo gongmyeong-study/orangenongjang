@@ -11,7 +11,7 @@ interface Props {
   loginStatus: string;
   logoutStatus: string;
   getMeStatus: string;
-  me: any | NonElementParentNode;
+  me: any;
   onGetMe: () => any;
   onLogout: () => any;
 }
