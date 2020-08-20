@@ -47,7 +47,7 @@ interface Props {
   name: string;
   option: string;
   price: number;
-  remove(id: number): any;
+  remove(necessityId: number): any;
 }
 
 function NecessityItem(props: Props) {
@@ -59,7 +59,7 @@ function NecessityItem(props: Props) {
           {` ${props.option} / ${props.price}원 `}
         </span>
       </Text>
-      <NecessityItemRemove onClick={() => props.remove(props.id)}>
+      <NecessityItemRemove onClick={() => props.remove(necessityId)}>
         <MdDelete />
       </NecessityItemRemove>
     </NecessityItemBlock>
@@ -67,14 +67,9 @@ function NecessityItem(props: Props) {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  remove: (id: number): void => dispatch(
-    necessityActions.removeNecessity(id),
+  remove: (necessityId: number): void => dispatch(
+    necessityActions.removeNecessity(necessityId),
   ),
 });
-
-// const mapStateToProps = (state: any) => ({
-//   removeStatus: state.necessity.removeStatus,
-//   me: state.user.me,
-// });
 
 export default connect(null, mapDispatchToProps)(NecessityItem);

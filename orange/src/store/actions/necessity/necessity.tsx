@@ -69,7 +69,7 @@ export const createNecessity = (
   .then((createResponse) => dispatch(createSuccess(createResponse.data)))
   .catch((createError) => dispatch(createFailure(createError)));
 
-export const removeNecessity = (id: number) => (dispatch: Dispatch) => axios.delete(`/api/v1/necessity/${id}/`)
+export const removeNecessity = (necessityId: number) => (dispatch: Dispatch) => axios.delete(`/api/v1/necessity/${necessityId}/`)
   .then((removeResponse) => dispatch(removeSuccess(removeResponse.data)))
   .catch((removeError) => dispatch(removeFailure(removeError)));
 
