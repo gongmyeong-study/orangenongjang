@@ -43,7 +43,7 @@ const createFailure = (error: any) => {
 };
 
 // 생필품 삭제 기능
-const removeSuccess = (necessities: []) => ({
+const removeSuccess = (necessities: any) => ({
   type: necessityConstants.REMOVE_SUCCESS,
   target: necessities,
 });
@@ -69,7 +69,7 @@ export const createNecessity = (
   .then((createResponse) => dispatch(createSuccess(createResponse.data)))
   .catch((createError) => dispatch(createFailure(createError)));
 
-export const removeNecessity = () => (dispatch: Dispatch) => axios.delete('/api/v1/necessity/{necessity_id}/')
+export const removeNecessity = () => (dispatch: Dispatch) => axios.patch('/api/v1/necessity/{necessity_id}/')
   .then((removeResponse) => dispatch(removeSuccess(removeResponse.data)))
   .catch((removeError) => dispatch(removeFailure(removeError)));
 

@@ -36,11 +36,17 @@ class NecessityViewSet(viewsets.GenericViewSet):
 
         necessity, created = Necessity.objects.get_or_create(name=name, option=option,
                                                              description=description, price=price)
+        necessity_user = NecessityUser.objects.all()
 
         try:
             NecessityUser.objects.create(user=user, necessity=necessity)
         except IntegrityError:
-            return Response(status=status.HTTP_409_CONFLICT)
+            if not necessity_user.used:
+                necessity_user.used = True
+                necessity_user.save()
+                NecessityUser.objects.create(user=user, necessity=necessity)
+            if necessity_user.used:
+                return Response(status=status.HTTP_409_CONFLICT)
 
         # create log when user create necessity
         NecessityUserLog.objects.create(user=user, necessity=necessity, activity_category=NecessityUserLog.CREATE)
@@ -60,11 +66,12 @@ class NecessityViewSet(viewsets.GenericViewSet):
         return Response(self.get_serializer(necessities, many=True).data)
 
     # DELETE /api/v1/necessity/{necessity_id}/
-    def destroy(self, request, pk=None):
+    @action(methods=['PUT'], detail=False)
+    def delete(self, request, pk=None):
         try:
-            necessity = Necessity.objects.get(pk=pk)
-            necessity.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            necessity_user = NecessityUser.objects.get(pk=pk)
+            necessity_user.used = False
+            necessity_user.save()
 
         except Necessity.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
@@ -73,6 +80,8 @@ class NecessityViewSet(viewsets.GenericViewSet):
     @action(methods=['get'], detail=False)
     def log(self, request):
         logs = NecessityUserLog.objects.all()
+
         if not logs.exists():
             return Response(status=status.HTTP_404_NOT_FOUND)
+
         return Response(self.get_serializer(logs, many=True).data)

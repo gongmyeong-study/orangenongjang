@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import { MdDelete } from 'react-icons/md';
+import { necessityActions } from '../../../store/actions';
+// import { necessityStatus } from '../../../constants/constants';
 
 const NecessityItemRemove = styled.div`
     display: flex;
@@ -38,22 +41,52 @@ const Text = styled.div`
 }
 `;
 
-function NecessityItem({
-  id, name, option, price,
-}: { id: number; name: string; option: string; price: number }) {
+interface Props {
+  key: number;
+  id: number;
+  name: string;
+  option: string;
+  price: number;
+  remove(id: number): any;
+}
+
+interface State {
+  key: number;
+  id: number;
+  name: string;
+  option: string;
+  price: number;
+}
+
+function NecessityItem(props: Props) {
+  // {
+  //   id, name, option, price,
+  // }: { id: number; name: string; option: string; price: number })
+
   return (
-    <NecessityItemBlock id={`necessity-item-${id}`}>
+    <NecessityItemBlock id={`necessity-item-${props.id}`}>
       <Text>
-        {`${name}`}
+        {`${props.name}`}
         <span className="option">
-          {` ${option} / ${price}원 `}
+          {` ${props.option} / ${props.price}원 `}
         </span>
       </Text>
-      <NecessityItemRemove>
+      <NecessityItemRemove onClick={() => props.remove(props.id)}>
         <MdDelete />
       </NecessityItemRemove>
     </NecessityItemBlock>
   );
 }
 
-export default React.memo(NecessityItem);
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  remove: (): void => dispatch(
+    necessityActions.removeNecessity(),
+  ),
+});
+
+const mapStateToProps = (state: any) => ({
+  removeStatus: state.necessity.removeStatus,
+  me: state.user.me,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NecessityItem);
