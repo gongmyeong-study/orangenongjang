@@ -50,19 +50,7 @@ interface Props {
   remove(id: number): any;
 }
 
-interface State {
-  key: number;
-  id: number;
-  name: string;
-  option: string;
-  price: number;
-}
-
 function NecessityItem(props: Props) {
-  // {
-  //   id, name, option, price,
-  // }: { id: number; name: string; option: string; price: number })
-
   return (
     <NecessityItemBlock id={`necessity-item-${props.id}`}>
       <Text>
@@ -79,14 +67,14 @@ function NecessityItem(props: Props) {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  remove: (): void => dispatch(
-    necessityActions.removeNecessity(),
+  remove: (id: number): void => dispatch(
+    necessityActions.removeNecessity(id),
   ),
 });
 
-const mapStateToProps = (state: any) => ({
-  removeStatus: state.necessity.removeStatus,
-  me: state.user.me,
-});
+// const mapStateToProps = (state: any) => ({
+//   removeStatus: state.necessity.removeStatus,
+//   me: state.user.me,
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NecessityItem);
+export default connect(null, mapDispatchToProps)(NecessityItem);

@@ -13,7 +13,6 @@ class NecessityUser(models.Model):
     user = models.ForeignKey(User, related_name='necessities', on_delete=models.CASCADE)
     necessity = models.ForeignKey(Necessity, related_name='users', on_delete=models.CASCADE)
     count = models.PositiveIntegerField(default=0)
-    used = models.BooleanField(default=True)
 
     class Meta:
         unique_together = [
