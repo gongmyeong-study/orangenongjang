@@ -52,6 +52,7 @@ const removeFailure = (error: any) => {
   let actionType = null;
   switch (error.response.status) {
     default:
+      window.alert('실패!');
       actionType = necessityConstants.REMOVE_FAILURE;
       break;
   }

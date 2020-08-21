@@ -12,14 +12,14 @@ function NecessityList(props: Props) {
 
   return (
     <div className="necessity-list-block">
-
-      {necessities.map((necessity: any) => (
+      {Array.from(necessities).map((necessity: any) => (
         <NecessityItem
           key={necessity.id}
           id={necessity.id}
           name={necessity.name}
           option={necessity.option}
           price={necessity.price}
+          necessityId={necessity.necessity_user.necessity_user_id}
         />
       ))}
 

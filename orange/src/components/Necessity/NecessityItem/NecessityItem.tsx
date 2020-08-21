@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { MdDelete } from 'react-icons/md';
 import { necessityActions } from '../../../store/actions';
-// import { necessityStatus } from '../../../constants/constants';
 
 const NecessityItemRemove = styled.div`
     display: flex;
@@ -47,10 +46,16 @@ interface Props {
   name: string;
   option: string;
   price: number;
+  necessityId: any;
   remove(necessityId: number): any;
 }
 
 function NecessityItem(props: Props) {
+  function refreshPage() {
+    window.alert('삭제 완료!');
+    window.location.reload(false);
+  }
+
   return (
     <NecessityItemBlock id={`necessity-item-${props.id}`}>
       <Text>
@@ -59,7 +64,9 @@ function NecessityItem(props: Props) {
           {` ${props.option} / ${props.price}원 `}
         </span>
       </Text>
-      <NecessityItemRemove onClick={() => props.remove(necessityId)}>
+      <NecessityItemRemove
+        onClick={() => { props.remove(props.necessityId); refreshPage(); }}
+      >
         <MdDelete />
       </NecessityItemRemove>
     </NecessityItemBlock>

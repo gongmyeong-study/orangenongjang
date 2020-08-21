@@ -36,17 +36,11 @@ class NecessityViewSet(viewsets.GenericViewSet):
 
         necessity, created = Necessity.objects.get_or_create(name=name, option=option,
                                                              description=description, price=price)
-        necessity_user = NecessityUser.objects.all()
 
         try:
             NecessityUser.objects.create(user=user, necessity=necessity)
         except IntegrityError:
-            if not necessity_user.used:
-                necessity_user.used = True
-                necessity_user.save()
-                NecessityUser.objects.create(user=user, necessity=necessity)
-            if necessity_user.used:
-                return Response(status=status.HTTP_409_CONFLICT)
+            return Response(status=status.HTTP_409_CONFLICT)
 
         # create log when user create necessity
         NecessityUserLog.objects.create(user=user, necessity=necessity, activity_category=NecessityUserLog.CREATE)
@@ -69,6 +63,8 @@ class NecessityViewSet(viewsets.GenericViewSet):
     def destroy(self, request, pk=None):
         try:
             necessity_user = NecessityUser.objects.get(pk=pk)
+            NecessityUserLog.objects.create(user=necessity_user.user, necessity=necessity_user.necessity,
+                                            activity_category=NecessityUserLog.DELETE)
             necessity_user.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
 

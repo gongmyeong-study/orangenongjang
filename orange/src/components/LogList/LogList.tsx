@@ -16,7 +16,7 @@ function LogList(props: Props) {
       case 'UPDATE':
         return '를(을) 수정했습니다.';
       case 'DELETE':
-        return '를(을) 생필품 목록에서 삭제했습니다/';
+        return '를(을) 생필품 목록에서 삭제했습니다.';
       default:
         return '를(을) 수정했습니다.';
     }
