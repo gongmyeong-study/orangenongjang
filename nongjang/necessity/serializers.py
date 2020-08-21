@@ -15,7 +15,6 @@ class NecessitySerializer(serializers.ModelSerializer):
             'option',           # size
             'description',      # 상품 설명
             'price',            # 개당 가격
-            # 'count',            # 생필품 개수
             'necessity_user',   # 해당 사용자의 생필품
          )
 
@@ -28,14 +27,7 @@ class NecessitySerializer(serializers.ModelSerializer):
             "necessity_user_id": necessity_user.id,
             "necessity_user_count": necessity_user.count,
         }
-        # user = necessity_user.necessity_user
-        # if not necessity_user:
-        #     raise Exception("no necessity user")
-        # return {
-        #     "necessity_user_id": user.id,
-        #     "necessity_user_count": user.count,
-        # }
-
+    
 
 class NecessityUserLogSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
