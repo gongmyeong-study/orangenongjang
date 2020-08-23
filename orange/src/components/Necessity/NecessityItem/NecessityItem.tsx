@@ -60,7 +60,7 @@ function NecessityItem(props: Props) {
         </span>
       </Text>
       <NecessityItemRemove
-        onClick={() => { props.remove(props.necessityUserId); }}
+        onClick={() => props.remove(props.necessityUserId)}
       >
         <MdDelete />
       </NecessityItemRemove>
