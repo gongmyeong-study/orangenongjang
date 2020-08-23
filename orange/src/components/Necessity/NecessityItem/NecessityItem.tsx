@@ -53,7 +53,7 @@ interface Props {
 function NecessityItem(props: Props) {
   function refreshPage() {
     window.alert('삭제 완료!');
-    window.location.reload(false);
+    window.location.reload();
   }
 
   return (

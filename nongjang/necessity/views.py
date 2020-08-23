@@ -63,13 +63,14 @@ class NecessityViewSet(viewsets.GenericViewSet):
     def destroy(self, request, pk=None):
         try:
             necessity_user = NecessityUser.objects.get(pk=pk)
-            NecessityUserLog.objects.create(user=necessity_user.user, necessity=necessity_user.necessity,
-                                            activity_category=NecessityUserLog.DELETE)
-            necessity_user.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
 
         except NecessityUser.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+        NecessityUserLog.objects.create(user=necessity_user.user, necessity=necessity_user.necessity,
+                                        activity_category=NecessityUserLog.DELETE)
+        necessity_user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     # GET /api/v1/necessity/log/
     @action(methods=['get'], detail=False)
