@@ -46,7 +46,6 @@ class NecessityViewSet(viewsets.GenericViewSet):
         NecessityUserLog.objects.create(user=user, necessity=necessity, activity_category=NecessityUserLog.CREATE)
 
         necessities = Necessity.objects.filter(users__user=user)
-
         return Response(self.get_serializer(necessities, many=True).data, status=status.HTTP_201_CREATED)
 
     # GET /api/v1/necessity/
@@ -61,6 +60,7 @@ class NecessityViewSet(viewsets.GenericViewSet):
 
     # DELETE /api/v1/necessity/{necessity_id}/
     def destroy(self, request, pk=None):
+        user = request.user
         try:
             necessity_user = NecessityUser.objects.get(pk=pk)
 
@@ -70,7 +70,8 @@ class NecessityViewSet(viewsets.GenericViewSet):
         NecessityUserLog.objects.create(user=necessity_user.user, necessity=necessity_user.necessity,
                                         activity_category=NecessityUserLog.DELETE)
         necessity_user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        necessities = Necessity.objects.filter(users__user=user)
+        return Response(self.get_serializer(necessities, many=True).data)
 
     # GET /api/v1/necessity/log/
     @action(methods=['get'], detail=False)

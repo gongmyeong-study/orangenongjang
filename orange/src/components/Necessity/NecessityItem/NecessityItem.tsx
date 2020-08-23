@@ -46,16 +46,11 @@ interface Props {
   name: string;
   option: string;
   price: number;
-  necessityId: any;
-  remove(necessityId: number): any;
+  necessityUserId: any;
+  remove(necessityUserId: number): any;
 }
 
 function NecessityItem(props: Props) {
-  function refreshPage() {
-    window.alert('삭제 완료!');
-    window.location.reload();
-  }
-
   return (
     <NecessityItemBlock id={`necessity-item-${props.id}`}>
       <Text>
@@ -65,7 +60,7 @@ function NecessityItem(props: Props) {
         </span>
       </Text>
       <NecessityItemRemove
-        onClick={() => { props.remove(props.necessityId); refreshPage(); }}
+        onClick={() => { props.remove(props.necessityUserId); }}
       >
         <MdDelete />
       </NecessityItemRemove>
@@ -74,8 +69,8 @@ function NecessityItem(props: Props) {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  remove: (necessityId: number): void => dispatch(
-    necessityActions.removeNecessity(necessityId),
+  remove: (necessityUserId: number): void => dispatch(
+    necessityActions.removeNecessity(necessityUserId),
   ),
 });
 
