@@ -47,6 +47,7 @@ class MainPage extends Component<Props, State> {
             className="main-tab"
             id="necessity-tab"
             onClick={() => this.setState({ activeTab: 0 })}
+            style={this.state.activeTab === 0 ? { backgroundColor: 'orange' } : {}}
           >
             생필품 관리
           </div>
@@ -54,6 +55,7 @@ class MainPage extends Component<Props, State> {
             className="main-tab"
             id="work-tab"
             onClick={() => this.setState({ activeTab: 1 })}
+            style={this.state.activeTab === 1 ? { backgroundColor: 'orange' } : {}}
           >
             가사노동 관리
           </div>
@@ -61,6 +63,7 @@ class MainPage extends Component<Props, State> {
             className="main-tab"
             id="timeline-tab"
             onClick={() => this.setState({ activeTab: 2 })}
+            style={this.state.activeTab === 2 ? { backgroundColor: 'orange' } : {}}
           >
             타임라인
           </div>
@@ -68,6 +71,7 @@ class MainPage extends Component<Props, State> {
             className="main-tab"
             id="statistics-tab"
             onClick={() => this.setState({ activeTab: 3 })}
+            style={this.state.activeTab === 3 ? { backgroundColor: 'orange' } : {}}
           >
             통계
           </div>
