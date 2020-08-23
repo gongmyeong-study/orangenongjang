@@ -24,8 +24,8 @@ class NecessitySerializer(serializers.ModelSerializer):
         except NecessityUser.DoesNotExist:
             raise Exception("no necessity user")
         return {
-            "necessity_user_id": necessity_user.id,
-            "necessity_user_count": necessity_user.count,
+            "id": necessity_user.id,
+            "count": necessity_user.count,
         }
     
 
