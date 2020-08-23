@@ -16,9 +16,19 @@
   padding: 0;
   margin: auto;
   font: 500 1em 'Noto Sans KR', sans-serif;
-  
 }
 
 .main-header-li-hello {
   font: 400 1.14em 'Noto Sans KR', sans-serif;
+}
+
+@media screen and (max-width: 540px) {
+  .main-header-li {
+    width: 7em;
+    text-align: center;
+    font: 500 1em 'Noto Sans KR', sans-serif;
+  }
+  .main-header-li-hello {
+    display: none;
+  }
 }

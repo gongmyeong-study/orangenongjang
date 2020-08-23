@@ -25,8 +25,19 @@
     background-color: rgb(255, 150, 0);
 }
 
-@media screen and (max-width: 1080px) {
+@media screen and (max-width: 1080px) and (min-width: 540px) {
     .main-tabs {
          margin: 3% 10%;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .main-tabs {
+         margin: 3% 2%;
+    }
+
+    .main-tab {
+        width: 7em;
+        font: 500 0.8em 'Noto Sans KR', sans-serif;
     }
 }
