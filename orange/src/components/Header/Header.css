@@ -1,8 +1,26 @@
 .main-header {
+  margin-top: 3%;
   display: flex;
+  justify-content: flex-end;
 }
 
-li {
-  margin-left: 5%;
-  margin-right: 5%;
+.main-header-li {
+  width: 10em;
+  text-align: center;
+  font: 500 1.14em 'Noto Sans KR', sans-serif;
+  /* margin-left: 5%;
+  margin-right: 5%; */
+}
+
+.main-header-li > button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: auto;
+  font: 500 1em 'Noto Sans KR', sans-serif;
+  
+}
+
+.main-header-li-hello {
+  font: 400 1.14em 'Noto Sans KR', sans-serif;
 }

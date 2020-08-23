@@ -23,7 +23,7 @@ class Header extends Component<Props> {
 
   render() {
     let whereToGo = '/info';
-    let whereToGoDisplay = 'info';
+    let whereToGoDisplay = '오렌지농장 소개';
     let logoutButton = null;
 
     // if not logged-in, userStatus would be FAILURE
@@ -31,7 +31,7 @@ class Header extends Component<Props> {
       if (this.props.pathname === '/info') {
         // anonymous user can access InfoPage
         whereToGo = '/intro';
-        whereToGoDisplay = 'intro';
+        whereToGoDisplay = '로그인';
       } else {
         // force anonymous user to redirect to IntroPage
         this.props.history.push('/intro');
@@ -39,9 +39,7 @@ class Header extends Component<Props> {
     } else {
       // if logged-in, there should be logout button
       logoutButton = (
-        <li>
-          {this.props.me.username}
-          님 안녕하세요!&nbsp;&nbsp;
+        <li className="main-header-li">
           <button
             className="logout-button"
             type="button"
@@ -53,7 +51,7 @@ class Header extends Component<Props> {
                 }
               })}
           >
-            logout
+            로그아웃
           </button>
         </li>
       );
@@ -62,15 +60,24 @@ class Header extends Component<Props> {
         this.props.history.push('/');
       } else if (this.props.pathname !== '/') {
         whereToGo = '/';
-        whereToGoDisplay = 'main';
+        whereToGoDisplay = '메인 페이지';
       }
+    }
+
+    let helloUser = null;
+    if (this.props.pathname !== '/intro' && this.props.pathname !== '/info') {
+      helloUser = (
+        <li className="main-header-li main-header-li-hello">
+          {this.props.me.username}
+          님 안녕하세요!&nbsp;&nbsp;
+        </li>
+      );
     }
 
     return (
       <ul className="main-header">
-        <li>오렌지농장</li>
-        <li>Since. 2020.04.12.</li>
-        <li>
+        {helloUser}
+        <li className="main-header-li">
           <button
             className="header-page-button"
             type="button"
