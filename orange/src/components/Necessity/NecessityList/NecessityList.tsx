@@ -19,7 +19,7 @@ function NecessityList(props: Props) {
           name={necessity.name}
           option={necessity.option}
           price={necessity.price}
-          necessityId={necessity.necessity_user.necessity_user_id}
+          necessityUserId={necessity.necessity_user.id}
         />
       ))}
 

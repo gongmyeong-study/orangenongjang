@@ -43,10 +43,13 @@ const createFailure = (error: any) => {
 };
 
 // 생필품 삭제 기능
-const removeSuccess = (necessities: any) => ({
-  type: necessityConstants.REMOVE_SUCCESS,
-  target: necessities,
-});
+const removeSuccess = (necessities: any) => {
+  window.alert('삭제되었습니다!');
+  return {
+    type: necessityConstants.REMOVE_SUCCESS,
+    target: necessities,
+  };
+};
 
 const removeFailure = (error: any) => {
   let actionType = null;
@@ -70,7 +73,7 @@ export const createNecessity = (
   .then((createResponse) => dispatch(createSuccess(createResponse.data)))
   .catch((createError) => dispatch(createFailure(createError)));
 
-export const removeNecessity = (necessityId: number) => (dispatch: Dispatch) => axios.delete(`/api/v1/necessity/${necessityId}/`)
+export const removeNecessity = (necessityUserId: number) => (dispatch: Dispatch) => axios.delete(`/api/v1/necessity/${necessityUserId}/`)
   .then((removeResponse) => dispatch(removeSuccess(removeResponse.data)))
   .catch((removeError) => dispatch(removeFailure(removeError)));
 

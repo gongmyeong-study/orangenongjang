@@ -1,22 +1,43 @@
 .main-tabs {
-    margin-top: 5%;
+    margin: 3% 20%;
     display: flex;
 }
 
 .main-tab {
-    margin-left: 5%;
-    margin-right: 5%;
-    padding: 1%;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 1cm;
-    background-color: white;
+    margin: 0 auto;
+    background-color: #ffffff;
+
+    width: 9em;
+    padding: 0.8em 0;
+
+    border: 0.2px solid rgba(0, 0, 0, 0.16);
+    box-sizing: border-box;
+    border-radius: 12px;
+
+    line-height: normal;
+    text-align: center;
+    font: 500 1.2em 'Noto Sans KR', sans-serif;
 }
 .main-tab:hover {
-    background-color: green;
-    color: white;
+    background-color: rgb(255, 165, 0);
 }
 .main-tab:active {
-    background-color: blue;
-    color: white;
+    background-color: rgb(255, 150, 0);
+}
+
+@media screen and (max-width: 1080px) and (min-width: 540px) {
+    .main-tabs {
+         margin: 3% 10%;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .main-tabs {
+         margin: 3% 2%;
+    }
+
+    .main-tab {
+        width: 7em;
+        font: 500 0.8em 'Noto Sans KR', sans-serif;
+    }
 }
