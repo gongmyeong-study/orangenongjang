@@ -1,14 +1,9 @@
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
 from django.db import IntegrityError
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-
 from necessity.serializers import NecessitySerializer, NecessityUserLogSerializer
-from necessity.models import Necessity, NecessityUser, NecessityCounter, NecessityUserLog
-
-from user.serializers import UserSerializer
+from necessity.models import Necessity, NecessityUser, NecessityUserLog
 
 
 class NecessityViewSet(viewsets.GenericViewSet):
@@ -57,6 +52,40 @@ class NecessityViewSet(viewsets.GenericViewSet):
         necessities = Necessity.objects.filter(users__user=user)
 
         return Response(self.get_serializer(necessities, many=True).data)
+
+    # PUT /api/v1/necessity/{necessity_id}/
+    def update(self, request, pk=None, **kwargs):
+        user = request.user
+
+        try:
+            necessity_user = NecessityUser.objects.get(pk=pk)
+
+        except NecessityUser.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        name = request.data.get('name')
+        option = request.data.get('option')
+        description = request.data.get('description')
+        price = request.data.get('price')
+
+        if not name:
+            return Response({'error': "생필품 이름을 입력하세요."}, status=status.HTTP_400_BAD_REQUEST)
+
+        necessity, created = Necessity.objects.get_or_create(name=name, option=option,
+                                                             description=description, price=price)
+
+        try:
+            # create log when user update necessity
+            NecessityUserLog.objects.create(user=user, necessity=necessity, activity_category=NecessityUserLog.UPDATE)
+
+            necessity_user.delete()
+            NecessityUser.objects.create(user=user, necessity=necessity)
+
+        except IntegrityError:
+            return Response(status=status.HTTP_409_CONFLICT)
+
+        necessity_user = NecessityUser.objects.filter(pk=pk)
+        return Response(self.get_serializer(necessity_user, many=True).data, status=status.HTTP_202_ACCEPTED)
 
     # DELETE /api/v1/necessity/{necessity_id}/
     def destroy(self, request, pk=None):

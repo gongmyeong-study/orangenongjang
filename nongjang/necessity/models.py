@@ -20,10 +20,6 @@ class NecessityUser(models.Model):
         ]
 
 
-class NecessityCounter(models.Model):
-    count = models.PositiveIntegerField(default=0)
-
-
 class NecessityUserLog(models.Model):
     CREATE = 'CREATE'
     UPDATE = 'UPDATE'

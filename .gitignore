@@ -344,4 +344,4 @@ $RECYCLE.BIN/
 secret_info.json
 
 # yeonghyeon virtualenv dir
-venv_nongjang/
+nongjang_venv/
