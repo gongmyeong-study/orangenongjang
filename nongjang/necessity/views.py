@@ -63,6 +63,8 @@ class NecessityViewSet(viewsets.GenericViewSet):
         except NecessityUser.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+        necessities_old = Necessity.objects.get(pk=necessity_user.necessity.pk)
+
         name = request.data.get('name')
         option = request.data.get('option')
         description = request.data.get('description')
@@ -71,15 +73,15 @@ class NecessityViewSet(viewsets.GenericViewSet):
         if not name:
             return Response({'error': "생필품 이름을 입력하세요."}, status=status.HTTP_400_BAD_REQUEST)
 
-        necessity, created = Necessity.objects.get_or_create(name=name, option=option,
-                                                             description=description, price=price)
+        necessities_new, created = Necessity.objects.get_or_create(name=name, option=option,
+                                                                   description=description, price=price)
 
         try:
-            # create log when user update necessity
-            NecessityUserLog.objects.create(user=user, necessity=necessity, activity_category=NecessityUserLog.UPDATE)
-
             necessity_user.delete()
-            NecessityUser.objects.create(user=user, necessity=necessity)
+            NecessityUser.objects.create(user=user, necessity=necessities_new)
+
+            # create log when user update necessity
+            NecessityUserLog.objects.create(user=user, necessity=necessities_old, activity_category=NecessityUserLog.UPDATE)
 
         except IntegrityError:
             return Response(status=status.HTTP_409_CONFLICT)
