@@ -53,7 +53,7 @@ class NecessityViewSet(viewsets.GenericViewSet):
 
         return Response(self.get_serializer(necessities, many=True).data)
 
-    # PUT /api/v1/necessity/{necessity_id}/
+    # PUT /api/v1/necessity/{necessity_user_id}/
     def update(self, request, pk=None, **kwargs):
         user = request.user
 
@@ -63,31 +63,26 @@ class NecessityViewSet(viewsets.GenericViewSet):
         except NecessityUser.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        necessities_old = Necessity.objects.get(pk=necessity_user.necessity.pk)
-
         name = request.data.get('name')
-        option = request.data.get('option')
-        description = request.data.get('description')
-        price = request.data.get('price')
 
         if not name:
             return Response({'error': "생필품 이름을 입력하세요."}, status=status.HTTP_400_BAD_REQUEST)
 
-        necessities_new, created = Necessity.objects.get_or_create(name=name, option=option,
-                                                                   description=description, price=price)
+        option = request.data.get('option')
+        description = request.data.get('description')
+        price = request.data.get('price')
 
-        try:
-            necessity_user.delete()
-            NecessityUser.objects.create(user=user, necessity=necessities_new)
+        necessity_old = necessity_user.necessity
+        necessity_new, created = Necessity.objects.get_or_create(name=name, option=option,
+                                                                 description=description, price=price)
 
-            # create log when user update necessity
-            NecessityUserLog.objects.create(user=user, necessity=necessities_old, activity_category=NecessityUserLog.UPDATE)
+        NecessityUser.objects.filter(pk=pk).update(user=user, necessity=necessity_new)
 
-        except IntegrityError:
-            return Response(status=status.HTTP_409_CONFLICT)
+        # create log when user update necessity
+        NecessityUserLog.objects.create(user=user, necessity=necessity_old, activity_category=NecessityUserLog.UPDATE)
 
-        necessity_user = NecessityUser.objects.filter(pk=pk)
-        return Response(self.get_serializer(necessity_user, many=True).data, status=status.HTTP_202_ACCEPTED)
+        necessity_user = NecessityUser.objects.get(pk=pk)
+        return Response(self.get_serializer(necessity_user.necessity, many=False).data)
 
     # DELETE /api/v1/necessity/{necessity_id}/
     def destroy(self, request, pk=None):
