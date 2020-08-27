@@ -84,7 +84,19 @@ class NecessityViewSet(viewsets.GenericViewSet):
         necessity_user = NecessityUser.objects.get(pk=pk)
         return Response(self.get_serializer(necessity_user.necessity, many=False).data)
 
-    # DELETE /api/v1/necessity/{necessity_id}/
+    # PATCH /api/v1/necessity/{necessity_user_id}/
+    def patch(self, request, pk=None):
+        count = request.data.get('count')
+
+        if int(count) < 0:
+            return Response({'error': "0개 이상의 수량을 입력하세요."}, status=status.HTTP_400_BAD_REQUEST)
+
+        NecessityUser.objects.filter(pk=pk).update(count=count)
+
+        necessity_user = NecessityUser.objects.get(pk=pk)
+        return Response(self.get_serializer(necessity_user.necessity, many=False).data)
+
+    # DELETE /api/v1/necessity/{necessity_user_id}/
     def destroy(self, request, pk=None):
         user = request.user
         try:
