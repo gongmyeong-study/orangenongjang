@@ -57,20 +57,19 @@ class NecessityViewSet(viewsets.GenericViewSet):
     def update(self, request, pk=None, **kwargs):
         user = request.user
 
-        try:
-            necessity_user = NecessityUser.objects.get(pk=pk)
-
-        except NecessityUser.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
         name = request.data.get('name')
-
         if not name:
             return Response({'error': "생필품 이름을 입력하세요."}, status=status.HTTP_400_BAD_REQUEST)
 
         option = request.data.get('option')
         description = request.data.get('description')
         price = request.data.get('price')
+
+        try:
+            necessity_user = NecessityUser.objects.get(pk=pk)
+
+        except NecessityUser.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
         necessity_old = necessity_user.necessity
         necessity_new, created = Necessity.objects.get_or_create(name=name, option=option,
@@ -82,7 +81,7 @@ class NecessityViewSet(viewsets.GenericViewSet):
         NecessityUserLog.objects.create(user=user, necessity=necessity_old, activity_category=NecessityUserLog.UPDATE)
 
         necessity_user = NecessityUser.objects.get(pk=pk)
-        return Response(self.get_serializer(necessity_user.necessity, many=False).data)
+        return Response(self.get_serializer(necessity_user.necessity).data)
 
     # DELETE /api/v1/necessity/{necessity_id}/
     def destroy(self, request, pk=None):
