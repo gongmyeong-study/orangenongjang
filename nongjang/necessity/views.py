@@ -57,14 +57,7 @@ class NecessityViewSet(viewsets.GenericViewSet):
     def update(self, request, pk=None, **kwargs):
         user = request.user
 
-        try:
-            necessity_user = NecessityUser.objects.get(pk=pk)
-
-        except NecessityUser.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
         name = request.data.get('name')
-
         if not name:
             return Response({'error': "생필품 이름을 입력하세요."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -72,24 +65,33 @@ class NecessityViewSet(viewsets.GenericViewSet):
         description = request.data.get('description')
         price = request.data.get('price')
 
-        necessity_old = necessity_user.necessity
+        try:
+            necessity_user = NecessityUser.objects.get(pk=pk)
+
+        except NecessityUser.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
         necessity_new, created = Necessity.objects.get_or_create(name=name, option=option,
                                                                  description=description, price=price)
 
+        if not created:
+            return Response({'error': "수정된 사항이 없습니다."}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            # create log when user update necessity
+            NecessityUserLog.objects.create(user=user, necessity=necessity_user.necessity,
+                                            activity_category=NecessityUserLog.UPDATE)
+
         NecessityUser.objects.filter(pk=pk).update(user=user, necessity=necessity_new)
 
-        # create log when user update necessity
-        NecessityUserLog.objects.create(user=user, necessity=necessity_old, activity_category=NecessityUserLog.UPDATE)
-
         necessity_user = NecessityUser.objects.get(pk=pk)
-        return Response(self.get_serializer(necessity_user.necessity, many=False).data)
+        return Response(self.get_serializer(necessity_user.necessity).data)
 
     # PATCH /api/v1/necessity/{necessity_user_id}/
     def patch(self, request, pk=None):
         count = request.data.get('count')
 
         if int(count) < 0:
-            return Response({'error': "0개 이상의 수량을 입력하세요."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': "0 이상의 숫자를 입력하세요."}, status=status.HTTP_400_BAD_REQUEST)
 
         NecessityUser.objects.filter(pk=pk).update(count=count)
 
