@@ -7,9 +7,9 @@ const NecessityItemCount = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #F1948A;
+    color: #ffa500;
     font-size: 20px;
-    cursor: pointer;
+    cursor: text
     &:hover {
         color: #B03A2E;
     }
@@ -37,8 +37,9 @@ interface Props {
 function NecessityCounter(props: Props) {
   return (
     <NecessityItemBlock key={props.key}>
+      수량 :
       <NecessityItemCount
-        onClick={() => props.counter(props.necessityUserId, props.count)}
+        onChange={() => props.counter(props.necessityUserId, props.count)}
       >
         {`${props.count}`}
       </NecessityItemCount>

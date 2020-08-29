@@ -1,13 +1,21 @@
 .necessity-list-block {
   flex: 1;
-  padding: 20px 32px;
-  padding-bottom: 48px;
+  padding: 20px 20px;
+  padding-bottom: 5px;
   overflow-y: auto;
   }
 
-.necessity-counter-block {
-  flex: 10;
-  padding: 20px 32px;
-  padding-bottom: 40px;
+/* .necessity-counter-block {
+  flex: 1;
+  padding: 1px 3px;
+  padding-bottom: 5px;
   overflow-y: auto;
+} */
+
+.necessity-item-block {
+  width: 200px;
+  height: 100px;
+  border-radius: 12px;
+  border: solid 0.5px #828282;
+  background-color: #ffffff;
 }

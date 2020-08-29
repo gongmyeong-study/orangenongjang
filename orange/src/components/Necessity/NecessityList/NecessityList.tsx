@@ -13,9 +13,16 @@ function NecessityList(props: Props) {
 
   return (
     <>
-      <div className="necessity-counter-block">
-        <span>
-          {Array.from(necessities).map((necessity: any) => (
+
+      {Array.from(necessities).map((necessity: any) => (
+        <div className="necessity-list-block">
+          {/* <span className="necessity-counter-block" /> */}
+          <div className="necessity-item-block">
+            <NecessityCounter
+              key={necessity.necessity_user.id}
+              necessityUserId={necessity.necessity_user.id}
+              count={necessity.necessity_user.count}
+            />
             <NecessityItem
               key={necessity.id}
               id={necessity.id}
@@ -24,18 +31,9 @@ function NecessityList(props: Props) {
               price={necessity.price}
               necessityUserId={necessity.necessity_user.id}
             />
-          ))}
-        </span>
-        <span>
-          {Array.from(necessities).map((necessity: any) => (
-            <NecessityCounter
-              key={necessity.necessity_user.id}
-              necessityUserId={necessity.necessity_user.id}
-              count={necessity.necessity_user.count}
-            />
-          ))}
-        </span>
-      </div>
+          </div>
+        </div>
+      ))}
     </>
   );
 }
