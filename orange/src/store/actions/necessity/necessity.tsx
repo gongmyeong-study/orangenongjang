@@ -65,6 +65,29 @@ const removeFailure = (error: any) => {
   };
 };
 
+// 생필품 수량 기능
+const countSuccess = (necessities: any) => {
+  window.alert('변경되었습니다!');
+  return {
+    type: necessityConstants.COUNT_SUCCESS,
+    target: necessities,
+  };
+};
+
+const countFailure = (error: any) => {
+  let actionType = null;
+  switch (error.response.status) {
+    default:
+      window.alert('실패!');
+      actionType = necessityConstants.COUNT_FAILURE;
+      break;
+  }
+  return {
+    type: actionType,
+    target: error,
+  };
+};
+
 export const createNecessity = (
   name: string, option: string, description: string, price: number,
 ) => (dispatch: Dispatch) => axios.post('/api/v1/necessity/', {
@@ -80,3 +103,9 @@ export const removeNecessity = (necessityUserId: number) => (dispatch: Dispatch)
 export const getNecessity = () => (dispatch: Dispatch) => axios.get('/api/v1/necessity/')
   .then((getResponse) => dispatch(getSuccess(getResponse.data)))
   .catch((getError) => dispatch(getFailure(getError)));
+
+export const countNecessity = (
+  necessityUserId: number, count: number,
+) => (dispatch: Dispatch) => axios.patch(`/api/v1/necessity/${necessityUserId}/`, { count })
+  .then((countResponse) => dispatch(countSuccess(countResponse.data)))
+  .catch((countError) => dispatch(countFailure(countError)));

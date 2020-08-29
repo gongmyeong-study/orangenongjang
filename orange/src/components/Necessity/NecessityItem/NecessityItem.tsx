@@ -46,7 +46,7 @@ interface Props {
   name: string;
   option: string;
   price: number;
-  necessityUserId: any;
+  necessityUserId: number;
   remove(necessityUserId: number): any;
 }
 

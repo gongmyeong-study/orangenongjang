@@ -1,6 +1,13 @@
 .necessity-list-block {
-    flex: 1;
-    padding: 20px 32px;
-    padding-bottom: 48px;
-    overflow-y: auto;
+  flex: 1;
+  padding: 20px 32px;
+  padding-bottom: 48px;
+  overflow-y: auto;
   }
+
+.necessity-counter-block {
+  flex: 10;
+  padding: 20px 32px;
+  padding-bottom: 40px;
+  overflow-y: auto;
+}

@@ -60,6 +60,19 @@ function necessityreducer(state = initialState, action: Action) {
         removeStatus: necessityStatus.FAILURE,
       };
 
+      // 생필품 수량
+    case necessityConstants.COUNT_SUCCESS:
+      return {
+        ...state,
+        countStatus: necessityStatus.SUCCESS,
+        necessities: data,
+      };
+    case necessityConstants.COUNT_FAILURE:
+      return {
+        ...state,
+        countStatus: necessityStatus.FAILURE,
+      };
+
     default:
       return { ...state };
   }

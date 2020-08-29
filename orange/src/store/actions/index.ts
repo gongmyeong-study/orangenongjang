@@ -9,6 +9,7 @@ import {
   createNecessity,
   getNecessity,
   removeNecessity,
+  countNecessity,
 } from './necessity/necessity';
 
 export const userActions = {
@@ -22,4 +23,5 @@ export const necessityActions = {
   createNecessity,
   getNecessity,
   removeNecessity,
+  countNecessity,
 };
