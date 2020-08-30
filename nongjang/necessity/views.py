@@ -81,14 +81,36 @@ class NecessityViewSet(viewsets.GenericViewSet):
             NecessityUserLog.objects.create(user=user, necessity=necessity_user.necessity,
                                             activity_category=NecessityUserLog.UPDATE)
 
-        NecessityUser.objects.filter(pk=pk).update(user=user, necessity=necessity_new)
+        necessity_user.user = user
+        necessity_user.necessity = necessity_new
+        necessity_user.save()
 
-        necessity_user = NecessityUser.objects.get(pk=pk)
         return Response(self.get_serializer(necessity_user.necessity).data)
 
-    # DELETE /api/v1/necessity/{necessity_id}/
+    # PUT /api/v1/necessity/{necessity_user_id}/count/
+    @action(detail=True, methods=['PUT'])
+    def count(self, request, pk=None):
+        try:
+            count = int(request.data.get('count'))
+            if count < 0:
+                return Response({'error': "0 이상의 정수를 입력하세요."}, status=status.HTTP_400_BAD_REQUEST)
+        except ValueError:
+            return Response({'error': "0 이상의 정수를 입력하세요."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            necessity_user = NecessityUser.objects.get(pk=pk)
+        except NecessityUser.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        necessity_user.count = count
+        necessity_user.save()
+
+        return Response(self.get_serializer(necessity_user.necessity).data)
+
+    # DELETE /api/v1/necessity/{necessity_user_id}/
     def destroy(self, request, pk=None):
         user = request.user
+
         try:
             necessity_user = NecessityUser.objects.get(pk=pk)
 
