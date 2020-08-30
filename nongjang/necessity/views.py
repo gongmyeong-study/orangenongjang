@@ -92,7 +92,7 @@ class NecessityViewSet(viewsets.GenericViewSet):
         necessity_user.count = count
         necessity_user.save()
 
-        return Response(self.get_serializer(necessity_user.necessity, many=False).data)
+        return Response(self.get_serializer(necessity_user.necessity).data)
 
     # DELETE /api/v1/necessity/{necessity_user_id}/
     def destroy(self, request, pk=None):
