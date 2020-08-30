@@ -73,9 +73,6 @@ class NecessityViewSet(viewsets.GenericViewSet):
 
         necessity_new, created = Necessity.objects.get_or_create(name=name, option=option,
                                                                  description=description, price=price)
-        # create log when user update necessity
-        NecessityUserLog.objects.create(user=user, necessity=necessity_user.necessity,
-                                        activity_category=NecessityUserLog.UPDATE)
 
         if not created:
             return Response({'error': "수정된 사항이 없습니다."}, status=status.HTTP_400_BAD_REQUEST)
@@ -93,9 +90,12 @@ class NecessityViewSet(viewsets.GenericViewSet):
     # PUT /api/v1/necessity/{necessity_user_id}/count/
     @action(detail=True, methods=['PUT'])
     def count(self, request, pk=None):
-        count = request.data.get('count')
-        if not count or not float(count).is_integer():
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        try:
+            count = int(request.data.get('count'))
+            if count < 0:
+                return Response({'error': "0 이상의 정수를 입력하세요."}, status=status.HTTP_400_BAD_REQUEST)
+        except ValueError:
+            return Response({'error': "0 이상의 정수를 입력하세요."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             necessity_user = NecessityUser.objects.get(pk=pk)
