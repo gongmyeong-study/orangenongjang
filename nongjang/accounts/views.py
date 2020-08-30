@@ -1,4 +1,3 @@
-# Create your views here.
 from django.db import IntegrityError
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
@@ -50,9 +49,9 @@ class AccountsViewSet(viewsets.GenericViewSet):
            return Response(status=status.HTTP_204_NO_CONTENT)
 
         else:
-          return Response({'error': '권한이 없습니다'}, status=status.HTTP_401_UNAUTHORIZED)
+          return Response({'error': 'Leader 유저만 House를 삭제할 수 있습니다'}, status=status.HTTP_401_UNAUTHORIZED)
     
-    # DELETE /api/v1/accounts/leave/{house_id}
+    # DELETE /api/v1/accounts/{house_id}/leave/
     @action(detail=True, methods=['delete'])
     def leave(self, request, pk=None):
         user = request.user
@@ -71,7 +70,7 @@ class AccountsViewSet(viewsets.GenericViewSet):
         else:
           return Response({'error': 'Leader 유저이므로 House를 떠날 수 없습니다. Leader를 다른 User에게 양도한 뒤 다시 시도해 주세요'}, status=status.HTTP_401_UNAUTHORIZED)
 
-    # GET /api/v1/accounts
+    # GET /api/v1/accounts/
     def list(self, request):
         user = request.user
         if not user.is_authenticated:
