@@ -25,6 +25,20 @@ function NecessityList(props: Props) {
                 count={necessity.necessity_user.count}
               />
             </td>
+
+            <table>
+              <tr>
+                <button type="button">
+                  +
+                </button>
+              </tr>
+              <tr>
+                <button type="button">
+                  -
+                </button>
+              </tr>
+            </table>
+
             <td className="necessity-item-block">
               <NecessityItem
                 key={necessity.id}
