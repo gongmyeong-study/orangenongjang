@@ -1,7 +1,7 @@
 .necessity-template-block {
     width: 512px;
-    height: 600px;
-
+    height: 610px;
+    overflow-y: auto;
     position: relative;
 
     background: white;
@@ -11,7 +11,7 @@
     margin: 0 auto;
 
     margin-top: 80px;
-    margin-bottom: 32px;
+    margin-bottom: 50px;
     display: flex;
     flex-direction: column;
 }

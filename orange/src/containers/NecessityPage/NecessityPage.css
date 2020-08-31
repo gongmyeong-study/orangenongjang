@@ -1,0 +1,8 @@
+.necessity-list-column {
+    column-count: 2;
+    column-gap: 1em;
+    column-rule: dashed;
+    column-rule-width: thin;
+    column-rule-color: #38d9a9;
+
+}

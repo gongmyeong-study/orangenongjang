@@ -20,8 +20,9 @@ const NecessityItemRemove = styled.div`
 const NecessityItemBlock = styled.div`
     display: flex;
     align-items: center;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    column-count: 2;
     &:hover {
         ${NecessityItemRemove}{
             display: initial;
@@ -56,6 +57,7 @@ function NecessityItem(props: Props) {
       <Text>
         {`${props.name}`}
         <span className="option">
+          <br />
           {` ${props.option} / ${props.price}원 `}
         </span>
       </Text>

@@ -9,6 +9,7 @@ import {
   NecessityCreateModal, NecessityHead, NecessityList, NecessityTemplate,
 } from '../../components';
 import { necessityActions } from '../../store/actions';
+import './NecessityPage.css';
 
 const CircleButton = styled.button`
     background: #38d9a9;
@@ -28,7 +29,7 @@ const CircleButton = styled.button`
     align-items: center;
     justify-content: center;
     font-size: 60px;
-    position: absolute;
+    position: relative;
     left: 50%;
     bottom: 0px;
     transform: translate(-50%, 50%);
@@ -36,9 +37,6 @@ const CircleButton = styled.button`
     border-radius: 50%;
     border: none;
     outline: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 `;
 
 const GlobalStyle = createGlobalStyle`
@@ -69,16 +67,18 @@ function NecessityPage(props: Props): ReactElement {
       <GlobalStyle />
       <NecessityTemplate>
         <NecessityHead />
-        <NecessityList />
-        <CircleButton onClick={showModal}>
-          <MdAdd />
-        </CircleButton>
-        {showNecessityCreateModal ? (
-          <NecessityCreateModal
-            history={props.history}
-            restoreModal={restoreModal}
-          />
-        ) : null}
+        <div className="necessity-list-column">
+          <NecessityList />
+          <CircleButton onClick={showModal}>
+            <MdAdd />
+          </CircleButton>
+          {showNecessityCreateModal ? (
+            <NecessityCreateModal
+              history={props.history}
+              restoreModal={restoreModal}
+            />
+          ) : null}
+        </div>
       </NecessityTemplate>
     </>
   );

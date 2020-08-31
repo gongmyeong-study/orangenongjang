@@ -36,14 +36,15 @@ interface Props {
 
 function NecessityCounter(props: Props) {
   return (
-    <NecessityItemBlock key={props.key}>
-      수량 :
-      <NecessityItemCount
-        onChange={() => props.counter(props.necessityUserId, props.count)}
-      >
-        {`${props.count}`}
-      </NecessityItemCount>
-    </NecessityItemBlock>
+    <div>
+      <NecessityItemBlock key={props.key}>
+        <NecessityItemCount
+          onChange={() => props.counter(props.necessityUserId, props.count)}
+        >
+          {`${props.count}`}
+        </NecessityItemCount>
+      </NecessityItemBlock>
+    </div>
   );
 }
 
