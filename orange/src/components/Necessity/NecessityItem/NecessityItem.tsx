@@ -22,7 +22,6 @@ const NecessityItemBlock = styled.div`
     align-items: center;
     padding-top: 10px;
     padding-bottom: 10px;
-    column-count: 2;
     &:hover {
         ${NecessityItemRemove}{
             display: initial;

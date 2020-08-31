@@ -24,12 +24,12 @@ const CircleButton = styled.button`
     z-index: 0;
     cursor: pointer;
     width: 80px;
-    height: 80px;
+    height: 70px;
     display: block;
     align-items: center;
     justify-content: center;
     font-size: 60px;
-    position: relative;
+    position : absolute;
     left: 50%;
     bottom: 0px;
     transform: translate(-50%, 50%);
