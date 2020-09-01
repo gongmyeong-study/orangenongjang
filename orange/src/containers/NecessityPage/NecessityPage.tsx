@@ -12,29 +12,30 @@ import { necessityActions } from '../../store/actions';
 import './NecessityPage.css';
 
 const CircleButton = styled.button`
-    background: #38d9a9;
+    background: lightgray;
+    transition: 0.3s;
     &:hover {
-        background: #63e6be;
+        background: gray;
     }
     &:active {
         opacity: 0.2;
-        background: #20c997;
+        background: gray;
     }
     
     z-index: 0;
     cursor: pointer;
-    width: 80px;
-    height: 70px;
-    display: block;
+    width: 160px;
+    height: 106.8px;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     font-size: 60px;
-    position : absolute;
-    left: 50%;
-    bottom: 0px;
-    transform: translate(-50%, 50%);
+    position : static;
+    left: 100%
+    padding: 150px 150px;
+    bottom: 20px;
     color: white;
-    border-radius: 50%;
+    border-radius: 10%;
     border: none;
     outline: none;
 `;
@@ -68,7 +69,6 @@ function NecessityPage(props: Props): ReactElement {
       <NecessityTemplate>
         <NecessityHead />
         <div className="necessity-list-column">
-          <NecessityList />
           <CircleButton onClick={showModal}>
             <MdAdd />
           </CircleButton>
@@ -78,6 +78,8 @@ function NecessityPage(props: Props): ReactElement {
               restoreModal={restoreModal}
             />
           ) : null}
+
+          <NecessityList />
         </div>
       </NecessityTemplate>
     </>

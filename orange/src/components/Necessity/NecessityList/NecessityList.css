@@ -1,5 +1,8 @@
 .necessity-list-block {
-  flex: 1;
+  /* flex: 1; */
+  display: inline-flex;
+  flex-wrap: wrap;
+  flex-direction: column;
   padding: 15px 15px;
   padding-bottom: 15px;
   overflow-y: auto;
