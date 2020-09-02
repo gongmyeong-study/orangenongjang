@@ -3,7 +3,7 @@ from django.db import models
 
 
 class House(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     introduction = models.CharField(max_length=300)
     created_at = models.DateTimeField(auto_now_add=True)
     is_hidden = models.BooleanField(default=False)
