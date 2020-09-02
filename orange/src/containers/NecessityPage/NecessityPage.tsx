@@ -57,7 +57,6 @@ function NecessityPage(props: Props): ReactElement {
     month: 'long',
     day: 'numeric',
   });
-  const dayName = today.toLocaleDateString('ko-KR', { weekday: 'long' });
 
   const [showNecessityCreateModal, setShowNecessityCreateModal] = useState(false);
   const showModal = (): void => setShowNecessityCreateModal(true);
@@ -72,9 +71,9 @@ function NecessityPage(props: Props): ReactElement {
 
   return (
     <>
-      <div>
+      <span>
         <h1 className="NecessityPageBlock">{dateString}</h1>
-      </div>
+      </span>
 
       <GlobalStyle />
       <NecessityTemplate>
