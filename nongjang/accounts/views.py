@@ -11,7 +11,7 @@ class AccountsViewSet(viewsets.GenericViewSet):
     def get_serializer_class(self, *args, **kwargs):
         return self.serializer_class
 
-    # POST /api/v1/accounts/
+    # POST /api/v1/house/
     def create(self, request, *args, **kwargs):
         user = request.user
         if not user.is_authenticated:
@@ -32,7 +32,7 @@ class AccountsViewSet(viewsets.GenericViewSet):
 
         return Response(self.get_serializer(house).data, status=status.HTTP_201_CREATED)
 
-    # DELETE /api/v1/accounts/{house_id}/
+    # DELETE /api/v1/house/{house_id}/
     def destroy(self, request, pk=None):
         user = request.user
         if not user.is_authenticated:
@@ -54,7 +54,7 @@ class AccountsViewSet(viewsets.GenericViewSet):
         else:
           return Response({'error': 'Leader 유저만 House를 삭제할 수 있습니다'}, status=status.HTTP_400_BAD_REQUEST)
     
-    # JOIN /api/v1/accounts/{house_id}/join/
+    # JOIN /api/v1/house/{house_id}/join/
     @action(detail=True, methods=['post'])
     def join(self, request, pk=None):
         user = request.user
@@ -69,9 +69,9 @@ class AccountsViewSet(viewsets.GenericViewSet):
         except IntegrityError:
             return Response(status=status.HTTP_409_CONFLICT)
         
-        return Response(self.get_serializer(house).data,)
+        return Response(self.get_serializer(house).data)
 
-    # DELETE /api/v1/accounts/{house_id}/leave/
+    # DELETE /api/v1/house/{house_id}/leave/
     @action(detail=True, methods=['delete'])
     def leave(self, request, pk=None):
         user = request.user
@@ -88,9 +88,9 @@ class AccountsViewSet(viewsets.GenericViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
         
         else:
-            return Response({'error': 'Leader 유저이므로 House를 떠날 수 없습니다. Leader를 다른 User에게 양도한 뒤 다시 시도해 주세요'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'error': 'Leader 유저이므로 House를 떠날 수 없습니다. Leader를 다른 User에게 양도한 뒤 다시 시도해 주세요'}, status=status.HTTP_400_BAD_REQUEST)
 
-    # GET /api/v1/accounts/
+    # GET /api/v1/house/
     def list(self, request):
         user = request.user
         if not user.is_authenticated:

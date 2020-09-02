@@ -5,7 +5,7 @@ from accounts.views import AccountsViewSet
 app_name = 'accounts'
 
 router = SimpleRouter()
-router.register('accounts', AccountsViewSet, basename='accounts')  # /api/v1/accounts/
+router.register('house', AccountsViewSet, basename='house')  # /api/v1/house/
 
 urlpatterns = [
     path('', include((router.urls))),
