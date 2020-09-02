@@ -51,6 +51,14 @@ interface Props {
 }
 
 function NecessityPage(props: Props): ReactElement {
+  const today = new Date();
+  const dateString = today.toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+  const dayName = today.toLocaleDateString('ko-KR', { weekday: 'long' });
+
   const [showNecessityCreateModal, setShowNecessityCreateModal] = useState(false);
   const showModal = (): void => setShowNecessityCreateModal(true);
 
@@ -64,6 +72,10 @@ function NecessityPage(props: Props): ReactElement {
 
   return (
     <>
+      <div>
+        <h1 className="NecessityPageBlock">{dateString}</h1>
+      </div>
+
       <GlobalStyle />
       <NecessityTemplate>
         <NecessityHead />

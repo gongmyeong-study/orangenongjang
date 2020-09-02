@@ -6,3 +6,12 @@
     column-rule-color: lightslategrey;
     padding: 10px;
 }
+
+.NecessityPageBlock {
+    padding-top: 0px;
+    padding-left: 20%;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e9ecef;
+}
+
