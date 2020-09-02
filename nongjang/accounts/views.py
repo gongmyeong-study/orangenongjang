@@ -22,12 +22,12 @@ class AccountsViewSet(viewsets.GenericViewSet):
 
         if not name:
             return Response({'error': "House 이름을 입력하세요."}, status=status.HTTP_400_BAD_REQUEST)
-
-        try:
+        
+        if not House.objects.filter(name=name, is_hidden=False).exists():
             house = House.objects.create(name=name, introduction=introduction)
-        except IntegrityError:
+        else:
             return Response(status=status.HTTP_409_CONFLICT)
-
+        
         UserHouse.objects.create(user=user, house=house, leader=True)
 
         return Response(self.get_serializer(house).data, status=status.HTTP_201_CREATED)
@@ -39,13 +39,16 @@ class AccountsViewSet(viewsets.GenericViewSet):
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         try:
-            house = House.objects.get(pk=pk)
+            house = House.objects.get(pk=pk, is_hidden=False)
             user_house = UserHouse.objects.get(user=user, house=house)
         except House.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        except UserHouse.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
         
         if user_house.leader:
-           house.delete()
+           house.is_hidden = True
+           house.save()
            return Response(status=status.HTTP_204_NO_CONTENT)
 
         else:
@@ -59,7 +62,7 @@ class AccountsViewSet(viewsets.GenericViewSet):
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         try:
-            house = House.objects.get(id=pk)
+            house = House.objects.get(id=pk, is_hidden=False)
             user_house = UserHouse.objects.create(user=user, house=house)
         except House.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
@@ -93,6 +96,6 @@ class AccountsViewSet(viewsets.GenericViewSet):
         if not user.is_authenticated:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
-        houses = House.objects.filter(users__user=user)
+        houses = House.objects.filter(users__user=user, is_hidden=False)
 
         return Response(self.get_serializer(houses, many=True).data)
