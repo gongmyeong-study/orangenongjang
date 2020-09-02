@@ -25,14 +25,13 @@ const CircleButton = styled.button`
     z-index: 0;
     cursor: pointer;
     width: 160px;
-    height: 106.8px;
+    height: 137.69px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     font-size: 60px;
     position : static;
-    left: 100%
-    padding: 150px 150px;
+    left: 10%;
     bottom: 20px;
     color: white;
     border-radius: 10%;

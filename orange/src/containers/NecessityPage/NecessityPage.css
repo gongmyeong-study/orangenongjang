@@ -4,4 +4,5 @@
     column-rule: dashed;
     column-rule-width: thin;
     column-rule-color: lightslategrey;
+    padding: 10px;
 }

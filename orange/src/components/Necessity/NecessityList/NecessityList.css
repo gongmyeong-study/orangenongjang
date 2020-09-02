@@ -3,7 +3,7 @@
   display: inline-flex;
   flex-wrap: wrap;
   flex-direction: column;
-  padding: 15px 15px;
+  padding: 15px 0px;
   padding-bottom: 15px;
   overflow-y: auto;
 }
@@ -17,8 +17,9 @@
 
 .necessity-item-block {
   width: 160px;
-  height: 5px;
+  height: 106.8px;
   align-content: space-around;
+  overflow-y: auto;
   border-radius: 12px;
   border: solid 0.5px #828282;
   background-color: #ffffff;

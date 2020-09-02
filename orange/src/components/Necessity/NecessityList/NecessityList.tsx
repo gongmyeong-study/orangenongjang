@@ -18,6 +18,17 @@ function NecessityList(props: Props) {
         <div className="necessity-list-block">
           {/* <span className="necessity-counter-block" /> */}
           <tr>
+            <td className="necessity-item-block">
+              <NecessityItem
+                key={necessity.id}
+                id={necessity.id}
+                name={necessity.name}
+                option={necessity.option}
+                price={necessity.price}
+                necessityUserId={necessity.necessity_user.id}
+              />
+            </td>
+
             <td>
               <button type="button">
                 -
@@ -35,17 +46,6 @@ function NecessityList(props: Props) {
               <button type="button">
                 +
               </button>
-            </td>
-
-            <td className="necessity-item-block">
-              <NecessityItem
-                key={necessity.id}
-                id={necessity.id}
-                name={necessity.name}
-                option={necessity.option}
-                price={necessity.price}
-                necessityUserId={necessity.necessity_user.id}
-              />
             </td>
           </tr>
         </div>
