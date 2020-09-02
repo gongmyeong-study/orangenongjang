@@ -32,17 +32,47 @@ interface Props {
   necessityUserId: number;
   count: number;
   counter(necessityUserId: number, count: number): any;
+  increase(necessityUserId: number, count: number): any;
+  decrease(necessityUserId: number, count: number): any;
 }
 
 function NecessityCounter(props: Props) {
   return (
     <div>
       <NecessityItemBlock key={props.key}>
-        <NecessityItemCount
-          onChange={() => props.counter(props.necessityUserId, props.count)}
-        >
-          {`${props.count}`}
-        </NecessityItemCount>
+        <td>
+          <tr>
+            <button
+              type="button"
+              onClick={() => {
+                props.increase(props.necessityUserId, props.count + 1);
+                window.location.reload();
+              }}
+            >
+              +
+            </button>
+          </tr>
+
+          <tr>
+            <NecessityItemCount
+              onSubmit={() => props.counter(props.necessityUserId, props.count)}
+            >
+              { `${props.count}`}
+            </NecessityItemCount>
+          </tr>
+
+          <tr>
+            <button
+              type="button"
+              onClick={() => {
+                props.increase(props.necessityUserId, props.count - 1);
+                window.location.reload();
+              }}
+            >
+              -
+            </button>
+          </tr>
+        </td>
       </NecessityItemBlock>
     </div>
   );
@@ -50,6 +80,12 @@ function NecessityCounter(props: Props) {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   counter: (necessityUserId: number, count: number): void => dispatch(
+    necessityActions.countNecessity(necessityUserId, count),
+  ),
+  increase: (necessityUserId: number, count: number): void => dispatch(
+    necessityActions.countNecessity(necessityUserId, count),
+  ),
+  decrease: (necessityUserId: number, count: number): void => dispatch(
     necessityActions.countNecessity(necessityUserId, count),
   ),
 });

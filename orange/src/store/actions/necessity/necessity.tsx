@@ -66,19 +66,17 @@ const removeFailure = (error: any) => {
 };
 
 // 생필품 수량 기능
-const countSuccess = (necessities: any) => {
-  window.alert('변경되었습니다!');
-  return {
-    type: necessityConstants.COUNT_SUCCESS,
-    target: necessities,
-  };
-};
+const countSuccess = (necessities: any) => ({
+  type: necessityConstants.COUNT_SUCCESS,
+  target: necessities,
+});
 
 const countFailure = (error: any) => {
   let actionType = null;
   switch (error.response.status) {
     default:
-      window.alert('실패!');
+      /* NecessityCounter의 window.location.reload() 때문에 alert창 안뜨는 상황 */
+      window.alert('수량을 확인하세요!');
       actionType = necessityConstants.COUNT_FAILURE;
       break;
   }
@@ -106,6 +104,6 @@ export const getNecessity = () => (dispatch: Dispatch) => axios.get('/api/v1/nec
 
 export const countNecessity = (
   necessityUserId: number, count: number,
-) => (dispatch: Dispatch) => axios.patch(`/api/v1/necessity/${necessityUserId}/`, { count })
+) => (dispatch: Dispatch) => axios.put(`/api/v1/necessity/${necessityUserId}/count/`, { count })
   .then((countResponse) => dispatch(countSuccess(countResponse.data)))
   .catch((countError) => dispatch(countFailure(countError)));

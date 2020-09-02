@@ -18,6 +18,7 @@
 .necessity-item-block {
   width: 160px;
   height: 106.8px;
+  display: flexbox;
   align-content: space-around;
   overflow-y: auto;
   border-radius: 12px;

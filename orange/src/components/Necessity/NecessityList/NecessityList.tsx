@@ -28,24 +28,12 @@ function NecessityList(props: Props) {
                 necessityUserId={necessity.necessity_user.id}
               />
             </td>
-
-            <td>
-              <button type="button">
-                -
-              </button>
-            </td>
             <td>
               <NecessityCounter
                 key={necessity.necessity_user.id}
                 necessityUserId={necessity.necessity_user.id}
                 count={necessity.necessity_user.count}
               />
-            </td>
-
-            <td>
-              <button type="button">
-                +
-              </button>
             </td>
           </tr>
         </div>
