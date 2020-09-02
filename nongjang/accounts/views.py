@@ -30,7 +30,6 @@ class AccountsViewSet(viewsets.GenericViewSet):
 
         UserHouse.objects.create(user=user, house=house, leader=True)
 
-        print("house : ", self.get_serializer_class(house).data)
         return Response(self.get_serializer(house).data, status=status.HTTP_201_CREATED)
 
     # DELETE /api/v1/accounts/{house_id}/
@@ -50,25 +49,24 @@ class AccountsViewSet(viewsets.GenericViewSet):
            return Response(status=status.HTTP_204_NO_CONTENT)
 
         else:
-          return Response({'error': 'Leader 유저만 House를 삭제할 수 있습니다'}, status=status.HTTP_403_FORBIDDEN)
+          return Response({'error': 'Leader 유저만 House를 삭제할 수 있습니다'}, status=status.HTTP_400_BAD_REQUEST)
     
     # JOIN /api/v1/accounts/{house_id}/join/
-    @action(detail=True, methods=['get'])
+    @action(detail=True, methods=['post'])
     def join(self, request, pk=None):
         user = request.user
         if not user.is_authenticated:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         try:
-            user_house = UserHouse.objects.create(user=user, house_id=pk)
-        except IntegrityError:
-            return Response(status=status.HTTP_409_CONFLICT)
+            house = House.objects.get(id=pk)
+            user_house = UserHouse.objects.create(user=user, house=house)
         except House.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        except IntegrityError:
+            return Response(status=status.HTTP_409_CONFLICT)
         
-        # return Response(status=st)
-        house = user_house.house
-        return Response(self.get_serializer_class(house))
+        return Response(self.get_serializer(house).data,)
 
     # DELETE /api/v1/accounts/{house_id}/leave/
     @action(detail=True, methods=['delete'])
