@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'user.apps.UserConfig',
     'necessity.apps.NecessityConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
