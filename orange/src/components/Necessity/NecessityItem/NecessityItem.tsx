@@ -5,26 +5,27 @@ import { MdDelete } from 'react-icons/md';
 import { necessityActions } from '../../../store/actions';
 
 const NecessityItemRemove = styled.div`
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     color: #F1948A;
     font-size: 20px;
+    float: right;
     cursor: pointer;
     &:hover {
         color: #B03A2E;
     }
-    display: none;
 `;
 
 const NecessityItemBlock = styled.div`
-    display: flex;
+    display: inline-flex;
     align-items: center;
     padding-top: 10px;
     padding-bottom: 10px;
     &:hover {
         ${NecessityItemRemove}{
-            display: initial;
+            display: inline-flex;
+            float: right;
         }
     }
 `;

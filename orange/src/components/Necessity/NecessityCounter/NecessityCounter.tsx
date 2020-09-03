@@ -38,10 +38,11 @@ interface Props {
 
 function NecessityCounter(props: Props) {
   return (
-    <div>
-      <NecessityItemBlock key={props.key}>
+    <NecessityItemBlock key={props.key}>
+
+      <table>
         <td>
-          <tr>
+          <div>
             <button
               type="button"
               onClick={() => {
@@ -51,17 +52,17 @@ function NecessityCounter(props: Props) {
             >
               +
             </button>
-          </tr>
+          </div>
 
-          <tr>
+          <div>
             <NecessityItemCount
               onSubmit={() => props.counter(props.necessityUserId, props.count)}
             >
               { `${props.count}`}
             </NecessityItemCount>
-          </tr>
+          </div>
 
-          <tr>
+          <div>
             <button
               type="button"
               onClick={() => {
@@ -71,10 +72,12 @@ function NecessityCounter(props: Props) {
             >
               -
             </button>
-          </tr>
+          </div>
         </td>
-      </NecessityItemBlock>
-    </div>
+
+      </table>
+    </NecessityItemBlock>
+
   );
 }
 

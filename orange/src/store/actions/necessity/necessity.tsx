@@ -75,8 +75,6 @@ const countFailure = (error: any) => {
   let actionType = null;
   switch (error.response.status) {
     default:
-      /* NecessityCounter의 window.location.reload() 때문에 alert창 안뜨는 상황 */
-      window.alert('수량을 확인하세요!');
       actionType = necessityConstants.COUNT_FAILURE;
       break;
   }
