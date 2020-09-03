@@ -1,6 +1,19 @@
 .necessity-list-block {
-    flex: 1;
-    padding: 20px 32px;
-    padding-bottom: 48px;
-    overflow-y: auto;
-  }
+  display: inline-flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding: 15px 0px;
+  padding-bottom: 15px;
+  overflow-y: auto;
+}
+
+.necessity-item-block {
+  width: 160px;
+  height: 106.8px;
+  display: flex;
+  align-content: space-around;
+  overflow-y: auto;
+  border-radius: 12px;
+  border: solid 0.5px #828282;
+  background-color: #ffffff;
+}

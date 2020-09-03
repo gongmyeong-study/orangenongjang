@@ -1,0 +1,17 @@
+.necessity-list-column {
+    column-count: 2;
+    column-gap: 1em;
+    column-rule: dashed;
+    column-rule-width: thin;
+    column-rule-color: lightslategrey;
+    padding: 10px;
+}
+
+.NecessityPageBlock {
+    padding-top: 0px;
+    padding-left: 25%;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e9ecef;
+}
+

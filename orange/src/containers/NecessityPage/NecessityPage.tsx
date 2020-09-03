@@ -9,36 +9,34 @@ import {
   NecessityCreateModal, NecessityHead, NecessityList, NecessityTemplate,
 } from '../../components';
 import { necessityActions } from '../../store/actions';
+import './NecessityPage.css';
 
 const CircleButton = styled.button`
-    background: #38d9a9;
+    background: lightgray;
+    transition: 0.3s;
     &:hover {
-        background: #63e6be;
+        background: gray;
     }
     &:active {
         opacity: 0.2;
-        background: #20c997;
+        background: gray;
     }
     
     z-index: 0;
     cursor: pointer;
-    width: 80px;
-    height: 80px;
-    display: block;
+    width: 160px;
+    height: 137.69px;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     font-size: 60px;
-    position: absolute;
-    left: 50%;
-    bottom: 0px;
-    transform: translate(-50%, 50%);
+    position : static;
+    left: 10%;
+    bottom: 20px;
     color: white;
-    border-radius: 50%;
+    border-radius: 10%;
     border: none;
     outline: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 `;
 
 const GlobalStyle = createGlobalStyle`
@@ -53,6 +51,13 @@ interface Props {
 }
 
 function NecessityPage(props: Props): ReactElement {
+  const today = new Date();
+  const dateString = today.toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   const [showNecessityCreateModal, setShowNecessityCreateModal] = useState(false);
   const showModal = (): void => setShowNecessityCreateModal(true);
 
@@ -66,19 +71,26 @@ function NecessityPage(props: Props): ReactElement {
 
   return (
     <>
+      <span>
+        <h1 className="NecessityPageBlock">{dateString}</h1>
+      </span>
+
       <GlobalStyle />
       <NecessityTemplate>
         <NecessityHead />
-        <NecessityList />
-        <CircleButton onClick={showModal}>
-          <MdAdd />
-        </CircleButton>
-        {showNecessityCreateModal ? (
-          <NecessityCreateModal
-            history={props.history}
-            restoreModal={restoreModal}
-          />
-        ) : null}
+        <div className="necessity-list-column">
+          <CircleButton onClick={showModal}>
+            <MdAdd />
+          </CircleButton>
+          {showNecessityCreateModal ? (
+            <NecessityCreateModal
+              history={props.history}
+              restoreModal={restoreModal}
+            />
+          ) : null}
+
+          <NecessityList />
+        </div>
       </NecessityTemplate>
     </>
   );
