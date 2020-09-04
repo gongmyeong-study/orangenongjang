@@ -74,12 +74,12 @@ class NecessityViewSet(viewsets.GenericViewSet):
         necessity_new, created = Necessity.objects.get_or_create(name=name, option=option,
                                                                  description=description, price=price)
 
-        if not created:
-            return Response({'error': "수정된 사항이 없습니다."}, status=status.HTTP_400_BAD_REQUEST)
-        else:
-            # create log when user update necessity
+        if created and necessity_user.necessity_id != necessity_new.id:
+            # create log when user newly update necessity
             NecessityUserLog.objects.create(user=user, necessity=necessity_user.necessity,
                                             activity_category=NecessityUserLog.UPDATE)
+        else:
+            return Response({'error': "수정된 사항이 없습니다."}, status=status.HTTP_400_BAD_REQUEST)
 
         necessity_user.user = user
         necessity_user.necessity = necessity_new
