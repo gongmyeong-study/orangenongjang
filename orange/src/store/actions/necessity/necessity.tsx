@@ -85,9 +85,9 @@ const countFailure = (error: any) => {
 };
 
 export const createNecessity = (
-  name: string, option: string, description: string, price: number,
-) => (dispatch: Dispatch) => axios.post('/api/v1/necessity/', {
-  name, option, description, price,
+  name: string, option: string, description: string, price: number, houseId: string,
+) => (dispatch: Dispatch) => axios.post(`/api/v1/${houseId}/necessity/`, {
+  name, option, description, price, houseId,
 })
   .then((createResponse) => dispatch(createSuccess(createResponse.data)))
   .catch((createError) => dispatch(createFailure(createError)));
@@ -96,7 +96,7 @@ export const removeNecessity = (necessityUserId: number) => (dispatch: Dispatch)
   .then((removeResponse) => dispatch(removeSuccess(removeResponse.data)))
   .catch((removeError) => dispatch(removeFailure(removeError)));
 
-export const getNecessity = () => (dispatch: Dispatch) => axios.get('/api/v1/necessity/')
+export const getNecessity = (houseId: string) => (dispatch: Dispatch) => axios.get(`/api/v1/necessity/${houseId}/`)
   .then((getResponse) => dispatch(getSuccess(getResponse.data)))
   .catch((getError) => dispatch(getFailure(getError)));
 

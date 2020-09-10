@@ -8,6 +8,7 @@ import './MainPage.css';
 
 interface Props {
   history: any;
+  match: any;
 }
 
 interface State {
@@ -23,19 +24,21 @@ class MainPage extends Component<Props, State> {
   }
 
   render() {
+    const houseId = this.props.match.params.id;
+
     let body = null;
     switch (this.state.activeTab) {
       case 1:
         body = <WorkPage />;
         break;
       case 2:
-        body = <TimelinePage history={this.props.history} />;
+        body = <TimelinePage history={this.props.history} houseId={houseId} />;
         break;
       case 3:
         body = <StatisticsPage />;
         break;
       default:
-        body = <NecessityPage history={this.props.history} />;
+        body = <NecessityPage history={this.props.history} houseId={houseId} />;
     }
 
     return (

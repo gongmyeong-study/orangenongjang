@@ -7,10 +7,17 @@ import './NecessityCreateModal.css';
 
 interface Props {
   history: History;
-  create: (name: string, option: string, description: string, price: number) => any;
+  create: (
+    name: string,
+    option: string,
+    description: string,
+    price: number,
+    houseId: string
+  ) => any;
   me: any;
   createStatus: string;
   restoreModal: any;
+  houseId: string;
 }
 
 interface State {
@@ -34,7 +41,13 @@ class NecessityCreateModal extends Component<Props, State> {
   }
 
   create = (): void => {
-    this.props.create(this.state.name, this.state.option, this.state.description, this.state.price)
+    this.props.create(
+      this.state.name,
+      this.state.option,
+      this.state.description,
+      this.state.price,
+      this.props.houseId,
+    )
       .then(() => {
         console.log(this.props.createStatus);
         if (this.props.createStatus === necessityStatus.SUCCESS) {
@@ -128,8 +141,10 @@ class NecessityCreateModal extends Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  create: (name: string, option: string, description: string, price: number): void => dispatch(
-    necessityActions.createNecessity(name, option, description, price),
+  create: (
+    name: string, option: string, description: string, price: number, houseId: string,
+  ): void => dispatch(
+    necessityActions.createNecessity(name, option, description, price, houseId),
   ),
 });
 
