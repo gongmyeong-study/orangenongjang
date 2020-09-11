@@ -12,12 +12,12 @@ interface Props {
     option: string,
     description: string,
     price: number,
-    houseId: string
+    houseId: number
   ) => any;
   me: any;
   createStatus: string;
   restoreModal: any;
-  houseId: string;
+  houseId: number;
 }
 
 interface State {
@@ -142,7 +142,7 @@ class NecessityCreateModal extends Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   create: (
-    name: string, option: string, description: string, price: number, houseId: string,
+    name: string, option: string, description: string, price: number, houseId: number,
   ): void => dispatch(
     necessityActions.createNecessity(name, option, description, price, houseId),
   ),

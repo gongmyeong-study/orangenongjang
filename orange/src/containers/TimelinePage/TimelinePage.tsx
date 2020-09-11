@@ -24,7 +24,7 @@ class TimelinePage extends Component<Props, State> {
   }
 
   componentDidMount() {
-    axios.get(`/api/v1/necessity/${this.props.houseId}/log/`)
+    axios.get('/api/v1/necessity/log/', { params: this.props.houseId })
       .then((res) => {
         if (res.status === 200) {
           this.setState({ logs: res.data, getLogStatus: necessityUserLogStatus.SUCCESS });
