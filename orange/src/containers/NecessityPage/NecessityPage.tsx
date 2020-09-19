@@ -47,7 +47,8 @@ const GlobalStyle = createGlobalStyle`
 
 interface Props {
   history: any;
-  get(): void;
+  get(houseId: number): void;
+  houseId: number;
 }
 
 function NecessityPage(props: Props): ReactElement {
@@ -66,7 +67,7 @@ function NecessityPage(props: Props): ReactElement {
   };
 
   useEffect(() => {
-    props.get();
+    props.get(props.houseId);
   });
 
   return (
@@ -86,6 +87,7 @@ function NecessityPage(props: Props): ReactElement {
             <NecessityCreateModal
               history={props.history}
               restoreModal={restoreModal}
+              houseId={props.houseId}
             />
           ) : null}
 
@@ -97,8 +99,8 @@ function NecessityPage(props: Props): ReactElement {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  get: (): void => dispatch(
-    necessityActions.getNecessity(),
+  get: (houseId: number): void => dispatch(
+    necessityActions.getNecessity(houseId),
   ),
 });
 
