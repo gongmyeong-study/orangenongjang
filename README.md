@@ -6,4 +6,3 @@
 ![Django CI](https://github.com/gongmyeong-study/orangenongjang/workflows/Django%20CI/badge.svg)
 
 - 다빈, 영현, 진섭
-
