@@ -4,8 +4,8 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from accounts.models import House, UserHouse
-from accounts.serializers import HouseSerializer, SimpleHouseSerializer
+from house.models import House, UserHouse
+from house.serializers import HouseSerializer, SimpleHouseSerializer
 from necessity.models import Necessity, NecessityHouse, NecessityLog
 from necessity.serializers import NecessityLogSerializer
 

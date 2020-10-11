@@ -1,8 +1,8 @@
 from django.urls import include, path
 from rest_framework.routers import SimpleRouter
-from accounts.views import HouseViewSet
+from house.views import HouseViewSet
 
-app_name = 'accounts'
+app_name = 'house'
 
 router = SimpleRouter()
 router.register('house', HouseViewSet, basename='house')  # /api/v1/house/

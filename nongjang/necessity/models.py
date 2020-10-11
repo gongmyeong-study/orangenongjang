@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from accounts.models import House
+from house.models import House
 
 
 class Necessity(models.Model):

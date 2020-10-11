@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from accounts.models import House
+from house.models import House
 from necessity.serializers import NecessityOfHouseSerializer
 
 
