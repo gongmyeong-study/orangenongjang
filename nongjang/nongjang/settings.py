@@ -27,6 +27,7 @@ SECRET_KEY = '%$(uu1zk1f4*8wnljep5ug(5t7*2u3+&exurk*0t+af56vbued'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+USE_DEBUG_TOOLBAR = os.getenv('DEBUG_TOOLBAR', '').lower() == 'true'
 
 ALLOWED_HOSTS = []
 
@@ -161,3 +162,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+if USE_DEBUG_TOOLBAR:
+    INSTALLED_APPS += (
+    'debug_toolbar',
+    )
+
+    MIDDLEWARE += (
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    )
+
+    INTERNAL_IPS = ('127.0.0.1',)
