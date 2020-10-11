@@ -92,7 +92,7 @@ class HouseViewSet(viewsets.GenericViewSet):
     # GET /api/v1/house/
     def list(self, request):
         user = request.user
-        houses = House.objects.filter(users__user=user, is_hidden=False)
+        houses = self.queryset.filter(users__user=user)
         return Response(self.get_serializer(houses, many=True).data)
 
     # /api/v1/house/{house_id}/necessity/
@@ -107,34 +107,48 @@ class HouseViewSet(viewsets.GenericViewSet):
         user = self.request.user
 
         data = self.request.data
+
+        necessity_id = data.get('necessity_id')
         name = data.get('name')
+        if not (bool(necessity_id) ^ bool(name)):
+            return Response({'error': "necessity_id 또는 name이 요청에 포함되어야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
         option = data.get('option')
         description = data.get('description')
         price = data.get('price')
+        if price:
+            try:
+                price = int(price)
+            except ValueError:
+                return Response({'error': "price는 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
+            if price < 0:
+                return Response({'error': "price는 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
 
-        if not name:
-            return Response({'error': "생필품 이름을 입력하세요."}, status=status.HTTP_400_BAD_REQUEST)
+        if necessity_id:
+            # GET /api/v1/necessity/ 등을 이용해 frontend가 이미 존재하는 Necessity들을 제시하고, 유저가 그것을 택했을 때 해당 id를 보내는 경우
+            try:
+                necessity = Necessity.objects.get(id=necessity_id)
+            except Necessity.DoesNotExist:
+                return Response({'error': "해당하는 Necessity가 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
 
-        necessity, created = Necessity.objects.get_or_create(name=name, option=option,
-                                                             description=description, price=price)
+        else:
+            # DB에 기존에 존재하지 않던 새로운 Necessity를 생성하는 경우
+            necessity = Necessity.objects.create(name=name, option=option, description=description, price=price)
 
         try:
             necessity_house = NecessityHouse.objects.create(house=house, necessity=necessity,
                                                             description=description, price=price)
         except IntegrityError:
-            return Response(status=status.HTTP_409_CONFLICT)
+            return Response({'error': "집에 이미 존재하는 Necessity 정보입니다."}, status=status.HTTP_409_CONFLICT)
 
         NecessityLog.objects.create(necessity_house=necessity_house, user=user, activity_category=NecessityLog.CREATE)
-
         return Response(self.get_serializer(house).datta, status=status.HTTP_201_CREATED)
 
     def _get_necessity(self, house):
         return Response(self.get_serializer(house).data)
 
     # GET /api/v1/house/{house_id}/necessity_log/
-    @action(detail=False, methods=['GET'])
+    @action(detail=True, methods=['GET'])
     def necessity_log(self, request, pk=None):
         house = self.get_object()
-
         logs = house.necessity_houses.necessity_logs.all().select_related('necessity_house')
         return Response(self.get_serializer(logs, many=True).data)

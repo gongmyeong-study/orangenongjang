@@ -6,16 +6,16 @@ from house.models import House
 
 class Necessity(models.Model):
     name = models.CharField(max_length=200)
-    option = models.CharField(max_length=100, blank=True, default='')
-    description = models.CharField(max_length=500, blank=True, default='')
+    option = models.CharField(max_length=100, blank=True)
+    description = models.CharField(max_length=500, blank=True)
     price = models.PositiveIntegerField(null=True)
 
 
 class NecessityHouse(models.Model):
     house = models.ForeignKey(House, related_name='necessity_houses', on_delete=models.CASCADE)
     necessity = models.ForeignKey(Necessity, related_name='necessity_houses', on_delete=models.CASCADE)
-    name = models.CharField(max_length=200, blank=True, default='')
-    description = models.CharField(max_length=500, blank=True, default='')
+    name = models.CharField(max_length=200, blank=True)
+    description = models.CharField(max_length=500, blank=True)
     price = models.PositiveIntegerField(null=True)
     count = models.PositiveIntegerField(db_index=True)
 
