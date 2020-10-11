@@ -12,7 +12,7 @@ class House(models.Model):
 class UserHouse(models.Model):
     user = models.ForeignKey(User, related_name="user_houses", on_delete=models.CASCADE)
     house = models.ForeignKey(House, related_name="user_houses", on_delete=models.CASCADE)
-    leader = models.BooleanField(default=False)
+    is_leader = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

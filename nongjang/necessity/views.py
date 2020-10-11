@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
@@ -10,7 +11,7 @@ from necessity.models import Necessity, NecessityHouse, NecessityLog
 class NecessityViewSet(viewsets.GenericViewSet):
     queryset = Necessity.objects.all()
     serializer_class = NecessitySerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, )
 
     def get_permissions(self):
         if self.action == 'create':
@@ -28,22 +29,29 @@ class NecessityViewSet(viewsets.GenericViewSet):
         name = data.get('name')
         if not name:
             return Response({'error': "name은 필수 항목입니다."}, status=status.HTTP_400_BAD_REQUEST)
-        option = data.get('option')
-        description = data.get('description')
+        option = data.get('option', '')
+        description = data.get('description', '')
         price = data.get('price')
         if price:
-            try:
-                price = int(price)
-            except ValueError:
+            if not price.isnumeric() or int(price) < 0:
                 return Response({'error': "price는 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
-            if price < 0:
-                return Response({'error': "price는 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
-        necessity = Necessity.objects.create(name=name, option=option, description=description, price=price)
+            price = int(price)
+        else:
+            price = None
+
+        try:
+            necessity = Necessity.objects.create(name=name, option=option, description=description, price=price)
+        except IntegrityError:
+            return Response({'error': "이미 존재하는 Necessity 정보입니다."}, status=status.HTTP_409_CONFLICT)
         return Response(self.get_serializer(necessity).data, status=status.HTTP_201_CREATED)
+
+    # GET /api/v1/necessity/{necessity_id}/
+    def retrieve(self, request, pk=None):
+        return Response(self.get_serializer(self.get_object()).data)
 
     # GET /api/v1/necessity/
     def list(self, request):
-        return Response(self.get_serializer(self.queryset, many=True).data)
+        return Response(self.get_serializer(self.get_queryset(), many=True).data)
 
 
 class NecessityHouseViewSet(viewsets.GenericViewSet):
@@ -57,11 +65,11 @@ class NecessityHouseViewSet(viewsets.GenericViewSet):
 
         necessity_house = self.get_object()
         if not user.user_houses.filter(house=necessity_house.house).exists():
-            return Response(status=status.HTTP_403_FORBIDDEN)
+            return Response({'error': "소속되어 있지 않은 집의 Necessity입니다."}, status=status.HTTP_403_FORBIDDEN)
 
         data = request.data
         name = data.get('name')
-        description = data.get('description')
+        description = data.get('description', '')
         price = data.get('price')
         if name is not None or description is not None or price is not None:
             necessity_house.name = name
@@ -69,7 +77,7 @@ class NecessityHouseViewSet(viewsets.GenericViewSet):
             necessity_house.price = price
             necessity_house.save()
 
-        NecessityLog.objects.create(necessity_house=necessity_house, user=user, activity_category=NecessityLog.UPDATE)
+        NecessityLog.objects.create(necessity_house=necessity_house, user=user, action=NecessityLog.UPDATE)
 
         return Response(self.get_serializer(necessity_house).data)
 
@@ -78,16 +86,14 @@ class NecessityHouseViewSet(viewsets.GenericViewSet):
     def count(self, request, pk=None):
         user = request.user
 
-        try:
-            count = int(request.data.get('count'))
-            if count < 0:
-                return Response({'error': "0 이상의 정수를 입력하세요."}, status=status.HTTP_400_BAD_REQUEST)
-        except ValueError:
-            return Response({'error': "0 이상의 정수를 입력하세요."}, status=status.HTTP_400_BAD_REQUEST)
+        count = request.data.get('count')
+        if not count or not count.isnumeric() or int(count) < 0:
+            return Response({'error': "count는 필수 항목이며 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
+        count = int(count)
 
         necessity_house = self.get_object()
         if not user.user_houses.filter(house=necessity_house.house).exists():
-            return Response(status=status.HTTP_403_FORBIDDEN)
+            return Response({'error': "소속되어 있지 않은 집의 Necessity입니다."}, status=status.HTTP_403_FORBIDDEN)
 
         necessity_house.count = count
         necessity_house.save()
@@ -100,9 +106,9 @@ class NecessityHouseViewSet(viewsets.GenericViewSet):
 
         necessity_house = self.get_object()
         if not user.user_houses.filter(house=necessity_house.house).exists():
-            return Response(status=status.HTTP_403_FORBIDDEN)
+            return Response({'error': "소속되어 있지 않은 집의 Necessity입니다."}, status=status.HTTP_403_FORBIDDEN)
 
-        NecessityLog.objects.create(necessity_house=necessity_house, user=user, activity_category=NecessityLog.DELETE)
+        NecessityLog.objects.create(necessity_house=necessity_house, user=user, action=NecessityLog.DELETE)
         necessity_house.count = 0
         necessity_house.save()
 

@@ -5,7 +5,6 @@ from user.serializers import SimpleUserSerializer
 
 
 class NecessitySerializer(serializers.ModelSerializer):
-    necessity_user = serializers.SerializerMethodField()
 
     class Meta:
         model = Necessity
@@ -19,7 +18,8 @@ class NecessitySerializer(serializers.ModelSerializer):
 
 
 class NecessityOfHouseSerializer(serializers.ModelSerializer):
-    name = serializers.SerializerMethodField()
+    id = serializers.IntegerField(source='necessity.id')
+    name = serializers.CharField(source='necessity.name')
     option = serializers.CharField(source='necessity.option')
     description = serializers.SerializerMethodField()
     price = serializers.SerializerMethodField()
@@ -34,9 +34,6 @@ class NecessityOfHouseSerializer(serializers.ModelSerializer):
             'price',
             'count',
         )
-
-    def get_name(self, necessity_house):
-        return necessity_house.name if necessity_house.name else necessity_house.necessity.name
 
     def get_description(self, necessity_house):
         return necessity_house.description if necessity_house.description else necessity_house.necessity.description
