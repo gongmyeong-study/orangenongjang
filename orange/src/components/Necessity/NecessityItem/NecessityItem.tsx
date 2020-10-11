@@ -48,7 +48,11 @@ interface Props {
   option: string;
   price: number;
   necessityUserId: number;
-  remove(necessityUserId: number): any;
+  count: number;
+  necessities: any;
+  onIncrease?(necessityUserId: number, count: number): any;
+  onDecrease?(necessityUserId: number, count: number): any;
+  onRemove?(necessityUserId: number): any;
 }
 
 function NecessityItem(props: Props) {
@@ -62,18 +66,57 @@ function NecessityItem(props: Props) {
         </span>
       </Text>
       <NecessityItemRemove
-        onClick={() => props.remove(props.necessityUserId)}
+        onClick={() => {
+          if (props.onRemove) {
+            props.onRemove(props.necessityUserId)}
+          }
+        }
       >
         <MdDelete />
       </NecessityItemRemove>
+
+      <button
+        type="button"
+        onClick={() => {
+          if (props.onIncrease) {
+          props.onIncrease(props.necessityUserId, props.count + 1);
+          window.location.reload();
+          }
+        }}
+      >
+        +
+      </button>
+        <div>{props.count}</div>
+      <button
+        type="button"
+        onClick={() => {
+          if (props.onDecrease) {
+          props.onDecrease(props.necessityUserId, props.count - 1);
+          window.location.reload();
+          }
+        }}
+      >
+        -
+      </button>
     </NecessityItemBlock>
   );
 }
 
+const mapStateToProps = (state: any) => ({
+  necessities: state.necessity.necessities,
+});
+
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  remove: (necessityUserId: number): void => dispatch(
+  onRemove: (necessityUserId: number): void => dispatch(
     necessityActions.removeNecessity(necessityUserId),
+  ),
+  onIncrease: (necessityUserId: number, count: number): void => dispatch(
+    necessityActions.countNecessity(necessityUserId, count),
+  ),
+  onDecrease: (necessityUserId: number, count: number): void => dispatch(
+    necessityActions.countNecessity(necessityUserId, count),
   ),
 });
 
-export default connect(null, mapDispatchToProps)(NecessityItem);
+
+export default connect(mapStateToProps, mapDispatchToProps)(NecessityItem);

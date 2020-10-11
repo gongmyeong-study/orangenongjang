@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import NecessityItem from '../NecessityItem/NecessityItem';
-import NecessityCounter from '../NecessityCounter/NecessityCounter';
 import './NecessityList.css';
 
 interface Props {
@@ -19,7 +18,7 @@ function NecessityList(props: Props) {
           className="necessity-list-block"
           key={necessity.id}
         >
-          <td className="necessity-item-block">
+          <div className="necessity-item-block">
             <NecessityItem
               key={necessity.id}
               id={necessity.id}
@@ -27,15 +26,9 @@ function NecessityList(props: Props) {
               option={necessity.option}
               price={necessity.price}
               necessityUserId={necessity.necessity_user.id}
-            />
-          </td>
-          <td>
-            <NecessityCounter
-              key={necessity.necessity_user.id}
-              necessityUserId={necessity.necessity_user.id}
               count={necessity.necessity_user.count}
             />
-          </td>
+          </div>
         </div>
       ))}
     </>
