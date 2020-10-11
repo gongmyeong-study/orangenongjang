@@ -11,10 +11,10 @@ class NecessitySerializer(serializers.ModelSerializer):
         model = Necessity
         fields = (
             'id',
-            'name',             # 상품명
-            'option',           # size
-            'description',      # 상품 설명
-            'price',            # 개당 가격
+            'name',
+            'option',
+            'description',
+            'price',
          )
 
 

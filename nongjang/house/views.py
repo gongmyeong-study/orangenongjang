@@ -23,7 +23,7 @@ class HouseViewSet(viewsets.GenericViewSet):
         return self.serializer_class
 
     # POST /api/v1/house/
-    def create(self, request, *args, **kwargs):
+    def create(self, request):
         user = request.user
 
         name = request.data.get('name')
