@@ -68,9 +68,9 @@ function NecessityItem(props: Props) {
       <NecessityItemRemove
         onClick={() => {
           if (props.onRemove) {
-            props.onRemove(props.necessityUserId)}
+            props.onRemove(props.necessityUserId);
           }
-        }
+        }}
       >
         <MdDelete />
       </NecessityItemRemove>
@@ -79,20 +79,20 @@ function NecessityItem(props: Props) {
         type="button"
         onClick={() => {
           if (props.onIncrease) {
-          props.onIncrease(props.necessityUserId, props.count + 1);
-          window.location.reload();
+            props.onIncrease(props.necessityUserId, props.count + 1);
+            window.location.reload();
           }
         }}
       >
         +
       </button>
-        <div>{props.count}</div>
+      <div>{props.count}</div>
       <button
         type="button"
         onClick={() => {
           if (props.onDecrease) {
-          props.onDecrease(props.necessityUserId, props.count - 1);
-          window.location.reload();
+            props.onDecrease(props.necessityUserId, props.count - 1);
+            window.location.reload();
           }
         }}
       >
@@ -117,6 +117,5 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
     necessityActions.countNecessity(necessityUserId, count),
   ),
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(NecessityItem);
