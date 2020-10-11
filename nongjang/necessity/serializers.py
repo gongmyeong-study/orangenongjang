@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from necessity.models import Necessity, NecessityUser, NecessityUserLog
+from necessity.models import Necessity, NecessityHouse, NecessityLog
+from user.serializers import SimpleUserSerializer
 
 
 class NecessitySerializer(serializers.ModelSerializer):
@@ -14,48 +15,52 @@ class NecessitySerializer(serializers.ModelSerializer):
             'option',           # size
             'description',      # 상품 설명
             'price',            # 개당 가격
-            'necessity_user',   # 해당 사용자의 생필품
          )
 
-    def get_necessity_user(self, necessity):
-        try:
-            necessity_user = NecessityUser.objects.get(necessity=necessity, user=self.context['request'].user)
-        except NecessityUser.DoesNotExist:
-            raise Exception("no necessity user")
-        return {
-            "id": necessity_user.id,
-            "count": necessity_user.count,
-        }
-    
 
-class NecessityUserLogSerializer(serializers.ModelSerializer):
-    user = serializers.SerializerMethodField()
-    necessity = serializers.SerializerMethodField()
-    
+class NecessityOfHouseSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+    option = serializers.CharField(source='necessity.option')
+    description = serializers.SerializerMethodField()
+    price = serializers.SerializerMethodField()
+
     class Meta:
-        model = NecessityUserLog
+        model = NecessityHouse
         fields = (
             'id',
-            'user',
+            'name',
+            'option',
+            'description',
+            'price',
+            'count',
+        )
+
+    def get_name(self, necessity_house):
+        return necessity_house.name if necessity_house.name else necessity_house.necessity.name
+
+    def get_description(self, necessity_house):
+        return necessity_house.description if necessity_house.description else necessity_house.necessity.description
+
+    def get_price(self, necessity_house):
+        return necessity_house.price if necessity_house.price else necessity_house.necessity.price
+
+
+class NecessityLogSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+    necessity = serializers.SerializerMethodField()
+
+    class Meta:
+        model = NecessityLog
+        fields = (
+            'id',
+            'action',
+            'user'
             'necessity',
-            'activity_category',
             'created_at',
         )
 
     def get_user(self, log):
-        user = log.user
-        if not user:
-            raise Exception("no user")
-        return {
-            "id": user.id,
-            "username": user.username,
-        }
+        return SimpleUserSerializer(log.necessity_house.user, context=self.context).data
 
     def get_necessity(self, log):
-        necessity = log.necessity
-        if not necessity:
-            raise Exception("no necessity")
-        return {
-            "id": necessity.id,
-            "name": necessity.name
-        }
+        return NecessityOfHouseSerializer(log.necessity_house, context=self.context).data

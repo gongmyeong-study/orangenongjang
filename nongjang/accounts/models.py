@@ -8,11 +8,14 @@ class House(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_hidden = models.BooleanField(default=False)
 
+
 class UserHouse(models.Model):
-    user = models.ForeignKey(User, related_name="houses", on_delete=models.CASCADE)
-    house = models.ForeignKey(House, related_name="users", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="user_houses", on_delete=models.CASCADE)
+    house = models.ForeignKey(House, related_name="user_houses", on_delete=models.CASCADE)
     leader = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('user', 'house')
+        unique_together = (
+            ('user', 'house'),
+        )

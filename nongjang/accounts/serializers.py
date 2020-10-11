@@ -1,9 +1,10 @@
 from rest_framework import serializers
 
 from accounts.models import House
+from necessity.serializers import NecessityOfHouseSerializer
 
 
-class HouseSerializer(serializers.ModelSerializer):
+class SimpleHouseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = House
@@ -12,3 +13,20 @@ class HouseSerializer(serializers.ModelSerializer):
             'name',
             'introduction',
          ) 
+
+
+class HouseSerializer(serializers.ModelSerializer):
+    necessities = serializers.SerializerMethodField()
+
+    class Meta:
+        model = House
+        fields = (
+            'id',
+            'name',
+            'introduction',
+            'necessities',
+        )
+
+    def get_necessities(self, house):
+        necessity_houses = house.necessity_houses.filter(count__gt=0).select_related('necessity')
+        return NecessityOfHouseSerializer(necessity_houses, many=True, context=self.context).data
