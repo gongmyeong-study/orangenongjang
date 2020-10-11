@@ -51,13 +51,13 @@ class NecessityLogSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'action',
-            'user'
+            'user',
             'necessity',
             'created_at',
         )
 
     def get_user(self, log):
-        return SimpleUserSerializer(log.necessity_house.user, context=self.context).data
+        return SimpleUserSerializer(log.user, context=self.context).data
 
     def get_necessity(self, log):
         return NecessityOfHouseSerializer(log.necessity_house, context=self.context).data
