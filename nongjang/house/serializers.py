@@ -48,6 +48,7 @@ class HouseSerializer(serializers.ModelSerializer):
 class UserOfHouseSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(source='user.id')
     username = serializers.CharField(source='user.username')
+    joined_at = serializers.DateTimeField(source='created_at')
 
     class Meta:
         model = UserHouse
@@ -55,4 +56,5 @@ class UserOfHouseSerializer(serializers.ModelSerializer):
             'id',
             'username',
             'is_leader',
+            'joined_at',
         )

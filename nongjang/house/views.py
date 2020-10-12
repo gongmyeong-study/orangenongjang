@@ -171,5 +171,6 @@ class HouseViewSet(viewsets.GenericViewSet):
         if not user_house:
             return Response({'error': "소속되어 있지 않은 집입니다."}, status=status.HTTP_403_FORBIDDEN)
 
-        logs = NecessityLog.objects.filter(necessity_house__house=house).select_related('necessity_house')
+        logs = NecessityLog.objects.filter(
+            necessity_house__house=house).order_by('-created_at').select_related('necessity_house')
         return Response(self.get_serializer(logs, many=True).data)
