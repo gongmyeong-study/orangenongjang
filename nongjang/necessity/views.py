@@ -69,12 +69,28 @@ class NecessityHouseViewSet(viewsets.GenericViewSet):
 
         data = request.data
         name = data.get('name')
-        description = data.get('description', '')
+        description = data.get('description')
         price = data.get('price')
-        if name is not None or description is not None or price is not None:
+        updated = False
+
+        if price:
+            if not price.isnumeric() or int(price) < 0:
+                return Response({'error': "price는 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
+            necessity_house.price = int(price)
+            updated = True
+        elif price == '':
+            necessity_house.price = None
+            updated = True
+
+        if name:
             necessity_house.name = name
+            updated = True
+
+        if description is not None:
             necessity_house.description = description
-            necessity_house.price = price
+            updated = True
+
+        if updated:
             necessity_house.save()
 
         NecessityLog.objects.create(necessity_house=necessity_house, user=user, action=NecessityLog.UPDATE)
