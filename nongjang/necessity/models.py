@@ -1,39 +1,50 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from house.models import House
+
 
 class Necessity(models.Model):
-    name = models.CharField(max_length=200)
-    option = models.CharField(max_length=100, blank=True, default='')
-    description = models.CharField(max_length=500, blank=True, default='')
+    name = models.CharField(max_length=200, db_index=True)
+    option = models.CharField(max_length=100, blank=True, db_index=True)
+    description = models.CharField(max_length=500, blank=True)
     price = models.PositiveIntegerField(null=True)
 
+    class Meta:
+        unique_together = (
+            ('name', 'option'),
+        )
 
-class NecessityUser(models.Model):
-    user = models.ForeignKey(User, related_name='necessities', on_delete=models.CASCADE)
-    necessity = models.ForeignKey(Necessity, related_name='users', on_delete=models.CASCADE)
-    count = models.PositiveIntegerField(default=0)
+
+class NecessityHouse(models.Model):
+    house = models.ForeignKey(House, related_name='necessity_houses', on_delete=models.CASCADE)
+    necessity = models.ForeignKey(Necessity, related_name='necessity_houses', on_delete=models.CASCADE)
+    description = models.CharField(max_length=500, blank=True)
+    price = models.PositiveIntegerField(null=True)
+    count = models.PositiveIntegerField(db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True, db_index=True)
 
     class Meta:
-        unique_together = [
-            ['user', 'necessity'],
-        ]
+        unique_together = (
+            ('house', 'necessity'),
+        )
 
 
-class NecessityUserLog(models.Model):
+class NecessityLog(models.Model):
     CREATE = 'CREATE'
     UPDATE = 'UPDATE'
     DELETE = 'DELETE'
-    CHANGE = 'CHANGE'
+    COUNT = 'COUNT'
 
-    ACTIVITY_CATEGORY = (
-        (CREATE, 'Create'),
-        (UPDATE, 'Update'),
-        (DELETE, 'Delete'),
-        (CHANGE, 'Change'),
+    ACTIONS = (
+        (CREATE, 'create'),
+        (UPDATE, 'update'),
+        (DELETE, 'delete'),
+        (COUNT, 'count'),
     )
 
-    activity_category = models.CharField(max_length=50, choices=ACTIVITY_CATEGORY, default=CHANGE)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    necessity = models.ForeignKey(Necessity, on_delete=models.SET_NULL, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    action = models.CharField(max_length=50, choices=ACTIONS)
+    necessity_house = models.ForeignKey(NecessityHouse, related_name='necessity_logs', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='necessity_logs', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
