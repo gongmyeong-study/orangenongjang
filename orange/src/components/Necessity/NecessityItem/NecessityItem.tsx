@@ -1,8 +1,11 @@
-import React, { Dispatch } from 'react';
+import React, {
+  Dispatch, useEffect, useState, useReducer,
+} from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { MdDelete } from 'react-icons/md';
-import { necessityActions } from '../../../store/actions';
+import { necessityActions } from '../../../store/actions/index';
+import { necessityConstants } from '../../../store/actions/actionTypes';
 
 const NecessityItemRemove = styled.div`
     display: none;
@@ -56,8 +59,33 @@ interface Props {
 }
 
 function NecessityItem(props: Props) {
+  // const initialState = { count: props.count };
+  // function reducer(state: any, action: any) {
+  //   switch (action.type) {
+  //     case necessityConstants.COUNT_INCREASE:
+  //       return { count: state.count + 1 };
+  //     case necessityConstants.COUNT_DECREASE:
+  //       return { count: state.count - 1 };
+  //     default:
+  //       throw new Error();
+  //   }
+  // }
+  // const [state, dispatch] = useReducer(reducer, initialState);
+  // console.log(initialState, props.count);
+
+  const [count, setCount] = useState<number>(props.count);
+  const onIncrease = () => setCount(count + 1);
+  const onDecrease = () => setCount(count - 1);
+  console.log(count, props.count);
+
+  useEffect(() => {
+    // 이 함수는 render 가 마치고 난 다음에 실행됩니다!
+    console.log('rendered:', count, props.count);
+  });
+
   return (
     <NecessityItemBlock id={`necessity-item-${props.id}`}>
+      {console.log('2222', props)}
       <Text>
         {`${props.name}`}
         <span className="option">
@@ -75,25 +103,39 @@ function NecessityItem(props: Props) {
         <MdDelete />
       </NecessityItemRemove>
 
+      {/* <button
+        type="button"
+        onClick={() => dispatch({ type: necessityConstants.COUNT_INCREASE })}
+      >
+        +
+      </button>
+      {state.count}
+      <button
+        type="button"
+        onClick={() => dispatch({ type: necessityConstants.COUNT_DECREASE })}
+      >
+        -
+      </button> */}
+
       <button
         type="button"
         onClick={() => {
-          if (props.onIncrease) {
-            props.onIncrease(props.necessityUserId, props.count + 1);
-            window.location.reload();
-          }
+          onIncrease();
+          // if (props.onIncrease) {
+          //   props.onIncrease(props.necessityUserId, props.count + 1);
+          // }
         }}
       >
         +
       </button>
-      <div>{props.count}</div>
+      <div>{count}</div>
       <button
         type="button"
         onClick={() => {
-          if (props.onDecrease) {
-            props.onDecrease(props.necessityUserId, props.count - 1);
-            window.location.reload();
-          }
+          onDecrease();
+          // if (props.onDecrease) {
+          //   props.onDecrease(props.necessityUserId, props.count - 1);
+          // }
         }}
       >
         -

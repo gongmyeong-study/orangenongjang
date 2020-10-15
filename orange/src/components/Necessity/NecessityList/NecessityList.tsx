@@ -12,7 +12,6 @@ function NecessityList(props: Props) {
 
   return (
     <>
-
       {Array.from(necessities).map((necessity: any) => (
         <div
           className="necessity-list-block"
