@@ -43,13 +43,10 @@ const createFailure = (error: any) => {
 };
 
 // 생필품 삭제 기능
-const removeSuccess = (necessities: any) => {
-  window.alert('삭제되었습니다!');
-  return {
-    type: necessityConstants.REMOVE_SUCCESS,
-    target: necessities,
-  };
-};
+const removeSuccess = (necessities: any) => ({
+  type: necessityConstants.REMOVE_SUCCESS,
+  target: necessities,
+});
 
 const removeFailure = (error: any) => {
   let actionType = null;

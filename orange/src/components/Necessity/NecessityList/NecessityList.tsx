@@ -9,9 +9,13 @@ interface Props {
 
 function NecessityList(props: Props) {
   const { necessities } = props;
+  console.log('9999999');
 
   return (
     <>
+      {console.log('4444444')}
+      {console.log(Array(necessities))}
+
       {Array.from(necessities).map((necessity: any) => (
         <div
           className="necessity-list-block"

@@ -76,7 +76,6 @@ function NecessityItem(props: Props) {
   const [count, setCount] = useState<number>(props.count);
   const onIncrease = () => setCount(count + 1);
   const onDecrease = () => setCount(count - 1);
-  console.log(count, props.count);
 
   useEffect(() => {
     // 이 함수는 render 가 마치고 난 다음에 실행됩니다!
@@ -120,10 +119,10 @@ function NecessityItem(props: Props) {
       <button
         type="button"
         onClick={() => {
-          onIncrease();
-          // if (props.onIncrease) {
-          //   props.onIncrease(props.necessityUserId, props.count + 1);
-          // }
+          // onIncrease();
+          if (props.onIncrease) {
+            props.onIncrease(props.necessityUserId, props.count + 1);
+          }
         }}
       >
         +
