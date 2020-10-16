@@ -24,16 +24,17 @@ function NecessityList(props: Props) {
               key={necessity.id}
               id={necessity.id}
               name={necessity.name}
+              count={necessity.count}
               option={necessity.option}
               price={necessity.price}
-              necessityUserId={necessity.necessity_user.id}
+              necessityHouseId={necessity.necessity_house.id}
             />
           </td>
           <td>
             <NecessityCounter
-              key={necessity.necessity_user.id}
-              necessityUserId={necessity.necessity_user.id}
-              count={necessity.necessity_user.count}
+              key={necessity.necessity_house.id}
+              necessityHouseId={necessity.necessity_house.id}
+              count={necessity.necessity_house.count}
             />
           </td>
         </div>

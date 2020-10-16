@@ -45,10 +45,11 @@ interface Props {
   key: number;
   id: number;
   name: string;
+  count: number;
   option: string;
   price: number;
-  necessityUserId: number;
-  remove(necessityUserId: number): any;
+  necessityHouseId: number;
+  remove(necessityHouseId: number): any;
 }
 
 function NecessityItem(props: Props) {
@@ -58,11 +59,11 @@ function NecessityItem(props: Props) {
         {`${props.name}`}
         <span className="option">
           <br />
-          {` ${props.option} / ${props.price}원 `}
+          {` ${props.count} / ${props.option} / ${props.price}원 `}
         </span>
       </Text>
       <NecessityItemRemove
-        onClick={() => props.remove(props.necessityUserId)}
+        onClick={() => props.remove(props.necessityHouseId)}
       >
         <MdDelete />
       </NecessityItemRemove>
@@ -71,8 +72,8 @@ function NecessityItem(props: Props) {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  remove: (necessityUserId: number): void => dispatch(
-    necessityActions.removeNecessity(necessityUserId),
+  remove: (necessityHouseId: number): void => dispatch(
+    necessityActions.removeHouseNecessity(necessityHouseId),
   ),
 });
 

@@ -12,6 +12,7 @@ interface Props {
     option: string,
     description: string,
     price: number,
+    count: number,
     houseId: number
   ) => any;
   me: any;
@@ -26,6 +27,7 @@ interface State {
   option: string;
   description: string;
   price: number;
+  count: number;
 }
 
 class NecessityCreateModal extends Component<Props, State> {
@@ -37,6 +39,7 @@ class NecessityCreateModal extends Component<Props, State> {
       option: '',
       description: '',
       price: 0,
+      count: 0,
     };
   }
 
@@ -46,6 +49,7 @@ class NecessityCreateModal extends Component<Props, State> {
       this.state.option,
       this.state.description,
       this.state.price,
+      this.state.count,
       this.props.houseId,
     )
       .then(() => {
@@ -91,6 +95,16 @@ class NecessityCreateModal extends Component<Props, State> {
               placeholder="오렌지"
               required
               onChange={(e) => this.setState({ name: e.target.value })}
+            />
+
+            <label htmlFor="count">
+              <b>개수 (Count)</b>
+            </label>
+            <input
+              type="number"
+              placeholder="0"
+              required
+              onChange={(e) => this.setState({ count: parseInt(e.target.value, 10) })}
             />
 
             <label htmlFor="option">
@@ -142,9 +156,9 @@ class NecessityCreateModal extends Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   create: (
-    name: string, option: string, description: string, price: number, houseId: number,
+    name: string, option: string, description: string, price: number, count: number, houseId: number,
   ): void => dispatch(
-    necessityActions.createNecessity(name, option, description, price, houseId),
+    necessityActions.createHouseNecessity(name, option, description, price, count, houseId),
   ),
 });
 
