@@ -126,13 +126,23 @@ class HouseViewSet(viewsets.GenericViewSet):
         description = data.get('description', '')
         price = data.get('price')
         count = data.get('count')
-        if not count or not isinstance(count, int) or int(count) < 0:
+
+        if isinstance(count, str):
+            if not count.isnumeric() or int(count) < 0:
+                return Response({'error': "count는 필수 항목이며 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                count = int(count)
+        elif not isinstance(count, int) or count < 0:
             return Response({'error': "count는 필수 항목이며 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
-        count = int(count)
+
         if price:
-            if not isinstance(price, int) or int(price) < 0:
+            if isinstance(price, str):
+                if not price.isnumeric() or int(price) < 0:
+                    return Response({'error': "price는 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    price = int(price)
+            elif not isinstance(price, int) or count < 0:
                 return Response({'error': "price는 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
-            price = int(price)
         else:
             price = None
 
