@@ -104,7 +104,7 @@ class NecessityCreateModal extends Component<Props, State> {
               type="number"
               placeholder="0"
               required
-              onChange={(e) => this.setState({ count: parseInt(e.target.value, 10) })}
+              onChange={(e) => this.setState({ count: parseFloat(e.target.value) })}
             />
 
             <label htmlFor="option">
@@ -134,7 +134,7 @@ class NecessityCreateModal extends Component<Props, State> {
               type="number"
               placeholder="2900"
               required
-              onChange={(e) => this.setState({ price: parseInt(e.target.value, 10) })}
+              onChange={(e) => this.setState({ price: parseFloat(e.target.value) })}
             />
 
             <div className="necessity-create-clearfix">
