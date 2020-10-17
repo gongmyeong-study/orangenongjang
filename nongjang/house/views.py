@@ -109,7 +109,6 @@ class HouseViewSet(viewsets.GenericViewSet):
         user_house = request.user.user_houses.filter(house=house).last()
         if not user_house:
             return Response({'error': "소속되어 있지 않은 집입니다."}, status=status.HTTP_403_FORBIDDEN)
-
         if self.request.method == 'POST':
             return self._create_necessity(house)
         return self._get_necessity(house)
@@ -174,4 +173,3 @@ class HouseViewSet(viewsets.GenericViewSet):
         logs = NecessityLog.objects.filter(
             necessity_house__house=house).order_by('-created_at').select_related('necessity_house')
         return Response(self.get_serializer(logs, many=True).data)
-
