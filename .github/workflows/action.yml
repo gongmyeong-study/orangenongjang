@@ -56,9 +56,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      ORANGENONGJANG_HOST: {{ secrets.ORANGENONGJANG_HOST }}
-      ORANGENONGJANG_USER: {{ secrets.ORANGENONGJANG_USER }}
-      ORANGENONGJANG_KEY: {{ secrets.ORANGENONGJANG_KEY }}
+      ORANGENONGJANG_HOST: ${{ secrets.ORANGENONGJANG_HOST }}
+      ORANGENONGJANG_USER: ${{ secrets.ORANGENONGJANG_USER }}
+      ORANGENONGJANG_KEY: ${{ secrets.ORANGENONGJANG_KEY }}
     steps:    
     - uses: actions/checkout@v2
     - name: executing remote ssh commands using private key
