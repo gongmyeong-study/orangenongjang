@@ -77,7 +77,7 @@ class HouseViewSet(viewsets.GenericViewSet):
         user_house = user.user_houses.filter(house=house).last()
         if not user_house:
             return Response({'error': "소속되어 있지 않은 집입니다."}, status=status.HTTP_403_FORBIDDEN)
-        
+
         if user_house.is_leader:
             return Response({'error': 'leader이므로 집을 떠날 수 없습니다. leader를 다른 유저에게 양도한 뒤 다시 시도해 주세요'},
                             status=status.HTTP_400_BAD_REQUEST)
@@ -109,7 +109,6 @@ class HouseViewSet(viewsets.GenericViewSet):
         user_house = request.user.user_houses.filter(house=house).last()
         if not user_house:
             return Response({'error': "소속되어 있지 않은 집입니다."}, status=status.HTTP_403_FORBIDDEN)
-
         if self.request.method == 'POST':
             return self._create_necessity(house)
         return self._get_necessity(house)
@@ -127,13 +126,23 @@ class HouseViewSet(viewsets.GenericViewSet):
         description = data.get('description', '')
         price = data.get('price')
         count = data.get('count')
-        if not count or not count.isnumeric() or int(count) < 0:
+
+        if isinstance(count, str):
+            if not count.isnumeric() or int(count) < 0:
+                return Response({'error': "count는 필수 항목이며 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                count = int(count)
+        elif not isinstance(count, int) or count < 0:
             return Response({'error': "count는 필수 항목이며 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
-        count = int(count)
+
         if price:
-            if not price.isnumeric() or int(price) < 0:
+            if isinstance(price, str):
+                if not price.isnumeric() or int(price) < 0:
+                    return Response({'error': "price는 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    price = int(price)
+            elif not isinstance(price, int) or count < 0:
                 return Response({'error': "price는 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
-            price = int(price)
         else:
             price = None
 
