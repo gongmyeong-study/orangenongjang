@@ -13,7 +13,7 @@ function NecessityList(props: Props) {
 
   return (
     <>
-
+      {console.log(necessities)}
       {Array.from(necessities).map((necessity: any) => (
         <div
           className="necessity-list-block"

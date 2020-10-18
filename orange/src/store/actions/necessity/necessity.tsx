@@ -3,9 +3,9 @@ import { Dispatch } from 'redux';
 import { necessityConstants } from '../actionTypes';
 
 // 생필품 호출 기능
-const getSuccess = (necessities: any) => ({
+const getSuccess = (data: any) => ({
   type: necessityConstants.GET_SUCCESS,
-  target: necessities,
+  target: data.necessities,
 });
 
 const getFailure = (error: any) => {
@@ -96,7 +96,7 @@ export const removeHouseNecessity = (necessityHouseId: number) => (dispatch: Dis
   .then((removeResponse) => dispatch(removeSuccess(removeResponse.data)))
   .catch((removeError) => dispatch(removeFailure(removeError)));
 
-export const getNecessity = (houseId: number) => (dispatch: Dispatch) => axios.get('/api/v1/house/{house_id}/necessity/', { params: { houseId } })
+export const getNecessity = (houseId: number) => (dispatch: Dispatch) => axios.get(`/api/v1/house/${houseId}/necessity/`)
   .then((getResponse) => dispatch(getSuccess(getResponse.data)))
   .catch((getError) => dispatch(getFailure(getError)));
 
