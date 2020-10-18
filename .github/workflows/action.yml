@@ -55,6 +55,10 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    env:
+      ORANGENONGJANG_HOST: {{ secrets.ORANGENONGJANG_HOST }}
+      ORANGENONGJANG_USER: {{ secrets.ORANGENONGJANG_USER }}
+      ORANGENONGJANG_KEY: {{ secrets.ORANGENONGJANG_KEY }}
     steps:    
     - uses: actions/checkout@v2
     - name: executing remote ssh commands using private key
@@ -65,7 +69,3 @@ jobs:
         echo "$ORANGENONGJANG_HOST"
         echo "$ORANGENONGJANG_HOST" > ~/.ssh/known_hosts
         ssh $ORANGENONGJANG_USER@ORANGENONGJANG_HOST -i ~/.ssh/orangenongjang.pem "touch hello.txt"
-    - env:
-      ORANGENONGJANG_HOST: {{ secrets.ORANGENONGJANG_HOST }}
-      ORANGENONGJANG_USER: {{ secrets.ORANGENONGJANG_USER }}
-      ORANGENONGJANG_KEY: {{ secrets.ORANGENONGJANG_KEY }}
