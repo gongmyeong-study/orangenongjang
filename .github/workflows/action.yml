@@ -62,5 +62,10 @@ jobs:
         mkdir -p ~/.ssh/
         echo "$ORANGENONGJANG_KEY" > ~/.ssh/orangenongjang.pem
         sudo chmod 400 ~/.ssh/orangenongjang.pem
+        echo "$ORANGENONGJANG_HOST"
         echo "$ORANGENONGJANG_HOST" > ~/.ssh/known_hosts
         ssh $ORANGENONGJANG_USER@ORANGENONGJANG_HOST -i ~/.ssh/orangenongjang.pem "touch hello.txt"
+    - env:
+      ORANGENONGJANG_HOST: {{ secrets.ORANGENONGJANG_HOST }}
+      ORANGENONGJANG_USER: {{ secrets.ORANGENONGJANG_USER }}
+      ORANGENONGJANG_KEY: {{ secrets.ORANGENONGJANG_KEY }}
