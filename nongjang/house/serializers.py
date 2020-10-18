@@ -58,4 +58,3 @@ class UserOfHouseSerializer(serializers.ModelSerializer):
             'is_leader',
             'joined_at',
         )
-

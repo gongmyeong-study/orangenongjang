@@ -10,4 +10,3 @@ router.register('necessity', NecessityViewSet, basename='necessity')  # /api/v1/
 urlpatterns = [
     path('', include((router.urls))),
 ]
-

@@ -12,4 +12,3 @@ urlpatterns = [
     path('house/<int:house_id>/necessity/<int:necessity_id>/', HouseNecessityView.as_view()),
     path('house/<int:house_id>/necessity/<int:necessity_id>/count/', HouseNecessityCountView.as_view()),
 ]
-

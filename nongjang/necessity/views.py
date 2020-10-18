@@ -1,11 +1,10 @@
 from django.db import IntegrityError
 from rest_framework import status, viewsets
-from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 
-from necessity.serializers import NecessitySerializer, NecessityOfHouseSerializer
-from necessity.models import Necessity, NecessityHouse, NecessityLog
+from necessity.serializers import NecessitySerializer
+from necessity.models import Necessity
 
 
 class NecessityViewSet(viewsets.GenericViewSet):
@@ -56,4 +55,3 @@ class NecessityViewSet(viewsets.GenericViewSet):
     # GET /api/v1/necessity/
     def list(self, request):
         return Response(self.get_serializer(self.get_queryset(), many=True).data)
-

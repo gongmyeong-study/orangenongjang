@@ -291,4 +291,3 @@ class HouseNecessityCountView(APIView):
         necessity_house.save()
 
         return Response(NecessityOfHouseSerializer(necessity_house).data)
-

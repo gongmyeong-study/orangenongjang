@@ -23,17 +23,25 @@ class NecessityOfHouseSerializer(serializers.ModelSerializer):
     option = serializers.CharField(source='necessity.option')
     description = serializers.SerializerMethodField()
     price = serializers.SerializerMethodField()
+    house_id = serializers.SerializerMethodField()
 
     class Meta:
         model = NecessityHouse
         fields = (
             'id',
+            'house_id',
             'name',
             'option',
             'description',
             'price',
             'count',
         )
+
+    def get_house_id(self, necessity_house):
+        if necessity_house.house_id:
+            return necessity_house.house_id
+        else:
+            return None
 
     def get_description(self, necessity_house):
         return necessity_house.description if necessity_house.description else necessity_house.necessity.description
