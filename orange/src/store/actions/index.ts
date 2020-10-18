@@ -7,9 +7,9 @@ import {
 
 import {
   createHouseNecessity,
-  getNecessity,
+  getHouseNecessity,
   removeHouseNecessity,
-  countNecessity,
+  countHouseNecessity,
 } from './necessity/necessity';
 
 export const userActions = {
@@ -21,7 +21,7 @@ export const userActions = {
 
 export const necessityActions = {
   createHouseNecessity,
-  getNecessity,
+  getHouseNecessity,
   removeHouseNecessity,
-  countNecessity,
+  countHouseNecessity,
 };

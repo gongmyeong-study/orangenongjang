@@ -100,7 +100,7 @@ function NecessityPage(props: Props): ReactElement {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   onGetNecessity: (houseId: number): void => dispatch(
-    necessityActions.getNecessity(houseId),
+    necessityActions.getHouseNecessity(houseId),
   ),
 });
 

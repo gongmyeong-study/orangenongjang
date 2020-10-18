@@ -49,21 +49,27 @@ interface Props {
   description: string;
   option: string;
   price: number;
-  remove(necessityHouseId: number): any;
+  houseId: number;
+  necessityId: number;
+  onRemoveNecessity(houseId: number, necessityId: number): any;
 }
 
 function NecessityItem(props: Props) {
   return (
-    <NecessityItemBlock id={`necessity-item-${props.id}`}>
+    <NecessityItemBlock id={`necessity-item-${props.necessityId}`}>
       <Text>
         {`${props.name}`}
         <span className="option">
           <br />
-          {` ${props.count} / ${props.option} / ${props.price}원 `}
+          {` ${props.count}개 / ${props.price}원 / ${props.option} `}
         </span>
       </Text>
       <NecessityItemRemove
-        onClick={() => props.remove(props.necessityHouseId)}
+        onClick={() => {
+          props.onRemoveNecessity(props.houseId, props.necessityId);
+          window.location.reload();
+        }}
+
       >
         <MdDelete />
       </NecessityItemRemove>
@@ -72,8 +78,8 @@ function NecessityItem(props: Props) {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  remove: (necessityHouseId: number): void => dispatch(
-    necessityActions.removeHouseNecessity(necessityHouseId),
+  onRemoveNecessity: (houseId: number, necessityId: number): void => dispatch(
+    necessityActions.removeHouseNecessity(houseId, necessityId),
   ),
 });
 

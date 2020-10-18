@@ -53,7 +53,6 @@ class NecessityCreateModal extends Component<Props, State> {
       this.props.houseId,
     )
       .then(() => {
-        console.log(this.props.createStatus);
         if (this.props.createStatus === necessityStatus.SUCCESS) {
           window.alert('입력 완료!');
           this.props.restoreModal();
