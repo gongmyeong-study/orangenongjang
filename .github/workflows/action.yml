@@ -64,6 +64,7 @@ jobs:
     steps:    
     - uses: actions/checkout@v2
     - name: executing remote ssh commands using private key
+      if: github.event_name == 'push'
       run: |
         mkdir -p ~/.ssh/
         echo "$ORANGENONGJANG_KEY" > ~/.ssh/orangenongjang.pem
