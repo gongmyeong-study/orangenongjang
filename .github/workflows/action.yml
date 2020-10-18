@@ -54,6 +54,8 @@ jobs:
     - run: yarn build --prod
 
   deploy:
+    needs: [django-test, react-test]
+
     runs-on: ubuntu-latest
     env:
       ORANGENONGJANG_HOST: ${{ secrets.ORANGENONGJANG_HOST }}
@@ -67,4 +69,4 @@ jobs:
         echo "$ORANGENONGJANG_KEY" > ~/.ssh/orangenongjang.pem
         sudo chmod 400 ~/.ssh/orangenongjang.pem
         ssh-keyscan -H "$ORANGENONGJANG_HOST" > ~/.ssh/known_hosts
-        ssh $ORANGENONGJANG_USER@$ORANGENONGJANG_HOST -i ~/.ssh/orangenongjang.pem "touch hello.txt"
+        ssh $ORANGENONGJANG_USER@$ORANGENONGJANG_HOST -i ~/.ssh/orangenongjang.pem "bash deploy.sh"
