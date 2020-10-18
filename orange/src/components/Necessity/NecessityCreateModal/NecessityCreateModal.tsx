@@ -155,7 +155,8 @@ class NecessityCreateModal extends Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   create: (
-    name: string, option: string, description: string, price: number, count: number, houseId: number,
+    name: string, option: string, description: string,
+    price: number, count: number, houseId: number,
   ): void => dispatch(
     necessityActions.createHouseNecessity(name, option, description, price, count, houseId),
   ),
