@@ -19,11 +19,11 @@ class NecessitySerializer(serializers.ModelSerializer):
 
 class NecessityOfHouseSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(source='necessity.id')
+    house_id = serializers.IntegerField(source='house.id')
     name = serializers.CharField(source='necessity.name')
     option = serializers.CharField(source='necessity.option')
     description = serializers.SerializerMethodField()
     price = serializers.SerializerMethodField()
-    house_id = serializers.SerializerMethodField()
 
     class Meta:
         model = NecessityHouse
@@ -36,12 +36,6 @@ class NecessityOfHouseSerializer(serializers.ModelSerializer):
             'price',
             'count',
         )
-
-    def get_house_id(self, necessity_house):
-        if necessity_house.house_id:
-            return necessity_house.house_id
-        else:
-            return None
 
     def get_description(self, necessity_house):
         return necessity_house.description if necessity_house.description else necessity_house.necessity.description

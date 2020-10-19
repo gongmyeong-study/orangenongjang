@@ -3,8 +3,8 @@ from rest_framework import status, viewsets
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 
-from necessity.serializers import NecessitySerializer
 from necessity.models import Necessity
+from necessity.serializers import NecessitySerializer
 
 
 class NecessityViewSet(viewsets.GenericViewSet):
