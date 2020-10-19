@@ -51,7 +51,7 @@ interface Props {
   price: number;
   houseId: number;
   necessityId: number;
-  onRemoveNecessity(houseId: number, necessityId: number): any;
+  onRemoveNecessityHouse(houseId: number, necessityId: number): any;
 }
 
 function NecessityItem(props: Props) {
@@ -66,7 +66,7 @@ function NecessityItem(props: Props) {
       </Text>
       <NecessityItemRemove
         onClick={() => {
-          props.onRemoveNecessity(props.houseId, props.necessityId);
+          props.onRemoveNecessityHouse(props.houseId, props.necessityId);
           window.location.reload();
         }}
 
@@ -78,8 +78,8 @@ function NecessityItem(props: Props) {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  onRemoveNecessity: (houseId: number, necessityId: number): void => dispatch(
-    necessityActions.removeHouseNecessity(houseId, necessityId),
+  onRemoveNecessityHouse: (houseId: number, necessityId: number): void => dispatch(
+    necessityActions.removeNecessityHouse(houseId, necessityId),
   ),
 });
 

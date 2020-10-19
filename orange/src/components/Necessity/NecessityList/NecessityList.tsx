@@ -37,7 +37,6 @@ function NecessityList(props: Props) {
               houseId={necessity.house_id}
               necessityId={necessity.id}
               count={necessity.count}
-
             />
           </div>
         </div>

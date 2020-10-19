@@ -84,7 +84,7 @@ const countFailure = (error: any) => {
   };
 };
 
-export const createHouseNecessity = (
+export const createNecessityHouse = (
   name: string, option: string, description: string, price: number, count: number, houseId: number,
 ) => (dispatch: Dispatch) => axios.post(`/api/v1/house/${houseId}/necessity/`, {
   houseId, name, option, description, price, count,
@@ -92,17 +92,17 @@ export const createHouseNecessity = (
   .then((createResponse) => dispatch(createSuccess(createResponse.data)))
   .catch((createError) => dispatch(createFailure(createError)));
 
-export const removeHouseNecessity = (
+export const removeNecessityHouse = (
   houseId: number, necessityId: number,
 ) => (dispatch: Dispatch) => axios.delete(`/api/v1/house/${houseId}/necessity/${necessityId}/`)
   .then((removeResponse) => dispatch(removeSuccess(removeResponse.data)))
   .catch((removeError) => dispatch(removeFailure(removeError)));
 
-export const getHouseNecessity = (houseId: number) => (dispatch: Dispatch) => axios.get(`/api/v1/house/${houseId}/necessity/`)
+export const getNecessityHouse = (houseId: number) => (dispatch: Dispatch) => axios.get(`/api/v1/house/${houseId}/necessity/`)
   .then((getResponse) => dispatch(getSuccess(getResponse.data)))
   .catch((getError) => dispatch(getFailure(getError)));
 
-export const countHouseNecessity = (
+export const countNecessityHouse = (
   houseId: number, necessityId: number, count: number,
 ) => (dispatch: Dispatch) => axios.put(`/api/v1/house/${houseId}/necessity/${necessityId}/count/`, { count })
   .then((countResponse) => dispatch(countSuccess(countResponse.data)))

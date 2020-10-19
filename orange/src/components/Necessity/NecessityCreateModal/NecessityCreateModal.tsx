@@ -7,7 +7,7 @@ import './NecessityCreateModal.css';
 
 interface Props {
   history: History;
-  create: (
+  onCreateNecessityHouse: (
     name: string,
     option: string,
     description: string,
@@ -39,12 +39,12 @@ class NecessityCreateModal extends Component<Props, State> {
       option: '',
       description: '',
       price: 0,
-      count: 0,
+      count: 1,
     };
   }
 
-  create = (): void => {
-    this.props.create(
+  onCreateNecessityHouse = (): void => {
+    this.props.onCreateNecessityHouse(
       this.state.name,
       this.state.option,
       this.state.description,
@@ -101,7 +101,9 @@ class NecessityCreateModal extends Component<Props, State> {
             </label>
             <input
               type="number"
-              placeholder="0"
+              min="1"
+              step="1"
+              placeholder="1"
               required
               onChange={(e) => this.setState({ count: parseFloat(e.target.value) })}
             />
@@ -141,7 +143,7 @@ class NecessityCreateModal extends Component<Props, State> {
                 type="button"
                 className="necessity-create-createbtn"
                 disabled={this.state.name === ''}
-                onClick={this.create}
+                onClick={this.onCreateNecessityHouse}
               >
                 생필품 등록
               </button>
@@ -154,11 +156,11 @@ class NecessityCreateModal extends Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  create: (
+  onCreateNecessityHouse: (
     name: string, option: string, description: string,
     price: number, count: number, houseId: number,
   ): void => dispatch(
-    necessityActions.createHouseNecessity(name, option, description, price, count, houseId),
+    necessityActions.createNecessityHouse(name, option, description, price, count, houseId),
   ),
 });
 
