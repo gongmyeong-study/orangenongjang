@@ -3,11 +3,12 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from house.models import House, UserHouse
 from house.serializers import HouseSerializer, SimpleHouseSerializer
 from necessity.models import Necessity, NecessityHouse, NecessityLog
-from necessity.serializers import NecessityLogSerializer
+from necessity.serializers import NecessityLogSerializer, NecessityOfHouseSerializer
 
 
 class HouseViewSet(viewsets.GenericViewSet):
@@ -141,7 +142,7 @@ class HouseViewSet(viewsets.GenericViewSet):
                     return Response({'error': "price는 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
                 else:
                     price = int(price)
-            elif not isinstance(price, int) or count < 0:
+            elif not isinstance(price, int) or price < 0:
                 return Response({'error': "price는 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
         else:
             price = None
@@ -183,3 +184,110 @@ class HouseViewSet(viewsets.GenericViewSet):
         logs = NecessityLog.objects.filter(
             necessity_house__house=house).order_by('-created_at').select_related('necessity_house')
         return Response(self.get_serializer(logs, many=True).data)
+
+
+class HouseNecessityView(APIView):
+    permission_classes = (IsAuthenticated, )
+
+    # PUT /api/v1/house/{house_id}/necessity/{necessity_id}/
+    def put(self, request, *args, **kwargs):
+        house_id = kwargs['house_id']
+        necessity_id = kwargs['necessity_id']
+
+        user = request.user
+
+        try:
+            necessity_house = NecessityHouse.objects.get(house_id=house_id, necessity_id=necessity_id)
+        except NecessityHouse.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        if not user.user_houses.filter(house=necessity_house.house).exists():
+            return Response({'error': "소속되어 있지 않은 집의 Necessity입니다."}, status=status.HTTP_403_FORBIDDEN)
+
+        data = request.data
+        name = data.get('name')
+        description = data.get('description')
+        price = data.get('price')
+        updated = False
+
+        if price:
+            if isinstance(price, str):
+                if not price.isnumeric() or int(price) < 0:
+                    return Response({'error': "price는 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    necessity_house.price = int(price)
+                    updated = True
+            elif not isinstance(price, int) or price < 0:
+                return Response({'error': "price는 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            necessity_house.price = None
+            updated = True
+
+        if name:
+            necessity_house.name = name
+            updated = True
+
+        if description is not None:
+            necessity_house.description = description
+            updated = True
+
+        if updated:
+            necessity_house.save()
+
+        NecessityLog.objects.create(necessity_house=necessity_house, user=user, action=NecessityLog.UPDATE)
+
+        return Response(NecessityOfHouseSerializer(necessity_house).data)
+
+    # DELETE /api/v1/house/{house_id}/necessity/{necessity_id}/
+    def delete(self, request, *args, **kwargs):
+        house_id = kwargs['house_id']
+        necessity_id = kwargs['necessity_id']
+
+        user = request.user
+
+        try:
+            necessity_house = NecessityHouse.objects.get(house_id=house_id, necessity_id=necessity_id)
+        except NecessityHouse.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        if not user.user_houses.filter(house=necessity_house.house).exists():
+            return Response({'error': "소속되어 있지 않은 집의 Necessity입니다."}, status=status.HTTP_403_FORBIDDEN)
+
+        NecessityLog.objects.create(necessity_house=necessity_house, user=user, action=NecessityLog.DELETE)
+        necessity_house.count = 0
+        necessity_house.save()
+
+        return Response(NecessityOfHouseSerializer(necessity_house).data)
+
+
+class HouseNecessityCountView(APIView):
+    permission_classes = (IsAuthenticated, )
+
+    # PUT /api/v1/house/{house_id}/necessity/{necessity_id}/count/
+    def put(self, request, *args, **kwargs):
+        house_id = kwargs['house_id']
+        necessity_id = kwargs['necessity_id']
+
+        user = request.user
+
+        count = request.data.get('count')
+        if isinstance(count, str):
+            if not count.isnumeric() or int(count) < 0:
+                return Response({'error': "count는 필수 항목이며 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                count = int(count)
+        elif not isinstance(count, int) or count < 0:
+            return Response({'error': "count는 필수 항목이며 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            necessity_house = NecessityHouse.objects.get(house_id=house_id, necessity_id=necessity_id)
+        except NecessityHouse.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        if not user.user_houses.filter(house=necessity_house.house).exists():
+            return Response({'error': "소속되어 있지 않은 집의 Necessity입니다."}, status=status.HTTP_403_FORBIDDEN)
+
+        necessity_house.count = count
+        necessity_house.save()
+
+        return Response(NecessityOfHouseSerializer(necessity_house).data)

@@ -19,6 +19,7 @@ class NecessitySerializer(serializers.ModelSerializer):
 
 class NecessityOfHouseSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(source='necessity.id')
+    house_id = serializers.IntegerField(source='house.id')
     name = serializers.CharField(source='necessity.name')
     option = serializers.CharField(source='necessity.option')
     description = serializers.SerializerMethodField()
@@ -28,6 +29,7 @@ class NecessityOfHouseSerializer(serializers.ModelSerializer):
         model = NecessityHouse
         fields = (
             'id',
+            'house_id',
             'name',
             'option',
             'description',
