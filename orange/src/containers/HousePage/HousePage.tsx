@@ -2,7 +2,7 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import axios from 'axios';
 
 interface House {
-  id?: string;
+  id: string;
   name: string;
   introduction: string;
   users?: object;
@@ -29,18 +29,18 @@ function HousePage(props: Props) {
     };
   }, []);
 
-  const createHouse = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    axios.post('/api/v1/house/', {'name': nameToCreate, 'introduction': introductionToCreate})
-      .then((res) => {
-        const data: House= res.data;
-        goToTheRoom(data.id!);
-      });
-  }
-
   const goToTheRoom = (houseId: string) => {
     const url = `/main/${houseId}`;
     props.history.push(url);
+  };
+
+  const createHouse = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    axios.post('/api/v1/house/', { name: nameToCreate, introduction: introductionToCreate })
+      .then((res) => {
+        const { data } = res;
+        goToTheRoom(data.id);
+      });
   };
 
   const showUserHouses = houses?.map((house, index) => (
@@ -53,7 +53,7 @@ function HousePage(props: Props) {
       </h2>
       <button
         type="button"
-        onClick={() => goToTheRoom(house.id!)}
+        onClick={() => goToTheRoom(house.id)}
       >
         들어가기
       </button>
@@ -64,22 +64,28 @@ function HousePage(props: Props) {
   return (
     <main>
       <section>
-      <form onSubmit={createHouse}>
-        <label>
-          Name:
-          <input type="text" onChange={(e) => setNameToCreate(e.target.value)}
-          />
-        </label>
-        <label>
-          Introduction:
-          <input type="text" onChange={(e) => setIntroductionToCreate(e.target.value)}
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+        <form onSubmit={createHouse}>
+          <label>
+            Name:
+            <input
+              type="text"
+              onChange={(e) => setNameToCreate(e.target.value)}
+              placeholder="예쁜 우리집"
+            />
+          </label>
+          <label>
+            Introduction:
+            <input
+              type="text"
+              onChange={(e) => setIntroductionToCreate(e.target.value)}
+              placeholder="친구들과 함께 사는 공간"
+            />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
       </section>
       <section>
-      {showUserHouses}
+        {showUserHouses}
       </section>
     </main>
   );
