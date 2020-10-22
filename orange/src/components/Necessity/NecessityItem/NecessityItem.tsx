@@ -45,24 +45,31 @@ interface Props {
   key: number;
   id: number;
   name: string;
+  count: number;
+  description: string;
   option: string;
   price: number;
-  necessityUserId: number;
-  remove(necessityUserId: number): any;
+  houseId: number;
+  necessityId: number;
+  onRemoveNecessityHouse(houseId: number, necessityId: number): any;
 }
 
 function NecessityItem(props: Props) {
   return (
-    <NecessityItemBlock id={`necessity-item-${props.id}`}>
+    <NecessityItemBlock id={`necessity-item-${props.necessityId}`}>
       <Text>
         {`${props.name}`}
         <span className="option">
           <br />
-          {` ${props.option} / ${props.price}원 `}
+          {` ${props.count}개 / ${props.price}원 / ${props.option} `}
         </span>
       </Text>
       <NecessityItemRemove
-        onClick={() => props.remove(props.necessityUserId)}
+        onClick={() => {
+          props.onRemoveNecessityHouse(props.houseId, props.necessityId);
+          window.location.reload();
+        }}
+
       >
         <MdDelete />
       </NecessityItemRemove>
@@ -71,8 +78,8 @@ function NecessityItem(props: Props) {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  remove: (necessityUserId: number): void => dispatch(
-    necessityActions.removeNecessity(necessityUserId),
+  onRemoveNecessityHouse: (houseId: number, necessityId: number): void => dispatch(
+    necessityActions.removeNecessityHouse(houseId, necessityId),
   ),
 });
 

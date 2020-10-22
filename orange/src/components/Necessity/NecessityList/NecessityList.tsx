@@ -13,29 +13,32 @@ function NecessityList(props: Props) {
 
   return (
     <>
-
       {Array.from(necessities).map((necessity: any) => (
         <div
           className="necessity-list-block"
           key={necessity.id}
         >
-          <td className="necessity-item-block">
+          <div className="necessity-item-block">
             <NecessityItem
               key={necessity.id}
               id={necessity.id}
               name={necessity.name}
+              count={necessity.count}
+              description={necessity.description}
               option={necessity.option}
               price={necessity.price}
-              necessityUserId={necessity.necessity_user.id}
+              houseId={necessity.house_id}
+              necessityId={necessity.id}
             />
-          </td>
-          <td>
+          </div>
+          <div>
             <NecessityCounter
-              key={necessity.necessity_user.id}
-              necessityUserId={necessity.necessity_user.id}
-              count={necessity.necessity_user.count}
+              key={necessity.id}
+              houseId={necessity.house_id}
+              necessityId={necessity.id}
+              count={necessity.count}
             />
-          </td>
+          </div>
         </div>
       ))}
     </>

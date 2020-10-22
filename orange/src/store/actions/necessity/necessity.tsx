@@ -3,9 +3,9 @@ import { Dispatch } from 'redux';
 import { necessityConstants } from '../actionTypes';
 
 // 생필품 호출 기능
-const getSuccess = (necessities: any) => ({
+const getSuccess = (data: any) => ({
   type: necessityConstants.GET_SUCCESS,
-  target: necessities,
+  target: data.necessities,
 });
 
 const getFailure = (error: any) => {
@@ -84,24 +84,26 @@ const countFailure = (error: any) => {
   };
 };
 
-export const createNecessity = (
-  name: string, option: string, description: string, price: number, houseId: number,
-) => (dispatch: Dispatch) => axios.post('/api/v1/necessity/', {
-  name, option, description, price, houseId,
+export const createNecessityHouse = (
+  name: string, option: string, description: string, price: number, count: number, houseId: number,
+) => (dispatch: Dispatch) => axios.post(`/api/v1/house/${houseId}/necessity/`, {
+  houseId, name, option, description, price, count,
 })
   .then((createResponse) => dispatch(createSuccess(createResponse.data)))
   .catch((createError) => dispatch(createFailure(createError)));
 
-export const removeNecessity = (necessityUserId: number) => (dispatch: Dispatch) => axios.delete(`/api/v1/necessity/${necessityUserId}/`)
+export const removeNecessityHouse = (
+  houseId: number, necessityId: number,
+) => (dispatch: Dispatch) => axios.delete(`/api/v1/house/${houseId}/necessity/${necessityId}/`)
   .then((removeResponse) => dispatch(removeSuccess(removeResponse.data)))
   .catch((removeError) => dispatch(removeFailure(removeError)));
 
-export const getNecessity = (houseId: number) => (dispatch: Dispatch) => axios.get('/api/v1/necessity/', { params: { houseId } })
+export const getNecessityHouse = (houseId: number) => (dispatch: Dispatch) => axios.get(`/api/v1/house/${houseId}/necessity/`)
   .then((getResponse) => dispatch(getSuccess(getResponse.data)))
   .catch((getError) => dispatch(getFailure(getError)));
 
-export const countNecessity = (
-  necessityUserId: number, count: number,
-) => (dispatch: Dispatch) => axios.put(`/api/v1/necessity/${necessityUserId}/count/`, { count })
+export const countNecessityHouse = (
+  houseId: number, necessityId: number, count: number,
+) => (dispatch: Dispatch) => axios.put(`/api/v1/house/${houseId}/necessity/${necessityId}/count/`, { count })
   .then((countResponse) => dispatch(countSuccess(countResponse.data)))
   .catch((countError) => dispatch(countFailure(countError)));
