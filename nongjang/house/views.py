@@ -289,5 +289,6 @@ class HouseNecessityCountView(APIView):
 
         necessity_house.count = count
         necessity_house.save()
+        NecessityLog.objects.create(action='COUNT', necessity_house_id=necessity_house.id, user_id=user.id)
 
         return Response(NecessityOfHouseSerializer(necessity_house).data)
