@@ -7,11 +7,12 @@ import './NecessityCreateModal.css';
 
 interface Props {
   history: History;
-  create: (
+  onCreateNecessityHouse: (
     name: string,
     option: string,
     description: string,
     price: number,
+    count: number,
     houseId: number
   ) => any;
   me: any;
@@ -26,6 +27,7 @@ interface State {
   option: string;
   description: string;
   price: number;
+  count: number;
 }
 
 class NecessityCreateModal extends Component<Props, State> {
@@ -37,19 +39,20 @@ class NecessityCreateModal extends Component<Props, State> {
       option: '',
       description: '',
       price: 0,
+      count: 1,
     };
   }
 
-  create = (): void => {
-    this.props.create(
+  onCreateNecessityHouse = (): void => {
+    this.props.onCreateNecessityHouse(
       this.state.name,
       this.state.option,
       this.state.description,
       this.state.price,
+      this.state.count,
       this.props.houseId,
     )
       .then(() => {
-        console.log(this.props.createStatus);
         if (this.props.createStatus === necessityStatus.SUCCESS) {
           window.alert('입력 완료!');
           this.props.restoreModal();
@@ -93,6 +96,21 @@ class NecessityCreateModal extends Component<Props, State> {
               onChange={(e) => this.setState({ name: e.target.value })}
             />
 
+            <label htmlFor="count">
+              <b>개수 (Count)</b>
+            </label>
+            <input
+              type="number"
+              min="1"
+              step="1"
+              placeholder="1"
+              required
+              onChange={(e) => this.setState({
+                count: (parseFloat(e.target.value) === parseInt(e.target.value, 10))
+                  ? parseFloat(e.target.value) : NaN,
+              })}
+            />
+
             <label htmlFor="option">
               <b>옵션 (Option)</b>
             </label>
@@ -120,7 +138,10 @@ class NecessityCreateModal extends Component<Props, State> {
               type="number"
               placeholder="2900"
               required
-              onChange={(e) => this.setState({ price: parseInt(e.target.value, 10) })}
+              onChange={(e) => this.setState({
+                price: (parseFloat(e.target.value) === parseInt(e.target.value, 10))
+                  ? parseFloat(e.target.value) : NaN,
+              })}
             />
 
             <div className="necessity-create-clearfix">
@@ -128,7 +149,7 @@ class NecessityCreateModal extends Component<Props, State> {
                 type="button"
                 className="necessity-create-createbtn"
                 disabled={this.state.name === ''}
-                onClick={this.create}
+                onClick={this.onCreateNecessityHouse}
               >
                 생필품 등록
               </button>
@@ -141,10 +162,11 @@ class NecessityCreateModal extends Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  create: (
-    name: string, option: string, description: string, price: number, houseId: number,
+  onCreateNecessityHouse: (
+    name: string, option: string, description: string,
+    price: number, count: number, houseId: number,
   ): void => dispatch(
-    necessityActions.createNecessity(name, option, description, price, houseId),
+    necessityActions.createNecessityHouse(name, option, description, price, count, houseId),
   ),
 });
 

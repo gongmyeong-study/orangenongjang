@@ -14,7 +14,7 @@ class SimpleHouseSerializer(serializers.ModelSerializer):
             'name',
             'introduction',
             'users',
-         )
+        )
 
     def get_users(self, house):
         user_houses = house.user_houses.all().select_related('user')

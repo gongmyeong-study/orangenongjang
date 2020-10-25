@@ -6,10 +6,10 @@ import {
 } from './user/user';
 
 import {
-  createNecessity,
-  getNecessity,
-  removeNecessity,
-  countNecessity,
+  createNecessityHouse,
+  getNecessityHouse,
+  removeNecessityHouse,
+  countNecessityHouse,
 } from './necessity/necessity';
 
 export const userActions = {
@@ -20,8 +20,8 @@ export const userActions = {
 };
 
 export const necessityActions = {
-  createNecessity,
-  getNecessity,
-  removeNecessity,
-  countNecessity,
+  createNecessityHouse,
+  getNecessityHouse,
+  removeNecessityHouse,
+  countNecessityHouse,
 };

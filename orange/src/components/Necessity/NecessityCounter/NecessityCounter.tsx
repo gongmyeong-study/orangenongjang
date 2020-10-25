@@ -29,24 +29,22 @@ const NecessityItemBlock = styled.div`
 
 interface Props {
   key: number;
-  necessityUserId: number;
+  houseId: number;
+  necessityId: number;
   count: number;
-  counter(necessityUserId: number, count: number): any;
-  increase(necessityUserId: number, count: number): any;
-  decrease(necessityUserId: number, count: number): any;
+  onCountNecessityHouse(houseId: number, necessityId: number, count: number): any;
 }
 
 function NecessityCounter(props: Props) {
   return (
     <NecessityItemBlock key={props.key}>
-
       <table>
         <td>
           <div>
             <button
               type="button"
               onClick={() => {
-                props.increase(props.necessityUserId, props.count + 1);
+                props.onCountNecessityHouse(props.houseId, props.necessityId, props.count + 1);
                 window.location.reload();
               }}
             >
@@ -56,7 +54,9 @@ function NecessityCounter(props: Props) {
 
           <div>
             <NecessityItemCount
-              onSubmit={() => props.counter(props.necessityUserId, props.count)}
+              onSubmit={() => props.onCountNecessityHouse(
+                props.houseId, props.necessityId, props.count,
+              )}
             >
               { `${props.count}`}
             </NecessityItemCount>
@@ -66,7 +66,7 @@ function NecessityCounter(props: Props) {
             <button
               type="button"
               onClick={() => {
-                props.increase(props.necessityUserId, props.count - 1);
+                props.onCountNecessityHouse(props.houseId, props.necessityId, props.count - 1);
                 window.location.reload();
               }}
             >
@@ -82,14 +82,8 @@ function NecessityCounter(props: Props) {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  counter: (necessityUserId: number, count: number): void => dispatch(
-    necessityActions.countNecessity(necessityUserId, count),
-  ),
-  increase: (necessityUserId: number, count: number): void => dispatch(
-    necessityActions.countNecessity(necessityUserId, count),
-  ),
-  decrease: (necessityUserId: number, count: number): void => dispatch(
-    necessityActions.countNecessity(necessityUserId, count),
+  onCountNecessityHouse: (houseId: number, necessityId: number, count: number): void => dispatch(
+    necessityActions.countNecessityHouse(houseId, necessityId, count),
   ),
 });
 
