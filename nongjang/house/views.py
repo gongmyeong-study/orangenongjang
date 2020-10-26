@@ -176,21 +176,19 @@ class HouseViewSet(viewsets.GenericViewSet):
     # GET /api/v1/house/{house_id}/necessity_log/
     @action(detail=True, methods=['GET'])
     def necessity_log(self, request, pk=None):
-        log_order = self.request.GET.get('order', None)
+        log_order = self.request.query_params.get('necessity_order')
         house = self.get_object()
         user_house = request.user.user_houses.filter(house=house).last()
         if not user_house:
             return Response({'error': "소속되어 있지 않은 집입니다."}, status=status.HTTP_403_FORBIDDEN)
 
+        queryset = NecessityLog.objects.filter(necessity_house__house=house).select_related('necessity_house')
         if log_order == 'earliest':
-            logs = NecessityLog.objects.filter(
-                necessity_house__house=house).order_by('created_at').select_related('necessity_house')
+            logs = queryset.order_by('created_at')
         elif log_order == 'user':
-            logs = NecessityLog.objects.filter(
-                necessity_house__house=house).order_by('user_id', '-created_at').select_related('necessity_house')
+            logs = queryset.order_by('user_id', '-created_at')
         else:
-            logs = NecessityLog.objects.filter(
-                necessity_house__house=house).order_by('-created_at').select_related('necessity_house')
+            logs = queryset.order_by('-created_at')
         return Response(self.get_serializer(logs, many=True).data)
 
 
@@ -297,6 +295,6 @@ class HouseNecessityCountView(APIView):
 
         necessity_house.count = count
         necessity_house.save()
-        NecessityLog.objects.create(action='COUNT', necessity_house_id=necessity_house.id, user_id=user.id)
+        NecessityLog.objects.create(necessity_house=necessity_house, user=user, action=NecessityLog.COUNT)
 
         return Response(NecessityOfHouseSerializer(necessity_house).data)
