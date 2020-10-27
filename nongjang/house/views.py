@@ -185,8 +185,6 @@ class HouseViewSet(viewsets.GenericViewSet):
         queryset = NecessityLog.objects.filter(necessity_house__house=house).select_related('necessity_house')
         if log_order == 'earliest':
             logs = queryset.order_by('created_at')
-        elif log_order == 'user':
-            logs = queryset.order_by('user_id', '-created_at')
         else:
             logs = queryset.order_by('-created_at')
         return Response(self.get_serializer(logs, many=True).data)
