@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { History } from 'history';
+import { match } from 'react-router-dom';
 
 import NecessityPage from '../NecessityPage/NecessityPage';
 import StatisticsPage from '../StatisticsPage/StatisticsPage';
@@ -6,9 +8,13 @@ import TimelinePage from '../TimelinePage/TimelinePage';
 import WorkPage from '../WorkPage/WorkPage';
 import './MainPage.css';
 
+interface DetailParams {
+  id: string;
+}
+
 interface Props {
-  history: any;
-  match: any;
+  history: History;
+  match: match<DetailParams>;
 }
 
 interface State {
@@ -24,7 +30,7 @@ class MainPage extends Component<Props, State> {
   }
 
   render() {
-    const houseId = this.props.match.params.id;
+    const houseId = Number(this.props.match.params.id);
 
     let body = null;
     switch (this.state.activeTab) {

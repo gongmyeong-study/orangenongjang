@@ -1,15 +1,16 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import axios from 'axios';
+import { History } from 'history';
 
 interface House {
-  id: string;
+  id: number;
   name: string;
   introduction: string;
   users?: object;
 }
 
 interface Props {
-  history: any;
+  history: History;
 }
 
 function HousePage(props: Props) {
@@ -29,7 +30,7 @@ function HousePage(props: Props) {
     };
   }, []);
 
-  const goToTheRoom = (houseId: string) => {
+  const goToTheRoom = (houseId: number) => {
     const url = `/main/${houseId}`;
     props.history.push(url);
   };

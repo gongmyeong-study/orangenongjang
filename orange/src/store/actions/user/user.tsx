@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
 import { userConstants } from '../actionTypes';
+import { User } from '../../../apis';
 
-const signupSuccess = (user: any) => ({
+const signupSuccess = (user: User) => ({
   type: userConstants.SIGNUP_SUCCESS,
   target: user,
 });
@@ -28,7 +29,7 @@ export const signUp = (
   .then((res) => dispatch(signupSuccess(res.data)))
   .catch((err) => dispatch(signupFailure(err)));
 
-const loginSuccess = (user: any) => ({
+const loginSuccess = (user: User) => ({
   type: userConstants.LOGIN_SUCCESS,
   target: user,
 });
@@ -66,7 +67,7 @@ export const logout = () => (dispatch: Dispatch) => axios.get('/api/v1/user/logo
   .then(() => dispatch(logoutSuccess()))
   .catch((err) => dispatch(logoutFailure(err)));
 
-const getMeSuccess = (user: any) => ({
+const getMeSuccess = (user: User) => ({
   type: userConstants.GET_ME_SUCCESS,
   target: user,
 });

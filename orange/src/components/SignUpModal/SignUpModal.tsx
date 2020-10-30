@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import { userActions } from '../../store/actions';
 import { userStatus } from '../../constants/constants';
 import './SignUpModal.css';
+import { User } from '../../apis';
 
 interface Props {
   history?: any;
   signUp: (email: string, username: string, password: string) => any; // for redux dispatch
-  me: any;
+  me: User;
   signupStatus: string;
 }
 

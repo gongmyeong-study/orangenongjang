@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { History } from 'history';
 
 import { LogList } from '../../components';
 import { necessityUserLogStatus } from '../../constants/constants';
 
 interface Props {
-  history: any;
-  houseId: string;
+  history: History;
+  houseId: number;
 }
 
 interface State {

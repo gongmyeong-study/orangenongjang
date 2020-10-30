@@ -1,6 +1,7 @@
 import React from 'react';
 import { ConnectedRouter } from 'connected-react-router';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import { History } from 'history';
 
 import { Header } from './components';
 import {
@@ -9,7 +10,7 @@ import {
 import './App.css';
 
 interface Props {
-  history: any;
+  history: History;
 }
 
 function App(props: Props): JSX.Element {

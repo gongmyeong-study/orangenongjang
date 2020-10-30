@@ -4,6 +4,7 @@ import React, {
 import styled, { createGlobalStyle } from 'styled-components';
 import { MdAdd } from 'react-icons/md';
 import { connect } from 'react-redux';
+import { History } from 'history';
 
 import {
   NecessityCreateModal, NecessityHead, NecessityList, NecessityTemplate,
@@ -46,7 +47,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 interface Props {
-  history: any;
+  history: History;
   onGetNecessityHouse(houseId: number): void;
   houseId: number;
 }

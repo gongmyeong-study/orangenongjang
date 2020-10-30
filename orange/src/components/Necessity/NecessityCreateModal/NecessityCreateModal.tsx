@@ -1,9 +1,11 @@
 import React, { Component, Dispatch } from 'react';
 import { History } from 'history';
 import { connect } from 'react-redux';
+
 import { necessityActions } from '../../../store/actions';
 import { necessityStatus } from '../../../constants/constants';
 import './NecessityCreateModal.css';
+import { User } from '../../../apis';
 
 interface Props {
   history: History;
@@ -15,7 +17,7 @@ interface Props {
     count: number,
     houseId: number
   ) => any;
-  me: any;
+  me: User ;
   createStatus: string;
   restoreModal: any;
   houseId: number;
