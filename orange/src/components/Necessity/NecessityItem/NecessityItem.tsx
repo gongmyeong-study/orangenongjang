@@ -1,8 +1,9 @@
-import React, { Dispatch } from 'react';
+import React, { Dispatch, ReactElement, useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { MdDelete } from 'react-icons/md';
 import { necessityActions } from '../../../store/actions';
+import NecessityUpdateModal from '../NecessityUpdateModal/NecessityUpdateModal';
 
 const NecessityItemRemove = styled.div`
     display: none;
@@ -54,22 +55,42 @@ interface Props {
   onRemoveNecessityHouse(houseId: number, necessityId: number): any;
 }
 
-function NecessityItem(props: Props) {
+function NecessityItem(props: Props): ReactElement {
+  const [showNecessityUpdateModal, setShowNecessityUpdateModal] = useState(false);
+  const showUpdateModal = (): void => setShowNecessityUpdateModal(true);
+  const restoreUpdateModal = () => {
+    setShowNecessityUpdateModal(false);
+  };
+
   return (
     <NecessityItemBlock id={`necessity-item-${props.necessityId}`}>
-      <Text>
-        {`${props.name}`}
-        <span className="option">
-          <br />
-          {` ${props.count}개 / ${props.price}원 / ${props.option} `}
-        </span>
-      </Text>
+      <div onClick={showUpdateModal}>
+        {showNecessityUpdateModal ? (
+          <NecessityUpdateModal
+            houseId={props.houseId}
+            necessityId={props.necessityId}
+            name={props.name}
+            option={props.option}
+            description={props.description}
+            price={props.price}
+            restoreUpdateModal={restoreUpdateModal}
+          />
+        ) : null}
+
+        <Text>
+          {`${props.name}`}
+          <span className="option">
+            <br />
+            {` ${props.count}개 / ${props.price}원 / ${props.option} `}
+          </span>
+        </Text>
+      </div>
+
       <NecessityItemRemove
         onClick={() => {
           props.onRemoveNecessityHouse(props.houseId, props.necessityId);
           window.location.reload();
         }}
-
       >
         <MdDelete />
       </NecessityItemRemove>

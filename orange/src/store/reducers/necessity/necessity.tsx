@@ -10,6 +10,8 @@ const initialState = {
   createStatus: necessityStatus.NONE,
   getStatus: necessityStatus.NONE,
   removeStatus: necessityStatus.NONE,
+  countStatus: necessityStatus.NONE,
+  updateStatus: necessityStatus.NONE,
   necessities: [],
 };
 
@@ -60,7 +62,7 @@ function necessityreducer(state = initialState, action: Action) {
         removeStatus: necessityStatus.FAILURE,
       };
 
-      // 생필품 수량
+    // 생필품 수량
     case necessityConstants.COUNT_SUCCESS:
       return {
         ...state,
@@ -71,6 +73,19 @@ function necessityreducer(state = initialState, action: Action) {
       return {
         ...state,
         countStatus: necessityStatus.FAILURE,
+      };
+
+    // 생필품 수정
+    case necessityConstants.UPDATE_SUCCESS:
+      return {
+        ...state,
+        updateStatus: necessityStatus.SUCCESS,
+        necessities: data,
+      };
+    case necessityConstants.UPDATE_FAILURE:
+      return {
+        ...state,
+        updateStatus: necessityStatus.FAILURE,
       };
 
     default:

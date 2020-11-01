@@ -84,6 +84,24 @@ const countFailure = (error: any) => {
   };
 };
 
+// 생필품 수정 기능
+const updateSuccess = (necessities: any) => ({
+  type: necessityConstants.UPDATE_SUCCESS,
+  target: necessities,
+});
+
+const updateFailure = (error: any) => {
+  let actionType = null;
+  switch (error.response.status) {
+    default:
+      actionType = necessityConstants.UPDATE_FAILURE;
+  }
+  return {
+    type: actionType,
+    target: error,
+  };
+};
+
 export const createNecessityHouse = (
   name: string, option: string, description: string, price: number, count: number, houseId: number,
 ) => (dispatch: Dispatch) => axios.post(`/api/v1/house/${houseId}/necessity/`, {
@@ -107,3 +125,12 @@ export const countNecessityHouse = (
 ) => (dispatch: Dispatch) => axios.put(`/api/v1/house/${houseId}/necessity/${necessityId}/count/`, { count })
   .then((countResponse) => dispatch(countSuccess(countResponse.data)))
   .catch((countError) => dispatch(countFailure(countError)));
+
+export const updateNecessityHouse = (
+  houseId: number, necessityId: number, name: string,
+  option: string, description: string, price: number,
+) => (dispatch: Dispatch) => axios.put(`/api/v1/house/${houseId}/necessity/${necessityId}/`, {
+  houseId, necessityId, name, option, description, price,
+})
+  .then((updateResponse) => dispatch(updateSuccess(updateResponse.data)))
+  .catch((updateError) => dispatch(updateFailure(updateError)));
