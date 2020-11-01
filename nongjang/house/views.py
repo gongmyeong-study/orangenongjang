@@ -218,11 +218,11 @@ class HouseNecessityView(APIView):
             if isinstance(price, str):
                 if not price.isnumeric() or int(price) < 0:
                     return Response({'error': "price는 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
-                else:
-                    necessity_house.price = int(price)
-                    updated = True
             elif not isinstance(price, int) or price < 0:
                 return Response({'error': "price는 0 이상의 정수여야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                necessity_house.price = int(price)
+                updated = True
         else:
             necessity_house.price = None
             updated = True
