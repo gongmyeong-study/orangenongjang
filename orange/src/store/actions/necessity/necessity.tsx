@@ -85,13 +85,18 @@ const countFailure = (error: any) => {
 };
 
 // 생필품 수정 기능
-const updateSuccess = (necessities: any) => ({
-  type: necessityConstants.UPDATE_SUCCESS,
-  target: necessities,
-});
+const updateSuccess = (necessities: any) => {
+  window.alert('수정되었습니다!');
+  window.location.reload();
+  return {
+    type: necessityConstants.UPDATE_SUCCESS,
+    target: necessities,
+  };
+};
 
 const updateFailure = (error: any) => {
   let actionType = null;
+  window.alert('수정 내역을 다시 확인해주세요.');
   switch (error.response.status) {
     default:
       actionType = necessityConstants.UPDATE_FAILURE;

@@ -8,12 +8,12 @@ import './NecessityCreateModal.css';
 interface Props {
   history: History;
   onCreateNecessityHouse: (
+    houseId: number,
     name: string,
     option: string,
     description: string,
     price: number,
     count: number,
-    houseId: number
   ) => any;
   me: any;
   createStatus: string;
@@ -45,12 +45,12 @@ class NecessityCreateModal extends Component<Props, State> {
 
   onCreateNecessityHouse = (): void => {
     this.props.onCreateNecessityHouse(
+      this.props.houseId,
       this.state.name,
       this.state.option,
       this.state.description,
       this.state.price,
       this.state.count,
-      this.props.houseId,
     )
       .then(() => {
         if (this.props.createStatus === necessityStatus.SUCCESS) {
@@ -163,10 +163,10 @@ class NecessityCreateModal extends Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   onCreateNecessityHouse: (
-    name: string, option: string, description: string,
-    price: number, count: number, houseId: number,
+    houseId: number, name: string, option: string,
+    description: string, price: number, count: number,
   ): void => dispatch(
-    necessityActions.createNecessityHouse(name, option, description, price, count, houseId),
+    necessityActions.createNecessityHouse(houseId, name, option, description, price, count),
   ),
 });
 

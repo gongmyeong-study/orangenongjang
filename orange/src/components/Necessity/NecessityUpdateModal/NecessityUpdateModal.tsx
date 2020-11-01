@@ -43,19 +43,7 @@ class NecessityUpdateModal extends Component<Props, State> {
       this.props.necessityId,
       this.state.description,
       this.state.price,
-    )
-      .then(() => {
-        if (this.props.updateStatus === necessityStatus.SUCCESS) {
-          window.alert('수정되었습니다!');
-          window.location.reload();
-          this.props.restoreUpdateModal();
-        } else if (this.props.updateStatus === necessityStatus.FAILURE) {
-          window.alert('변동사항이 없습니다.');
-        } else {
-          console.log(this.props.updateStatus);
-          window.alert('실패!');
-        }
-      });
+    );
   };
 
   render() {
