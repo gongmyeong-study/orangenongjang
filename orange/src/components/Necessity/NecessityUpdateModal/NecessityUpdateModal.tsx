@@ -13,18 +13,16 @@ interface Props {
   price: number;
   me: any;
   onUpdateNecessityHouse: (
-    houseId: number, necessityId: number, name: string,
-    option: string, description: string, price: number) => any;
+    houseId: number,
+    necessityId: number,
+    description: string,
+    price: number) => any;
   updateStatus: string;
   restoreUpdateModal: any;
 }
 
 interface State {
   appearing: boolean;
-  houseId: number;
-  necessityId: number;
-  name: string;
-  option: string;
   description: string;
   price: number;
 }
@@ -34,10 +32,6 @@ class NecessityUpdateModal extends Component<Props, State> {
     super(props);
     this.state = {
       appearing: true,
-      houseId: props.houseId,
-      necessityId: props.necessityId,
-      name: props.name,
-      option: props.option,
       description: props.description,
       price: props.price,
     };
@@ -45,21 +39,23 @@ class NecessityUpdateModal extends Component<Props, State> {
 
   onUpdateNecessityHouse = (): void => {
     this.props.onUpdateNecessityHouse(
-      this.state.houseId,
-      this.state.necessityId,
-      this.state.name,
-      this.state.option,
+      this.props.houseId,
+      this.props.necessityId,
       this.state.description,
       this.state.price,
-    );
-
-    if (this.props.updateStatus === necessityStatus.SUCCESS) {
-      window.alert('수정되었습니다!');
-      window.location.reload();
-      this.props.restoreUpdateModal();
-    } else if (this.props.updateStatus === necessityStatus.FAILURE) {
-      window.alert('변동사항이 없습니다.');
-    }
+    )
+      .then(() => {
+        if (this.props.updateStatus === necessityStatus.SUCCESS) {
+          window.alert('수정되었습니다!');
+          window.location.reload();
+          this.props.restoreUpdateModal();
+        } else if (this.props.updateStatus === necessityStatus.FAILURE) {
+          window.alert('변동사항이 없습니다.');
+        } else {
+          console.log(this.props.updateStatus);
+          window.alert('실패!');
+        }
+      });
   };
 
   render() {
@@ -84,19 +80,26 @@ class NecessityUpdateModal extends Component<Props, State> {
           <div className="necessity-update-container">
             <p>
               {this.props.name}
-              의 정보를 수정해주세요.
+              의 설명 또는 가격을 수정해주세요.
             </p>
-            {console.log('123123132123')}
             <hr />
+
+            <label htmlFor="name">
+              <b>생필품 (Necessity)</b>
+            </label>
+            <input
+              type="text"
+              value={this.props.name}
+              disabled
+            />
 
             <label htmlFor="option">
               <b>옵션 (Option)</b>
             </label>
             <input
               type="text"
-              placeholder={this.props.option}
-              required
-              onChange={(e) => this.setState({ option: e.target.value })}
+              value={this.props.option}
+              disabled
             />
 
             <label htmlFor="description">
@@ -116,7 +119,10 @@ class NecessityUpdateModal extends Component<Props, State> {
               type="number"
               placeholder={String(this.props.price)}
               required
-              onChange={(e) => this.setState({ price: parseInt(e.target.value, 10) })}
+              onChange={(e) => this.setState({
+                price: (parseFloat(e.target.value) === parseInt(e.target.value, 10))
+                  ? parseFloat(e.target.value) : NaN,
+              })}
             />
 
             <div className="necessity-update-clearfix">
@@ -138,10 +144,9 @@ class NecessityUpdateModal extends Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   onUpdateNecessityHouse: (
-    houseId: number, necessityId: number, name: string,
-    option: string, description: string, price: number,
+    houseId: number, necessityId: number, description: string, price: number,
   ): void => dispatch(
-    necessityActions.updateNecessityHouse(houseId, necessityId, name, option, description, price),
+    necessityActions.updateNecessityHouse(houseId, necessityId, description, price),
   ),
 });
 

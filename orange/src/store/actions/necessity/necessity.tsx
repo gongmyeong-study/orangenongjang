@@ -95,6 +95,7 @@ const updateFailure = (error: any) => {
   switch (error.response.status) {
     default:
       actionType = necessityConstants.UPDATE_FAILURE;
+      break;
   }
   return {
     type: actionType,
@@ -103,7 +104,7 @@ const updateFailure = (error: any) => {
 };
 
 export const createNecessityHouse = (
-  name: string, option: string, description: string, price: number, count: number, houseId: number,
+  houseId: number, name: string, option: string, description: string, price: number, count: number,
 ) => (dispatch: Dispatch) => axios.post(`/api/v1/house/${houseId}/necessity/`, {
   houseId, name, option, description, price, count,
 })
@@ -127,10 +128,7 @@ export const countNecessityHouse = (
   .catch((countError) => dispatch(countFailure(countError)));
 
 export const updateNecessityHouse = (
-  houseId: number, necessityId: number, name: string,
-  option: string, description: string, price: number,
-) => (dispatch: Dispatch) => axios.put(`/api/v1/house/${houseId}/necessity/${necessityId}/`, {
-  houseId, necessityId, name, option, description, price,
-})
+  houseId: number, necessityId: number, description: string, price: number,
+) => (dispatch: Dispatch) => axios.put(`/api/v1/house/${houseId}/necessity/${necessityId}/`, { description, price })
   .then((updateResponse) => dispatch(updateSuccess(updateResponse.data)))
   .catch((updateError) => dispatch(updateFailure(updateError)));
