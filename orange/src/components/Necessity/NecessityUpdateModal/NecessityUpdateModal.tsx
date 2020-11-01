@@ -1,7 +1,6 @@
 import React, { Component, Dispatch } from 'react';
 import { connect } from 'react-redux';
 import { necessityActions } from '../../../store/actions';
-import { necessityStatus } from '../../../constants/constants';
 import './NecessityUpdateModal.css';
 
 interface Props {
