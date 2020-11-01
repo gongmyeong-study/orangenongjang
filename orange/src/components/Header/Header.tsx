@@ -5,7 +5,7 @@ import { History } from 'history';
 import { userActions } from '../../store/actions';
 import { userStatus } from '../../constants/constants';
 import './Header.css';
-import { User } from '../../apis';
+import { User } from '../../api';
 
 interface Props {
   history: History;

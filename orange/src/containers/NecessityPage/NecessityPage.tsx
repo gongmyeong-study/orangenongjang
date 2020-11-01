@@ -11,6 +11,7 @@ import {
 } from '../../components';
 import { necessityActions } from '../../store/actions';
 import './NecessityPage.css';
+import { NecessityHouse } from '../../api';
 
 const CircleButton = styled.button`
     background: lightgray;
@@ -50,6 +51,7 @@ interface Props {
   history: History;
   onGetNecessityHouse(houseId: number): void;
   houseId: number;
+  necessitiyHouse: NecessityHouse;
 }
 
 function NecessityPage(props: Props): ReactElement {
@@ -69,7 +71,7 @@ function NecessityPage(props: Props): ReactElement {
 
   useEffect(() => {
     props.onGetNecessityHouse(props.houseId);
-  });
+  }, [props]);
 
   return (
     <>
@@ -91,8 +93,8 @@ function NecessityPage(props: Props): ReactElement {
               houseId={props.houseId}
             />
           ) : null}
-
-          <NecessityList />
+          { props.necessitiyHouse.necessities
+            ? <NecessityList necessities={props.necessitiyHouse.necessities} /> : ''}
         </div>
       </NecessityTemplate>
     </>
@@ -100,9 +102,13 @@ function NecessityPage(props: Props): ReactElement {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  onGetNecessityHouse: (houseId: number): void => dispatch(
+  onGetNecessityHouse: (houseId: number) => dispatch(
     necessityActions.getNecessityHouse(houseId),
   ),
 });
 
-export default connect(null, mapDispatchToProps)(NecessityPage);
+const mapStateToProps = (state: any) => ({
+  necessitiyHouse: state.necessity.necessities,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NecessityPage);

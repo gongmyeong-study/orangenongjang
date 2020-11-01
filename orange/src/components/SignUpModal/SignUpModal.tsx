@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { userActions } from '../../store/actions';
 import { userStatus } from '../../constants/constants';
 import './SignUpModal.css';
-import { User } from '../../apis';
+import { User } from '../../api';
 
 interface Props {
   history?: any;

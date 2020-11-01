@@ -3,5 +3,6 @@ export interface User {
   username: string;
   email: string;
   last_login: string;
-  date_joined: string;
+  date_joined?: string;
+  is_leader?: boolean;
 }

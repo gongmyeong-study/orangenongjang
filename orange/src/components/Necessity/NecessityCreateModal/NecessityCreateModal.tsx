@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { necessityActions } from '../../../store/actions';
 import { necessityStatus } from '../../../constants/constants';
 import './NecessityCreateModal.css';
-import { User } from '../../../apis';
+import { User } from '../../../api';
 
 interface Props {
   history: History;

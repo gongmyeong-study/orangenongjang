@@ -1,9 +1,10 @@
 import { necessityConstants } from '../../actions/actionTypes';
 import { necessityStatus } from '../../../constants/constants';
+import { Necessity } from '../../../api';
 
 type Action = {
   type: string;
-  target: any;
+  target: Necessity;
 };
 
 const initialState = {

@@ -1,16 +1,16 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
 import { userConstants } from '../actionTypes';
-import { User } from '../../../apis';
+import { User } from '../../../api';
 
 const signupSuccess = (user: User) => ({
   type: userConstants.SIGNUP_SUCCESS,
   target: user,
 });
 
-const signupFailure = (error: any) => {
+const signupFailure = (error: AxiosError) => {
   let actionType = null;
-  switch (error.response.status) {
+  switch (error.response?.status) {
     case 409:
       actionType = userConstants.SIGNUP_FAILURE_USERNAME;
       break;
@@ -26,7 +26,7 @@ const signupFailure = (error: any) => {
 export const signUp = (
   email: string, username: string, password: string,
 ) => (dispatch: Dispatch) => axios.post('/api/v1/user/', { email, username, password })
-  .then((res) => dispatch(signupSuccess(res.data)))
+  .then((res: AxiosResponse<User>) => dispatch(signupSuccess(res.data)))
   .catch((err) => dispatch(signupFailure(err)));
 
 const loginSuccess = (user: User) => ({
@@ -34,9 +34,9 @@ const loginSuccess = (user: User) => ({
   target: user,
 });
 
-const loginFailure = (error: any) => {
+const loginFailure = (error: AxiosError) => {
   let actionType = null;
-  switch (error.response.status) {
+  switch (error.response?.status) {
     default:
       actionType = userConstants.LOGIN_FAILURE;
       break;
@@ -50,7 +50,7 @@ const loginFailure = (error: any) => {
 export const login = (
   username: string, password: string,
 ) => (dispatch: Dispatch) => axios.put('/api/v1/user/login/', { username, password })
-  .then((res) => dispatch(loginSuccess(res.data)))
+  .then((res: AxiosResponse<User>) => dispatch(loginSuccess(res.data)))
   .catch((err) => dispatch(loginFailure(err)));
 
 const logoutSuccess = () => ({
@@ -58,7 +58,7 @@ const logoutSuccess = () => ({
   target: null,
 });
 
-const logoutFailure = (error: any) => ({
+const logoutFailure = (error: AxiosError) => ({
   type: userConstants.LOGOUT_FAILURE,
   target: error,
 });
@@ -78,5 +78,5 @@ const getMeFailure = (error: any) => ({
 });
 
 export const getMe = () => (dispatch: Dispatch) => axios.get('/api/v1/user/me/')
-  .then((res) => dispatch(getMeSuccess(res.data)))
+  .then((res: AxiosResponse<User>) => dispatch(getMeSuccess(res.data)))
   .catch((err) => dispatch(getMeFailure(err)));

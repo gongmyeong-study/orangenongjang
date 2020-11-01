@@ -1,11 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import './NecessityList.css';
+import { Necessity } from '../../../api';
 import NecessityItem from '../NecessityItem/NecessityItem';
 import NecessityCounter from '../NecessityCounter/NecessityCounter';
-import './NecessityList.css';
 
 interface Props {
-  necessities: any;
+  necessities: [Necessity];
 }
 
 function NecessityList(props: Props) {
@@ -13,7 +13,8 @@ function NecessityList(props: Props) {
 
   return (
     <>
-      {Array.from(necessities).map((necessity: any) => (
+      {necessities.map((necessity) => (
+
         <div
           className="necessity-list-block"
           key={necessity.id}
@@ -45,8 +46,4 @@ function NecessityList(props: Props) {
   );
 }
 
-const mapStateToProps = (state: any) => ({
-  necessities: state.necessity.necessities,
-});
-
-export default connect(mapStateToProps)(NecessityList);
+export default NecessityList;

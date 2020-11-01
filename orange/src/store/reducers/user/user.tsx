@@ -1,5 +1,11 @@
 import { userConstants } from '../../actions/actionTypes';
 import { userStatus } from '../../../constants/constants';
+import { User } from '../../../api';
+
+type Action = {
+  type: string;
+  target: User;
+};
 
 const initialState = {
   me: {},
@@ -9,7 +15,7 @@ const initialState = {
   getMeStatus: userStatus.NONE,
 };
 
-const reducer = (state = initialState, action: any) => {
+const reducer = (state = initialState, action: Action) => {
   const data = action.target;
   switch (action.type) {
     case userConstants.SIGNUP_SUCCESS:
