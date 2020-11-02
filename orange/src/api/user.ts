@@ -1,8 +1,8 @@
 export interface User {
   id: number;
   username: string;
-  email: string;
-  last_login: string;
+  email?: string;
+  last_login?: string;
   date_joined?: string;
   is_leader?: boolean;
 }

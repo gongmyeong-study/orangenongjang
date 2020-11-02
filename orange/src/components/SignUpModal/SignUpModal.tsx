@@ -1,12 +1,13 @@
 import React, { Component, Dispatch } from 'react';
 import { connect } from 'react-redux';
+import { History } from 'history';
 import { userActions } from '../../store/actions';
 import { userStatus } from '../../constants/constants';
 import './SignUpModal.css';
 import { User } from '../../api';
 
 interface Props {
-  history?: any;
+  history?: History;
   signUp: (email: string, username: string, password: string) => any; // for redux dispatch
   me: User;
   signupStatus: string;
@@ -36,7 +37,7 @@ class SignUpModal extends Component<Props, State> {
         if (this.props.signupStatus === userStatus.SUCCESS) {
           window.alert('성공!');
           this.setState({ appearing: false });
-          this.props.history.push('/');
+          this.props.history?.push('/');
         } else if (this.props.signupStatus === userStatus.FAILURE_USERNAME) {
           window.alert('중복된 사용자 이름!');
         } else {

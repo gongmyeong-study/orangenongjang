@@ -17,3 +17,11 @@ export interface Necessity {
   price?: number;
   count: number;
 }
+
+export interface NecessityHouseLog {
+  id: number;
+  action: string;
+  user: User;
+  necessity: Necessity;
+  created_at: string;
+}

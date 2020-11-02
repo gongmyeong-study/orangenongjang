@@ -1,28 +1,30 @@
 import { necessityConstants } from '../../actions/actionTypes';
 import { necessityStatus } from '../../../constants/constants';
-import { Necessity } from '../../../api';
+import { Necessity, NecessityHouse } from '../../../api';
 
 type Action = {
   type: string;
-  target: Necessity;
+  target: NecessityHouse | Necessity;
 };
 
 const initialState = {
   createStatus: necessityStatus.NONE,
   getStatus: necessityStatus.NONE,
   removeStatus: necessityStatus.NONE,
-  necessities: [],
+  countSatus: necessityStatus.NONE,
+  necessityHouse: {} as NecessityHouse,
 };
 
 function necessityreducer(state = initialState, action: Action) {
   const data = action.target;
+
   switch (action.type) {
     // 생필품 호출
     case necessityConstants.GET_SUCCESS:
       return {
         ...state,
         getStatus: necessityStatus.SUCCESS,
-        necessities: data,
+        necessityHouse: data,
       };
     case necessityConstants.GET_FAILURE:
       return {
@@ -35,7 +37,7 @@ function necessityreducer(state = initialState, action: Action) {
       return {
         ...state,
         createStatus: necessityStatus.SUCCESS,
-        necessities: data,
+        necessityHouse: data,
       };
     case necessityConstants.CREATE_FAILURE:
       return {
@@ -53,7 +55,7 @@ function necessityreducer(state = initialState, action: Action) {
       return {
         ...state,
         removeStatus: necessityStatus.SUCCESS,
-        necessities: data,
+        necessityHouse: data,
       };
     case necessityConstants.REMOVE_FAILURE:
       return {
@@ -63,10 +65,13 @@ function necessityreducer(state = initialState, action: Action) {
 
       // 생필품 수량
     case necessityConstants.COUNT_SUCCESS:
+      const necessityHouse = { ...state.necessityHouse };
+      const indexToBeUpdated = necessityHouse.necessities.findIndex(({ id }) => id === data.id);
+      necessityHouse.necessities[indexToBeUpdated] = data as Necessity;
       return {
         ...state,
         countStatus: necessityStatus.SUCCESS,
-        necessities: data,
+        necessityHouse,
       };
     case necessityConstants.COUNT_FAILURE:
       return {

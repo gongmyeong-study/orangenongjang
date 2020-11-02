@@ -69,6 +69,7 @@ function NecessityPage(props: Props): ReactElement {
     setShowNecessityCreateModal(false);
   };
 
+  // TODO: 무한 루프 문제
   useEffect(() => {
     props.onGetNecessityHouse(props.houseId);
   }, [props]);
@@ -108,7 +109,7 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
 });
 
 const mapStateToProps = (state: any) => ({
-  necessitiyHouse: state.necessity.necessities,
+  necessitiyHouse: state.necessity.necessityHouse,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NecessityPage);

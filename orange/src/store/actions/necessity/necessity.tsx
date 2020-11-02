@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
 import { necessityConstants } from '../actionTypes';
-import { NecessityHouse } from '../../../api';
+import { NecessityHouse, Necessity } from '../../../api';
 
 // 생필품 호출 기능
 const getSuccess = (necessityHouse: NecessityHouse) => ({
@@ -67,9 +67,9 @@ const removeFailure = (error: AxiosError) => {
 };
 
 // 생필품 수량 기능
-const countSuccess = (necessityHouse: NecessityHouse) => ({
+const countSuccess = (necessity: Necessity) => ({
   type: necessityConstants.COUNT_SUCCESS,
-  target: necessityHouse,
+  target: necessity,
 });
 
 const countFailure = (error: AxiosError) => {
@@ -112,7 +112,7 @@ export const getNecessityHouse = (houseId: number) => (dispatch: Dispatch) => ax
 export const countNecessityHouse = (
   houseId: number, necessityId: number, count: number,
 ) => (dispatch: Dispatch) => axios.put(`/api/v1/house/${houseId}/necessity/${necessityId}/count/`, { count })
-  .then((countResponse: AxiosResponse<NecessityHouse>) => {
+  .then((countResponse: AxiosResponse<Necessity>) => {
     dispatch(countSuccess(countResponse.data));
   })
   .catch((countError) => dispatch(countFailure(countError)));

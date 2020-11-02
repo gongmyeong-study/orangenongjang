@@ -72,7 +72,7 @@ const getMeSuccess = (user: User) => ({
   target: user,
 });
 
-const getMeFailure = (error: any) => ({
+const getMeFailure = (error: AxiosError) => ({
   type: userConstants.GET_ME_FAILURE,
   target: error,
 });

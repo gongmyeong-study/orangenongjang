@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { History } from 'history';
 
 import { LogList } from '../../components';
 import { necessityUserLogStatus } from '../../constants/constants';
+import { NecessityHouseLog } from '../../api';
 
 interface Props {
   history: History;
@@ -11,7 +12,7 @@ interface Props {
 }
 
 interface State {
-  logs: any[];
+  logs: Array<NecessityHouseLog>;
   getLogStatus: string;
 }
 
@@ -26,7 +27,7 @@ class TimelinePage extends Component<Props, State> {
 
   componentDidMount() {
     axios.get('/api/v1/necessity/log/', { params: this.props.houseId })
-      .then((res) => {
+      .then((res: AxiosResponse<[NecessityHouseLog]>) => {
         if (res.status === 200) {
           this.setState({ logs: res.data, getLogStatus: necessityUserLogStatus.SUCCESS });
         }
