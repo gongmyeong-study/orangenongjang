@@ -1,19 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './NecessityList.css';
-import { Necessity } from '../../../api';
+import { NecessityHouse } from '../../../api';
 import NecessityItem from '../NecessityItem/NecessityItem';
 import NecessityCounter from '../NecessityCounter/NecessityCounter';
+import { necessityConstants } from '../../../store/actions/actionTypes';
 
 interface Props {
-  necessities: [Necessity];
+  necessityHouse: NecessityHouse;
 }
 
 function NecessityList(props: Props) {
-  const { necessities } = props;
+  const { necessityHouse } = props;
 
   return (
     <>
-      {necessities.map((necessity) => (
+      { necessityHouse.necessities?.length ? necessityHouse.necessities.map((necessity) => (
 
         <div
           className="necessity-list-block"
@@ -41,9 +43,18 @@ function NecessityList(props: Props) {
             />
           </div>
         </div>
-      ))}
+      )) : (
+        <h2>
+          {necessityHouse.name}
+          에 첫 생필품을 추가해보세요!
+        </h2>
+      )}
     </>
   );
 }
 
-export default NecessityList;
+const mapStateToProps = (state: any) => ({
+  necessityHouse: state.necessity.necessityHouse,
+});
+
+export default connect(mapStateToProps)(NecessityList);

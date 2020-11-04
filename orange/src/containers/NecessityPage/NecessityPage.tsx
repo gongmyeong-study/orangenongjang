@@ -5,13 +5,11 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { MdAdd } from 'react-icons/md';
 import { connect } from 'react-redux';
 import { History } from 'history';
-
 import {
   NecessityCreateModal, NecessityHead, NecessityList, NecessityTemplate,
 } from '../../components';
 import { necessityActions } from '../../store/actions';
 import './NecessityPage.css';
-import { NecessityHouse } from '../../api';
 
 const CircleButton = styled.button`
     background: lightgray;
@@ -51,7 +49,6 @@ interface Props {
   history: History;
   onGetNecessityHouse(houseId: number): void;
   houseId: number;
-  necessitiyHouse: NecessityHouse;
 }
 
 function NecessityPage(props: Props): ReactElement {
@@ -69,10 +66,13 @@ function NecessityPage(props: Props): ReactElement {
     setShowNecessityCreateModal(false);
   };
 
-  // TODO: 무한 루프 문제
-  useEffect(() => {
+  const fetchNecessityHouse = () => {
     props.onGetNecessityHouse(props.houseId);
-  }, [props]);
+  };
+
+  useEffect(() => {
+    fetchNecessityHouse();
+  });
 
   return (
     <>
@@ -94,8 +94,7 @@ function NecessityPage(props: Props): ReactElement {
               houseId={props.houseId}
             />
           ) : null}
-          { props.necessitiyHouse.necessities
-            ? <NecessityList necessities={props.necessitiyHouse.necessities} /> : ''}
+          <NecessityList />
         </div>
       </NecessityTemplate>
     </>
@@ -108,8 +107,4 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   ),
 });
 
-const mapStateToProps = (state: any) => ({
-  necessitiyHouse: state.necessity.necessityHouse,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(NecessityPage);
+export default connect(null, mapDispatchToProps)(NecessityPage);
