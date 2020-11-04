@@ -5,6 +5,7 @@ import { History } from 'history';
 import { userStatus } from '../../constants/constants';
 import { userActions } from '../../store/actions';
 import './Login.css';
+import { OrangeGlobalState } from '../../store/state';
 
 interface Props {
   history: History;
@@ -71,9 +72,8 @@ class Login extends Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: OrangeGlobalState) => ({
   loginStatus: state.user.loginStatus,
-  user: state.user.login,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({

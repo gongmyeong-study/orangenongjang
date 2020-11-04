@@ -5,6 +5,7 @@ import { userActions } from '../../store/actions';
 import { userStatus } from '../../constants/constants';
 import './SignUpModal.css';
 import { User } from '../../api';
+import { OrangeGlobalState } from '../../store/state';
 
 interface Props {
   history?: History;
@@ -129,7 +130,7 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   ),
 });
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: OrangeGlobalState) => ({
   signupStatus: state.user.signupStatus,
   me: state.user.me,
 });

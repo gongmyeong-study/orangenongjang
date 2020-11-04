@@ -4,7 +4,7 @@ import './NecessityList.css';
 import { NecessityHouse } from '../../../api';
 import NecessityItem from '../NecessityItem/NecessityItem';
 import NecessityCounter from '../NecessityCounter/NecessityCounter';
-import { necessityConstants } from '../../../store/actions/actionTypes';
+import { OrangeGlobalState } from '../../../store/state';
 
 interface Props {
   necessityHouse: NecessityHouse;
@@ -53,7 +53,7 @@ function NecessityList(props: Props) {
   );
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: OrangeGlobalState) => ({
   necessityHouse: state.necessity.necessityHouse,
 });
 

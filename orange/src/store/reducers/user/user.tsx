@@ -1,34 +1,29 @@
 import { userConstants } from '../../actions/actionTypes';
 import { userStatus } from '../../../constants/constants';
 import { User } from '../../../api';
+import { UserState } from '../../state';
 
 type Action = {
   type: string;
   target: User;
 };
 
-const initialState = {
-  me: {},
+const initialState: UserState = {
+  me: {} as User,
   signupStatus: userStatus.NONE,
   loginStatus: userStatus.NONE,
   logoutStatus: userStatus.NONE,
   getMeStatus: userStatus.NONE,
 };
 
-const reducer = (state = initialState, action: Action) => {
+const userReducer = (state = initialState, action: Action): UserState => {
   const data = action.target;
   switch (action.type) {
     case userConstants.SIGNUP_SUCCESS:
       return {
         ...state,
         signupStatus: userStatus.SUCCESS,
-        me: {
-          id: data.id,
-          username: data.username,
-          email: data.email,
-          lastLogin: data.last_login,
-          dateJoined: data.date_joined,
-        },
+        me: data,
       };
     case userConstants.SIGNUP_FAILURE_USERNAME:
       return { ...state, signupStatus: userStatus.FAILURE_USERNAME };
@@ -38,13 +33,7 @@ const reducer = (state = initialState, action: Action) => {
       return {
         ...state,
         loginStatus: userStatus.SUCCESS,
-        me: {
-          id: data.id,
-          username: data.username,
-          email: data.email,
-          lastLogin: data.last_login,
-          dateJoined: data.date_joined,
-        },
+        me: data,
       };
     case userConstants.LOGIN_FAILURE:
       return { ...state, loginStatus: userStatus.FAILURE };
@@ -55,13 +44,7 @@ const reducer = (state = initialState, action: Action) => {
     case userConstants.GET_ME_SUCCESS:
       return {
         ...state,
-        me: {
-          id: data.id,
-          username: data.username,
-          email: data.email,
-          lastLogin: data.last_login,
-          dateJoined: data.date_joined,
-        },
+        me: data,
         getMeStatus: userStatus.SUCCESS,
       };
     case userConstants.GET_ME_FAILURE:
@@ -71,4 +54,4 @@ const reducer = (state = initialState, action: Action) => {
   }
 };
 
-export default reducer;
+export default userReducer;

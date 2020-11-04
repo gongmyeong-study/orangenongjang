@@ -1,21 +1,22 @@
 import { necessityConstants } from '../../actions/actionTypes';
 import { necessityStatus } from '../../../constants/constants';
 import { Necessity, NecessityHouse } from '../../../api';
+import { NecessityState } from '../../state';
 
 type Action = {
   type: string;
   target: NecessityHouse | Necessity;
 };
 
-const initialState = {
+const initialState: NecessityState = {
   createStatus: necessityStatus.NONE,
   getStatus: necessityStatus.NONE,
   removeStatus: necessityStatus.NONE,
-  countSatus: necessityStatus.NONE,
+  countStatus: necessityStatus.NONE,
   necessityHouse: {} as NecessityHouse,
 };
 
-function necessityreducer(state = initialState, action: Action) {
+function necessityreducer(state = initialState, action: Action): NecessityState {
   let necessityHouse: NecessityHouse;
   if (action.type === necessityConstants.COUNT_SUCCESS) {
     necessityHouse = { ...state.necessityHouse };

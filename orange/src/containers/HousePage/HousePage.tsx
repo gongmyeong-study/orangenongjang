@@ -1,13 +1,7 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import axios from 'axios';
 import { History } from 'history';
-
-interface House {
-  id: number;
-  name: string;
-  introduction: string;
-  users?: object;
-}
+import { House } from '../../api';
 
 interface Props {
   history: History;

@@ -23,5 +23,6 @@ export interface NecessityHouseLog {
   action: string;
   user: User;
   necessity: Necessity;
+  activity_category: string;
   created_at: string;
 }
