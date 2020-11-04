@@ -4,7 +4,7 @@ export interface NecessityHouse {
   id: number;
   name: string;
   introduction: string;
-  users: User;
+  users: [User];
   necessities: [Necessity];
 }
 

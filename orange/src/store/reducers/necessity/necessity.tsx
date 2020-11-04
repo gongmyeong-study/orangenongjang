@@ -16,7 +16,15 @@ const initialState = {
 };
 
 function necessityreducer(state = initialState, action: Action) {
-  const data = action.target;
+  let necessityHouse: NecessityHouse;
+  if (action.type === necessityConstants.COUNT_SUCCESS) {
+    necessityHouse = { ...state.necessityHouse };
+    const data = action.target as Necessity;
+    const indexToBeUpdated = necessityHouse.necessities.findIndex(({ id }) => id === data.id);
+    necessityHouse.necessities[indexToBeUpdated] = data;
+  } else {
+    necessityHouse = action.target as NecessityHouse;
+  }
 
   switch (action.type) {
     // 생필품 호출
@@ -24,7 +32,7 @@ function necessityreducer(state = initialState, action: Action) {
       return {
         ...state,
         getStatus: necessityStatus.SUCCESS,
-        necessityHouse: data,
+        necessityHouse,
       };
     case necessityConstants.GET_FAILURE:
       return {
@@ -37,7 +45,7 @@ function necessityreducer(state = initialState, action: Action) {
       return {
         ...state,
         createStatus: necessityStatus.SUCCESS,
-        necessityHouse: data,
+        necessityHouse,
       };
     case necessityConstants.CREATE_FAILURE:
       return {
@@ -55,7 +63,7 @@ function necessityreducer(state = initialState, action: Action) {
       return {
         ...state,
         removeStatus: necessityStatus.SUCCESS,
-        necessityHouse: data,
+        necessityHouse,
       };
     case necessityConstants.REMOVE_FAILURE:
       return {
@@ -65,9 +73,6 @@ function necessityreducer(state = initialState, action: Action) {
 
       // 생필품 수량
     case necessityConstants.COUNT_SUCCESS:
-      const necessityHouse = { ...state.necessityHouse };
-      const indexToBeUpdated = necessityHouse.necessities.findIndex(({ id }) => id === data.id);
-      necessityHouse.necessities[indexToBeUpdated] = data as Necessity;
       return {
         ...state,
         countStatus: necessityStatus.SUCCESS,
