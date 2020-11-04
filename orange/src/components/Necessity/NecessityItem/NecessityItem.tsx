@@ -1,4 +1,4 @@
-import React, { Dispatch, ReactElement, useState } from 'react';
+import React, { Dispatch, useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { MdDelete } from 'react-icons/md';
@@ -55,7 +55,7 @@ interface Props {
   onRemoveNecessityHouse(houseId: number, necessityId: number): any;
 }
 
-function NecessityItem(props: Props): ReactElement {
+function NecessityItem(props: Props) {
   const [showNecessityUpdateModal, setShowNecessityUpdateModal] = useState(false);
   const showUpdateModal = (): void => setShowNecessityUpdateModal(true);
   const restoreUpdateModal = () => {
