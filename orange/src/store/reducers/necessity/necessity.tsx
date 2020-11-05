@@ -18,7 +18,7 @@ const initialState: NecessityState = {
 
 function necessityreducer(state = initialState, action: Action): NecessityState {
   let necessityHouse: NecessityHouse;
-  if (action.type === necessityConstants.COUNT_SUCCESS 
+  if (action.type === necessityConstants.COUNT_SUCCESS
     || action.type === necessityConstants.REMOVE_SUCCESS) {
     necessityHouse = { ...state.necessityHouse };
     const data = action.target as Necessity;
