@@ -44,7 +44,7 @@ const createFailure = (error: AxiosError) => {
 };
 
 // 생필품 삭제 기능
-const removeSuccess = (necessityHouse: NecessityHouse) => {
+const removeSuccess = (necessityHouse: Necessity) => {
   window.alert('삭제되었습니다!');
   return {
     type: necessityConstants.REMOVE_SUCCESS,
@@ -98,7 +98,7 @@ export const createNecessityHouse = (
 export const removeNecessityHouse = (
   houseId: number, necessityId: number,
 ) => (dispatch: Dispatch) => axios.delete(`/api/v1/house/${houseId}/necessity/${necessityId}/`)
-  .then((removeResponse: AxiosResponse<NecessityHouse>) => {
+  .then((removeResponse: AxiosResponse<Necessity>) => {
     dispatch(removeSuccess(removeResponse.data));
   })
   .catch((removeError) => dispatch(removeFailure(removeError)));

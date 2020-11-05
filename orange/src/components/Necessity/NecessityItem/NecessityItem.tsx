@@ -67,7 +67,6 @@ function NecessityItem(props: Props) {
       <NecessityItemRemove
         onClick={() => {
           props.onRemoveNecessityHouse(props.houseId, props.necessityId);
-          window.location.reload();
         }}
 
       >
