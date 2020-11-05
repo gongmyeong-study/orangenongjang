@@ -45,7 +45,6 @@ function NecessityCounter(props: Props) {
               type="button"
               onClick={() => {
                 props.onCountNecessityHouse(props.houseId, props.necessityId, props.count + 1);
-                window.location.reload();
               }}
             >
               +
@@ -67,7 +66,6 @@ function NecessityCounter(props: Props) {
               type="button"
               onClick={() => {
                 props.onCountNecessityHouse(props.houseId, props.necessityId, props.count - 1);
-                window.location.reload();
               }}
             >
               -

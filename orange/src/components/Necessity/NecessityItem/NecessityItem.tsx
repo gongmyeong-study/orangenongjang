@@ -48,7 +48,7 @@ interface Props {
   count: number;
   description: string;
   option: string;
-  price: number;
+  price?: number;
   houseId: number;
   necessityId: number;
   onRemoveNecessityHouse(houseId: number, necessityId: number): any;
@@ -67,7 +67,6 @@ function NecessityItem(props: Props) {
       <NecessityItemRemove
         onClick={() => {
           props.onRemoveNecessityHouse(props.houseId, props.necessityId);
-          window.location.reload();
         }}
 
       >

@@ -1,9 +1,12 @@
 import React, { Component, Dispatch } from 'react';
 import { History } from 'history';
 import { connect } from 'react-redux';
+
 import { necessityActions } from '../../../store/actions';
 import { necessityStatus } from '../../../constants/constants';
 import './NecessityCreateModal.css';
+import { User } from '../../../api';
+import { OrangeGlobalState } from '../../../store/state';
 
 interface Props {
   history: History;
@@ -15,7 +18,7 @@ interface Props {
     count: number,
     houseId: number
   ) => any;
-  me: any;
+  me: User ;
   createStatus: string;
   restoreModal: any;
   houseId: number;
@@ -170,7 +173,7 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   ),
 });
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: OrangeGlobalState) => ({
   createStatus: state.necessity.createStatus,
   me: state.user.me,
 });

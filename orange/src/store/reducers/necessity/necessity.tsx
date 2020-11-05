@@ -1,27 +1,40 @@
 import { necessityConstants } from '../../actions/actionTypes';
 import { necessityStatus } from '../../../constants/constants';
+import { Necessity, NecessityHouse } from '../../../api';
+import { NecessityState } from '../../state';
 
 type Action = {
   type: string;
-  target: any;
+  target: NecessityHouse | Necessity;
 };
 
-const initialState = {
+const initialState: NecessityState = {
   createStatus: necessityStatus.NONE,
   getStatus: necessityStatus.NONE,
   removeStatus: necessityStatus.NONE,
-  necessities: [],
+  countStatus: necessityStatus.NONE,
+  necessityHouse: {} as NecessityHouse,
 };
 
-function necessityreducer(state = initialState, action: Action) {
-  const data = action.target;
+function necessityreducer(state = initialState, action: Action): NecessityState {
+  let necessityHouse: NecessityHouse;
+  if (action.type === necessityConstants.COUNT_SUCCESS
+    || action.type === necessityConstants.REMOVE_SUCCESS) {
+    necessityHouse = { ...state.necessityHouse };
+    const data = action.target as Necessity;
+    const indexToBeUpdated = necessityHouse.necessities.findIndex(({ id }) => id === data.id);
+    necessityHouse.necessities[indexToBeUpdated] = data;
+  } else {
+    necessityHouse = action.target as NecessityHouse;
+  }
+
   switch (action.type) {
     // 생필품 호출
     case necessityConstants.GET_SUCCESS:
       return {
         ...state,
         getStatus: necessityStatus.SUCCESS,
-        necessities: data,
+        necessityHouse,
       };
     case necessityConstants.GET_FAILURE:
       return {
@@ -34,7 +47,7 @@ function necessityreducer(state = initialState, action: Action) {
       return {
         ...state,
         createStatus: necessityStatus.SUCCESS,
-        necessities: data,
+        necessityHouse,
       };
     case necessityConstants.CREATE_FAILURE:
       return {
@@ -52,7 +65,7 @@ function necessityreducer(state = initialState, action: Action) {
       return {
         ...state,
         removeStatus: necessityStatus.SUCCESS,
-        necessities: data,
+        necessityHouse,
       };
     case necessityConstants.REMOVE_FAILURE:
       return {
@@ -65,7 +78,7 @@ function necessityreducer(state = initialState, action: Action) {
       return {
         ...state,
         countStatus: necessityStatus.SUCCESS,
-        necessities: data,
+        necessityHouse,
       };
     case necessityConstants.COUNT_FAILURE:
       return {

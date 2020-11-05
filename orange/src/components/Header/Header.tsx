@@ -1,17 +1,19 @@
 import React, { Component, Dispatch } from 'react';
 import { connect } from 'react-redux';
+import { History } from 'history';
 
 import { userActions } from '../../store/actions';
 import { userStatus } from '../../constants/constants';
 import './Header.css';
+import { User } from '../../api';
 
 interface Props {
-  history: any;
+  history: History;
   pathname: string;
   loginStatus: string;
   logoutStatus: string;
   getMeStatus: string;
-  me: any;
+  me: User;
   onGetMe: () => any;
   onLogout: () => any;
 }
