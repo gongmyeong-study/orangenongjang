@@ -12,7 +12,7 @@ from necessity.serializers import NecessityLogSerializer, NecessityOfHouseSerial
 
 
 class HouseViewSet(viewsets.GenericViewSet):
-    queryset = House.objects.filter(is_hidden=False)  # self.queryset, get_queryset, get_object 등을 사용할 때 기반이 됨
+    queryset = House.objects.filter(is_hidden=False)
     serializer_class = SimpleHouseSerializer
     permission_classes = (IsAuthenticated, )
 
@@ -159,7 +159,9 @@ class HouseViewSet(viewsets.GenericViewSet):
             try:
                 necessity = Necessity.objects.create(name=name, option=option, description=description, price=price)
             except IntegrityError:
-                return Response({'error': "이미 존재하는 Necessity 정보입니다."}, status=status.HTTP_409_CONFLICT)
+                # return Response({'error': "이미 존재하는 Necessity 정보입니다."}, status=status.HTTP_409_CONFLICT)
+                # FIXME: front에서 기 존재하는 Necessity를 갖고 생성하고 싶을 때는 id를 보내야 함.(ON-25) 그 전까지의 임시 방편.
+                necessity = Necessity.objects.filter(name=name).last()
 
         try:
             necessity_house = NecessityHouse.objects.create(house=house, necessity=necessity,
@@ -258,10 +260,9 @@ class HouseNecessityView(APIView):
             return Response({'error': "소속되어 있지 않은 집의 Necessity입니다."}, status=status.HTTP_403_FORBIDDEN)
 
         NecessityLog.objects.create(necessity_house=necessity_house, user=user, action=NecessityLog.DELETE)
-        necessity_house.count = 0
-        necessity_house.save()
+        necessity_house.delete()
 
-        return Response(NecessityOfHouseSerializer(necessity_house).data)
+        return Response(HouseSerializer(necessity_house.house).data)
 
 
 class HouseNecessityCountView(APIView):
