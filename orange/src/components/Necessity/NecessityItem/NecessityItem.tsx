@@ -5,7 +5,6 @@ import { MdDelete } from 'react-icons/md';
 import { necessityActions } from '../../../store/actions';
 import NecessityUpdateModal from '../NecessityUpdateModal/NecessityUpdateModal';
 import { Necessity } from '../../../api';
-import { necessityConstants } from '../../../store/actions/actionTypes';
 import { OrangeGlobalState } from '../../../store/state';
 
 const NecessityItemRemove = styled.div`
@@ -61,7 +60,6 @@ function NecessityItem(props: Props) {
   const showUpdateModal = (): void => setShowNecessityUpdateModal(true);
   const restoreUpdateModal = () => {
     setShowNecessityUpdateModal(false);
-    console.log('사라져');
   };
 
   const updateNecessityHouse = (houseId: number,
@@ -77,7 +75,6 @@ function NecessityItem(props: Props) {
   return (
     <NecessityItemBlock id={`necessity-item-${props.necessity.id}`}>
       <div onClick={showUpdateModal}>
-        {console.log(showNecessityUpdateModal)}
         {showNecessityUpdateModal ? (
           <NecessityUpdateModal
             necessity={props.necessity}
