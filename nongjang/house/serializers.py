@@ -40,12 +40,16 @@ class HouseSerializer(serializers.ModelSerializer):
         return UserOfHouseSerializer(user_houses, many=True, context=self.context).data
 
     def get_necessities(self, house):
-        necessity_order = self.context['request'].query_params.get('necessity_order')
-        queryset = house.necessity_houses.filter(count__gt=0)
+        queryset = house.necessity_houses.select_related('necessity')
+
+        necessity_order = None
+        if self.context.get('request'):
+            necessity_order = self.context['request'].query_params.get('necessity_order')
+
         if necessity_order == 'name':
-            necessity_houses = queryset.order_by('necessity__name', '-created_at').select_related('necessity')
+            necessity_houses = queryset.order_by('necessity__name', '-created_at')
         else:
-            necessity_houses = queryset.order_by('-created_at').select_related('necessity')
+            necessity_houses = queryset.order_by('-created_at')
 
         return NecessityOfHouseSerializer(necessity_houses, many=True, context=self.context).data
 
