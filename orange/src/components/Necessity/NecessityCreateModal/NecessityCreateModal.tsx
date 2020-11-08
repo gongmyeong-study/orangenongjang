@@ -108,10 +108,6 @@ class NecessityCreateModal extends Component<Props, State> {
               step="1"
               placeholder="1"
               required
-              onChange={(e) => this.setState({
-                count: (parseFloat(e.target.value) === parseInt(e.target.value, 10))
-                  ? parseFloat(e.target.value) : NaN,
-              })}
             />
 
             <label htmlFor="option">

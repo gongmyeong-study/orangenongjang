@@ -20,7 +20,6 @@ const initialState: NecessityState = {
 
 const SingleResponseCases = [
   necessityConstants.COUNT_SUCCESS,
-  necessityConstants.REMOVE_SUCCESS,
   necessityConstants.UPDATE_SUCCESS,
 ];
 
