@@ -6,6 +6,7 @@ import { NecessityState } from '../../state';
 type Action = {
   type: string;
   target: NecessityHouse | Necessity;
+  // NecessityHouse는 전체 House Necessity를, Necessity는 단일 House Necessity를 response로 보냄.
 };
 
 const initialState: NecessityState = {
@@ -17,7 +18,7 @@ const initialState: NecessityState = {
   necessityHouse: {} as NecessityHouse,
 };
 
-const nenene = [
+const SingleResponseCases = [
   necessityConstants.COUNT_SUCCESS,
   necessityConstants.REMOVE_SUCCESS,
   necessityConstants.UPDATE_SUCCESS,
@@ -25,7 +26,7 @@ const nenene = [
 
 function necessityreducer(state = initialState, action: Action): NecessityState {
   let necessityHouse: NecessityHouse;
-  if (nenene.includes(action.type)) {
+  if (SingleResponseCases.includes(action.type)) {
     necessityHouse = { ...state.necessityHouse };
     const data = action.target as Necessity;
     const indexToBeUpdated = necessityHouse.necessities.findIndex(({ id }) => id === data.id);
