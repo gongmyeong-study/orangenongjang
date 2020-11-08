@@ -1,7 +1,8 @@
 import React from 'react';
+import { NecessityHouseLog } from '../../api';
 
 interface Props {
-  logs: any;
+  logs: NecessityHouseLog;
 }
 
 function LogList(props: Props) {

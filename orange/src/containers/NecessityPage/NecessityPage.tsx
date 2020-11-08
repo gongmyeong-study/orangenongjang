@@ -4,7 +4,7 @@ import React, {
 import styled, { createGlobalStyle } from 'styled-components';
 import { MdAdd } from 'react-icons/md';
 import { connect } from 'react-redux';
-
+import { History } from 'history';
 import {
   NecessityCreateModal, NecessityHead, NecessityList, NecessityTemplate,
 } from '../../components';
@@ -46,7 +46,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 interface Props {
-  history: any;
+  history: History;
   onGetNecessityHouse(houseId: number): void;
   houseId: number;
 }
@@ -66,8 +66,12 @@ function NecessityPage(props: Props) {
     setShowNecessityCreateModal(false);
   };
 
-  useEffect(() => {
+  const fetchNecessityHouse = () => {
     props.onGetNecessityHouse(props.houseId);
+  };
+
+  useEffect(() => {
+    fetchNecessityHouse();
   });
 
   return (
@@ -90,7 +94,6 @@ function NecessityPage(props: Props) {
               houseId={props.houseId}
             />
           ) : null}
-
           <NecessityList />
         </div>
       </NecessityTemplate>
@@ -99,7 +102,7 @@ function NecessityPage(props: Props) {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  onGetNecessityHouse: (houseId: number): void => dispatch(
+  onGetNecessityHouse: (houseId: number) => dispatch(
     necessityActions.getNecessityHouse(houseId),
   ),
 });

@@ -32,6 +32,7 @@
 /* Set a style for all buttons */
 .necessity-update-modal .necessity-update-clearfix > button {
   background-color: darksalmon;
+  background-color: darksal;
   color: white;
   padding: 15px 16px;
   margin: 20px 0;

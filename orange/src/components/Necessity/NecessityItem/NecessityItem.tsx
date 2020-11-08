@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { MdDelete } from 'react-icons/md';
 import { necessityActions } from '../../../store/actions';
 import NecessityUpdateModal from '../NecessityUpdateModal/NecessityUpdateModal';
+import { Necessity } from '../../../api';
+import { necessityConstants } from '../../../store/actions/actionTypes';
+import { OrangeGlobalState } from '../../../store/state';
 
 const NecessityItemRemove = styled.div`
     display: none;
@@ -43,16 +46,14 @@ const Text = styled.div`
 `;
 
 interface Props {
-  key: number;
-  id: number;
-  name: string;
-  count: number;
-  description: string;
-  option: string;
-  price: number;
-  houseId: number;
-  necessityId: number;
+  necessity: Necessity;
   onRemoveNecessityHouse(houseId: number, necessityId: number): any;
+  onUpdateNecessityHouse: (
+    houseId: number,
+    necessityId: number,
+    description: string,
+    price?: number) => any;
+  updateStatus?: string;
 }
 
 function NecessityItem(props: Props) {
@@ -60,36 +61,43 @@ function NecessityItem(props: Props) {
   const showUpdateModal = (): void => setShowNecessityUpdateModal(true);
   const restoreUpdateModal = () => {
     setShowNecessityUpdateModal(false);
+    console.log('사라져');
+  };
+
+  const updateNecessityHouse = (houseId: number,
+    necessityId: number,
+    description: string,
+    price?: number) => {
+    props.onUpdateNecessityHouse(houseId, necessityId, description, price)
+      .then(() => {
+        restoreUpdateModal();
+      });
   };
 
   return (
-    <NecessityItemBlock id={`necessity-item-${props.necessityId}`}>
+    <NecessityItemBlock id={`necessity-item-${props.necessity.id}`}>
       <div onClick={showUpdateModal}>
+        {console.log(showNecessityUpdateModal)}
         {showNecessityUpdateModal ? (
           <NecessityUpdateModal
-            houseId={props.houseId}
-            necessityId={props.necessityId}
-            name={props.name}
-            option={props.option}
-            description={props.description}
-            price={props.price}
+            necessity={props.necessity}
             restoreUpdateModal={restoreUpdateModal}
+            updateNecessityHouse={updateNecessityHouse}
           />
         ) : null}
 
         <Text>
-          {`${props.name}`}
+          {`${props.necessity.name}`}
           <span className="option">
             <br />
-            {` ${props.count}개 / ${props.price}원 / ${props.option} `}
+            {` ${props.necessity.count}개 / ${props.necessity.price}원 / ${props.necessity.option} `}
           </span>
         </Text>
       </div>
 
       <NecessityItemRemove
         onClick={() => {
-          props.onRemoveNecessityHouse(props.houseId, props.necessityId);
-          window.location.reload();
+          props.onRemoveNecessityHouse(props.necessity.house_id, props.necessity.id);
         }}
       >
         <MdDelete />
@@ -102,6 +110,15 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   onRemoveNecessityHouse: (houseId: number, necessityId: number): void => dispatch(
     necessityActions.removeNecessityHouse(houseId, necessityId),
   ),
+  onUpdateNecessityHouse: (
+    houseId: number, necessityId: number, description: string, price?: number,
+  ): void => dispatch(
+    necessityActions.updateNecessityHouse(houseId, necessityId, description, price),
+  ),
 });
 
-export default connect(null, mapDispatchToProps)(NecessityItem);
+const mapStateToProps = (state: OrangeGlobalState) => ({
+  updateStatus: state.necessity.updateStatus,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NecessityItem);

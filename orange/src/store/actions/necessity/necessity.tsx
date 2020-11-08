@@ -1,16 +1,17 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
 import { necessityConstants } from '../actionTypes';
+import { NecessityHouse, Necessity } from '../../../api';
 
 // 생필품 호출 기능
-const getSuccess = (data: any) => ({
+const getSuccess = (necessityHouse: NecessityHouse) => ({
   type: necessityConstants.GET_SUCCESS,
-  target: data.necessities,
+  target: necessityHouse,
 });
 
-const getFailure = (error: any) => {
+const getFailure = (error: AxiosError) => {
   let actionType = null;
-  switch (error.response.status) {
+  switch (error.response?.status) {
     default:
       actionType = necessityConstants.GET_FAILURE;
       break;
@@ -22,14 +23,14 @@ const getFailure = (error: any) => {
 };
 
 // 생필품 추가 기능
-const createSuccess = (necessities: any) => ({
+const createSuccess = (necessityHouse: NecessityHouse) => ({
   type: necessityConstants.CREATE_SUCCESS,
-  target: necessities,
+  target: necessityHouse,
 });
 
-const createFailure = (error: any) => {
+const createFailure = (error: AxiosError) => {
   let actionType = null;
-  switch (error.response.status) {
+  switch (error.response?.status) {
     case 409:
       actionType = necessityConstants.CREATE_FAILURE_NAME;
       break;
@@ -43,17 +44,17 @@ const createFailure = (error: any) => {
 };
 
 // 생필품 삭제 기능
-const removeSuccess = (necessities: any) => {
+const removeSuccess = (necessityHouse: Necessity) => {
   window.alert('삭제되었습니다!');
   return {
     type: necessityConstants.REMOVE_SUCCESS,
-    target: necessities,
+    target: necessityHouse,
   };
 };
 
-const removeFailure = (error: any) => {
+const removeFailure = (error: AxiosError) => {
   let actionType = null;
-  switch (error.response.status) {
+  switch (error.response?.status) {
     default:
       window.alert('실패!');
       actionType = necessityConstants.REMOVE_FAILURE;
@@ -66,14 +67,14 @@ const removeFailure = (error: any) => {
 };
 
 // 생필품 수량 기능
-const countSuccess = (necessities: any) => ({
+const countSuccess = (necessity: Necessity) => ({
   type: necessityConstants.COUNT_SUCCESS,
-  target: necessities,
+  target: necessity,
 });
 
-const countFailure = (error: any) => {
+const countFailure = (error: AxiosError) => {
   let actionType = null;
-  switch (error.response.status) {
+  switch (error.response?.status) {
     default:
       actionType = necessityConstants.COUNT_FAILURE;
       break;
@@ -85,19 +86,15 @@ const countFailure = (error: any) => {
 };
 
 // 생필품 수정 기능
-const updateSuccess = (necessities: any) => {
-  window.alert('수정되었습니다!');
-  window.location.reload();
-  return {
-    type: necessityConstants.UPDATE_SUCCESS,
-    target: necessities,
-  };
-};
+const updateSuccess = (necessityHouse: Necessity) => ({
+  type: necessityConstants.UPDATE_SUCCESS,
+  target: necessityHouse,
+});
 
-const updateFailure = (error: any) => {
+const updateFailure = (error: AxiosError) => {
   let actionType = null;
   window.alert('수정 내역을 다시 확인해주세요.');
-  switch (error.response.status) {
+  switch (error.response?.status) {
     default:
       actionType = necessityConstants.UPDATE_FAILURE;
       break;
@@ -113,27 +110,37 @@ export const createNecessityHouse = (
 ) => (dispatch: Dispatch) => axios.post(`/api/v1/house/${houseId}/necessity/`, {
   houseId, name, option, description, price, count,
 })
-  .then((createResponse) => dispatch(createSuccess(createResponse.data)))
+  .then((createResponse: AxiosResponse<NecessityHouse>) => {
+    dispatch(createSuccess(createResponse.data));
+  })
   .catch((createError) => dispatch(createFailure(createError)));
 
 export const removeNecessityHouse = (
   houseId: number, necessityId: number,
 ) => (dispatch: Dispatch) => axios.delete(`/api/v1/house/${houseId}/necessity/${necessityId}/`)
-  .then((removeResponse) => dispatch(removeSuccess(removeResponse.data)))
+  .then((removeResponse: AxiosResponse<Necessity>) => {
+    dispatch(removeSuccess(removeResponse.data));
+  })
   .catch((removeError) => dispatch(removeFailure(removeError)));
 
 export const getNecessityHouse = (houseId: number) => (dispatch: Dispatch) => axios.get(`/api/v1/house/${houseId}/necessity/`)
-  .then((getResponse) => dispatch(getSuccess(getResponse.data)))
+  .then((getResponse: AxiosResponse<NecessityHouse>) => {
+    dispatch(getSuccess(getResponse.data));
+  })
   .catch((getError) => dispatch(getFailure(getError)));
 
 export const countNecessityHouse = (
   houseId: number, necessityId: number, count: number,
 ) => (dispatch: Dispatch) => axios.put(`/api/v1/house/${houseId}/necessity/${necessityId}/count/`, { count })
-  .then((countResponse) => dispatch(countSuccess(countResponse.data)))
+  .then((countResponse: AxiosResponse<Necessity>) => {
+    dispatch(countSuccess(countResponse.data));
+  })
   .catch((countError) => dispatch(countFailure(countError)));
 
 export const updateNecessityHouse = (
-  houseId: number, necessityId: number, description: string, price: number,
+  houseId: number, necessityId: number, description: string, price?: number,
 ) => (dispatch: Dispatch) => axios.put(`/api/v1/house/${houseId}/necessity/${necessityId}/`, { description, price })
-  .then((updateResponse) => dispatch(updateSuccess(updateResponse.data)))
+  .then((updateResponse: AxiosResponse<Necessity>) => {
+    dispatch(updateSuccess(updateResponse.data));
+  })
   .catch((updateError) => dispatch(updateFailure(updateError)));

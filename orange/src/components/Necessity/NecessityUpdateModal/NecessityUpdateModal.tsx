@@ -1,63 +1,57 @@
-import React, { Component, Dispatch } from 'react';
-import { connect } from 'react-redux';
-import { necessityActions } from '../../../store/actions';
+import React, { Component } from 'react';
+import { Necessity } from '../../../api';
+
 import './NecessityUpdateModal.css';
 
 interface Props {
-  houseId: number;
-  necessityId: number;
-  name: string;
-  option: string;
-  description: string;
-  price: number;
-  me: any;
-  onUpdateNecessityHouse: (
+  necessity: Necessity;
+  updateNecessityHouse: (
     houseId: number,
     necessityId: number,
     description: string,
-    price: number) => any;
-  updateStatus: string;
-  restoreUpdateModal: any;
+    price?: number) => any;
+  restoreUpdateModal: () => void;
 }
 
 interface State {
-  appearing: boolean;
   description: string;
-  price: number;
+  price?: number;
 }
 
 class NecessityUpdateModal extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      appearing: true,
-      description: props.description,
-      price: props.price,
+      description: props.necessity.description,
+      price: props.necessity.price,
     };
   }
 
-  onUpdateNecessityHouse = (): void => {
-    this.props.onUpdateNecessityHouse(
-      this.props.houseId,
-      this.props.necessityId,
-      this.state.description,
-      this.state.price,
-    );
-  };
+  componentDidMount() {
+    console.log('모달 떴어');
+  }
 
   render() {
+    const update = () => {
+      this.props.updateNecessityHouse(
+        this.props.necessity.house_id,
+        this.props.necessity.id,
+        this.state.description,
+        this.state.price,
+      );
+    };
     return (
       <div
         className="necessity-update-modal"
-        style={this.state.appearing ? { display: 'block' } : { display: 'none' }}
+        style={{ display: 'block' }}
       >
         <form>
           <button
             className="necessity-update-close"
-            onClick={() => this.props.restoreUpdateModal}
             type="submit"
             title="Close Modal"
             style={{ background: 'none', border: 'none' }}
+            onClick={() => this.props.restoreUpdateModal}
           >
             &times;
           </button>
@@ -66,7 +60,7 @@ class NecessityUpdateModal extends Component<Props, State> {
         <form className="necessity-update-modal-content">
           <div className="necessity-update-container">
             <p>
-              {this.props.name}
+              {this.props.necessity.name}
               의 설명 또는 가격을 수정해주세요.
             </p>
             <hr />
@@ -76,7 +70,7 @@ class NecessityUpdateModal extends Component<Props, State> {
             </label>
             <input
               type="text"
-              value={this.props.name}
+              value={this.props.necessity.name}
               disabled
             />
 
@@ -85,7 +79,7 @@ class NecessityUpdateModal extends Component<Props, State> {
             </label>
             <input
               type="text"
-              value={this.props.option}
+              value={this.props.necessity.option}
               disabled
             />
 
@@ -94,7 +88,7 @@ class NecessityUpdateModal extends Component<Props, State> {
             </label>
             <input
               type="text"
-              placeholder={this.props.description}
+              placeholder={this.props.necessity.description}
               required
               onChange={(e) => this.setState({ description: e.target.value })}
             />
@@ -104,7 +98,7 @@ class NecessityUpdateModal extends Component<Props, State> {
             </label>
             <input
               type="number"
-              placeholder={String(this.props.price)}
+              placeholder={String(this.props.necessity.price)}
               required
               onChange={(e) => this.setState({
                 price: (parseFloat(e.target.value) === parseInt(e.target.value, 10))
@@ -116,7 +110,7 @@ class NecessityUpdateModal extends Component<Props, State> {
               <button
                 type="button"
                 className="necessity-update-createbtn"
-                onClick={this.onUpdateNecessityHouse}
+                onClick={update}
               >
                 생필품 수정
               </button>
@@ -129,17 +123,4 @@ class NecessityUpdateModal extends Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  onUpdateNecessityHouse: (
-    houseId: number, necessityId: number, description: string, price: number,
-  ): void => dispatch(
-    necessityActions.updateNecessityHouse(houseId, necessityId, description, price),
-  ),
-});
-
-const mapStateToProps = (state: any) => ({
-  updateStatus: state.necessity.updateStatus,
-  me: state.user.me,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(NecessityUpdateModal);
+export default NecessityUpdateModal;

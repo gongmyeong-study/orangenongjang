@@ -1,34 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import './NecessityList.css';
+import { NecessityHouse } from '../../../api';
 import NecessityItem from '../NecessityItem/NecessityItem';
 import NecessityCounter from '../NecessityCounter/NecessityCounter';
-import './NecessityList.css';
+import { OrangeGlobalState } from '../../../store/state';
 
 interface Props {
-  necessities: any;
+  necessityHouse: NecessityHouse;
 }
 
 function NecessityList(props: Props) {
-  const { necessities } = props;
+  const { necessityHouse } = props;
 
   return (
     <>
-      {Array.from(necessities).map((necessity: any) => (
+      { necessityHouse.necessities?.length ? necessityHouse.necessities.map((necessity) => (
+
         <div
           className="necessity-list-block"
           key={necessity.id}
         >
           <div className="necessity-item-block">
             <NecessityItem
-              key={necessity.id}
-              id={necessity.id}
-              name={necessity.name}
-              count={necessity.count}
-              description={necessity.description}
-              option={necessity.option}
-              price={necessity.price}
-              houseId={necessity.house_id}
-              necessityId={necessity.id}
+              necessity={necessity}
             />
           </div>
           <div>
@@ -40,13 +35,18 @@ function NecessityList(props: Props) {
             />
           </div>
         </div>
-      ))}
+      )) : (
+        <h2>
+          {necessityHouse.name}
+          에 첫 생필품을 추가해보세요!
+        </h2>
+      )}
     </>
   );
 }
 
-const mapStateToProps = (state: any) => ({
-  necessities: state.necessity.necessities,
+const mapStateToProps = (state: OrangeGlobalState) => ({
+  necessityHouse: state.necessity.necessityHouse,
 });
 
 export default connect(mapStateToProps)(NecessityList);

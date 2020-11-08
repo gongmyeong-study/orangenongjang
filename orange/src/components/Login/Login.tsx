@@ -1,12 +1,14 @@
 import React, { Component, Dispatch } from 'react';
 import { connect } from 'react-redux';
+import { History } from 'history';
 
 import { userStatus } from '../../constants/constants';
 import { userActions } from '../../store/actions';
 import './Login.css';
+import { OrangeGlobalState } from '../../store/state';
 
 interface Props {
-  history: any;
+  history: History;
   loginStatus: string;
   onLogin: (username: string, password: string) => any;
 }
@@ -70,9 +72,8 @@ class Login extends Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: OrangeGlobalState) => ({
   loginStatus: state.user.loginStatus,
-  user: state.user.login,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({

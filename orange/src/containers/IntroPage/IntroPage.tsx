@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { History } from 'history';
 
 import { Login, SignUpModal } from '../../components/index';
 
 interface Props {
-  history: any;
+  history: History;
 }
 
 function IntroPage(props: Props) {
