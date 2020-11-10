@@ -11,15 +11,17 @@ function LogList(props: Props) {
   const createdAt = (new Date(props.logs.created_at)).toLocaleString();
 
   const activityCategory = () => {
-    switch (props.logs.activity_category) {
+    switch (props.logs.action) {
       case 'CREATE':
-        return '를(을) 생필품 목록에 추가했습니다.';
+        return '을(를) 생필품 목록에 추가했습니다.';
       case 'UPDATE':
-        return '를(을) 수정했습니다.';
+        return '을(를) 수정했습니다.';
       case 'DELETE':
-        return '를(을) 생필품 목록에서 삭제했습니다.';
+        return '을(를) 생필품 목록에서 삭제했습니다.';
+      case 'COUNT':
+        return '의 수량을 변경했습니다.';
       default:
-        return '를(을) 수정했습니다.';
+        return '을(를) 수정했습니다.';
     }
   };
 
