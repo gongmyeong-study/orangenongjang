@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.db import IntegrityError, transaction
 from rest_framework import status, viewsets
@@ -69,6 +70,8 @@ class HouseViewSet(viewsets.GenericViewSet):
             return Response({'error': "leader만 초대장을 전송할 수 있습니다."}, status=status.HTTP_403_FORBIDDEN)
 
         email = request.data.get('email')
+        if not User.objects.filter(email=email).exists():
+            return Response({'error': "등록되지 않은 Email입니다."}, status=status.HTTP_400_BAD_REQUEST)
         # Serializer를 통해 올바른 email 형식인지 검증할 필요가 있음. 현재 user에 대한 validation(email 형식 등) 로직이 없어 리팩토링해야 함.
 
         if email is None:
