@@ -27,10 +27,6 @@ class NecessityUpdateModal extends Component<Props, State> {
     };
   }
 
-  componentDidMount() {
-    console.log('모달 떴어');
-  }
-
   render() {
     const update = () => {
       this.props.updateNecessityHouse(
