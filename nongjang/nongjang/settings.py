@@ -144,6 +144,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Django Mail
+with open(secret_file) as f:
+    secret_info = json.loads(f.read())
 EMAIL_BACKEND = secret_info['EMAIL_BACKEND']
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
