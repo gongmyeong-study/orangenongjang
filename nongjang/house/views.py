@@ -1,3 +1,4 @@
+from django.core.mail import EmailMessage
 from django.db import IntegrityError, transaction
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
@@ -55,6 +56,28 @@ class HouseViewSet(viewsets.GenericViewSet):
         house.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    # /api/v1/house/{house_id}/invitation/
+    @action(detail=True, methods=['POST'])
+    def invitation(self, request, pk=None):
+        user = request.user
+        print(1)
+        house = self.get_object()
+        user_house = user.user_houses.filter(house=house).last()
+        if not user_house:
+            return Response({'error': "초대할 집이 존재하지 않습니다."}, status=status.HTTP_403_FORBIDDEN)
+        if not user_house.is_leader:
+            return Response({'error': "leader만 초대장을 전송할 수 있습니다."}, status=status.HTTP_403_FORBIDDEN)
+
+        email = request.data.get('email')
+        # Serializer를 통해 올바른 email 형식인지 검증할 필요가 있음. 현재 user에 대한 validation(email 형식 등) 로직이 없어 리팩토링해야 함.
+
+        if email is None:
+            return Response({'error': "Email 주소를 입력해주세요."}, status=status.HTTP_404_NOT_FOUND)
+        subject = '오렌지농장 House에 초대합니다.'
+        message = '{}님께서 {} 초대장을 보내셨습니다. 아래 링크를 클릭하여 초대를 수락하세요.'.format(user.username, house.name)
+        EmailMessage(subject, message, to=[email]).send()
+        return Response({'입력하신 이메일로 초대장이 전송되었습니다.'})
+
     # /api/v1/house/{house_id}/user/
     @action(detail=True, methods=['POST', 'DELETE'])
     def user(self, request, pk=None):
@@ -80,7 +103,7 @@ class HouseViewSet(viewsets.GenericViewSet):
             return Response({'error': "소속되어 있지 않은 집입니다."}, status=status.HTTP_403_FORBIDDEN)
 
         if user_house.is_leader:
-            return Response({'error': 'leader이므로 집을 떠날 수 없습니다. leader를 다른 유저에게 양도한 뒤 다시 시도해 주세요'},
+            return Response({'error': "leader이므로 집을 떠날 수 없습니다. leader를 다른 유저에게 양도한 뒤 다시 시도해 주세요"},
                             status=status.HTTP_400_BAD_REQUEST)
 
         user_house.delete()
