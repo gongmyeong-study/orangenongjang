@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core import mail
 from django.core.mail import EmailMessage
 from django.db import IntegrityError, transaction
 from rest_framework import status, viewsets
@@ -6,6 +7,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from smtplib import SMTPRecipientsRefused
 
 from house.models import House, UserHouse
 from house.serializers import HouseSerializer, SimpleHouseSerializer
@@ -61,25 +63,28 @@ class HouseViewSet(viewsets.GenericViewSet):
     @action(detail=True, methods=['POST'])
     def invitation(self, request, pk=None):
         user = request.user
-        print(1)
         house = self.get_object()
         user_house = user.user_houses.filter(house=house).last()
         if not user_house:
-            return Response({'error': "초대할 집이 존재하지 않습니다."}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'error': "초대할 집이 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
         if not user_house.is_leader:
             return Response({'error': "leader만 초대장을 전송할 수 있습니다."}, status=status.HTTP_403_FORBIDDEN)
 
         email = request.data.get('email')
-        if not User.objects.filter(email=email).exists():
-            return Response({'error': "등록되지 않은 Email입니다."}, status=status.HTTP_400_BAD_REQUEST)
-        # Serializer를 통해 올바른 email 형식인지 검증할 필요가 있음. 현재 user에 대한 validation(email 형식 등) 로직이 없어 리팩토링해야 함.
-
         if email is None:
-            return Response({'error': "Email 주소를 입력해주세요."}, status=status.HTTP_404_NOT_FOUND)
-        subject = '오렌지농장 House에 초대합니다.'
-        message = '{}님께서 {} 초대장을 보내셨습니다. 아래 링크를 클릭하여 초대를 수락하세요.'.format(user.username, house.name)
-        EmailMessage(subject, message, to=[email]).send()
-        return Response({'입력하신 이메일로 초대장이 전송되었습니다.'})
+            return Response({'error': "Email 주소를 입력해주세요."}, status=status.HTTP_400_BAD_REQUEST)
+        if not User.objects.filter(email=email).exists():
+            return Response({'error': "등록되지 않은 Email입니다."}, status=status.HTTP_404_NOT_FOUND)
+        # FIXME: Serializer를 통해 올바른 email 형식인지 검증할 필요가 있음. 현재 user에 대한 validation이 없어 리팩토링해야 함.(ON-35)
+
+        subject = "오렌지농장 House에 초대합니다."
+        message = "{}님께서 {} 초대장을 보내셨습니다. 아래 링크를 클릭하여 초대를 수락하세요.".format(user.username, house.name)
+        with mail.get_connection() as connection:
+            try:
+                EmailMessage(subject, message, to=[email], connection=connection).send()
+            except SMTPRecipientsRefused:
+                return Response({'error': "유효하지 않은 Email 주소입니다."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': "입력하신 이메일로 초대장이 전송되었습니다."})
 
     # /api/v1/house/{house_id}/user/
     @action(detail=True, methods=['POST', 'DELETE'])
