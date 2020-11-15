@@ -7,7 +7,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from smtplib import SMTPRecipientsRefused
+from smtplib import SMTPException
 
 from house.models import House, UserHouse
 from house.serializers import HouseSerializer, SimpleHouseSerializer
@@ -71,7 +71,7 @@ class HouseViewSet(viewsets.GenericViewSet):
             return Response({'error': "leader만 초대장을 전송할 수 있습니다."}, status=status.HTTP_403_FORBIDDEN)
 
         email = request.data.get('email')
-        if email is None:
+        if not email:
             return Response({'error': "Email 주소를 입력해주세요."}, status=status.HTTP_400_BAD_REQUEST)
         if not User.objects.filter(email=email).exists():
             return Response({'error': "등록되지 않은 Email입니다."}, status=status.HTTP_404_NOT_FOUND)
@@ -82,7 +82,7 @@ class HouseViewSet(viewsets.GenericViewSet):
         with mail.get_connection() as connection:
             try:
                 EmailMessage(subject, message, to=[email], connection=connection).send()
-            except SMTPRecipientsRefused:
+            except SMTPException:
                 return Response({'error': "유효하지 않은 Email 주소입니다."}, status=status.HTTP_400_BAD_REQUEST)
         return Response({'message': "입력하신 이메일로 초대장이 전송되었습니다."})
 
