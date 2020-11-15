@@ -1,10 +1,11 @@
 from rest_framework import serializers
 
-from necessity.models import Necessity, NecessityHouse, NecessityLog
+from necessity.models import Necessity, NecessityLog, NecessityPlace
 from user.serializers import SimpleUserSerializer
 
 
 class NecessitySerializer(serializers.ModelSerializer):
+    option = serializers.CharField(required=False, default='')
 
     class Meta:
         model = Necessity
@@ -17,19 +18,17 @@ class NecessitySerializer(serializers.ModelSerializer):
          )
 
 
-class NecessityOfHouseSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(source='necessity.id')
-    house_id = serializers.IntegerField(source='house.id')
-    name = serializers.CharField(source='necessity.name')
-    option = serializers.CharField(source='necessity.option')
-    description = serializers.SerializerMethodField()
-    price = serializers.SerializerMethodField()
+class NecessityOfPlaceWriteSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(source='necessity.id', read_only=True)
+    place_id = serializers.IntegerField(source='place.id', read_only=True)
+    name = serializers.CharField(source='necessity.name', read_only=True)
+    option = serializers.CharField(source='necessity.option', read_only=True)
 
     class Meta:
-        model = NecessityHouse
+        model = NecessityPlace
         fields = (
             'id',
-            'house_id',
+            'place_id',
             'name',
             'option',
             'description',
@@ -37,11 +36,16 @@ class NecessityOfHouseSerializer(serializers.ModelSerializer):
             'count',
         )
 
-    def get_description(self, necessity_house):
-        return necessity_house.description if necessity_house.description else necessity_house.necessity.description
 
-    def get_price(self, necessity_house):
-        return necessity_house.price if necessity_house.price else necessity_house.necessity.price
+class NecessityOfPlaceSerializer(NecessityOfPlaceWriteSerializer):
+    description = serializers.SerializerMethodField()
+    price = serializers.SerializerMethodField()
+
+    def get_description(self, necessity_place):
+        return necessity_place.description if necessity_place.description else necessity_place.necessity.description
+
+    def get_price(self, necessity_place):
+        return necessity_place.price if necessity_place.price else necessity_place.necessity.price
 
 
 class NecessityLogSerializer(serializers.ModelSerializer):
@@ -62,4 +66,6 @@ class NecessityLogSerializer(serializers.ModelSerializer):
         return SimpleUserSerializer(log.user, context=self.context).data
 
     def get_necessity(self, log):
-        return NecessityOfHouseSerializer(log.necessity_house, context=self.context).data
+        if log.necessity_place:
+            return NecessityOfPlaceSerializer(log.necessity_place, context=self.context).data
+        return None
