@@ -1,8 +1,5 @@
-import React, {
-  Dispatch, useEffect, useState,
-} from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
-import { MdAdd } from 'react-icons/md';
+import React, { Dispatch, useEffect } from 'react';
+import { createGlobalStyle } from 'styled-components';
 import { connect } from 'react-redux';
 import { History } from 'history';
 import {

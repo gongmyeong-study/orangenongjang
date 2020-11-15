@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { History } from 'history';
 import { connect } from 'react-redux';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import { MdAdd } from 'react-icons/md';
 import { Necessity, Place } from '../../../api';
 import { OrangeGlobalState } from '../../../store/state';
