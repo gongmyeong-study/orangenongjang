@@ -24,7 +24,6 @@ module.exports = {
     rules: {
       'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
       'react/destructuring-assignment': 0,
-      'react-hooks/exhaustive-deps': 0,
       'prefer-destructuring': 1,
       'react/prefer-stateless-function': 0,
       'import/no-extraneous-dependencies': [2, { devDependencies: ['**/test.tsx', '**/test.ts'] }],
