@@ -36,7 +36,7 @@ const createNecessityPlaceFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {
     case 409:
-      actionType = necessityConstants.CREATE_FAILURE_NAME;
+      actionType = necessityConstants.CREATE_NECESSITYPLACE_FAILURE_NAME;
       break;
     default:
       actionType = necessityConstants.CREATE_NECESSITYPLACE_FAILURE;

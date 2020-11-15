@@ -107,7 +107,7 @@ function necessityreducer(state = initialState, action: Action): NecessityState 
         ...state,
         createStatus: necessityStatus.FAILURE,
       };
-    case necessityConstants.CREATE_FAILURE_NAME:
+    case necessityConstants.CREATE_NECESSITYPLACE_FAILURE_NAME:
       return {
         ...state,
         createStatus: necessityStatus.FAILURE_NAME,
