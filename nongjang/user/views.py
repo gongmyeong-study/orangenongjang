@@ -4,29 +4,38 @@ from django.db import IntegrityError
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from user.serializers import UserSerializer
 
 
 class UserViewSet(viewsets.GenericViewSet):
+    permission_classes = (IsAuthenticated, )
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
-    # POST /api/v1/user/
-    def create(self, request, *args, **kwargs):
-        username = request.data.get('username')
-        email = request.data.get('email')
-        password = request.data.get('password')
+    def get_permissions(self):
+        return self.permission_classes
 
-        if not username or not email or not password:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+    # POST /api/v1/user/
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        # username = request.data.get('username')
+        # email = request.data.get('email')
+        # password = request.data.get('password')
+        #
+        # if not username or not email or not password:
+        #     return Response({'error': "정보를 모두 입력해주세요."}, status=status.HTTP_400_BAD_REQUEST)
         
         try:
             # Django 내부에 기본으로 정의된 User에 대해서는 create가 아닌 create_user를 사용
             # password가 자동으로 암호화되어 저장됨. database를 직접 조회해도 알 수 없는 형태로 저장됨.
-            user = User.objects.create_user(username, email, password)
+            # user = User.objects.create_user(username, email, password)
+            user = serializer.save()
         except IntegrityError:  # 중복된 username
-            return Response(status=status.HTTP_409_CONFLICT)
+            return Response({'error': "Email 또는 사용자명이 이미 존재합니다."}, status=status.HTTP_409_CONFLICT)
 
         # 가입했으니 바로 로그인 시켜주기
         login(request, user)
