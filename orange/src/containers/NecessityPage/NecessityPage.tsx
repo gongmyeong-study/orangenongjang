@@ -2,9 +2,7 @@ import React, { Dispatch, useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { connect } from 'react-redux';
 import { History } from 'history';
-import {
-  NecessityHead, NecessityTemplate,
-} from '../../components';
+import { NecessityTemplate, PlaceBox } from '../../components';
 import { necessityActions } from '../../store/actions';
 import { Place } from '../../api';
 import { OrangeGlobalState } from '../../store/state';
@@ -47,7 +45,7 @@ function NecessityPage(props: Props) {
 
       <GlobalStyle />
       <NecessityTemplate>
-        <NecessityHead history={props.history} />
+        <PlaceBox history={props.history} />
       </NecessityTemplate>
     </>
   );

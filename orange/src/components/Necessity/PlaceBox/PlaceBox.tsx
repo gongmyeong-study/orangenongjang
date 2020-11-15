@@ -6,7 +6,7 @@ import { MdAdd } from 'react-icons/md';
 import { Necessity, Place } from '../../../api';
 import { OrangeGlobalState } from '../../../store/state';
 import NecessityList from '../NecessityList/NecessityList';
-import './NecessityHead.css';
+import './PlaceBox.css';
 import NecessityCreateModal from '../NecessityCreateModal/NecessityCreateModal';
 
 const CircleButton = styled.button`
@@ -42,7 +42,7 @@ interface Props {
   places: Place[];
 }
 
-function NecessityHead(props: Props) {
+function PlaceBox(props: Props) {
   let name = '';
   let necessities: Necessity[] = [];
   let placeId = 0;
@@ -63,7 +63,7 @@ function NecessityHead(props: Props) {
 
   return (
     <div
-      className="NecessityHeadBlock"
+      className="PlaceBox"
     >
       <h1>{name}</h1>
       <NecessityList necessities={necessities} />
@@ -88,4 +88,4 @@ const mapStateToProps = (state: OrangeGlobalState) => ({
   places: state.necessity.places,
 });
 
-export default connect(mapStateToProps)(NecessityHead);
+export default connect(mapStateToProps)(PlaceBox);
