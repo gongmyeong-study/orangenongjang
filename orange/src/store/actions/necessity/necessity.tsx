@@ -83,9 +83,9 @@ export const countNecessityPlace = (
   })
   .catch((countError) => dispatch(countNecessityPlaceFailure(countError)));
 
-const updateNecessityPlaceSuccess = (necessityHouse: Necessity) => ({
+const updateNecessityPlaceSuccess = (necessity: Necessity) => ({
   type: necessityConstants.UPDATE_NECESSITYPLACE_SUCCESS,
-  target: necessityHouse,
+  target: necessity,
 });
 
 const updateNecessityPlaceFailure = (error: AxiosError) => {
@@ -110,11 +110,11 @@ export const updateNecessityPlace = (
   })
   .catch((updateError) => dispatch(updateNecessityPlaceFailure(updateError)));
 
-const removeNecessityPlaceSuccess = (necessityHouse: Necessity) => {
+const removeNecessityPlaceSuccess = (place: Place) => {
   window.alert('삭제되었습니다!');
   return {
     type: necessityConstants.REMOVE_NECESSITYPLACE_SUCCESS,
-    target: necessityHouse,
+    target: place,
   };
 };
 
@@ -135,7 +135,7 @@ const removeNecessityPlaceFailure = (error: AxiosError) => {
 export const removeNecessityPlace = (
   placeId: number, necessityId: number,
 ) => (dispatch: Dispatch) => axios.delete(`/api/v1/place/${placeId}/necessity/${necessityId}/`)
-  .then((removeResponse: AxiosResponse<Necessity>) => {
+  .then((removeResponse: AxiosResponse<Place>) => {
     dispatch(removeNecessityPlaceSuccess(removeResponse.data));
   })
   .catch((removeError) => dispatch(removeNecessityPlaceFailure(removeError)));
