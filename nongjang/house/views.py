@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 from smtplib import SMTPException
 
 from house.models import House, Place, UserHouse
-from house.serializers import HouseSerializer, PlaceSerializer
+from house.serializers import HouseSerializer, PlaceSerializer, SimpleHouseSerializer
 from necessity.models import Necessity, NecessityPlace, NecessityLog
 from necessity.serializers import NecessitySerializer, NecessityLogSerializer, NecessityOfPlaceWriteSerializer
 
@@ -26,6 +26,8 @@ class HouseViewSet(viewsets.GenericViewSet):
     def get_serializer_class(self, *args, **kwargs):
         if self.action == 'place':
             return PlaceSerializer
+        if self.action in ['list', 'destroy']:
+            return SimpleHouseSerializer
         if self.action == 'necessity_log':
             return NecessityLogSerializer
         return self.serializer_class
