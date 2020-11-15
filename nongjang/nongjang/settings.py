@@ -115,6 +115,15 @@ elif os.path.exists(secret_file):
                     'PORT': '3306',
                 }
             }
+        # Django Mail
+        EMAIL_BACKEND = secret_info['EMAIL_BACKEND']
+        EMAIL_USE_TLS = True
+        EMAIL_HOST = 'smtp.gmail.com'
+        EMAIL_PORT = 587
+        EMAIL_HOST_USER = secret_info['EMAIL_HOST_USER']
+        EMAIL_HOST_PASSWORD = secret_info['EMAIL_HOST_PASSWORD']
+        SERVER_EMAIL = secret_info['SERVER_EMAIL']
+        DEFAULT_FROM_MAIL = secret_info['DEFAULT_FROM_MAIL']
 else:
     raise Exception("Check your 'secret_info.json' file!")
 
@@ -142,7 +151,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
