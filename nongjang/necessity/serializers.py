@@ -66,4 +66,6 @@ class NecessityLogSerializer(serializers.ModelSerializer):
         return SimpleUserSerializer(log.user, context=self.context).data
 
     def get_necessity(self, log):
-        return NecessityOfPlaceSerializer(log.necessity_place, context=self.context).data
+        if log.necessity_place:
+            return NecessityOfPlaceSerializer(log.necessity_place, context=self.context).data
+        return None
