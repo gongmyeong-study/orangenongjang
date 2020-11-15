@@ -6,6 +6,7 @@ class House(models.Model):
     name = models.CharField(max_length=50)
     introduction = models.CharField(max_length=300, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     is_hidden = models.BooleanField(default=False)
 
 
@@ -18,4 +19,16 @@ class UserHouse(models.Model):
     class Meta:
         unique_together = (
             ('user', 'house'),
+        )
+
+
+class Place(models.Model):
+    name = models.CharField(max_length=50)
+    house = models.ForeignKey(House, related_name="places", on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = (
+            ('house', 'name'),
         )
