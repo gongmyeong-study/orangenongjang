@@ -1,13 +1,13 @@
 import React from 'react';
-import { NecessityHouseLog } from '../../api';
+import { NecessityLog } from '../../api';
 
 interface Props {
-  logs: NecessityHouseLog;
+  logs: NecessityLog;
 }
 
 function LogList(props: Props) {
   const { username } = props.logs.user;
-  const necessityname = props.logs.necessity.name;
+  const necessityname = props.logs.necessity?.name;
   const createdAt = (new Date(props.logs.created_at)).toLocaleString();
 
   const activityCategory = () => {

@@ -1,7 +1,7 @@
 import Header from './Header/Header';
 import Login from './Login/Login';
 import NecessityCreateModal from './Necessity/NecessityCreateModal/NecessityCreateModal';
-import NecessityHead from './Necessity/NecessityHead/NecessityHead';
+import PlaceBox from './Necessity/PlaceBox/PlaceBox';
 import NecessityItem from './Necessity/NecessityItem/NecessityItem';
 import NecessityList from './Necessity/NecessityList/NecessityList';
 import NecessityTemplate from './Necessity/NecessityTemplate/NecessityTemplate';
@@ -13,7 +13,7 @@ export {
   Header,
   Login,
   NecessityCreateModal,
-  NecessityHead,
+  PlaceBox,
   NecessityItem,
   NecessityList,
   NecessityTemplate,

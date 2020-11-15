@@ -5,7 +5,7 @@ from user.serializers import SimpleUserSerializer
 
 
 class NecessitySerializer(serializers.ModelSerializer):
-    option = serializers.CharField(required=False, default='')
+    option = serializers.CharField(required=False, allow_blank=True, default='')
 
     class Meta:
         model = Necessity

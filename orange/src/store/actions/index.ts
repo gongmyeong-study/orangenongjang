@@ -6,11 +6,11 @@ import {
 } from './user/user';
 
 import {
-  createNecessityHouse,
-  getNecessityHouse,
-  removeNecessityHouse,
-  countNecessityHouse,
-  updateNecessityHouse,
+  createNecessityPlace,
+  getHouse,
+  removeNecessityPlace,
+  countNecessityPlace,
+  updateNecessityPlace,
 } from './necessity/necessity';
 
 export const userActions = {
@@ -21,9 +21,9 @@ export const userActions = {
 };
 
 export const necessityActions = {
-  createNecessityHouse,
-  getNecessityHouse,
-  removeNecessityHouse,
-  countNecessityHouse,
-  updateNecessityHouse,
+  createNecessityPlace,
+  getHouse,
+  removeNecessityPlace,
+  countNecessityPlace,
+  updateNecessityPlace,
 };

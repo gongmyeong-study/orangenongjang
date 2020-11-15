@@ -1,5 +1,5 @@
 import { RouterState } from 'connected-react-router';
-import { NecessityHouse, User } from '../api';
+import { Place, User } from '../api';
 
 export interface NecessityState {
   createStatus: string;
@@ -7,7 +7,7 @@ export interface NecessityState {
   removeStatus: string;
   countStatus: string;
   updateStatus: string;
-  necessityHouse: NecessityHouse;
+  places: Place[];
 }
 
 export interface UserState {
