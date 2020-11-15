@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, ReactElement, Dispatch,
+  Dispatch, useEffect, useState,
 } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { MdAdd } from 'react-icons/md';
@@ -51,7 +51,7 @@ interface Props {
   houseId: number;
 }
 
-function NecessityPage(props: Props): ReactElement {
+function NecessityPage(props: Props) {
   const today = new Date();
   const dateString = today.toLocaleDateString('ko-KR', {
     year: 'numeric',

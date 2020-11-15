@@ -6,6 +6,7 @@ export interface NecessityState {
   getStatus: string;
   removeStatus: string;
   countStatus: string;
+  updateStatus: string;
   necessityHouse: NecessityHouse;
 }
 

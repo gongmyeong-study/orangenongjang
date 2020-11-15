@@ -23,15 +23,7 @@ function NecessityList(props: Props) {
         >
           <div className="necessity-item-block">
             <NecessityItem
-              key={necessity.id}
-              id={necessity.id}
-              name={necessity.name}
-              count={necessity.count}
-              description={necessity.description}
-              option={necessity.option}
-              price={necessity.price}
-              houseId={necessity.house_id}
-              necessityId={necessity.id}
+              necessity={necessity}
             />
           </div>
           <div>

@@ -85,8 +85,28 @@ const countFailure = (error: AxiosError) => {
   };
 };
 
+// 생필품 수정 기능
+const updateSuccess = (necessityHouse: Necessity) => ({
+  type: necessityConstants.UPDATE_SUCCESS,
+  target: necessityHouse,
+});
+
+const updateFailure = (error: AxiosError) => {
+  let actionType = null;
+  window.alert('수정 내역을 다시 확인해주세요.');
+  switch (error.response?.status) {
+    default:
+      actionType = necessityConstants.UPDATE_FAILURE;
+      break;
+  }
+  return {
+    type: actionType,
+    target: error,
+  };
+};
+
 export const createNecessityHouse = (
-  name: string, option: string, description: string, price: number, count: number, houseId: number,
+  houseId: number, name: string, option: string, description: string, price: number, count: number,
 ) => (dispatch: Dispatch) => axios.post(`/api/v1/house/${houseId}/necessity/`, {
   houseId, name, option, description, price, count,
 })
@@ -116,3 +136,11 @@ export const countNecessityHouse = (
     dispatch(countSuccess(countResponse.data));
   })
   .catch((countError) => dispatch(countFailure(countError)));
+
+export const updateNecessityHouse = (
+  houseId: number, necessityId: number, description: string, price?: number,
+) => (dispatch: Dispatch) => axios.put(`/api/v1/house/${houseId}/necessity/${necessityId}/`, { description, price })
+  .then((updateResponse: AxiosResponse<Necessity>) => {
+    dispatch(updateSuccess(updateResponse.data));
+  })
+  .catch((updateError) => dispatch(updateFailure(updateError)));

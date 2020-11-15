@@ -6,6 +6,7 @@ import { NecessityState } from '../../state';
 type Action = {
   type: string;
   target: NecessityHouse | Necessity;
+  // NecessityHouse는 전체 House Necessity를, Necessity는 단일 House Necessity를 response로 보냄.
 };
 
 const initialState: NecessityState = {
@@ -13,12 +14,18 @@ const initialState: NecessityState = {
   getStatus: necessityStatus.NONE,
   removeStatus: necessityStatus.NONE,
   countStatus: necessityStatus.NONE,
+  updateStatus: necessityStatus.NONE,
   necessityHouse: {} as NecessityHouse,
 };
 
+const SingleResponseCases = [
+  necessityConstants.COUNT_SUCCESS,
+  necessityConstants.UPDATE_SUCCESS,
+];
+
 function necessityreducer(state = initialState, action: Action): NecessityState {
   let necessityHouse: NecessityHouse;
-  if (action.type === necessityConstants.COUNT_SUCCESS) {
+  if (SingleResponseCases.includes(action.type)) {
     necessityHouse = { ...state.necessityHouse };
     const data = action.target as Necessity;
     const indexToBeUpdated = necessityHouse.necessities.findIndex(({ id }) => id === data.id);
@@ -72,7 +79,7 @@ function necessityreducer(state = initialState, action: Action): NecessityState 
         removeStatus: necessityStatus.FAILURE,
       };
 
-      // 생필품 수량
+    // 생필품 수량
     case necessityConstants.COUNT_SUCCESS:
       return {
         ...state,
@@ -83,6 +90,19 @@ function necessityreducer(state = initialState, action: Action): NecessityState 
       return {
         ...state,
         countStatus: necessityStatus.FAILURE,
+      };
+
+    // 생필품 수정
+    case necessityConstants.UPDATE_SUCCESS:
+      return {
+        ...state,
+        updateStatus: necessityStatus.SUCCESS,
+        necessityHouse,
+      };
+    case necessityConstants.UPDATE_FAILURE:
+      return {
+        ...state,
+        updateStatus: necessityStatus.FAILURE,
       };
 
     default:
