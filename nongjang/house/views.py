@@ -26,8 +26,6 @@ class HouseViewSet(viewsets.GenericViewSet):
     def get_serializer_class(self, *args, **kwargs):
         if self.action == 'place':
             return PlaceSerializer
-        if self.action == 'necessity':
-            return HouseSerializer
         if self.action == 'necessity_log':
             return NecessityLogSerializer
         return self.serializer_class

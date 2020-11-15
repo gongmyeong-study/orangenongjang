@@ -6,6 +6,7 @@ from necessity.serializers import NecessityOfPlaceSerializer
 
 class SimpleHouseSerializer(serializers.ModelSerializer):
     users = serializers.SerializerMethodField()
+    places = serializers.SerializerMethodField()
 
     class Meta:
         model = House
@@ -16,22 +17,25 @@ class SimpleHouseSerializer(serializers.ModelSerializer):
             'created_at',
             'updated_at',
             'users',
+            'places'
         )
 
     def get_users(self, house):
         user_houses = house.user_houses.all().select_related('user')
         return UserOfHouseSerializer(user_houses, many=True, context=self.context).data
 
+    def get_places(self, house):
+        return SimplePlaceSerializer(house.places, many=True).data
+
 
 class HouseSerializer(SimpleHouseSerializer):
-    places = serializers.SerializerMethodField()
 
     class Meta:
         model = House
-        fields = SimpleHouseSerializer.Meta.fields + ('places', )
+        fields = SimpleHouseSerializer.Meta.fields
 
     def get_places(self, house):
-        return SimplePlaceSerializer(house.places, many=True).data
+        return PlaceSerializer(house.places, many=True).data
 
 
 class UserOfHouseSerializer(serializers.ModelSerializer):
