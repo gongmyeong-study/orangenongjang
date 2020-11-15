@@ -1,16 +1,8 @@
 import { User } from './user';
 
-export interface NecessityHouse {
-  id: number;
-  name: string;
-  introduction: string;
-  users: [User];
-  necessities: [Necessity];
-}
-
 export interface Necessity {
   id: number;
-  house_id: number;
+  place_id: number;
   name: string;
   option: string;
   description: string;
@@ -18,11 +10,10 @@ export interface Necessity {
   count: number;
 }
 
-export interface NecessityHouseLog {
+export interface NecessityLog {
   id: number;
   action: string;
   user: User;
-  necessity: Necessity;
-  activity_category: string;
+  necessity?: Necessity;
   created_at: string;
 }

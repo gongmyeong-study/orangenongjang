@@ -6,38 +6,12 @@ import { MdAdd } from 'react-icons/md';
 import { connect } from 'react-redux';
 import { History } from 'history';
 import {
-  NecessityCreateModal, NecessityHead, NecessityList, NecessityTemplate,
+  NecessityHead, NecessityTemplate,
 } from '../../components';
 import { necessityActions } from '../../store/actions';
+import { Place } from '../../api';
+import { OrangeGlobalState } from '../../store/state';
 import './NecessityPage.css';
-
-const CircleButton = styled.button`
-    background: lightgray;
-    transition: 0.3s;
-    &:hover {
-        background: gray;
-    }
-    &:active {
-        opacity: 0.2;
-        background: gray;
-    }
-    
-    z-index: 0;
-    cursor: pointer;
-    width: 160px;
-    height: 137.69px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 60px;
-    position : static;
-    left: 10%;
-    bottom: 20px;
-    color: white;
-    border-radius: 10%;
-    border: none;
-    outline: none;
-`;
 
 const GlobalStyle = createGlobalStyle`
     body {
@@ -47,7 +21,8 @@ const GlobalStyle = createGlobalStyle`
 
 interface Props {
   history: History;
-  onGetNecessityHouse(houseId: number): void;
+  onGetHouse(houseId: number): void;
+  places: Place[];
   houseId: number;
 }
 
@@ -59,20 +34,13 @@ function NecessityPage(props: Props) {
     day: 'numeric',
   });
 
-  const [showNecessityCreateModal, setShowNecessityCreateModal] = useState(false);
-  const showModal = (): void => setShowNecessityCreateModal(true);
-
-  const restoreModal = () => {
-    setShowNecessityCreateModal(false);
-  };
-
-  const fetchNecessityHouse = () => {
-    props.onGetNecessityHouse(props.houseId);
+  const fetchHouse = () => {
+    props.onGetHouse(props.houseId);
   };
 
   useEffect(() => {
-    fetchNecessityHouse();
-  });
+    fetchHouse();
+  }, []);
 
   return (
     <>
@@ -82,29 +50,20 @@ function NecessityPage(props: Props) {
 
       <GlobalStyle />
       <NecessityTemplate>
-        <NecessityHead />
-        <div className="necessity-list-column">
-          <CircleButton onClick={showModal}>
-            <MdAdd />
-          </CircleButton>
-          {showNecessityCreateModal ? (
-            <NecessityCreateModal
-              history={props.history}
-              restoreModal={restoreModal}
-              houseId={props.houseId}
-            />
-          ) : null}
-          <NecessityList />
-        </div>
+        <NecessityHead history={props.history} />
       </NecessityTemplate>
     </>
   );
 }
 
+const mapStateToProps = (state: OrangeGlobalState) => ({
+  places: state.necessity.places,
+});
+
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  onGetNecessityHouse: (houseId: number) => dispatch(
-    necessityActions.getNecessityHouse(houseId),
+  onGetHouse: (houseId: number) => dispatch(
+    necessityActions.getHouse(houseId),
   ),
 });
 
-export default connect(null, mapDispatchToProps)(NecessityPage);
+export default connect(mapStateToProps, mapDispatchToProps)(NecessityPage);

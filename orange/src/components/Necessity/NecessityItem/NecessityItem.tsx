@@ -46,9 +46,9 @@ const Text = styled.div`
 
 interface Props {
   necessity: Necessity;
-  onRemoveNecessityHouse(houseId: number, necessityId: number): any;
-  onUpdateNecessityHouse: (
-    houseId: number,
+  onRemoveNecessityPlace(placeId: number, necessityId: number): any;
+  onUpdateNecessityPlace: (
+    placeId: number,
     necessityId: number,
     description: string,
     price?: number) => any;
@@ -62,11 +62,11 @@ function NecessityItem(props: Props) {
     setShowNecessityUpdateModal(false);
   };
 
-  const updateNecessityHouse = (houseId: number,
+  const updateNecessityPlace = (placeId: number,
     necessityId: number,
     description: string,
     price?: number) => {
-    props.onUpdateNecessityHouse(houseId, necessityId, description, price)
+    props.onUpdateNecessityPlace(placeId, necessityId, description, price)
       .then(() => {
         restoreUpdateModal();
       });
@@ -79,7 +79,7 @@ function NecessityItem(props: Props) {
           <NecessityUpdateModal
             necessity={props.necessity}
             restoreUpdateModal={restoreUpdateModal}
-            updateNecessityHouse={updateNecessityHouse}
+            updateNecessityPlace={updateNecessityPlace}
           />
         ) : null}
 
@@ -94,7 +94,7 @@ function NecessityItem(props: Props) {
 
       <NecessityItemRemove
         onClick={() => {
-          props.onRemoveNecessityHouse(props.necessity.house_id, props.necessity.id);
+          props.onRemoveNecessityPlace(props.necessity.place_id, props.necessity.id);
         }}
       >
         <MdDelete />
@@ -104,13 +104,13 @@ function NecessityItem(props: Props) {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  onRemoveNecessityHouse: (houseId: number, necessityId: number): void => dispatch(
-    necessityActions.removeNecessityHouse(houseId, necessityId),
+  onRemoveNecessityPlace: (placeId: number, necessityId: number): void => dispatch(
+    necessityActions.removeNecessityPlace(placeId, necessityId),
   ),
-  onUpdateNecessityHouse: (
-    houseId: number, necessityId: number, description: string, price?: number,
+  onUpdateNecessityPlace: (
+    placeId: number, necessityId: number, description: string, price?: number,
   ): void => dispatch(
-    necessityActions.updateNecessityHouse(houseId, necessityId, description, price),
+    necessityActions.updateNecessityPlace(placeId, necessityId, description, price),
   ),
 });
 

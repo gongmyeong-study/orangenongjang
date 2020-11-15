@@ -29,59 +29,56 @@ const NecessityItemBlock = styled.div`
 
 interface Props {
   key: number;
-  houseId: number;
+  placeId: number;
   necessityId: number;
   count: number;
-  onCountNecessityHouse(houseId: number, necessityId: number, count: number): any;
+  onCountNecessityPlace(placeId: number, necessityId: number, count: number): any;
 }
 
 function NecessityCounter(props: Props) {
   return (
     <NecessityItemBlock key={props.key}>
-      <table>
-        <td>
-          <div>
-            <button
-              type="button"
-              onClick={() => {
-                props.onCountNecessityHouse(props.houseId, props.necessityId, props.count + 1);
-              }}
-            >
-              +
-            </button>
-          </div>
+      <div>
+        <div>
+          <button
+            type="button"
+            onClick={() => {
+              props.onCountNecessityPlace(props.placeId, props.necessityId, props.count + 1);
+            }}
+          >
+            +
+          </button>
+        </div>
 
-          <div>
-            <NecessityItemCount
-              onSubmit={() => props.onCountNecessityHouse(
-                props.houseId, props.necessityId, props.count,
-              )}
-            >
-              { `${props.count}`}
-            </NecessityItemCount>
-          </div>
+        <div>
+          <NecessityItemCount
+            onSubmit={() => props.onCountNecessityPlace(
+              props.placeId, props.necessityId, props.count,
+            )}
+          >
+            {props.count}
+          </NecessityItemCount>
+        </div>
 
-          <div>
-            <button
-              type="button"
-              onClick={() => {
-                props.onCountNecessityHouse(props.houseId, props.necessityId, props.count - 1);
-              }}
-            >
-              -
-            </button>
-          </div>
-        </td>
-
-      </table>
+        <div>
+          <button
+            type="button"
+            onClick={() => {
+              props.onCountNecessityPlace(props.placeId, props.necessityId, props.count - 1);
+            }}
+          >
+            -
+          </button>
+        </div>
+      </div>
     </NecessityItemBlock>
 
   );
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  onCountNecessityHouse: (houseId: number, necessityId: number, count: number): void => dispatch(
-    necessityActions.countNecessityHouse(houseId, necessityId, count),
+  onCountNecessityPlace: (placeId: number, necessityId: number, count: number): void => dispatch(
+    necessityActions.countNecessityPlace(placeId, necessityId, count),
   ),
 });
 

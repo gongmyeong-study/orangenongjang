@@ -1,12 +1,13 @@
 import { necessityConstants } from '../../actions/actionTypes';
 import { necessityStatus } from '../../../constants/constants';
-import { Necessity, NecessityHouse } from '../../../api';
+import {
+  House, Necessity, Place,
+} from '../../../api';
 import { NecessityState } from '../../state';
 
 type Action = {
   type: string;
-  target: NecessityHouse | Necessity;
-  // NecessityHouse는 전체 House Necessity를, Necessity는 단일 House Necessity를 response로 보냄.
+  target: House | Necessity | Place;
 };
 
 const initialState: NecessityState = {
@@ -15,47 +16,93 @@ const initialState: NecessityState = {
   removeStatus: necessityStatus.NONE,
   countStatus: necessityStatus.NONE,
   updateStatus: necessityStatus.NONE,
-  necessityHouse: {} as NecessityHouse,
+  places: [],
 };
 
-const SingleResponseCases = [
-  necessityConstants.COUNT_SUCCESS,
-  necessityConstants.UPDATE_SUCCESS,
+const PlaceResponseCases = [
+  necessityConstants.CREATE_NECESSITYPLACE_SUCCESS,
+  necessityConstants.REMOVE_NECESSITYPLACE_SUCCESS,
+];
+
+const NecessityResponseCases = [
+  necessityConstants.COUNT_NECESSITYPLACE_SUCCESS,
+  necessityConstants.UPDATE_NECESSITYPLACE_SUCCESS,
 ];
 
 function necessityreducer(state = initialState, action: Action): NecessityState {
-  let necessityHouse: NecessityHouse;
-  if (SingleResponseCases.includes(action.type)) {
-    necessityHouse = { ...state.necessityHouse };
+  if (action.type === necessityConstants.GET_HOUSE_SUCCESS) {
+    const house = action.target as House;
+    return {
+      ...state,
+      getStatus: necessityStatus.SUCCESS,
+      places: house.places,
+    };
+  }
+
+  if (PlaceResponseCases.includes(action.type)) {
+    let { places } = state;
+    const data = action.target as Place;
+    places = places.map((place) => (place.id === data.id ? data : place));
+
+    if (action.type === necessityConstants.CREATE_NECESSITYPLACE_SUCCESS) {
+      return {
+        ...state,
+        createStatus: necessityStatus.SUCCESS,
+        places,
+      };
+    }
+    if (action.type === necessityConstants.REMOVE_NECESSITYPLACE_SUCCESS) {
+      return {
+        ...state,
+        removeStatus: necessityStatus.SUCCESS,
+        places,
+      };
+    }
+    return {
+      ...state,
+    };
+  }
+
+  if (NecessityResponseCases.includes(action.type)) {
+    let { places } = state;
     const data = action.target as Necessity;
-    const indexToBeUpdated = necessityHouse.necessities.findIndex(({ id }) => id === data.id);
-    necessityHouse.necessities[indexToBeUpdated] = data;
-  } else {
-    necessityHouse = action.target as NecessityHouse;
+    places = places.map((place) => {
+      if (place.id === data.place_id) {
+        const newPlace = place;
+        newPlace.necessities = place.necessities.map((necessity) => (
+          necessity.id === data.id ? data : necessity));
+        return newPlace;
+      }
+      return place;
+    });
+
+    if (action.type === necessityConstants.COUNT_NECESSITYPLACE_SUCCESS) {
+      return {
+        ...state,
+        countStatus: necessityStatus.SUCCESS,
+        places,
+      };
+    }
+    if (action.type === necessityConstants.UPDATE_NECESSITYPLACE_SUCCESS) {
+      return {
+        ...state,
+        updateStatus: necessityStatus.SUCCESS,
+        places,
+      };
+    }
+    return {
+      ...state,
+    };
   }
 
   switch (action.type) {
-    // 생필품 호출
-    case necessityConstants.GET_SUCCESS:
-      return {
-        ...state,
-        getStatus: necessityStatus.SUCCESS,
-        necessityHouse,
-      };
-    case necessityConstants.GET_FAILURE:
+    case necessityConstants.GET_HOUSE_FAILURE:
       return {
         ...state,
         getStatus: necessityStatus.FAILURE,
       };
 
-    // 생필품 추가
-    case necessityConstants.CREATE_SUCCESS:
-      return {
-        ...state,
-        createStatus: necessityStatus.SUCCESS,
-        necessityHouse,
-      };
-    case necessityConstants.CREATE_FAILURE:
+    case necessityConstants.CREATE_NECESSITYPLACE_FAILURE:
       return {
         ...state,
         createStatus: necessityStatus.FAILURE,
@@ -65,41 +112,18 @@ function necessityreducer(state = initialState, action: Action): NecessityState 
         ...state,
         createStatus: necessityStatus.FAILURE_NAME,
       };
-
-    // 생필품 제거
-    case necessityConstants.REMOVE_SUCCESS:
-      return {
-        ...state,
-        removeStatus: necessityStatus.SUCCESS,
-        necessityHouse,
-      };
-    case necessityConstants.REMOVE_FAILURE:
+    case necessityConstants.REMOVE_NECESSITYPLACE_FAILURE:
       return {
         ...state,
         removeStatus: necessityStatus.FAILURE,
       };
 
-    // 생필품 수량
-    case necessityConstants.COUNT_SUCCESS:
-      return {
-        ...state,
-        countStatus: necessityStatus.SUCCESS,
-        necessityHouse,
-      };
-    case necessityConstants.COUNT_FAILURE:
+    case necessityConstants.COUNT_NECESSITYPLACE_FAILURE:
       return {
         ...state,
         countStatus: necessityStatus.FAILURE,
       };
-
-    // 생필품 수정
-    case necessityConstants.UPDATE_SUCCESS:
-      return {
-        ...state,
-        updateStatus: necessityStatus.SUCCESS,
-        necessityHouse,
-      };
-    case necessityConstants.UPDATE_FAILURE:
+    case necessityConstants.UPDATE_NECESSITYPLACE_FAILURE:
       return {
         ...state,
         updateStatus: necessityStatus.FAILURE,

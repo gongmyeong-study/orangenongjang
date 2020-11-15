@@ -10,8 +10,8 @@ import { OrangeGlobalState } from '../../../store/state';
 
 interface Props {
   history: History;
-  onCreateNecessityHouse: (
-    houseId: number,
+  onCreateNecessityPlace: (
+    placeId: number,
     name: string,
     option: string,
     description: string,
@@ -21,7 +21,7 @@ interface Props {
   me: User ;
   createStatus: string;
   restoreModal: any;
-  houseId: number;
+  placeId: number;
 }
 
 interface State {
@@ -46,9 +46,9 @@ class NecessityCreateModal extends Component<Props, State> {
     };
   }
 
-  onCreateNecessityHouse = (): void => {
-    this.props.onCreateNecessityHouse(
-      this.props.houseId,
+  onCreateNecessityPlace = (): void => {
+    this.props.onCreateNecessityPlace(
+      this.props.placeId,
       this.state.name,
       this.state.option,
       this.state.description,
@@ -148,7 +148,7 @@ class NecessityCreateModal extends Component<Props, State> {
                 type="button"
                 className="necessity-create-createbtn"
                 disabled={this.state.name === ''}
-                onClick={this.onCreateNecessityHouse}
+                onClick={this.onCreateNecessityPlace}
               >
                 생필품 등록
               </button>
@@ -161,11 +161,11 @@ class NecessityCreateModal extends Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  onCreateNecessityHouse: (
-    houseId: number, name: string, option: string,
+  onCreateNecessityPlace: (
+    placeId: number, name: string, option: string,
     description: string, price: number, count: number,
   ): void => dispatch(
-    necessityActions.createNecessityHouse(houseId, name, option, description, price, count),
+    necessityActions.createNecessityPlace(placeId, name, option, description, price, count),
   ),
 });
 

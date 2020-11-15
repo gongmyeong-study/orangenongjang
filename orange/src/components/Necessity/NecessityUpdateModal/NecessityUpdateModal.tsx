@@ -5,8 +5,8 @@ import './NecessityUpdateModal.css';
 
 interface Props {
   necessity: Necessity;
-  updateNecessityHouse: (
-    houseId: number,
+  updateNecessityPlace: (
+    placeId: number,
     necessityId: number,
     description: string,
     price?: number) => any;
@@ -29,8 +29,8 @@ class NecessityUpdateModal extends Component<Props, State> {
 
   render() {
     const update = () => {
-      this.props.updateNecessityHouse(
-        this.props.necessity.house_id,
+      this.props.updateNecessityPlace(
+        this.props.necessity.place_id,
         this.props.necessity.id,
         this.state.description,
         this.state.price,
