@@ -17,16 +17,11 @@ class UserViewSet(viewsets.GenericViewSet):
     def create(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
-        email = request.data.get('email')
-        if User.objects.filter(email=email).exists():
-            return Response({'error': "이미 존재하는 Email입니다."}, status=status.HTTP_400_BAD_REQUEST)
         try:
             user = serializer.save()
-        except IntegrityError:  # 중복된 username
-            return Response({'error': "같은 정보의 사용자가 이미 존재합니다."}, status=status.HTTP_400_BAD_REQUEST)
-            
-        # 가입했으니 바로 로그인 시켜주기
+        except IntegrityError:  # 중복된 username or email
+            return Response({'error': "사용자명 또는 Email이 이미 사용 중입니다."}, status=status.HTTP_400_BAD_REQUEST)
+
         login(request, user)
         # login을 하면 Response의 Cookies에 csrftoken이 발급됨
         # 이후 요청을 보낼 때 이 csrftoken을 Headers의 X-CSRFToken의 값으로 사용해야 POST, PUT 등의 method 사용 가능

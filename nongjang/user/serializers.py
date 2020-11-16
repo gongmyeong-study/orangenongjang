@@ -24,6 +24,8 @@ class UserSerializer(serializers.ModelSerializer):
         email = data.get('email')
         if not username or not email:
             raise serializers.ValidationError("Email 또는 사용자명을 입력하세요.")
+        if User.objects.filter(email=email).exists():
+            raise serializers.ValidationError("이미 존재하는 Email입니다.")
         return data
 
     def create(self, validated_data):
