@@ -9,5 +9,5 @@ router.register('user', UserViewSet, basename='user')
 
 urlpatterns = [
     path('', include((router.urls))),
-    path('user/activate/<str:uibd64>/<str:token>', UserActivate.as_view())
+    path('user/<str:uidb64>/activate/<str:token>', UserActivate.as_view())
 ]

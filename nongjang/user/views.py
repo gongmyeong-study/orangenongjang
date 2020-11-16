@@ -17,7 +17,7 @@ from smtplib import SMTPException
 from nongjang.settings import REDIRECT_PAGE
 from user.serializers import UserSerializer
 from .token import user_activation_token
-from user.text import user_invitate_message
+from user.text import user_invite_message
 
 
 class UserViewSet(viewsets.GenericViewSet):
@@ -42,7 +42,7 @@ class UserViewSet(viewsets.GenericViewSet):
                     domain = get_current_site(request).domain
                     uibd64 = urlsafe_base64_encode(force_bytes(user.pk))
                     token = user_activation_token.make_token(user)
-                    message = user_invitate_message(domain, uibd64, token)
+                    message = user_invite_message(domain, uibd64, token)
 
                     mail_title = "오렌지농장에 초대합니다."
                     EmailMessage(mail_title, message, to=[email]).send()
@@ -96,16 +96,18 @@ class UserViewSet(viewsets.GenericViewSet):
 
 
 class UserActivate(View):
-    # GET /api/v1/user/activate/{uibd64}/{token}/
+    # GET /api/v1/user/{uidb64}/activate/{token}/
     @action(detail=False, methods=['GET'])
-    def activate(self, request, uibd64, token):
+    def activate(self, request, uidb64, token):
+        print(123)
         try:
-            uid = force_text(urlsafe_base64_decode(uibd64))
+            print(token)
+            print(uidb64)
+
+            uid = force_text(urlsafe_base64_decode(uidb64))
             user = User.objects.get(pk=uid)
             print(uid)
             print(user)
-            print(token)
-            print(uibd64)
 
             if user is not None and user_activation_token.check_token(user, token):
                 user.is_active = True
