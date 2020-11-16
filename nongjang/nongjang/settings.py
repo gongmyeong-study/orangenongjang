@@ -124,6 +124,7 @@ elif os.path.exists(secret_file):
         EMAIL_HOST_PASSWORD = secret_info['EMAIL_HOST_PASSWORD']
         SERVER_EMAIL = secret_info['SERVER_EMAIL']
         DEFAULT_FROM_MAIL = secret_info['DEFAULT_FROM_MAIL']
+        REDIRECT_PAGE = 'https://orangenongjang.com/'
 else:
     raise Exception("Check your 'secret_info.json' file!")
 
