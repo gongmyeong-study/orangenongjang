@@ -18,6 +18,9 @@ class UserViewSet(viewsets.GenericViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
+        email = request.data.get('email')
+        if User.objects.filter(email=email).exists():
+            return Response({'error': "이미 존재하는 Email입니다."}, status=status.HTTP_400_BAD_REQUEST)
         try:
             user = serializer.save()
         except IntegrityError:  # 중복된 username
@@ -33,13 +36,11 @@ class UserViewSet(viewsets.GenericViewSet):
 
         # authenticate라는 함수는 username, password가 올바르면 해당 user를, 그렇지 않으면 None을 return
         user = authenticate(request, username=username, password=password)
-        if user.is_active:
+        if user:
             login(request, user)
             # login을 하면 Response의 Cookies에 csrftoken이 발급됨 (반복 로그인 시 매번 값이 달라짐)
             # 이후 요청을 보낼 때 이 csrftoken을 Headers의 X-CSRFToken의 값으로 사용해야 POST, PUT 등의 method 사용 가능
             return Response(self.get_serializer(user).data)
-        else:
-            return Response({'error': "회원가입 인증이 완료되지 않았습니다."}, status=status.HTTP_403_FORBIDDEN)
         # 존재하지 않는 사용자이거나 비밀번호가 틀린 경우
         return Response(status=status.HTTP_403_FORBIDDEN)
 
