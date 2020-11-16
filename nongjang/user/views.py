@@ -1,23 +1,11 @@
-from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.contrib.sites.shortcuts import get_current_site
-from django.core import mail
-from django.core.mail import EmailMessage
 from django.db import IntegrityError, transaction
-from django.shortcuts import redirect
-from django.utils.encoding import force_bytes, force_text
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.views import View
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from smtplib import SMTPException
 
-from nongjang.settings import REDIRECT_PAGE
 from user.serializers import UserSerializer
-from .token import user_activation_token
-from user.text import user_invitate_message
 
 
 class UserViewSet(viewsets.GenericViewSet):
@@ -30,26 +18,8 @@ class UserViewSet(viewsets.GenericViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        email = request.data.get('email')
-        # if User.objects.filter(email=email).exists():
-        #     return Response({'error': "이미 존재하는 Email입니다."}, status=status.HTTP_400_BAD_REQUEST)
-
         try:
             user = serializer.save()
-
-            with mail.get_connection() as connection:
-                try:
-                    domain = get_current_site(request).domain
-                    uibd64 = urlsafe_base64_encode(force_bytes(user.pk))
-                    token = user_activation_token.make_token(user)
-                    message = user_invitate_message(domain, uibd64, token)
-
-                    mail_title = "오렌지농장에 초대합니다."
-                    EmailMessage(mail_title, message, to=[email]).send()
-                    redirect(REDIRECT_PAGE)
-                    return Response({'message': "회원가입 인증 메일이 전송되었습니다"})
-                except SMTPException:
-                    return Response({'error': "Email 발송에 문제가 있습니다."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         except IntegrityError:  # 중복된 username
             return Response({'error': "같은 정보의 사용자가 이미 존재합니다."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -93,25 +63,3 @@ class UserViewSet(viewsets.GenericViewSet):
             except User.DoesNotExist:
                 return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(self.get_serializer(user).data)
-
-
-class UserActivate(View):
-    # GET /api/v1/user/activate/{uibd64}/{token}/
-    @action(detail=False, methods=['GET'])
-    def activate(self, request, uibd64, token):
-        try:
-            uid = force_text(urlsafe_base64_decode(uibd64))
-            user = User.objects.get(pk=uid)
-            print(uid)
-            print(user)
-            print(token)
-            print(uibd64)
-
-            if user is not None and user_activation_token.check_token(user, token):
-                user.is_active = True
-                user.save()
-                auth.login(request, user)
-                return redirect(REDIRECT_PAGE)
-
-        except KeyError:
-            return Response({'error': "인증 키에 문제가 생겼습니다. 다시 시도해주세요."}, status=status.HTTP_400_BAD_REQUEST)
