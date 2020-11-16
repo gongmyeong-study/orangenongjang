@@ -25,7 +25,11 @@ class UserViewSet(viewsets.GenericViewSet):
             user = serializer.save()
         except IntegrityError:  # 중복된 username
             return Response({'error': "같은 정보의 사용자가 이미 존재합니다."}, status=status.HTTP_400_BAD_REQUEST)
-
+            
+        # 가입했으니 바로 로그인 시켜주기
+        login(request, user)
+        # login을 하면 Response의 Cookies에 csrftoken이 발급됨
+        # 이후 요청을 보낼 때 이 csrftoken을 Headers의 X-CSRFToken의 값으로 사용해야 POST, PUT 등의 method 사용 가능
         return Response(self.get_serializer(user).data, status=status.HTTP_201_CREATED)
 
     # PUT /api/v1/user/login/

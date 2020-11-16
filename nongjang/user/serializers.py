@@ -4,7 +4,6 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
-    is_active = serializers.BooleanField(default=False)
 
     class Meta:
         model = User
@@ -13,7 +12,6 @@ class UserSerializer(serializers.ModelSerializer):
             'username',
             'password',
             'email',
-            'is_active',
             'last_login',
             'date_joined',
         )
@@ -30,7 +28,6 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = super(UserSerializer, self).create(validated_data)
-        user.is_active = False
         return user
 
 
