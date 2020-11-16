@@ -89,6 +89,8 @@ if ENV_MODE == 'test':
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+    REDIRECT_PAGE = 'https://orangenongjang.com/'
+    
 elif os.path.exists(secret_file):
     with open(secret_file) as f:
         secret_info = json.loads(f.read())
