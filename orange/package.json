@@ -4,6 +4,8 @@
   "private": true,
   "proxy": "http://localhost:8000",
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -25,6 +27,7 @@
     "lodash": "4.17.19",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-hook-form": "^6.11.2",
     "react-icons": "^3.10.0",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.5",

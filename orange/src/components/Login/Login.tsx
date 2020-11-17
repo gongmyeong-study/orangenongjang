@@ -1,83 +1,67 @@
-import React, { Component, Dispatch } from 'react';
-import { connect } from 'react-redux';
-import { History } from 'history';
+import React from 'react';
+import TextField from '@material-ui/core/TextField';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import LockIcon from '@material-ui/icons/Lock';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import { useForm } from 'react-hook-form';
 
-import { userStatus } from '../../constants/constants';
-import { userActions } from '../../store/actions';
+import { Button } from '@material-ui/core';
 import './Login.css';
-import { OrangeGlobalState } from '../../store/state';
 
 interface Props {
-  history: History;
-  loginStatus: string;
   onLogin: (username: string, password: string) => any;
 }
 
-interface State {
+interface LoginFormData {
   username: string;
   password: string;
 }
 
-class Login extends Component<Props, State> {
-  // NOTE: this Login Component is just for example about api call.
-  //       it can be changed completely differently.
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      username: '',
-      password: '',
-    };
-  }
+function Login(props: Props) {
+  const {
+    register, handleSubmit, errors,
+  } = useForm<LoginFormData>();
 
-  clickLoginHandler() {
-    this.props.onLogin(this.state.username, this.state.password)
-      .then(() => {
-        if (this.props.loginStatus === userStatus.SUCCESS) {
-          this.props.history.push('/');
-          window.location.reload();
-        } else {
-          alert('로그인에 실패하였습니다. \n이름과 비밀번호를 확인해 주세요!');
-        }
-      });
-  }
+  const onSubmit = (data: LoginFormData) => props.onLogin(data.username, data.password);
 
-  render() {
-    return (
-      <>
-        <h1>Login</h1>
-        <div className="LoginField">
-          <input
-            id="username"
-            type="text"
-            placeholder="username"
-            onChange={(e) => this.setState({ username: e.target.value })}
-          />
-          <input
-            id="password"
-            type="password"
-            placeholder="password"
-            onChange={(e) => this.setState({ password: e.target.value })}
-          />
-        </div>
-        <button
-          type="button"
-          className="LoginButton"
-          disabled={!this.state.username || !this.state.password}
-          onClick={() => this.clickLoginHandler()}
-        >
-          go
-        </button>
-      </>
-    );
-  }
+  return (
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <TextField
+          name="username"
+          placeholder="이름"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AccountCircle />
+              </InputAdornment>
+            ),
+          }}
+          variant="outlined"
+          inputRef={register({ required: true })}
+          error={Boolean(errors.username)}
+          helperText={errors.username && '이름을 입력해주세요!'}
+        />
+        <TextField
+          name="password"
+          placeholder="비밀번호"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <LockIcon />
+              </InputAdornment>
+            ),
+          }}
+          type="password"
+          variant="outlined"
+          inputRef={register({ required: true })}
+          error={Boolean(errors.password)}
+          helperText={errors.password && '비밀번호를 입력해주세요!'}
+        />
+        <Button type="submit">로그인</Button>
+      </form>
+    </>
+  );
 }
 
-const mapStateToProps = (state: OrangeGlobalState) => ({
-  loginStatus: state.user.loginStatus,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  onLogin: (username: string, password: string) => dispatch(userActions.login(username, password)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;
