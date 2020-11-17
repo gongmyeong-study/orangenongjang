@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.db import IntegrityError, transaction
+from django.db import IntegrityError
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -13,15 +13,10 @@ class UserViewSet(viewsets.GenericViewSet):
     queryset = User.objects.all()
 
     # POST /api/v1/user/
-    @transaction.atomic
     def create(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        try:
-            user = serializer.save()
-        except IntegrityError:  # 중복된 username or email
-            return Response({'error': "사용자명 또는 Email이 이미 사용 중입니다."}, status=status.HTTP_400_BAD_REQUEST)
-
+        user = serializer.save()
         login(request, user)
         # login을 하면 Response의 Cookies에 csrftoken이 발급됨
         # 이후 요청을 보낼 때 이 csrftoken을 Headers의 X-CSRFToken의 값으로 사용해야 POST, PUT 등의 method 사용 가능

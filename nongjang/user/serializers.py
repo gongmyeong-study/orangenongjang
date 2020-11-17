@@ -20,16 +20,13 @@ class UserSerializer(serializers.ModelSerializer):
         return make_password(password)
 
     def validate(self, data):
-        username = data.get('username')
         email = data.get('email')
-        if not username or not email:
-            raise serializers.ValidationError("Email 또는 사용자명을 입력하세요.")
         if User.objects.filter(email=email).exists():
             raise serializers.ValidationError("이미 존재하는 Email입니다.")
         return data
 
     def create(self, validated_data):
-        user = super(UserSerializer, self).create(validated_data)
+        user = super().create(validated_data)
         return user
 
 
