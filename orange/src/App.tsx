@@ -21,7 +21,7 @@ function App(props: Props): JSX.Element {
         <Switch>
           <Route exact path="/" component={HousePage} hisory={props.history} />
           <Route exact path="/main/:id" component={MainPage} history={props.history} />
-          <Route exact path="/intro" component={IntroPage} history={props.history} />
+          <Route exact path="/intro" component={IntroPage} />
           <Route exact path="/info" component={InfoPage} />
           <Route exact path="/house" component={HousePage} history={props.history} />
           <Redirect exact to="/intro" />
