@@ -6,17 +6,21 @@ import {
 import { Login, SignUpModal } from '../../components/index';
 import { OrangeGlobalState } from '../../store/state';
 import { userStatus } from '../../constants/constants';
-import { login } from '../../store/actions/user/user';
+import { login, signUp } from '../../store/actions/user/user';
 
 function IntroPage() {
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const showModal = () => setShowSignUpModal(true);
 
   const dispatch = useDispatch();
-  const loginStatus = useSelector((state: OrangeGlobalState) => state.user.loginStatus);
+  const { loginStatus, signupStatus } = useSelector((state: OrangeGlobalState) => state.user);
 
   const onLogin = (username: string, password: string) => {
     dispatch(login(username, password));
+  };
+
+  const onSignUp = (email: string, username: string, password: string) => {
+    dispatch(signUp(email, username, password));
   };
 
   useEffect(() => {
@@ -25,7 +29,13 @@ function IntroPage() {
     } if (loginStatus === userStatus.FAILURE) {
       alert('로그인에 실패하였습니다. \n이름과 비밀번호를 확인해 주세요!');
     }
-  }, [loginStatus]);
+
+    if (signupStatus === userStatus.SUCCESS) {
+      window.location.reload();
+    } if (signupStatus === userStatus.FAILURE) {
+      alert('회원가입에 실패하였습니다.');
+    }
+  }, [loginStatus, signupStatus]);
 
   return (
     <div>
@@ -37,7 +47,7 @@ function IntroPage() {
         회원가입
         {' '}
       </button>
-      {showSignUpModal && <SignUpModal /> }
+      {showSignUpModal && <SignUpModal onSignUp={onSignUp} /> }
     </div>
   );
 }
