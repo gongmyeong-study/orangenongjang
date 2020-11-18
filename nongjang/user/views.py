@@ -25,14 +25,13 @@ class UserViewSet(viewsets.GenericViewSet):
     queryset = User.objects.all()
 
     # POST /api/v1/user/
-    @transaction.atomic
     def create(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         email = request.data.get('email')
-        # if User.objects.filter(email=email).exists():
-        #     return Response({'error': "이미 존재하는 Email입니다."}, status=status.HTTP_400_BAD_REQUEST)
+        if User.objects.filter(email=email).exists():
+            return Response({'error': "이미 존재하는 Email입니다."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             user = serializer.save()
@@ -50,7 +49,7 @@ class UserViewSet(viewsets.GenericViewSet):
                     return Response({'message': "회원가입 인증 메일이 전송되었습니다"})
                 except SMTPException:
                     return Response({'error': "Email 발송에 문제가 있습니다."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
-        except IntegrityError:  # 중복된 username
+        except IntegrityError:
             return Response({'error': "같은 정보의 사용자가 이미 존재합니다."}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(self.get_serializer(user).data, status=status.HTTP_201_CREATED)
