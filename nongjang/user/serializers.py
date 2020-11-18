@@ -25,10 +25,6 @@ class UserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("이미 존재하는 Email입니다.")
         return data
 
-    def create(self, validated_data):
-        user = super().create(validated_data)
-        return user
-
 
 class SimpleUserSerializer(serializers.ModelSerializer):
 
