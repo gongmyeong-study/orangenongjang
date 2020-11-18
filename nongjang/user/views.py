@@ -30,8 +30,8 @@ class UserViewSet(viewsets.GenericViewSet):
         serializer.is_valid(raise_exception=True)
 
         email = request.data.get('email')
-        if User.objects.filter(email=email).exists():
-            return Response({'error': "이미 존재하는 Email입니다."}, status=status.HTTP_400_BAD_REQUEST)
+        # if User.objects.filter(email=email).exists():
+        #     return Response({'error': "이미 존재하는 Email입니다."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             user = serializer.save()
@@ -39,12 +39,11 @@ class UserViewSet(viewsets.GenericViewSet):
             with mail.get_connection() as connection:
                 try:
                     domain = get_current_site(request).domain
-                    uibd64 = urlsafe_base64_encode(force_bytes(user.pk))
+                    uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
                     token = user_activation_token.make_token(user)
-                    message = user_invite_message(domain, uibd64, token)
+                    message = user_invite_message(domain, uidb64, token)
 
-                    mail_title = "오렌지농장에 초대합니다."
-                    EmailMessage(mail_title, message, to=[email]).send()
+                    EmailMessage("오렌지농장에 초대합니다.", message, to=[email]).send()
                     redirect(REDIRECT_PAGE)
                     return Response({'message': "회원가입 인증 메일이 전송되었습니다"})
                 except SMTPException:
@@ -94,19 +93,16 @@ class UserViewSet(viewsets.GenericViewSet):
         return Response(self.get_serializer(user).data)
 
 
-class UserActivate(View):
+class UserActivateView(View):
     # GET /api/v1/user/{uidb64}/activate/{token}/
     @action(detail=False, methods=['GET'])
-    def activate(self, request, uidb64, token):
-        print(123)
-        try:
-            print(token)
-            print(uidb64)
+    def activate(self, request, *args, **kwargs):
+        uidb64 = kwargs['uidb64']
+        token = kwargs['token']
 
+        try:
             uid = force_text(urlsafe_base64_decode(uidb64))
             user = User.objects.get(pk=uid)
-            print(uid)
-            print(user)
 
             if user is not None and user_activation_token.check_token(user, token):
                 user.is_active = True
