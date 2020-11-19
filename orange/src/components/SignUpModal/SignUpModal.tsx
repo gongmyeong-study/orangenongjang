@@ -1,138 +1,90 @@
-import React, { Component, Dispatch } from 'react';
-import { connect } from 'react-redux';
-import { History } from 'history';
-import { userActions } from '../../store/actions';
-import { userStatus } from '../../constants/constants';
+import React from 'react';
 import './SignUpModal.css';
-import { User } from '../../api';
-import { OrangeGlobalState } from '../../store/state';
+import { useForm } from 'react-hook-form';
+import { Button, InputAdornment, TextField } from '@material-ui/core';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import LockIcon from '@material-ui/icons/Lock';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 
 interface Props {
-  history?: History;
-  signUp: (email: string, username: string, password: string) => any; // for redux dispatch
-  me: User;
-  signupStatus: string;
+  onSignUp: (email: string, username: string, password: string) => any; // for redux dispatch
 }
 
-interface State {
-  appearing: boolean; // for modal appearing
+interface SignUpFormData {
   email: string;
   username: string;
   password: string;
 }
 
-class SignUpModal extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      appearing: true,
-      email: '',
-      username: '',
-      password: '',
-    };
-  }
+function SignUpModal(props: Props) {
+  const {
+    register, handleSubmit, errors,
+  } = useForm<SignUpFormData>();
 
-  signUp = () => {
-    this.props.signUp(this.state.email, this.state.username, this.state.password)
-      .then(() => {
-        if (this.props.signupStatus === userStatus.SUCCESS) {
-          window.alert('성공!');
-          this.setState({ appearing: false });
-          this.props.history?.push('/');
-        } else if (this.props.signupStatus === userStatus.FAILURE_USERNAME) {
-          window.alert('중복된 사용자 이름!');
-        } else {
-          window.alert('실패!');
-        }
-      });
-  };
+  const onSubmit = (data: SignUpFormData) => props.onSignUp(
+    data.email, data.username, data.password,
+  );
 
-  render() {
-    return (
-      <div
-        className="modal"
-        style={this.state.appearing ? { display: 'block' } : { display: 'none' }}
-      >
-        <form>
-          <button
-            type="submit"
-            className="close"
-            title="Close Modal"
-            style={{ background: 'none', border: 'none' }}
-          >
-            &times;
-          </button>
-        </form>
-        <form className="modal-content">
-          <div className="container">
-            <p>오렌지 농장을 이용하기 전에 회원가입을 해주세요</p>
-            <hr />
-            <label htmlFor="email">
-              <b>이메일 (Email)</b>
-            </label>
-            <input
-              type="text"
-              placeholder="haksaeng@snu.ac.kr"
-              required
-              onChange={(e) => this.setState({ email: e.target.value })}
-            />
-
-            <label htmlFor="email">
-              <b>이름 (Name)</b>
-            </label>
-            <input
-              type="text"
-              placeholder="Jinsup"
-              required
-              onChange={(e) => this.setState({ username: e.target.value })}
-            />
-
-            <label htmlFor="psw">
-              <b>비밀번호 (Password)</b>
-            </label>
-            <input
-              type="password"
-              placeholder="Enter Password"
-              required
-              onChange={(e) => this.setState({ password: e.target.value })}
-            />
-
-            {/* <label htmlFor="psw-repeat">
-              <b>비밀번호 확인 (Repeat Password)</b>
-            </label>
-            <input
-              type="password"
-              placeholder="Repeat Password"
-              name="psw-repeat"
-              required
-            /> */}
-
-            <div className="clearfix">
-              <button
-                type="button"
-                className="signupbtn"
-                disabled={this.state.email === '' || this.state.password === '' || this.state.username === ''}
-                onClick={this.signUp}
-              >
-                회원가입
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    );
-  }
+  return (
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <TextField
+          name="email"
+          placeholder="이메일"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <MailOutlineIcon />
+              </InputAdornment>
+            ),
+          }}
+          variant="outlined"
+          inputRef={register({
+            required: { value: true, message: '이메일을 입력해주세요!' },
+            pattern: {
+              // eslint-disable-next-line no-useless-escape
+              value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+              message: '이메일 형식에 맞지 않습니다!',
+            },
+          })}
+          error={Boolean(errors.email)}
+          helperText={errors.email && errors.email.message}
+        />
+        <TextField
+          name="username"
+          placeholder="이름"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AccountCircle />
+              </InputAdornment>
+            ),
+          }}
+          variant="outlined"
+          inputRef={register({ required: true })}
+          error={Boolean(errors.username)}
+          helperText={errors.username && '이름을 입력해주세요!'}
+        />
+        <TextField
+          name="password"
+          placeholder="비밀번호"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <LockIcon />
+              </InputAdornment>
+            ),
+          }}
+          type="password"
+          variant="outlined"
+          inputRef={register({ required: true })}
+          error={Boolean(errors.password)}
+          helperText={errors.password && '비밀번호를 입력해주세요!'}
+        />
+        <Button type="submit">회원가입</Button>
+      </form>
+    </>
+  );
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  signUp: (email: string, username: string, password: string) => dispatch(
-    userActions.signUp(email, username, password),
-  ),
-});
-
-const mapStateToProps = (state: OrangeGlobalState) => ({
-  signupStatus: state.user.signupStatus,
-  me: state.user.me,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpModal);
+export default SignUpModal;
