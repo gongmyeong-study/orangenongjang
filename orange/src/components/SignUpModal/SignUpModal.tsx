@@ -42,7 +42,7 @@ function SignUpModal(props: Props) {
           inputRef={register({
             required: { value: true, message: '이메일을 입력해주세요!' },
             pattern: {
-              // eslint-disable-next-line
+              // eslint-disable-next-line no-useless-escape
               value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
               message: '이메일 형식에 맞지 않습니다!',
             },
