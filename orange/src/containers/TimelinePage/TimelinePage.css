@@ -1,0 +1,6 @@
+.log-list {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 100px;
+    padding-bottom: 5px;
+}
