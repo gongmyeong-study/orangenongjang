@@ -94,21 +94,24 @@ class UserViewSet(viewsets.GenericViewSet):
 
 
 class UserActivateView(View):
+
     # GET /api/v1/user/{uidb64}/activate/{token}/
-    @action(detail=False, methods=['GET'])
-    def activate(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         uidb64 = kwargs['uidb64']
         token = kwargs['token']
 
         try:
             uid = force_text(urlsafe_base64_decode(uidb64))
             user = User.objects.get(pk=uid)
+            if user is None:
+                return Response({'error': "잘못된 접근입니다."}, status=status.HTTP_403_FORBIDDEN)
 
-            if user is not None and user_activation_token.check_token(user, token):
+            if user_activation_token.check_token(user, token):
                 user.is_active = True
                 user.save()
-                auth.login(request, user)
                 return redirect(REDIRECT_PAGE)
+            else:
+                return Response({'error': "이미 인증받은 회원입니다."}, status=status.HTTP_400_BAD_REQUEST)
 
         except KeyError:
             return Response({'error': "인증 키에 문제가 생겼습니다. 다시 시도해주세요."}, status=status.HTTP_400_BAD_REQUEST)

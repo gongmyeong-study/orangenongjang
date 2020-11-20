@@ -26,10 +26,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '%$(uu1zk1f4*8wnljep5ug(5t7*2u3+&exurk*0t+af56vbued'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 USE_DEBUG_TOOLBAR = os.getenv('DEBUG_TOOLBAR', '').lower() == 'true'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -126,7 +126,7 @@ elif os.path.exists(secret_file):
         EMAIL_HOST_PASSWORD = secret_info['EMAIL_HOST_PASSWORD']
         SERVER_EMAIL = secret_info['SERVER_EMAIL']
         DEFAULT_FROM_MAIL = secret_info['DEFAULT_FROM_MAIL']
-        REDIRECT_PAGE = 'https://orangenongjang.com/'
+        REDIRECT_PAGE = 'https://orangenongjang.com/main/'
 else:
     raise Exception("Check your 'secret_info.json' file!")
 
