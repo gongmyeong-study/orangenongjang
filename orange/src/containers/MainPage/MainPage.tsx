@@ -6,7 +6,9 @@ import NecessityPage from '../NecessityPage/NecessityPage';
 import StatisticsPage from '../StatisticsPage/StatisticsPage';
 import TimelinePage from '../TimelinePage/TimelinePage';
 import WorkPage from '../WorkPage/WorkPage';
+import { NecessityLog } from '../../api';
 import './MainPage.css';
+import { LogList } from '../../components';
 
 interface DetailParams {
   id: string;
@@ -15,6 +17,7 @@ interface DetailParams {
 interface Props {
   history: History;
   match: match<DetailParams>;
+  logs: NecessityLog;
 }
 
 interface State {
@@ -38,7 +41,13 @@ class MainPage extends Component<Props, State> {
         body = <WorkPage />;
         break;
       case 2:
-        body = <TimelinePage history={this.props.history} houseId={houseId} />;
+        body = (
+          <TimelinePage
+            history={this.props.history}
+            houseId={houseId}
+            log={this.props.logs}
+          />
+        );
         break;
       case 3:
         body = <StatisticsPage />;

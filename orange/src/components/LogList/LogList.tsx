@@ -28,6 +28,8 @@ function LogList(props: Props) {
   return (
     <div className="logList">
       <p>
+        {createdAt}
+        <br />
         {username}
         {' '}
         이(가)
@@ -37,9 +39,6 @@ function LogList(props: Props) {
         &apos;
         {activityCategory()}
         {' '}
-        (
-        {createdAt}
-        )
       </p>
     </div>
   );
