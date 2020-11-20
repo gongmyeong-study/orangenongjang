@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core import mail
 from django.core.mail import EmailMessage
-from django.db import IntegrityError, transaction
+from django.db import IntegrityError
 from django.shortcuts import redirect
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
@@ -30,13 +30,13 @@ class UserViewSet(viewsets.GenericViewSet):
         serializer.is_valid(raise_exception=True)
 
         email = request.data.get('email')
-        # if User.objects.filter(email=email).exists():
-        #     return Response({'error': "이미 존재하는 Email입니다."}, status=status.HTTP_400_BAD_REQUEST)
+        if User.objects.filter(email=email).exists():
+            return Response({'error': "이미 존재하는 Email입니다."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             user = serializer.save()
 
-            with mail.get_connection() as connection:
+            with mail.get_connection():
                 try:
                     domain = get_current_site(request).domain
                     uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
