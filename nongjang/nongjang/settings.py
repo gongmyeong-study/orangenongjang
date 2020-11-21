@@ -89,6 +89,8 @@ if ENV_MODE == 'test':
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+    REDIRECT_PAGE = 'https://orangenongjang.com/'
+    
 elif os.path.exists(secret_file):
     with open(secret_file) as f:
         secret_info = json.loads(f.read())
@@ -124,6 +126,7 @@ elif os.path.exists(secret_file):
         EMAIL_HOST_PASSWORD = secret_info['EMAIL_HOST_PASSWORD']
         SERVER_EMAIL = secret_info['SERVER_EMAIL']
         DEFAULT_FROM_MAIL = secret_info['DEFAULT_FROM_MAIL']
+        REDIRECT_PAGE = 'https://orangenongjang.com/main/'
 else:
     raise Exception("Check your 'secret_info.json' file!")
 
