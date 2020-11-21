@@ -35,22 +35,21 @@ class UserViewSet(viewsets.GenericViewSet):
 
         try:
             user = serializer.save()
-
-            with mail.get_connection():
-                try:
-                    domain = get_current_site(request).domain
-                    uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
-                    token = user_activation_token.make_token(user)
-                    message = user_invite_message(domain, uidb64, token)
-
-                    EmailMessage("오렌지농장에 초대합니다.", message, to=[email]).send()
-                    redirect(REDIRECT_PAGE)
-                    return Response({'message': "회원가입 인증 메일이 전송되었습니다"})
-                except SMTPException:
-                    return Response({'error': "Email 발송에 문제가 있습니다."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         except IntegrityError:
             return Response({'error': "같은 정보의 사용자가 이미 존재합니다."}, status=status.HTTP_400_BAD_REQUEST)
 
+        with mail.get_connection():
+            domain = get_current_site(request).domain
+            uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+            token = user_activation_token.make_token(user)
+            message = user_invite_message(domain, uidb64, token)
+            try:
+                EmailMessage("오렌지농장에 초대합니다.", message, to=[email]).send()
+                redirect(REDIRECT_PAGE)
+                return Response({'message': "회원가입 인증 메일이 전송되었습니다"})
+            except SMTPException:
+                return Response({'error': "Email 발송에 문제가 있습니다. 다시 시도해주세요."},
+                                status=status.HTTP_503_SERVICE_UNAVAILABLE)
         return Response(self.get_serializer(user).data, status=status.HTTP_201_CREATED)
 
     # PUT /api/v1/user/login/
@@ -93,25 +92,28 @@ class UserViewSet(viewsets.GenericViewSet):
         return Response(self.get_serializer(user).data)
 
 
-class UserActivateView(View):
+class UserActivateView(viewsets.GenericViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
 
     # GET /api/v1/user/{uidb64}/activate/{token}/
-    def get(self, request, *args, **kwargs):
+    @action(detail=False, methods=['GET'])
+    def activate(self, request, *args, **kwargs):
         uidb64 = kwargs['uidb64']
         token = kwargs['token']
-
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(id=uid)
+        if user is None:
+            return Response({'error': "잘못된 접근입니다."}, status=status.HTTP_403_FORBIDDEN)
+        if user.is_active:
+            return Response({'error': "이미 인증된 회원입니다."}, status=status.HTTP_400_BAD_REQUEST)
         try:
-            uid = force_text(urlsafe_base64_decode(uidb64))
-            user = User.objects.get(pk=uid)
-            if user is None:
-                return Response({'error': "잘못된 접근입니다."}, status=status.HTTP_403_FORBIDDEN)
-
             if user_activation_token.check_token(user, token):
                 user.is_active = True
                 user.save()
-                return redirect(REDIRECT_PAGE)
-            else:
-                return Response({'error': "이미 인증받은 회원입니다."}, status=status.HTTP_400_BAD_REQUEST)
-
+                return Response({'message': "회원 인증을 성공했습니다"})
         except KeyError:
             return Response({'error': "인증 키에 문제가 생겼습니다. 다시 시도해주세요."}, status=status.HTTP_400_BAD_REQUEST)
+
+        redirect(REDIRECT_PAGE)
+        return Response(self.get_serializer(user).data)

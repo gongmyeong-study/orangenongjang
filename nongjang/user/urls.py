@@ -9,5 +9,5 @@ router.register('user', UserViewSet, basename='user')  # /api/v1/user/
 
 urlpatterns = [
     path('', include((router.urls))),
-    path('user/<str:uidb64>/activate/<str:token>/', UserActivateView.as_view()),
+    path('user/<str:uidb64>/activate/<str:token>/', UserActivateView.as_view({'get': 'activate'})),
 ]
