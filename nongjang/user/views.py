@@ -66,7 +66,7 @@ class UserViewSet(viewsets.GenericViewSet):
             # 이후 요청을 보낼 때 이 csrftoken을 Headers의 X-CSRFToken의 값으로 사용해야 POST, PUT 등의 method 사용 가능
             return Response(self.get_serializer(user).data)
         else:
-            return Response({'error': "회원가입 인증이 완료되지 않았습니다."}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'error': "회원가입 인증이 완료되지 않았습니다."}, status=status.HTTP_401_UNAUTHORIZED)
         # 존재하지 않는 사용자이거나 비밀번호가 틀린 경우
         return Response(status=status.HTTP_403_FORBIDDEN)
 
@@ -104,7 +104,7 @@ class UserActivateView(viewsets.GenericViewSet):
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(id=uid)
         if user is None:
-            return Response({'error': "잘못된 접근입니다."}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'error': "잘못된 접근입니다."}, status=status.HTTP_401_UNAUTHORIZED)
         if user.is_active:
             return Response({'error': "이미 인증된 회원입니다."}, status=status.HTTP_400_BAD_REQUEST)
         try:
