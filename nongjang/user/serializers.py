@@ -4,6 +4,7 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
+    is_active = serializers.BooleanField(default=False)
 
     class Meta:
         model = User
@@ -12,18 +13,13 @@ class UserSerializer(serializers.ModelSerializer):
             'username',
             'password',
             'email',
+            'is_active',
             'last_login',
             'date_joined',
         )
 
     def validate_password(self, password):
         return make_password(password)
-
-    def validate(self, data):
-        email = data.get('email')
-        if User.objects.filter(email=email).exists():
-            raise serializers.ValidationError("이미 존재하는 Email입니다.")
-        return data
 
 
 class SimpleUserSerializer(serializers.ModelSerializer):
