@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 from smtplib import SMTPException
 
 from house.models import House, Place, UserHouse
-from house.serializers import HouseSerializer, PlaceSerializer, SimpleHouseSerializer
+from house.serializers import HouseSerializer, PlaceSerializer, SimpleHouseSerializer, UserOfHouseSerializer
 from necessity.models import Necessity, NecessityPlace, NecessityLog
 from necessity.serializers import NecessitySerializer, NecessityLogSerializer, NecessityOfPlaceWriteSerializer
 
@@ -21,6 +21,8 @@ class HouseViewSet(viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated, )
 
     def get_queryset(self):
+        if self.action == 'user' and self.request.method == 'POST':
+            return self.queryset
         return self.queryset.filter(user_houses__user=self.request.user)
 
     def get_serializer_class(self, *args, **kwargs):
@@ -28,6 +30,8 @@ class HouseViewSet(viewsets.GenericViewSet):
             return PlaceSerializer
         if self.action in ['list', 'destroy']:
             return SimpleHouseSerializer
+        if self.action == 'user' and self.request.method in ['GET', 'DELETE']:
+            return UserOfHouseSerializer
         if self.action == 'necessity_log':
             return NecessityLogSerializer
         return self.serializer_class
@@ -105,11 +109,13 @@ class HouseViewSet(viewsets.GenericViewSet):
         return Response({'message': "입력하신 이메일로 초대장이 전송되었습니다."})
 
     # /api/v1/house/{house_id}/user/
-    @action(detail=True, methods=['POST', 'DELETE'])
+    @action(detail=True, methods=['POST', 'GET', 'DELETE'])
     def user(self, request, pk=None):
         house = self.get_object()
         if self.request.method == 'POST':
             return self._join_house(house)
+        elif self.request.method == 'GET':
+            return self._get_members(house)
         else:
             return self._leave_house(house)
 
@@ -122,16 +128,16 @@ class HouseViewSet(viewsets.GenericViewSet):
         UserHouse.objects.create(user=user, house=house)
         return Response(self.get_serializer(house).data, status=status.HTTP_201_CREATED)
 
+    def _get_members(self, house):
+        members = house.user_houses.all()
+        return Response(self.get_serializer(members, many=True).data)
+
     def _leave_house(self, house):
         user = self.request.user
         user_house = user.user_houses.filter(house=house).last()
-        if not user_house:
-            return Response({'error': "소속되어 있지 않은 집입니다."}, status=status.HTTP_403_FORBIDDEN)
-
         if user_house.is_leader:
             return Response({'error': "leader이므로 집을 떠날 수 없습니다. leader를 다른 유저에게 양도한 뒤 다시 시도해 주세요"},
                             status=status.HTTP_400_BAD_REQUEST)
-
         user_house.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -339,3 +345,34 @@ class HousePlaceView(APIView):
 
         places = Place.objects.filter(house_id=house_id)
         return Response(PlaceSerializer(places, many=True))
+
+
+class HouseUserLeaderView(APIView):
+    permission_classes = (IsAuthenticated, )
+
+    # POST /api/v1/house/{house_id}/user/{user_id}/leader/
+    def post(self, request, *args, **kwargs):
+        house_id = kwargs['house_id']
+        user_id = kwargs['user_id']
+
+        user = self.request.user
+        if user.id == user_id:
+            return Response({'error': "자기 자신에게는 양도할 수 없습니다."}, status=status.HTTP_400_BAD_REQUEST)
+
+        user_houses = UserHouse.objects.filter(house_id=house_id)
+        from_user_house = user_houses.filter(user=user).last()
+        if not from_user_house:
+            return Response({'error': "소속되어 있지 않은 집입니다."}, status=status.HTTP_403_FORBIDDEN)
+        if not from_user_house.is_leader:
+            return Response({'error': "leader만 leader 권한을 양도할 수 있습니다."}, status=status.HTTP_403_FORBIDDEN)
+
+        to_user_house = user_houses.filter(user_id=user_id).last()
+        if not to_user_house:
+            return Response({'error': "집에 소속되어 있지 않은 User입니다."}, status=status.HTTP_400_BAD_REQUEST)
+
+        with transaction.atomic():
+            from_user_house.is_leader = False
+            from_user_house.save()
+            to_user_house.is_leader = True
+            to_user_house.save()
+        return Response(UserOfHouseSerializer(user_houses, many=True).data)
