@@ -111,9 +111,6 @@ class UserActivateView(viewsets.GenericViewSet):
             if user_activation_token.check_token(user, token):
                 user.is_active = True
                 user.save()
-                return Response({'message': "회원 인증을 성공했습니다"})
+                return redirect(REDIRECT_PAGE)
         except KeyError:
             return Response({'error': "인증 키에 문제가 생겼습니다. 다시 시도해주세요."}, status=status.HTTP_400_BAD_REQUEST)
-
-        redirect(REDIRECT_PAGE)
-        return Response(self.get_serializer(user).data)
