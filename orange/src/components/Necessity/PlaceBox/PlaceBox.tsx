@@ -67,7 +67,7 @@ function PlaceBox(props: Props) {
     >
       <h1>{name}</h1>
       <NecessityList necessities={necessities} />
-      <div className="necessity-list-column">
+      <div>
         <CircleButton onClick={showModal}>
           <MdAdd />
         </CircleButton>

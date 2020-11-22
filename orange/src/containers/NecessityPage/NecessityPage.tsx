@@ -1,18 +1,14 @@
 import React, { Dispatch, useEffect } from 'react';
-import { createGlobalStyle } from 'styled-components';
 import { connect } from 'react-redux';
 import { History } from 'history';
+import Slider from 'react-slick';
 import { NecessityTemplate, PlaceBox } from '../../components';
 import { necessityActions } from '../../store/actions';
 import { Place } from '../../api';
 import { OrangeGlobalState } from '../../store/state';
 import './NecessityPage.css';
-
-const GlobalStyle = createGlobalStyle`
-    body {
-        background: #e9ecef;
-    }
-`;
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 interface Props {
   history: History;
@@ -39,16 +35,20 @@ function NecessityPage(props: Props) {
   }, []);
 
   return (
-    <>
-      <span>
-        <h1 className="NecessityPageBlock">{dateString}</h1>
-      </span>
-
-      <GlobalStyle />
-      <NecessityTemplate>
-        <PlaceBox history={props.history} />
-      </NecessityTemplate>
-    </>
+    <div className="placebox-wrapper">
+      <h1 className="NecessityPageBlock">{dateString}</h1>
+      <Slider className="slider" dots slidesToShow={2} slidesToScroll={1} infinite={false}>
+        <NecessityTemplate>
+          <PlaceBox history={props.history} />
+        </NecessityTemplate>
+        <NecessityTemplate>
+          <PlaceBox history={props.history} />
+        </NecessityTemplate>
+        <NecessityTemplate>
+          <PlaceBox history={props.history} />
+        </NecessityTemplate>
+      </Slider>
+    </div>
   );
 }
 
