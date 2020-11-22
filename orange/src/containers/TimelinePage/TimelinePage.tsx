@@ -49,7 +49,7 @@ class TimelinePage extends Component<Props, State> {
 
     return (
       <div className="timeline-page">
-        {getLogStatus === necessityUserLogStatus.SUCCESS ? logList : null}
+        {getLogStatus === necessityUserLogStatus.SUCCESS && logList}
       </div>
     );
   }

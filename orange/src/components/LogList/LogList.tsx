@@ -3,7 +3,6 @@ import React from 'react';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import ExposureRoundedIcon from '@material-ui/icons/ExposureRounded';
-import { makeStyles } from '@material-ui/core/styles';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Paper from '@material-ui/core/Paper';
 import Timeline from '@material-ui/lab/Timeline';
@@ -15,15 +14,7 @@ import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
 import Typography from '@material-ui/core/Typography';
 
 import { NecessityLog } from '../../api';
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: '6px 16px',
-  },
-  secondaryTail: {
-    backgroundColor: theme.palette.secondary.main,
-  },
-}));
+import './LogList.css';
 
 interface Props {
   logs: NecessityLog;
@@ -32,7 +23,6 @@ interface Props {
 function LogList(props: Props) {
   const { username } = props.logs.user;
   const necessityname = props.logs.necessity?.name;
-  const classes = useStyles();
   const createdAt = (new Date(props.logs.created_at)).toLocaleString();
 
   const activityCategory = () => {
@@ -78,7 +68,7 @@ function LogList(props: Props) {
             <TimelineConnector />
           </TimelineSeparator>
           <TimelineContent>
-            <Paper elevation={3} className={classes.paper}>
+            <Paper elevation={3} className="log-message">
               <Typography variant="h6" component="h1">
                 <b>{necessityname}</b>
                 {activityCategory()}
