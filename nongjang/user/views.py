@@ -47,7 +47,7 @@ class UserViewSet(viewsets.GenericViewSet):
             except SMTPException:
                 return Response({'error': "Email 발송에 문제가 있습니다. 다시 시도해주세요."},
                                 status=status.HTTP_503_SERVICE_UNAVAILABLE)
-            return Response(self.get_serializer(user).data, status=status.HTTP_201_CREATED)
+        return Response(self.get_serializer(user).data, status=status.HTTP_201_CREATED)
 
     # PUT /api/v1/user/login/
     @action(detail=False, methods=['PUT'])
