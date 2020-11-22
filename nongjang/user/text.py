@@ -5,7 +5,7 @@ ENV_MODE = os.getenv('MODE', 'dev')
 
 
 def user_invite_message(domain, uidb64, token):
-    link = "http://{}/api/v1/user/{}/activate/{}/".format(domain, uidb64, token)
+    link = f"http://{domain}/api/v1/user/{uidb64}/activate/{token}/"
 
     return f"아래 링크를 클릭하면 회원 인증이 완료됩니다.\n\n" \
            f"링크 : {link}\n\n" \
