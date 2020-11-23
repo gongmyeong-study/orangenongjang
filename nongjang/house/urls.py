@@ -1,6 +1,7 @@
 from django.urls import include, path
 from rest_framework.routers import SimpleRouter
-from house.views import HouseViewSet, PlaceViewSet, PlaceNecessityView, PlaceNecessityCountView, HousePlaceView
+from house.views import (HouseViewSet, PlaceViewSet, PlaceNecessityView, PlaceNecessityCountView,
+                         HousePlaceView, HouseUserLeaderView)
 
 app_name = 'house'
 
@@ -13,4 +14,5 @@ urlpatterns = [
     path('place/<int:place_id>/necessity/<int:necessity_id>/', PlaceNecessityView.as_view()),
     path('place/<int:place_id>/necessity/<int:necessity_id>/count/', PlaceNecessityCountView.as_view()),
     path('house/<int:house_id>/place/<int:place_id>/', HousePlaceView.as_view()),
+    path('house/<int:house_id>/user/<int:user_id>/leader/', HouseUserLeaderView.as_view()),
 ]
