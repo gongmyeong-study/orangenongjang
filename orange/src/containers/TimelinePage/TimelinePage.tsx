@@ -6,6 +6,8 @@ import { LogList } from '../../components';
 import { necessityUserLogStatus } from '../../constants/constants';
 import { NecessityLog } from '../../api';
 
+import './TimelinePage.css';
+
 interface Props {
   history: History;
   houseId: number;
@@ -36,12 +38,18 @@ class TimelinePage extends Component<Props, State> {
 
   render() {
     const { logs, getLogStatus } = this.state;
-    const logList = logs.map((log) => <LogList key={log.id} logs={log} />);
+    const logList = logs.map((log) => (
+      <div className="log-list">
+        <LogList
+          key={log.id}
+          logs={log}
+        />
+      </div>
+    ));
 
     return (
       <div className="timeline-page">
-        타임라인 페이지
-        {getLogStatus === necessityUserLogStatus.SUCCESS ? logList : null}
+        {getLogStatus === necessityUserLogStatus.SUCCESS && logList}
       </div>
     );
   }

@@ -14,8 +14,8 @@ from smtplib import SMTPException
 
 from nongjang.settings import REDIRECT_PAGE
 from user.serializers import UserSerializer
-from .token import user_activation_token
 from user.text import user_invite_message
+from .token import user_activation_token
 
 
 class UserViewSet(viewsets.GenericViewSet):
@@ -40,14 +40,13 @@ class UserViewSet(viewsets.GenericViewSet):
             domain = get_current_site(request).domain
             uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
             token = user_activation_token.make_token(user)
-            message = user_invite_message(domain, uidb64, token)
+            message = user_invite_message(domain, uidb64, token, user)
             try:
                 EmailMessage("오렌지농장에 초대합니다.", message, to=[email]).send()
                 redirect(REDIRECT_PAGE)
             except SMTPException:
                 return Response({'error': "Email 발송에 문제가 있습니다. 다시 시도해주세요."},
                                 status=status.HTTP_503_SERVICE_UNAVAILABLE)
-        return Response(self.get_serializer(user).data, status=status.HTTP_201_CREATED)
 
     # PUT /api/v1/user/login/
     @action(detail=False, methods=['PUT'])
@@ -107,9 +106,9 @@ class UserActivateView(viewsets.GenericViewSet):
             if user_activation_token.check_token(user, token):
                 user.is_active = True
                 user.save()
-                return Response({'message': "회원 인증을 성공했습니다"})
+            else:
+                return Response({'error': "유효하지 않은 키입니다."}, status=status.HTTP_400_BAD_REQUEST)
         except KeyError:
             return Response({'error': "인증 키에 문제가 생겼습니다. 다시 시도해주세요."}, status=status.HTTP_400_BAD_REQUEST)
-
         redirect(REDIRECT_PAGE)
         return Response(self.get_serializer(user).data)
