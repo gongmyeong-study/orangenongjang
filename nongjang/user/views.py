@@ -43,10 +43,10 @@ class UserViewSet(viewsets.GenericViewSet):
             message = user_invite_message(domain, uidb64, token, user)
             try:
                 EmailMessage("오렌지농장에 초대합니다.", message, to=[email]).send()
-                redirect(REDIRECT_PAGE)
             except SMTPException:
                 return Response({'error': "Email 발송에 문제가 있습니다. 다시 시도해주세요."},
                                 status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        return redirect(REDIRECT_PAGE)
 
     # PUT /api/v1/user/login/
     @action(detail=False, methods=['PUT'])
