@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
@@ -12,10 +13,9 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from smtplib import SMTPException
 
-from nongjang.settings import REDIRECT_PAGE
 from user.serializers import UserSerializer
 from user.text import user_invite_message
-from .token import user_activation_token
+from user.token import user_activation_token
 
 
 class UserViewSet(viewsets.GenericViewSet):
@@ -46,7 +46,7 @@ class UserViewSet(viewsets.GenericViewSet):
             except SMTPException:
                 return Response({'error': "Email 발송에 문제가 있습니다. 다시 시도해주세요."},
                                 status=status.HTTP_503_SERVICE_UNAVAILABLE)
-        return redirect(REDIRECT_PAGE)
+        return redirect(settings.REDIRECT_PAGE)
 
     # PUT /api/v1/user/login/
     @action(detail=False, methods=['PUT'])
