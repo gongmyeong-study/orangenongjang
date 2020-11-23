@@ -110,5 +110,5 @@ class UserActivateView(viewsets.GenericViewSet):
                 return Response({'error': "유효하지 않은 키입니다."}, status=status.HTTP_400_BAD_REQUEST)
         except KeyError:
             return Response({'error': "인증 키에 문제가 생겼습니다. 다시 시도해주세요."}, status=status.HTTP_400_BAD_REQUEST)
-        redirect(REDIRECT_PAGE)
+        redirect(settings.REDIRECT_PAGE)
         return Response(self.get_serializer(user).data)
