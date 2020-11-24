@@ -11,11 +11,17 @@ const signupSuccess = (user: User) => ({
 const signupFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {
-    case 409:
+    case 400:
       actionType = userConstants.SIGNUP_FAILURE_USERNAME;
       break;
+    case 401:
+      actionType = userConstants.SIGNUP_WAITING;
+      break;
+    case 302:
+      actionType = userConstants.SIGNUP_SUCCESS;
+      break;
     default:
-      actionType = userConstants.SIGNUP_FAILURE;
+      actionType = userConstants.SIGNUP_SUCCESS;
   }
   return {
     type: actionType,

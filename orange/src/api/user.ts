@@ -5,4 +5,5 @@ export interface User {
   last_login?: string;
   date_joined?: string;
   is_leader?: boolean;
+  is_active?: boolean;
 }

@@ -19,16 +19,23 @@ const initialState: UserState = {
 const userReducer = (state = initialState, action: Action): UserState => {
   const data = action.target;
   switch (action.type) {
+    // SIGNUP
     case userConstants.SIGNUP_SUCCESS:
       return {
         ...state,
         signupStatus: userStatus.SUCCESS,
         me: data,
       };
+    case userConstants.SIGNUP_WAITING:
+      return { ...state, signupStatus: userStatus.WAITING };
     case userConstants.SIGNUP_FAILURE_USERNAME:
       return { ...state, signupStatus: userStatus.FAILURE_USERNAME };
+    case userConstants.SIGNUP_FAILURE_EMAIL:
+      return { ...state, signupStatus: userStatus.FAILURE_EMAIL };
     case userConstants.SIGNUP_FAILURE:
       return { ...state, signupStatus: userStatus.FAILURE };
+
+    // LOGIN
     case userConstants.LOGIN_SUCCESS:
       return {
         ...state,
@@ -37,10 +44,18 @@ const userReducer = (state = initialState, action: Action): UserState => {
       };
     case userConstants.LOGIN_FAILURE:
       return { ...state, loginStatus: userStatus.FAILURE };
+    case userConstants.LOGIN_FAILURE_INACTIVE:
+      return { ...state, loginStatus: userStatus.FAILURE_INACTIVE };
+    case userConstants.LOGIN_FAILURE_INFO:
+      return { ...state, loginStatus: userStatus.FAILURE_INFO };
+
+    // LOGOUT
     case userConstants.LOGOUT_SUCCESS:
       return { ...state, logoutStatus: userStatus.SUCCESS };
     case userConstants.LOGOUT_FAILURE:
       return { ...state, logoutStatus: userStatus.FAILURE };
+
+    // GET_ME
     case userConstants.GET_ME_SUCCESS:
       return {
         ...state,
