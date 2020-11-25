@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { History } from 'history';
 import { connect } from 'react-redux';
 import { Necessity, Place } from '../../../api';
 import { OrangeGlobalState } from '../../../store/state';
 import NecessityList from '../NecessityList/NecessityList';
 import './PlaceBox.css';
-import NecessityCreateModal from '../NecessityCreateModal/NecessityCreateModal';
 
 interface Props {
   history: History;
