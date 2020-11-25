@@ -1,15 +1,14 @@
-import React, { Component, Dispatch } from 'react';
-import { History } from 'history';
+import React, { Dispatch } from 'react';
 import { connect } from 'react-redux';
+import { TextField, InputAdornment, Button } from '@material-ui/core';
+import { useForm } from 'react-hook-form';
 
 import { necessityActions } from '../../../store/actions';
 import { necessityStatus } from '../../../constants/constants';
 import './NecessityCreateModal.css';
-import { User } from '../../../api';
 import { OrangeGlobalState } from '../../../store/state';
 
 interface Props {
-  history: History;
   onCreateNecessityPlace: (
     placeId: number,
     name: string,
@@ -18,160 +17,63 @@ interface Props {
     price: number,
     count: number,
   ) => any;
-  me: User ;
-  createStatus: string;
-  restoreModal: any;
   placeId: number;
 }
 
-interface State {
-  appearing: boolean; // for modal appearing
+interface NecessityCreateFormData {
   name: string;
   option: string;
   description: string;
   price: number;
   count: number;
 }
+function NecessityCreateModal(props: Props) {
+  const {
+    register, handleSubmit, errors,
+  } = useForm<NecessityCreateFormData>();
 
-class NecessityCreateModal extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      appearing: true,
-      name: '',
-      option: '',
-      description: '',
-      price: 0,
-      count: 1,
-    };
-  }
+  const onSubmit = (data: NecessityCreateFormData) => props.onCreateNecessityPlace(
+    props.placeId, data.name, data.option, data.description, data.price, data.count,
+  );
 
-  onCreateNecessityPlace = (): void => {
-    this.props.onCreateNecessityPlace(
-      this.props.placeId,
-      this.state.name,
-      this.state.option,
-      this.state.description,
-      this.state.price,
-      this.state.count,
-    )
-      .then(() => {
-        if (this.props.createStatus === necessityStatus.SUCCESS) {
-          window.alert('입력 완료!');
-          this.props.restoreModal();
-        } else if (this.props.createStatus === necessityStatus.FAILURE_NAME) {
-          window.alert('이미 존재하는 생필품입니다.');
-        } else {
-          window.alert('실패!');
-        }
-      });
-  };
-
-  render() {
-    return (
-      <div
-        className="necessity-create-modal"
-        style={this.state.appearing ? { display: 'block' } : { display: 'none' }}
-      >
-        <form>
-          <button
-            className="necessity-create-close"
-            onClick={() => this.props.restoreModal}
-            type="submit"
-            title="Close Modal"
-            style={{ background: 'none', border: 'none' }}
-          >
-            &times;
-          </button>
-        </form>
-
-        <form className="necessity-create-modal-content">
-          <div className="necessity-create-container">
-            <p>생필품 정보를 입력해주세요.</p>
-            <hr />
-            <label htmlFor="name">
-              <b>생필품 (Necessity)</b>
-            </label>
-            <input
-              type="text"
-              placeholder="오렌지"
-              required
-              onChange={(e) => this.setState({ name: e.target.value })}
-            />
-
-            <label htmlFor="count">
-              <b>개수 (Count)</b>
-            </label>
-            <input
-              type="number"
-              min="1"
-              step="1"
-              placeholder="1"
-              required
-            />
-
-            <label htmlFor="option">
-              <b>옵션 (Option)</b>
-            </label>
-            <input
-              type="text"
-              placeholder="발렌시아 품종"
-              required
-              onChange={(e) => this.setState({ option: e.target.value })}
-            />
-
-            <label htmlFor="description">
-              <b>설명 (Description)</b>
-            </label>
-            <input
-              type="text"
-              placeholder="식후 비타민 C 섭취용"
-              required
-              onChange={(e) => this.setState({ description: e.target.value })}
-            />
-
-            <label htmlFor="price">
-              <b>가격 (Price)</b>
-            </label>
-            <input
-              type="number"
-              placeholder="2900"
-              required
-              onChange={(e) => this.setState({
-                price: (parseFloat(e.target.value) === parseInt(e.target.value, 10))
-                  ? parseFloat(e.target.value) : NaN,
-              })}
-            />
-
-            <div className="necessity-create-clearfix">
-              <button
-                type="button"
-                className="necessity-create-createbtn"
-                disabled={this.state.name === ''}
-                onClick={this.onCreateNecessityPlace}
-              >
-                생필품 등록
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    );
-  }
+  return (
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <TextField
+          name="name"
+          placeholder="생필품"
+          variant="outlined"
+          inputRef={register({ required: true })}
+          error={Boolean(errors.name)}
+          helperText={errors.name && '생필품 이름을 입력해주세요!'}
+        />
+        <TextField
+          name="option"
+          placeholder="옵션"
+          variant="outlined"
+        />
+        <TextField
+          name="description"
+          placeholder="설명"
+          variant="outlined"
+        />
+        <TextField
+          name="price"
+          placeholder="가격"
+          variant="outlined"
+        />
+        <TextField
+          name="count"
+          placeholder="개수"
+          variant="outlined"
+          inputRef={register({ required: true })}
+          error={Boolean(errors.count)}
+          helperText={errors.count && '개수를 입력해주세요!'}
+        />
+        <Button type="submit">만들기</Button>
+      </form>
+    </>
+  );
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  onCreateNecessityPlace: (
-    placeId: number, name: string, option: string,
-    description: string, price: number, count: number,
-  ): void => dispatch(
-    necessityActions.createNecessityPlace(placeId, name, option, description, price, count),
-  ),
-});
-
-const mapStateToProps = (state: OrangeGlobalState) => ({
-  createStatus: state.necessity.createStatus,
-  me: state.user.me,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(NecessityCreateModal);
+export default NecessityCreateModal;

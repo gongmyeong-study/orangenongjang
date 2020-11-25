@@ -4,7 +4,6 @@ import NecessityCreateModal from './Necessity/NecessityCreateModal/NecessityCrea
 import PlaceBox from './Necessity/PlaceBox/PlaceBox';
 import NecessityItem from './Necessity/NecessityItem/NecessityItem';
 import NecessityList from './Necessity/NecessityList/NecessityList';
-import NecessityTemplate from './Necessity/NecessityTemplate/NecessityTemplate';
 import SignUpModal from './SignUpModal/SignUpModal';
 import StudyInfo from './StudyInfo/StudyInfo';
 import LogList from './LogList/LogList';
@@ -16,7 +15,6 @@ export {
   PlaceBox,
   NecessityItem,
   NecessityList,
-  NecessityTemplate,
   SignUpModal,
   StudyInfo,
   LogList,

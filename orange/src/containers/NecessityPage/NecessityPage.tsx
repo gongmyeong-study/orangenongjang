@@ -2,7 +2,7 @@ import React, { Dispatch, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { History } from 'history';
 import Slider from 'react-slick';
-import { NecessityTemplate, PlaceBox } from '../../components';
+import { PlaceBox } from '../../components';
 import { necessityActions } from '../../store/actions';
 import { Place } from '../../api';
 import { OrangeGlobalState } from '../../store/state';
@@ -37,16 +37,10 @@ function NecessityPage(props: Props) {
   return (
     <div className="placebox-wrapper">
       <h1 className="NecessityPageBlock">{dateString}</h1>
-      <Slider className="slider" dots slidesToShow={2} slidesToScroll={1} infinite={false}>
-        <NecessityTemplate>
-          <PlaceBox history={props.history} />
-        </NecessityTemplate>
-        <NecessityTemplate>
-          <PlaceBox history={props.history} />
-        </NecessityTemplate>
-        <NecessityTemplate>
-          <PlaceBox history={props.history} />
-        </NecessityTemplate>
+      <Slider className="slider" dots slidesToShow={1.5} slidesToScroll={1} infinite={false}>
+        <PlaceBox history={props.history} />
+        <PlaceBox history={props.history} />
+        <PlaceBox history={props.history} />
       </Slider>
     </div>
   );
