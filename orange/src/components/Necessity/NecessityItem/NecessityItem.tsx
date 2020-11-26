@@ -1,5 +1,6 @@
 import React from 'react';
 import { Necessity } from '../../../api';
+import './NecessityItem.css';
 
 interface Props {
   necessity: Necessity;
@@ -7,7 +8,10 @@ interface Props {
 
 function NecessityItem(props: Props) {
   return (
-    <h1>{props.necessity.name}</h1>
+    <div className="necessity">
+      <h4>{props.necessity.name}</h4>
+      <p>{props.necessity.count}</p>
+    </div>
   );
 }
 

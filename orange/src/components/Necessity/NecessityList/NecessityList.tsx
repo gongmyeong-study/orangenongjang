@@ -38,16 +38,24 @@ function NecessityList(props: Props) {
         <NecessityCreate onCreateNecessityPlace={onCreateNecessityPlace} placeId={place.id} />
       </Modal>
 
-      <button type="button" onClick={() => setModalOpen(true)}>만들기</button>
-      { place.necessities.length
-        ? place.necessities.map((necessity: Necessity) => <NecessityItem necessity={necessity} />)
-        : (
-          <h2>
-            {place.name}
-            에
-            첫 생필품을 추가해보세요!
-          </h2>
-        )}
+      <section className="necessity-list">
+        { place.necessities.length
+          ? place.necessities.map((necessity: Necessity) => (
+            <div className="necessity-wrapper">
+              <NecessityItem necessity={necessity} />
+            </div>
+          ))
+          : (
+            <h2>
+              {place.name}
+              에
+              첫 생필품을 추가해보세요!
+            </h2>
+          )}
+        <div className="necessity-wrapper">
+          <button className="create-button" type="button" onClick={() => setModalOpen(true)}>만들기</button>
+        </div>
+      </section>
     </>
   );
 }

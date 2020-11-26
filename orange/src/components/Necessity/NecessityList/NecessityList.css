@@ -1,19 +1,22 @@
-.necessity-list-block {
+.necessity-list {
   display: inline-flex;
   flex-wrap: wrap;
   flex-direction: row;
   padding: 15px 0px;
   padding-bottom: 15px;
-  overflow-y: auto;
 }
 
-.necessity-item-block {
-  width: 160px;
-  height: 106.8px;
+.necessity-wrapper {
+  width: 12vw;
+  height: 11vw;
   display: flex;
-  align-content: space-around;
-  overflow-y: auto;
-  border-radius: 12px;
-  border: solid 0.5px #828282;
-  background-color: #ffffff;
+  align-items: center;
+  border: 1px solid gray;
+  border-radius: 16px;
+  margin: 0 16px 18px 0;
+}
+
+.create-button {
+  background: none;
+  border: none;
 }
