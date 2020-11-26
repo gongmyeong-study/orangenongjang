@@ -7,10 +7,11 @@
 }
 
 .necessity-wrapper {
-  width: 12vw;
-  height: 11vw;
+  width: 8vw;
+  height: 7.6vw;
   display: flex;
   align-items: center;
+  justify-content: center;
   border: 1px solid gray;
   border-radius: 16px;
   margin: 0 16px 18px 0;
@@ -19,4 +20,13 @@
 .create-button {
   background: none;
   border: none;
+}
+
+.necessity-wrapper .fa-plus {
+  font-size: 3em;
+  color: orange;
+}
+
+.necessity-wrapper .fa-plus:hover {
+  color: rgb(253, 174, 54);
 }

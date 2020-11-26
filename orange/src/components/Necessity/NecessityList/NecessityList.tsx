@@ -53,7 +53,7 @@ function NecessityList(props: Props) {
             </h2>
           )}
         <div className="necessity-wrapper">
-          <button className="create-button" type="button" onClick={() => setModalOpen(true)}>만들기</button>
+          <i className="fas fa-plus" onClick={() => setModalOpen(true)} />
         </div>
       </section>
     </>
