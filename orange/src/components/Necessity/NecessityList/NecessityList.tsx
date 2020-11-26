@@ -33,7 +33,8 @@ function NecessityList(props: Props) {
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setModalOpen(false)}
-        contentLabel="Example Modal"
+        className="create-modal"
+        overlayClassName="create-modal-overlay"
       >
         <NecessityCreate onCreateNecessityPlace={onCreateNecessityPlace} placeId={place.id} />
       </Modal>
