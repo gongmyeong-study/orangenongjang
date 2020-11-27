@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { History } from 'history';
 import {
-  connect,
   useSelector,
 } from 'react-redux';
 import Modal from 'react-modal';
@@ -76,8 +74,4 @@ function PlaceBox(props: Props) {
   );
 }
 
-const mapStateToProps = (state: OrangeGlobalState) => ({
-  places: state.necessity.places,
-});
-
-export default connect(mapStateToProps)(PlaceBox);
+export default PlaceBox;

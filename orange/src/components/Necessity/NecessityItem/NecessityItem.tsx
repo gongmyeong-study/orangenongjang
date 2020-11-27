@@ -10,7 +10,6 @@ function NecessityItem(props: Props) {
   return (
     <div className="necessity">
       <h4>{props.necessity.name}</h4>
-      <p>{props.necessity.count}</p>
     </div>
   );
 }

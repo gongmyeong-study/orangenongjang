@@ -16,9 +16,7 @@ function NecessityRemoveButton(props: Props) {
   };
 
   return (
-    <Button onClick={() => onRemoveNecessityPlace(props.placeId, props.necesstiyId)}>
-      <i className="far fa-trash-alt" style={{ color: 'red' }} />
-    </Button>
+    <i className="far fa-trash-alt fa-lg" style={{ color: 'red' }} onClick={() => onRemoveNecessityPlace(props.placeId, props.necesstiyId)} />
   );
 }
 

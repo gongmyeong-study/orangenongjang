@@ -9,9 +9,7 @@ interface Props {
 
 function NecessityUpdateButton(props: Props) {
   return (
-    <Button onClick={() => props.updateNecessity(props.necessity)}>
-      <i className="far fa-edit" />
-    </Button>
+    <i className="far fa-edit fa-lg" onClick={() => props.updateNecessity(props.necessity)} />
   );
 }
 
