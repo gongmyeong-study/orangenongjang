@@ -139,3 +139,26 @@ export const removeNecessityPlace = (
     dispatch(removeNecessityPlaceSuccess(removeResponse.data));
   })
   .catch((removeError) => dispatch(removeNecessityPlaceFailure(removeError)));
+
+const createPlaceSuccess = (place: Place) => ({
+  type: necessityConstants.CREATE_PLACE_SUCCESS,
+  target: place,
+});
+
+const createPlaceFailure = (error: AxiosError) => {
+  let actionType = null;
+  switch (error.response?.status) {
+    default:
+      actionType = necessityConstants.CREATE_PLACE_FAILURE;
+      break;
+  }
+  return {
+    type: actionType,
+    target: error,
+  };
+};
+
+export const createPlace = (houseId: number, name: string) => (dispatch: Dispatch) => axios.post(`/api/v1/house/${houseId}/place/`, { name }).then((createResponse: AxiosResponse<Place>) => {
+  dispatch(createPlaceSuccess(createResponse.data));
+})
+  .catch((createError) => dispatch(createPlaceFailure(createError)));

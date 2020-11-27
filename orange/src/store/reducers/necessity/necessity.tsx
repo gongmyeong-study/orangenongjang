@@ -22,6 +22,7 @@ const initialState: NecessityState = {
 const PlaceResponseCases = [
   necessityConstants.CREATE_NECESSITYPLACE_SUCCESS,
   necessityConstants.REMOVE_NECESSITYPLACE_SUCCESS,
+  necessityConstants.CREATE_PLACE_SUCCESS,
 ];
 
 const NecessityResponseCases = [
@@ -44,7 +45,8 @@ function necessityreducer(state = initialState, action: Action): NecessityState 
     const data = action.target as Place;
     places = places.map((place) => (place.id === data.id ? data : place));
 
-    if (action.type === necessityConstants.CREATE_NECESSITYPLACE_SUCCESS) {
+    if (action.type === necessityConstants.CREATE_NECESSITYPLACE_SUCCESS
+      || action.type === necessityConstants.CREATE_PLACE_SUCCESS) {
       return {
         ...state,
         createStatus: necessityStatus.SUCCESS,

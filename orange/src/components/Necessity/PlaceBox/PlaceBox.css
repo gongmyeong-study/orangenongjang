@@ -1,9 +1,0 @@
-.PlaceBox {
-    padding: 10px;
-    width: 30vw;
-    height: 50vh;
-    border: 2px solid #e9ecef;
-    border-radius: 16px;
-    overflow-y: auto;
-    font-family: 'Noto Sans KR', Helvetica, sans-serif;
-}

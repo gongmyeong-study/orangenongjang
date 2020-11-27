@@ -4,6 +4,10 @@
     width: 60vw;
 }
 
+.slick-list {
+    padding: 0 32px !important;
+}
+
 .slider {
     width: 100%;
     display: flex;
@@ -14,4 +18,19 @@
     left: 5% !important;
     font-size: 30px !important;
     color: black !important;
+}
+
+.create-place-box {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    height: 50vh;
+}
+
+.create-place-box button {
+    height: 120px;
+    width: 120px;
+    border: 2px solid #e9ecef;
+    border-radius: 16px;
 }
