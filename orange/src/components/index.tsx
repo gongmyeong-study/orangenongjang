@@ -9,6 +9,7 @@ import StudyInfo from './StudyInfo/StudyInfo';
 import LogList from './LogList/LogList';
 import PlaceCreateForm from './PlaceCreateForm/PlaceCreateForm';
 import NecessityRemoveButton from './Necessity/NecessityRemoveButton/NecessityRemoveButton';
+import NecessityUpdateButton from './Necessity/NecessityUpdateButton/NecessityUpdateButton';
 
 export {
   Header,
@@ -22,4 +23,5 @@ export {
   LogList,
   PlaceCreateForm,
   NecessityRemoveButton,
+  NecessityUpdateButton,
 };
