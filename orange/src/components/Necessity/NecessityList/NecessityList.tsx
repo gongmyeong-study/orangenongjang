@@ -16,6 +16,9 @@ function NecessityList(props: Props) {
   return (
     <>
       <section className="necessity-list">
+        <div className="necessity-wrapper">
+          <i className="fas fa-plus" onClick={props.createNecessity} />
+        </div>
         { place.necessities.length
           ? place.necessities.map((necessity: Necessity) => (
             <div className="necessity-wrapper">
@@ -30,9 +33,6 @@ function NecessityList(props: Props) {
               첫 생필품을 추가해보세요!
             </h2>
           )}
-        <div className="necessity-wrapper">
-          <i className="fas fa-plus" onClick={props.createNecessity} />
-        </div>
       </section>
     </>
   );
