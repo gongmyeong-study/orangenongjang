@@ -59,17 +59,15 @@ function PlaceBox(props: Props) {
         className="create-modal"
         overlayClassName="create-modal-overlay"
       >
-        {Boolean(place)
-        && <NecessityCreateOrUpdateForm placeId={place.id} necessityToBeUpdated={necessityToBeUpdated} type={necessityToBeUpdated ? 'UPDATE' : 'CREATE'} />}
+        <NecessityCreateOrUpdateForm placeId={place.id} necessityToBeUpdated={necessityToBeUpdated} type={necessityToBeUpdated ? 'UPDATE' : 'CREATE'} />
       </Modal>
-      <h1>{Boolean(place) && place.name}</h1>
-      {Boolean(place) && (
+      <h1>{place.name}</h1>
+
       <NecessityList
         place={place}
         updateNecessity={updateNecessity}
         createNecessity={createNecessity}
       />
-      )}
     </div>
   );
 }
