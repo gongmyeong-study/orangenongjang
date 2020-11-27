@@ -17,7 +17,9 @@ function NecessityList(props: Props) {
     <>
       <section className="necessity-list">
         <div className="necessity-wrapper">
-          <i className="fas fa-plus" onClick={props.createNecessity} />
+          <Button onClick={props.createNecessity}>
+            <i className="fas fa-plus" />
+          </Button>
         </div>
         { place.necessities.length
           ? place.necessities.map((necessity: Necessity) => (
