@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { History } from 'history';
 import { connect } from 'react-redux';
+import Modal from 'react-modal';
 import { Necessity, Place } from '../../../api';
 import { OrangeGlobalState } from '../../../store/state';
 import NecessityList from '../NecessityList/NecessityList';
 import './PlaceBox.css';
+import NecessityCreateOrUpdateForm from '../NecessityCreateOrUpdateForm/NecessityCreateOrUpdateForm';
 
 interface Props {
   history: History;
@@ -12,27 +14,46 @@ interface Props {
 }
 
 function PlaceBox(props: Props) {
-  const name = '';
-  const necessities: Necessity[] = [];
-  const placeId = 0;
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [necessityToBeUpdated, setNecessityToBeUpdated] = useState<Necessity>();
+
+  const updateNecessity = (necessity: Necessity) => {
+    setNecessityToBeUpdated(necessity);
+    setModalOpen(true);
+  };
+
+  const createNecessity = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setNecessityToBeUpdated(undefined);
+    setModalOpen(false);
+  };
 
   const place = props.places[0];
-
-  // FIXME: 하나의 house 내 여러 개의 place를 보여주는 것은 구현이 안 되어있고, 항상 첫 번째 place를 보여줌
-  // if (props.places.length) {
-  //   name = props.places[0].name;
-  //   necessities = props.places[0].necessities;
-  //   placeId = props.places[0].id;
-  console.log('vmfhqtm');
-  console.log(props.places);
-  // }
 
   return (
     <div
       className="PlaceBox"
     >
-      <h1>{Boolean(props.places.length) && place.name}</h1>
-      {Boolean(props.places.length) && <NecessityList place={place} />}
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        className="create-modal"
+        overlayClassName="create-modal-overlay"
+      >
+        {Boolean(place)
+        && <NecessityCreateOrUpdateForm placeId={place.id} necessityToBeUpdated={necessityToBeUpdated} type={necessityToBeUpdated ? 'UPDATE' : 'CREATE'} />}
+      </Modal>
+      <h1>{Boolean(place) && place.name}</h1>
+      {Boolean(place) && (
+      <NecessityList
+        place={place}
+        updateNecessity={updateNecessity}
+        createNecessity={createNecessity}
+      />
+      )}
     </div>
   );
 }
