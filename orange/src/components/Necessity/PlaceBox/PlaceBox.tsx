@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { History } from 'history';
-import { connect } from 'react-redux';
+import {
+  connect,
+  useSelector,
+} from 'react-redux';
 import Modal from 'react-modal';
 import { Necessity, Place } from '../../../api';
 import { OrangeGlobalState } from '../../../store/state';
 import NecessityList from '../NecessityList/NecessityList';
 import './PlaceBox.css';
 import NecessityCreateOrUpdateForm from '../NecessityCreateOrUpdateForm/NecessityCreateOrUpdateForm';
+import { necessityStatus } from '../../../constants/constants';
 
 interface Props {
   history: History;
@@ -16,6 +20,8 @@ interface Props {
 function PlaceBox(props: Props) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [necessityToBeUpdated, setNecessityToBeUpdated] = useState<Necessity>();
+
+  const { createStatus, updateStatus } = useSelector((state: OrangeGlobalState) => state.necessity);
 
   const updateNecessity = (necessity: Necessity) => {
     setNecessityToBeUpdated(necessity);
@@ -30,6 +36,19 @@ function PlaceBox(props: Props) {
     setNecessityToBeUpdated(undefined);
     setModalOpen(false);
   };
+
+  useEffect(() => {
+    if (createStatus === necessityStatus.SUCCESS) {
+      closeModal();
+    } if (createStatus === necessityStatus.FAILURE) {
+      alert(`생필품 생성에 실패했어요ㅠㅠ \n 에러 메시지 : ${createStatus}`);
+    }
+    if (updateStatus === necessityStatus.SUCCESS) {
+      closeModal();
+    } if (updateStatus === necessityStatus.FAILURE) {
+      alert(`생필품 수정에 실패했어요ㅠㅠ\n 에러 메시지 : ${updateStatus}`);
+    }
+  }, [createStatus, updateStatus]);
 
   const place = props.places[0];
 
