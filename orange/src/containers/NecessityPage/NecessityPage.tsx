@@ -50,7 +50,7 @@ function NecessityPage(props: Props) {
       <div className="placebox-wrapper">
         <h1 className="NecessityPageBlock">집집</h1>
         <Slider className="slider" dots slidesToShow={1.6} slidesToScroll={1} infinite={false}>
-          {Boolean(places) && places.map((place) => <PlaceBox place={place} />)}
+          {Boolean(places) && places.map((place) => <PlaceBox place={place} key={place.id} />)}
           <div
             className="create-place-box"
             style={{
