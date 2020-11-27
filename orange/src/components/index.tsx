@@ -1,6 +1,6 @@
 import Header from './Header/Header';
 import Login from './Login/Login';
-import NecessityCreate from './Necessity/NecessityCreate/NecessityCreate';
+import NecessityCreateOrUpdateForm from './Necessity/NecessityCreateOrUpdateForm/NecessityCreateOrUpdateForm';
 import PlaceBox from './Necessity/PlaceBox/PlaceBox';
 import NecessityItem from './Necessity/NecessityItem/NecessityItem';
 import NecessityList from './Necessity/NecessityList/NecessityList';
@@ -11,7 +11,7 @@ import LogList from './LogList/LogList';
 export {
   Header,
   Login,
-  NecessityCreate,
+  NecessityCreateOrUpdateForm,
   PlaceBox,
   NecessityItem,
   NecessityList,

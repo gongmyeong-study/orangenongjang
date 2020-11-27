@@ -103,8 +103,8 @@ const updateNecessityPlaceFailure = (error: AxiosError) => {
 };
 
 export const updateNecessityPlace = (
-  placeId: number, necessityId: number, description: string, price?: number,
-) => (dispatch: Dispatch) => axios.put(`/api/v1/place/${placeId}/necessity/${necessityId}/`, { description, price })
+  placeId: number, necessityId: number, description: string, price?: number, count?: number,
+) => (dispatch: Dispatch) => axios.put(`/api/v1/place/${placeId}/necessity/${necessityId}/`, { description, price, count })
   .then((updateResponse: AxiosResponse<Necessity>) => {
     dispatch(updateNecessityPlaceSuccess(updateResponse.data));
   })

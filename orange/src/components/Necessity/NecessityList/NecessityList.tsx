@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import './NecessityList.css';
 import { useDispatch } from 'react-redux';
 import Modal from 'react-modal';
+import { Button } from '@material-ui/core';
 import { Necessity, Place } from '../../../api';
 import NecessityItem from '../NecessityItem/NecessityItem';
 import NecessityCounter from '../NecessityCounter/NecessityCounter';
-import NecessityCreate from '../NecessityCreate/NecessityCreate';
-import { createNecessityPlace } from '../../../store/actions/necessity/necessity';
+import NecessityCreateOrUpdateForm from '../NecessityCreateOrUpdateForm/NecessityCreateOrUpdateForm';
+import { createNecessityPlace, updateNecessityPlace } from '../../../store/actions/necessity/necessity';
 
 interface Props {
   place: Place;
@@ -14,29 +15,29 @@ interface Props {
 
 function NecessityList(props: Props) {
   const [isModalOpen, setModalOpen] = useState(false);
-  const dispatch = useDispatch();
+  const [necessityToBeUpdated, setNecessityToBeUpdated] = useState<Necessity>();
+
   const { place } = props;
 
-  const onCreateNecessityPlace = (
-    placeId: number,
-    name: string,
-    option: string,
-    description: string,
-    price: number,
-    count: number,
-  ) => {
-    dispatch(createNecessityPlace(placeId, name, option, description, price, count));
+  const updateNecessity = (necessity: Necessity) => {
+    setNecessityToBeUpdated(necessity);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setNecessityToBeUpdated(undefined);
+    setModalOpen(false);
   };
 
   return (
     <>
       <Modal
         isOpen={isModalOpen}
-        onRequestClose={() => setModalOpen(false)}
+        onRequestClose={closeModal}
         className="create-modal"
         overlayClassName="create-modal-overlay"
       >
-        <NecessityCreate onCreateNecessityPlace={onCreateNecessityPlace} placeId={place.id} />
+        <NecessityCreateOrUpdateForm placeId={place.id} necessityToBeUpdated={necessityToBeUpdated} type={necessityToBeUpdated ? 'UPDATE' : 'CREATE'} />
       </Modal>
 
       <section className="necessity-list">
@@ -44,6 +45,7 @@ function NecessityList(props: Props) {
           ? place.necessities.map((necessity: Necessity) => (
             <div className="necessity-wrapper">
               <NecessityItem necessity={necessity} />
+              <Button onClick={() => updateNecessity(necessity)}><i className="far fa-edit" /></Button>
             </div>
           ))
           : (
