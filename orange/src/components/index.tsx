@@ -8,6 +8,7 @@ import SignUpModal from './SignUpModal/SignUpModal';
 import StudyInfo from './StudyInfo/StudyInfo';
 import LogList from './LogList/LogList';
 import PlaceCreateForm from './PlaceCreateForm/PlaceCreateForm';
+import NecessityRemoveButton from './Necessity/NecessityRemoveButton/NecessityRemoveButton';
 
 export {
   Header,
@@ -20,4 +21,5 @@ export {
   StudyInfo,
   LogList,
   PlaceCreateForm,
+  NecessityRemoveButton,
 };

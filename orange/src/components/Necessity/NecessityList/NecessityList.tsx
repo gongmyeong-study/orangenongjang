@@ -3,6 +3,7 @@ import './NecessityList.css';
 import { Button } from '@material-ui/core';
 import { Necessity, Place } from '../../../api';
 import NecessityItem from '../NecessityItem/NecessityItem';
+import NecessityRemoveButton from '../NecessityRemoveButton/NecessityRemoveButton';
 
 interface Props {
   place: Place;
@@ -26,6 +27,7 @@ function NecessityList(props: Props) {
             <div className="necessity-wrapper">
               <NecessityItem necessity={necessity} />
               <Button onClick={() => props.updateNecessity(necessity)}><i className="far fa-edit" /></Button>
+              <NecessityRemoveButton placeId={place.id} necesstiyId={necessity.id} />
             </div>
           ))
           : (
