@@ -10,6 +10,7 @@ import LogList from './LogList/LogList';
 import PlaceCreateForm from './PlaceCreateForm/PlaceCreateForm';
 import NecessityRemoveButton from './Necessity/NecessityRemoveButton/NecessityRemoveButton';
 import NecessityUpdateButton from './Necessity/NecessityUpdateButton/NecessityUpdateButton';
+import NecessityCounterButton from './Necessity/NecessityCounterButton/NecessityCounterButton';
 
 export {
   Header,
@@ -24,4 +25,5 @@ export {
   PlaceCreateForm,
   NecessityRemoveButton,
   NecessityUpdateButton,
+  NecessityCounterButton,
 };

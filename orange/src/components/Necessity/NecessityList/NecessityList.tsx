@@ -5,6 +5,7 @@ import { Necessity, Place } from '../../../api';
 import NecessityItem from '../NecessityItem/NecessityItem';
 import NecessityRemoveButton from '../NecessityRemoveButton/NecessityRemoveButton';
 import NecessityUpdateButton from '../NecessityUpdateButton/NecessityUpdateButton';
+import NecessityCounterButton from '../NecessityCounterButton/NecessityCounterButton';
 
 interface Props {
   place: Place;
@@ -18,17 +19,42 @@ function NecessityList(props: Props) {
   return (
     <>
       <section className="necessity-list">
-        <div className="necessity-wrapper">
+        <div className="necessity-item-wrapper">
           <Button onClick={props.createNecessity}>
             <i className="fas fa-plus" />
           </Button>
         </div>
         { place.necessities.length
           ? place.necessities.map((necessity: Necessity) => (
-            <div className="necessity-wrapper">
-              <NecessityItem necessity={necessity} />
-              <NecessityUpdateButton updateNecessity={props.updateNecessity} necessity={necessity} />
-              <NecessityRemoveButton placeId={place.id} necesstiyId={necessity.id} />
+            <div className="necessity-item-and-counter-wrapper" key={necessity.id}>
+              <div className="necessity-item-wrapper">
+                <NecessityItem necessity={necessity} />
+                <div className="edit-wrapper">
+                  <NecessityUpdateButton
+                    updateNecessity={props.updateNecessity}
+                    necessity={necessity}
+                  />
+                  <NecessityRemoveButton placeId={place.id} necesstiyId={necessity.id} />
+                </div>
+              </div>
+              <div className="counter-wrapper">
+                <NecessityCounterButton
+                  placeId={place.id}
+                  necessityId={necessity.id}
+                  count={necessity.count}
+                  countType="add"
+                />
+                <h5>
+                  {necessity.count}
+                  개
+                </h5>
+                <NecessityCounterButton
+                  placeId={place.id}
+                  necessityId={necessity.id}
+                  count={necessity.count}
+                  countType="subtract"
+                />
+              </div>
             </div>
           ))
           : (
