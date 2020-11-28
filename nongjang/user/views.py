@@ -29,7 +29,7 @@ class UserViewSet(viewsets.GenericViewSet):
 
         email = request.data.get('email')
         if User.objects.filter(email=email).exists():
-            return Response({'error': "이미 존재하는 Email입니다."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': "이미 존재하는 Email입니다."}, status=status.HTTP_409_CONFLICT)
 
         try:
             user = serializer.save()
@@ -46,8 +46,7 @@ class UserViewSet(viewsets.GenericViewSet):
             except SMTPException:
                 return Response({'error': "Email 발송에 문제가 있습니다. 다시 시도해주세요."},
                                 status=status.HTTP_503_SERVICE_UNAVAILABLE)
-        redirect(settings.REDIRECT_PAGE)
-        return Response({'message': "회원 인증 메일이 전송되었습니다!"})
+        return Response({'message': "회원 인증 메일이 전송되었습니다!"}, status=status.HTTP_201_CREATED)
 
     # PUT /api/v1/user/login/
     @action(detail=False, methods=['PUT'])

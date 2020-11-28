@@ -27,10 +27,12 @@ const userReducer = (state = initialState, action: Action): UserState => {
       };
     case userConstants.SIGNUP_WAITING:
       return { ...state, signupStatus: userStatus.WAITING };
-    case userConstants.SIGNUP_FAILURE_INFO:
-      return { ...state, signupStatus: userStatus.FAILURE_INFO };
+    case userConstants.SIGNUP_FAILURE_AUTHENTICATION:
+      return { ...state, signupStatus: userStatus.FAILURE_AUTHENTICATION };
     case userConstants.SIGNUP_FAILURE_EMAIL:
       return { ...state, signupStatus: userStatus.FAILURE_EMAIL };
+    case userConstants.SIGNUP_FAILURE_USERNAME:
+      return { ...state, signupStatus: userStatus.FAILURE_USERNAME };
     case userConstants.SIGNUP_FAILURE:
       return { ...state, signupStatus: userStatus.FAILURE };
 
