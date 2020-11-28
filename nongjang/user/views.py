@@ -46,7 +46,8 @@ class UserViewSet(viewsets.GenericViewSet):
             except SMTPException:
                 return Response({'error': "Email 발송에 문제가 있습니다. 다시 시도해주세요."},
                                 status=status.HTTP_503_SERVICE_UNAVAILABLE)
-        return redirect(settings.REDIRECT_PAGE)
+        redirect(settings.REDIRECT_PAGE)
+        return Response({'message': "회원 인증 메일이 전송되었습니다!"})
 
     # PUT /api/v1/user/login/
     @action(detail=False, methods=['PUT'])
