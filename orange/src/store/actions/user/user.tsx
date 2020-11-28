@@ -43,6 +43,9 @@ const loginSuccess = (user: User) => ({
 const loginFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {
+    case 401:
+      actionType = userConstants.LOGIN_FAILURE_INACTIVE;
+      break;
     default:
       actionType = userConstants.LOGIN_FAILURE;
       break;

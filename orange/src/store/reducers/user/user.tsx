@@ -24,7 +24,6 @@ const userReducer = (state = initialState, action: Action): UserState => {
       return {
         ...state,
         signupStatus: userStatus.SUCCESS,
-        me: data,
       };
     case userConstants.SIGNUP_WAITING:
       return { ...state, signupStatus: userStatus.WAITING };
