@@ -12,7 +12,10 @@ const signupFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {
     case 400:
-      actionType = userConstants.SIGNUP_FAILURE_USERNAME;
+      actionType = userConstants.SIGNUP_FAILURE_INFO;
+      break;
+    case 503:
+      actionType = userConstants.SIGNUP_FAILURE_EMAIL;
       break;
     case 401:
       actionType = userConstants.SIGNUP_WAITING;
@@ -21,7 +24,7 @@ const signupFailure = (error: AxiosError) => {
       actionType = userConstants.SIGNUP_SUCCESS;
       break;
     default:
-      actionType = userConstants.SIGNUP_SUCCESS;
+      actionType = userConstants.SIGNUP_FAILURE;
   }
   return {
     type: actionType,
@@ -45,6 +48,11 @@ const loginFailure = (error: AxiosError) => {
   switch (error.response?.status) {
     case 401:
       actionType = userConstants.LOGIN_FAILURE_INACTIVE;
+      // 백엔드에서 401 error 이전에 authenticate에서 막히는 상황이므로 '인증 진행 중'과 같은 메시지를 띄우려면
+      // UserProfile과 같은 Model을 정의하거나 authenticate 함수를 새롭게 정의할 필요가 있음.
+      break;
+    case 403:
+      actionType = userConstants.LOGIN_FAILURE_INFO;
       break;
     default:
       actionType = userConstants.LOGIN_FAILURE;
