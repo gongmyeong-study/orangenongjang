@@ -11,8 +11,17 @@ const signupSuccess = (user: User) => ({
 const signupFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {
-    case 409:
+    case 400:
       actionType = userConstants.SIGNUP_FAILURE_USERNAME;
+      break;
+    case 401:
+      actionType = userConstants.SIGNUP_WAITING;
+      break;
+    case 409:
+      actionType = userConstants.SIGNUP_FAILURE_EMAIL;
+      break;
+    case 503:
+      actionType = userConstants.SIGNUP_FAILURE_AUTHENTICATION;
       break;
     default:
       actionType = userConstants.SIGNUP_FAILURE;
@@ -37,6 +46,12 @@ const loginSuccess = (user: User) => ({
 const loginFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {
+    case 401:
+      actionType = userConstants.LOGIN_FAILURE_INACTIVE;
+      break;
+    case 403:
+      actionType = userConstants.LOGIN_FAILURE_INFO;
+      break;
     default:
       actionType = userConstants.LOGIN_FAILURE;
       break;

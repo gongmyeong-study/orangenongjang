@@ -81,7 +81,7 @@ function SignUpModal(props: Props) {
           error={Boolean(errors.password)}
           helperText={errors.password && '비밀번호를 입력해주세요!'}
         />
-        <Button type="submit">회원가입</Button>
+        <Button type="submit">인증 메일 전송</Button>
       </form>
     </>
   );
