@@ -87,7 +87,6 @@ function NecessityCreateOrUpdateForm(props: Props) {
             ),
           }}
           inputRef={register({ required: true })}
-          placeholder="휴지"
           defaultValue={necessityToBeUpdated && necessityToBeUpdated.name}
           disabled={Boolean(necessityToBeUpdated)}
           error={Boolean(errors.name)}
@@ -104,7 +103,6 @@ function NecessityCreateOrUpdateForm(props: Props) {
           }}
           name="option"
           inputRef={register}
-          placeholder="크리넥스"
           defaultValue={necessityToBeUpdated && necessityToBeUpdated.option}
           disabled={Boolean(necessityToBeUpdated)}
           className="text-input"
@@ -119,7 +117,6 @@ function NecessityCreateOrUpdateForm(props: Props) {
           }}
           name="description"
           inputRef={register}
-          placeholder="부드러운거임"
           defaultValue={necessityToBeUpdated && necessityToBeUpdated.description}
           className="text-input"
         />
@@ -135,7 +132,6 @@ function NecessityCreateOrUpdateForm(props: Props) {
           inputRef={register({ required: true })}
           error={Boolean(errors.price)}
           type="number"
-          placeholder="10000"
           defaultValue={necessityToBeUpdated && necessityToBeUpdated.price}
           className="text-input"
           helperText={errors.count && '가격을 입력해주세요!'}
@@ -153,7 +149,6 @@ function NecessityCreateOrUpdateForm(props: Props) {
           inputRef={register({ required: true })}
           error={Boolean(errors.count)}
           className="text-input"
-          placeholder="1"
           defaultValue={necessityToBeUpdated && necessityToBeUpdated.count}
           helperText={errors.count && '개수를 입력해주세요!'}
         />

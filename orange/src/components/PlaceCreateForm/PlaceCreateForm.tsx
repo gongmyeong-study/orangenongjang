@@ -43,7 +43,6 @@ function PlaceCreateForm(props: Props) {
           ),
         }}
         inputRef={register({ required: true })}
-        placeholder="주방"
         error={Boolean(errors.name)}
         helperText={errors.name && '공간 이름을 입력해주세요!'}
         className="text-input"

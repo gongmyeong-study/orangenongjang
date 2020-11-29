@@ -65,7 +65,6 @@ function HousePage(props: Props) {
             <input
               type="text"
               onChange={(e) => setNameToCreate(e.target.value)}
-              placeholder="예쁜 우리집"
             />
           </label>
           <label>
@@ -73,7 +72,6 @@ function HousePage(props: Props) {
             <input
               type="text"
               onChange={(e) => setIntroductionToCreate(e.target.value)}
-              placeholder="친구들과 함께 사는 공간"
             />
           </label>
           <input type="submit" value="Submit" />
