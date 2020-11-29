@@ -1,0 +1,34 @@
+.PlaceBox {
+    padding: 10px;
+    width: 30vw;
+    height: 50vh;
+    border: 2px solid #e9ecef;
+    border-radius: 16px;
+    overflow-y: auto;
+    font-family: 'Noto Sans KR', Helvetica, sans-serif;
+}
+
+.create-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;;
+    align-items: center;
+    width: 38vw;
+    height: 62vh;
+    margin: 16vh auto;
+    background: white;
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding: 24px 0;
+    font-family: 'Noto Sans KR', Helvetica, sans-serif;
+  }
+  
+.create-modal-overlay {
+    top: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}

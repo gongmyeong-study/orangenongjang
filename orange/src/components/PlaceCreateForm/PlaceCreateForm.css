@@ -1,0 +1,14 @@
+.create-place-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.create-place-form .text-input {
+  width: 30vw;
+  margin-bottom: 48px;
+}
+
+.create-place-form .fa-plus {
+  color: orange;
+}

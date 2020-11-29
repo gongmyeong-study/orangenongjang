@@ -1,40 +1,70 @@
 import React from 'react';
 import './NecessityList.css';
-import { Necessity } from '../../../api';
+import { Button } from '@material-ui/core';
+import { Necessity, Place } from '../../../api';
 import NecessityItem from '../NecessityItem/NecessityItem';
-import NecessityCounter from '../NecessityCounter/NecessityCounter';
+import NecessityRemoveButton from '../NecessityRemoveButton/NecessityRemoveButton';
+import NecessityUpdateButton from '../NecessityUpdateButton/NecessityUpdateButton';
+import NecessityCounterButton from '../NecessityCounterButton/NecessityCounterButton';
 
 interface Props {
-  necessities: Necessity[];
+  place: Place;
+  createNecessity: () => void;
+  updateNecessity: (necessity: Necessity) => void;
 }
 
 function NecessityList(props: Props) {
+  const { place } = props;
+
   return (
     <>
-      { props.necessities?.length ? props.necessities.map((necessity) => (
-        <div
-          className="necessity-list-block"
-          key={necessity.id}
-        >
-          <div className="necessity-item-block">
-            <NecessityItem
-              necessity={necessity}
-            />
-          </div>
-          <div>
-            <NecessityCounter
-              key={necessity.id}
-              placeId={necessity.place_id}
-              necessityId={necessity.id}
-              count={necessity.count}
-            />
-          </div>
+      <section className="necessity-list">
+        <div className="necessity-item-wrapper">
+          <Button onClick={props.createNecessity}>
+            <i className="fas fa-plus" />
+          </Button>
         </div>
-      )) : (
-        <h2>
-          첫 생필품을 추가해보세요!
-        </h2>
-      )}
+        { place.necessities.length
+          ? place.necessities.map((necessity: Necessity) => (
+            <div className="necessity-item-and-counter-wrapper" key={necessity.id}>
+              <div className="necessity-item-wrapper">
+                <NecessityItem necessity={necessity} />
+                <div className="edit-wrapper">
+                  <NecessityUpdateButton
+                    updateNecessity={props.updateNecessity}
+                    necessity={necessity}
+                  />
+                  <NecessityRemoveButton placeId={place.id} necesstiyId={necessity.id} />
+                </div>
+              </div>
+              <div className="counter-wrapper">
+                <NecessityCounterButton
+                  placeId={place.id}
+                  necessityId={necessity.id}
+                  count={necessity.count}
+                  countType="add"
+                />
+                <h5>
+                  {necessity.count}
+                  개
+                </h5>
+                <NecessityCounterButton
+                  placeId={place.id}
+                  necessityId={necessity.id}
+                  count={necessity.count}
+                  countType="subtract"
+                />
+              </div>
+            </div>
+          ))
+          : (
+            <h2>
+              {place.name}
+              에
+              첫 생필품을 추가해보세요!
+            </h2>
+          )}
+      </section>
     </>
   );
 }

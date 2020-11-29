@@ -1,19 +1,55 @@
-.necessity-list-block {
+.necessity-list {
   display: inline-flex;
   flex-wrap: wrap;
   flex-direction: row;
   padding: 15px 0px;
   padding-bottom: 15px;
-  overflow-y: auto;
 }
 
-.necessity-item-block {
-  width: 160px;
-  height: 106.8px;
+.necessity-item-wrapper {
+  width: 6vw;
+  height: 5.6vw;
   display: flex;
-  align-content: space-around;
-  overflow-y: auto;
-  border-radius: 12px;
-  border: solid 0.5px #828282;
-  background-color: #ffffff;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid gray;
+  border-radius: 16px;
+  margin: 0 16px 18px 0;
+  padding: 12px 8px 16px 8px;
+}
+
+.create-button {
+  background: none;
+  border: none;
+}
+
+.necessity-item-wrapper .fa-plus {
+  font-size: 3em;
+  color: orange;
+}
+
+.necessity-item-wrapper .fa-plus:hover {
+  color: rgb(253, 174, 54);
+}
+
+.necessity-item-and-counter-wrapper {
+  display: flex;
+}
+
+.counter-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-left: -24px;
+}
+
+.counter-wrapper h5 {
+  margin: 0;
+  text-align: center;
+}
+
+.edit-wrapper {
+  display: flex;
+  justify-content: space-around;
+  width: 90%;
 }

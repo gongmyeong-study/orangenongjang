@@ -1,17 +1,36 @@
-.necessity-list-column {
-    column-count: 2;
-    column-gap: 1em;
-    column-rule: dashed;
-    column-rule-width: thin;
-    column-rule-color: lightslategrey;
+.placebox-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 60vw;
+}
+
+.slick-list {
+    padding: 24px 32px !important;
+}
+
+.slider {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.slick-prev::before, .slick-next::before {
+    left: 5% !important;
+    font-size: 30px !important;
+    color: black !important;
+}
+
+.create-place-box {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
     padding: 10px;
+    height: 50vh;
 }
 
-.NecessityPageBlock {
-    padding-top: 0px;
-    padding-left: 25%;
-    padding-right: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #e9ecef;
+.create-place-box button {
+    height: 120px;
+    width: 120px;
+    border: 2px solid #e9ecef;
+    border-radius: 16px;
 }
-
