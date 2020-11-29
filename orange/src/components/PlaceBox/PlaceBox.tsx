@@ -37,6 +37,8 @@ function PlaceBox(props: Props) {
   };
 
   useEffect(() => {
+    Modal.setAppElement('body');
+
     if (createStatus === necessityStatus.SUCCESS) {
       closeModal();
     } if (createStatus === necessityStatus.FAILURE) {
@@ -62,7 +64,6 @@ function PlaceBox(props: Props) {
         <NecessityCreateOrUpdateForm placeId={place.id} necessityToBeUpdated={necessityToBeUpdated} type={necessityToBeUpdated ? 'UPDATE' : 'CREATE'} />
       </Modal>
       <h1>{place.name}</h1>
-
       <NecessityList
         place={place}
         updateNecessity={updateNecessity}
