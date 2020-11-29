@@ -4,10 +4,10 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect';
 
-window.matchMedia = window.matchMedia || function () {
-  return {
-    matches: false,
-    addListener() {},
-    removeListener() {},
-  };
-};
+const matchMediaWithSlick = () => ({
+  matches: false,
+  addListener() {},
+  removeListener() {},
+});
+
+window.matchMedia = window.matchMedia || matchMediaWithSlick;
