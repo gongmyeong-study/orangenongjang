@@ -30,3 +30,12 @@ export const necessityConstants = {
   CREATE_PLACE_FAILURE: 'CREATE_PLACE_FAILURE',
   CREATE_PLACE_SUCCESS: 'CREATE_PLACE_SUCCESS',
 };
+
+export const houseConstants = {
+  INVITE_SUCCESS: 'INVITE_SUCCESS', // 멤버 초대 메일이 전송되었습니다.
+  INVITE_FAILURE: 'INVITE_FAILURE', // 멤버 초대를 실패했습니다. 다시 시도해주세요.
+  INVITE_FAILURE_AUTHENTICATION: 'INVITE_FAILURE_AUTHENTICATION', // 멤버 초대 메일에 문제가 있습니다. 다시 시도해주세요.
+  INVITE_FAILURE_EMAIL: 'INVITE_FAILURE_EMAIL', // 오렌지농장에 등록되지 않은 이메일입니다.
+  INVITE_FAILURE_LEADER: 'INVITE_FAILURE_LEADER', // leader만 초대장을 전송할 수 있습니다.
+  INVITE_FAILURE_USERNAME: 'INVITE_FAILURE_USERNAME', // 이미 초대된 멤버입니다.
+};

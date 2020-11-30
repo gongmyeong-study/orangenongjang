@@ -13,6 +13,10 @@ import {
   updateNecessityPlace,
 } from './necessity/necessity';
 
+import {
+  invite,
+} from './house/house';
+
 export const userActions = {
   signUp,
   login,
@@ -26,4 +30,8 @@ export const necessityActions = {
   removeNecessityPlace,
   countNecessityPlace,
   updateNecessityPlace,
+};
+
+export const houseActions = {
+  invite,
 };
