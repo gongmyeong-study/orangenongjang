@@ -12,6 +12,7 @@ import NecessityRemoveButton from './Necessity/NecessityRemoveButton/NecessityRe
 import NecessityUpdateButton from './Necessity/NecessityUpdateButton/NecessityUpdateButton';
 import NecessityCounterButton from './Necessity/NecessityCounterButton/NecessityCounterButton';
 import HouseInviteButton from './House/HouseInviteButton/HouseInviteButton';
+import HouseManageButton from './House/HouseManageButton/HouseManageButton';
 
 export {
   Header,
@@ -28,4 +29,5 @@ export {
   NecessityUpdateButton,
   NecessityCounterButton,
   HouseInviteButton,
+  HouseManageButton,
 };

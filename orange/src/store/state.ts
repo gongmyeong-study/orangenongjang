@@ -20,6 +20,8 @@ export interface UserState {
 
 export interface HouseState {
   inviteStatus: string;
+  leaveStatus: string;
+  tossStatus: string;
   getStatus: string;
   removeStatus: string;
   updateStatus: string;

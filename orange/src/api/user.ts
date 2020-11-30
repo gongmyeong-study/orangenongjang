@@ -3,7 +3,7 @@ export interface User {
   username: string;
   email?: string;
   last_login?: string;
-  date_joined?: string;
-  is_leader?: boolean;
+  joined_at: string;
+  is_leader: boolean;
   is_active?: boolean;
 }

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { History } from 'history';
 import Modal from 'react-modal';
 import { House } from '../../api';
-import { HouseInviteButton } from '../../components';
+import { HouseInviteButton, HouseManageButton } from '../../components';
 
 interface Props {
   history: History;
@@ -14,21 +14,28 @@ function HousePage(props: Props) {
   const [houses, setHouses] = useState<[House]>();
   const [nameToCreate, setNameToCreate] = useState('');
   const [introductionToCreate, setIntroductionToCreate] = useState('');
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isInviteModalOpen, setInviteModalOpen] = useState(false);
+  const [isManageModalOpen, setManageModalOpen] = useState(false);
   const [houseToBeInvited, setHouseToBeInvited] = useState<House>();
+  const [houseToManage, setHouseToManage] = useState<House>();
 
   const inviteHouse = () => {
-    setModalOpen(true);
+    setInviteModalOpen(true);
+  };
+
+  const manageHouse = () => {
+    setManageModalOpen(true);
   };
 
   const closeModal = () => {
     setHouseToBeInvited(undefined);
-    setModalOpen(false);
+    setInviteModalOpen(false);
+    setHouseToManage(undefined);
+    setManageModalOpen(false);
   };
 
   useEffect(() => {
     Modal.setAppElement('body');
-
     const { CancelToken } = axios;
     const source = CancelToken.source();
 
@@ -68,8 +75,28 @@ function HousePage(props: Props) {
       >
         들어가기
       </button>
+
       <Modal
-        isOpen={isModalOpen}
+        isOpen={isManageModalOpen}
+        onRequestClose={closeModal}
+        className="create-modal"
+        overlayClassName="create-modal-overlay"
+      >
+        <HouseManageButton
+          houseId={house.id}
+          LeaderToToss={houseToManage}
+          users={house.users}
+        />
+      </Modal>
+      <button
+        type="button"
+        onClick={() => manageHouse()}
+      >
+        관리하기
+      </button>
+
+      <Modal
+        isOpen={isInviteModalOpen}
         onRequestClose={closeModal}
         className="create-modal"
         overlayClassName="create-modal-overlay"
@@ -77,13 +104,14 @@ function HousePage(props: Props) {
         <HouseInviteButton
           houseId={house.id}
           houseToBeInvited={houseToBeInvited}
+          users={house.users}
         />
       </Modal>
       <button
         type="button"
         onClick={() => inviteHouse()}
       >
-        관리하기
+        초대하기
       </button>
       <hr />
     </div>

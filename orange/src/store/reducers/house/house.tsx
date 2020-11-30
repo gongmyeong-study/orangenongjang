@@ -10,6 +10,8 @@ type Action = {
 
 const initialState: HouseState = {
   inviteStatus: houseStatus.NONE,
+  leaveStatus: houseStatus.NONE,
+  tossStatus: houseStatus.NONE,
   getStatus: houseStatus.NONE,
   removeStatus: houseStatus.NONE,
   updateStatus: houseStatus.NONE,
@@ -19,7 +21,7 @@ const initialState: HouseState = {
 const houseReducer = (state = initialState, action: Action): HouseState => {
   const data = action.target;
   switch (action.type) {
-    // INVITE
+    // 멤버 초대
     case houseConstants.INVITE_SUCCESS:
       return {
         ...state,
@@ -36,6 +38,32 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
       return { ...state, inviteStatus: houseStatus.FAILURE_USERNAME };
     case houseConstants.INVITE_FAILURE_LEADER:
       return { ...state, inviteStatus: houseStatus.FAILURE_LEADER };
+
+    // House 탈퇴
+    case houseConstants.LEAVE_SUCCESS:
+      return {
+        ...state,
+        tossStatus: houseStatus.SUCCESS,
+        // house: data,
+      };
+    case houseConstants.LEAVE_FAILURE:
+      return { ...state, leaveStatus: houseStatus.FAILURE };
+    case houseConstants.LEAVE_FAILURE_LEADER:
+      return { ...state, leaveStatus: houseStatus.FAILURE_LEADER };
+
+    // Leader 양도
+    case houseConstants.TOSS_SUCCESS:
+      return {
+        ...state,
+        tossStatus: houseStatus.SUCCESS,
+        // house: data,
+      };
+    case houseConstants.TOSS_FAILURE:
+      return { ...state, tossStatus: houseStatus.FAILURE };
+    case houseConstants.TOSS_FAILURE_ME:
+      return { ...state, tossStatus: houseStatus.FAILURE_ME };
+    case houseConstants.TOSS_FAILURE_LEADER:
+      return { ...state, tossStatus: houseStatus.FAILURE_LEADER };
     default:
       return { ...state };
   }

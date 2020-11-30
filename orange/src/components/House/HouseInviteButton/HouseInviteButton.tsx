@@ -7,8 +7,6 @@ import { useForm } from 'react-hook-form';
 import { House, User } from '../../../api';
 import { inviteHouse } from '../../../store/actions/house/house';
 
-import '../../Necessity/NecessityCreateOrUpdateForm/NecessityCreateOrUpdateForm.css';
-
 interface Props {
   houseId: number;
   houseToBeInvited?: House;
@@ -38,15 +36,14 @@ function HouseInviteButton(props: Props) {
     props.houseId, data.email,
   );
 
-  const formTitle = 'House 관리하기';
+  const formTitle = 'House 초대';
   const submitIcon = <i className="far fa-envelope fa-3x" />;
 
   return (
     <>
-      <h2 className="create-form-title">{formTitle}</h2>
-      {props.houseId}
-      <form onSubmit={handleSubmit(onSubmitToInvite)} className="create-form">
-        <h4>이메일을 입력하면 House 초대장이 전송됩니다.</h4>
+      <h2>{formTitle}</h2>
+      <form onSubmit={handleSubmit(onSubmitToInvite)}>
+        <h4>이메일로 House 초대장이 전송됩니다.</h4>
         <TextField
           name="name"
           InputProps={{
@@ -62,7 +59,9 @@ function HouseInviteButton(props: Props) {
           helperText={errors.email && 'Email을 입력해주세요!'}
           className="text-input"
         />
-        <Button type="submit">{submitIcon}</Button>
+        <Button type="submit">
+          {submitIcon}
+        </Button>
       </form>
     </>
   );
