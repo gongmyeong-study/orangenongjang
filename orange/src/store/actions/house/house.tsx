@@ -32,7 +32,7 @@ const inviteFailure = (error: AxiosError) => {
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export const invite = (
+export const inviteHouse = (
   houseId: number, email: string,
 ) => (dispatch: Dispatch) => axios.post(`/api/v1/house/${houseId}/invitation/`, { email })
   .then((inviteResponse: AxiosResponse<House>) => dispatch(inviteSuccess(inviteResponse.data)))

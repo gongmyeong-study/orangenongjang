@@ -11,6 +11,7 @@ import PlaceCreateForm from './PlaceCreateForm/PlaceCreateForm';
 import NecessityRemoveButton from './Necessity/NecessityRemoveButton/NecessityRemoveButton';
 import NecessityUpdateButton from './Necessity/NecessityUpdateButton/NecessityUpdateButton';
 import NecessityCounterButton from './Necessity/NecessityCounterButton/NecessityCounterButton';
+import HouseInviteButton from './House/HouseInviteButton/HouseInviteButton';
 
 export {
   Header,
@@ -26,4 +27,5 @@ export {
   NecessityRemoveButton,
   NecessityUpdateButton,
   NecessityCounterButton,
+  HouseInviteButton,
 };

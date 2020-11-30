@@ -14,7 +14,6 @@ const initialState: UserState = {
   loginStatus: userStatus.NONE,
   logoutStatus: userStatus.NONE,
   getMeStatus: userStatus.NONE,
-  inviteStatus: userStatus.NONE,
 };
 
 const userReducer = (state = initialState, action: Action): UserState => {

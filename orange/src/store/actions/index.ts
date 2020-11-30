@@ -14,7 +14,7 @@ import {
 } from './necessity/necessity';
 
 import {
-  invite,
+  inviteHouse,
 } from './house/house';
 
 export const userActions = {
@@ -33,5 +33,5 @@ export const necessityActions = {
 };
 
 export const houseActions = {
-  invite,
+  inviteHouse,
 };

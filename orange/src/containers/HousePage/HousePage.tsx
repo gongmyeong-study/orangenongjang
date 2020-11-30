@@ -1,18 +1,37 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import axios from 'axios';
+import { Button } from '@material-ui/core';
 import { History } from 'history';
+import Modal from 'react-modal';
 import { House } from '../../api';
+import { HouseInviteButton } from '../../components';
 
 interface Props {
   history: History;
+  house: House;
 }
 
 function HousePage(props: Props) {
   const [houses, setHouses] = useState<[House]>();
   const [nameToCreate, setNameToCreate] = useState('');
   const [introductionToCreate, setIntroductionToCreate] = useState('');
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [houseToBeInvited, setHouseToBeInvited] = useState<House>();
+
+  const { house } = props;
+
+  const inviteHouse = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setHouseToBeInvited(undefined);
+    setModalOpen(false);
+  };
 
   useEffect(() => {
+    Modal.setAppElement('body');
+
     const { CancelToken } = axios;
     const source = CancelToken.source();
 
@@ -52,6 +71,16 @@ function HousePage(props: Props) {
       >
         들어가기
       </button>
+      {/* <button
+        type="button"
+        onClick={() => }
+      >
+        초대하기
+      </button> */}
+      <HouseInviteButton
+        houseId={house.id}
+        houseToBeInvited={houseToBeInvited}
+      />
       <hr />
     </div>
   ));

@@ -16,7 +16,6 @@ export interface UserState {
   loginStatus: string;
   logoutStatus: string;
   getMeStatus: string;
-  inviteStatus: string;
 }
 
 export interface HouseState {
