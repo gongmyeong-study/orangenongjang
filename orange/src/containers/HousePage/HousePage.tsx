@@ -1,6 +1,5 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import axios from 'axios';
-import { Button } from '@material-ui/core';
 import { History } from 'history';
 import Modal from 'react-modal';
 import { House } from '../../api';
@@ -17,8 +16,6 @@ function HousePage(props: Props) {
   const [introductionToCreate, setIntroductionToCreate] = useState('');
   const [isModalOpen, setModalOpen] = useState(false);
   const [houseToBeInvited, setHouseToBeInvited] = useState<House>();
-
-  const { house } = props;
 
   const inviteHouse = () => {
     setModalOpen(true);
@@ -71,16 +68,23 @@ function HousePage(props: Props) {
       >
         들어가기
       </button>
-      {/* <button
-        type="button"
-        onClick={() => }
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        className="create-modal"
+        overlayClassName="create-modal-overlay"
       >
-        초대하기
-      </button> */}
-      <HouseInviteButton
-        houseId={house.id}
-        houseToBeInvited={houseToBeInvited}
-      />
+        <HouseInviteButton
+          houseId={house.id}
+          houseToBeInvited={houseToBeInvited}
+        />
+      </Modal>
+      <button
+        type="button"
+        onClick={() => inviteHouse()}
+      >
+        관리하기
+      </button>
       <hr />
     </div>
   ));
@@ -90,20 +94,21 @@ function HousePage(props: Props) {
       <section>
         <form onSubmit={createHouse}>
           <label>
-            Name:
+            House 이름 :
             <input
               type="text"
               onChange={(e) => setNameToCreate(e.target.value)}
             />
           </label>
+          &emsp;
           <label>
-            Introduction:
+            House 소개 :
             <input
               type="text"
               onChange={(e) => setIntroductionToCreate(e.target.value)}
             />
           </label>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="House 만들기" />
         </form>
       </section>
       <section>

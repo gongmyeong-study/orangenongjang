@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { House } from '../../../api';
+import { House, User } from '../../../api';
 import { inviteHouse } from '../../../store/actions/house/house';
 
 import '../../Necessity/NecessityCreateOrUpdateForm/NecessityCreateOrUpdateForm.css';
@@ -12,6 +12,7 @@ import '../../Necessity/NecessityCreateOrUpdateForm/NecessityCreateOrUpdateForm.
 interface Props {
   houseId: number;
   houseToBeInvited?: House;
+  users?: User[];
 }
 
 interface HouseInviteFormData {
@@ -37,13 +38,15 @@ function HouseInviteButton(props: Props) {
     props.houseId, data.email,
   );
 
-  const formTitle = '집에 초대하고 싶은 사람의 이메일을 적어주세요';
-  const submitIcon = <i className="fas fa-edit fa-3x" />;
+  const formTitle = 'House 관리하기';
+  const submitIcon = <i className="far fa-envelope fa-3x" />;
 
   return (
     <>
-      <h3 className="create-form-title">{formTitle}</h3>
+      <h2 className="create-form-title">{formTitle}</h2>
+      {props.houseId}
       <form onSubmit={handleSubmit(onSubmitToInvite)} className="create-form">
+        <h4>이메일을 입력하면 House 초대장이 전송됩니다.</h4>
         <TextField
           name="name"
           InputProps={{
