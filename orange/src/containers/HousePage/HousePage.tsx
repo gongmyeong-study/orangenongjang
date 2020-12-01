@@ -16,19 +16,19 @@ function HousePage(props: Props) {
   const [introductionToCreate, setIntroductionToCreate] = useState('');
   const [isInviteModalOpen, setInviteModalOpen] = useState(false);
   const [isManageModalOpen, setManageModalOpen] = useState(false);
-  const [houseToBeInvited, setHouseToBeInvited] = useState<House>();
+  const [UserToBeInvited, setUserToBeInvited] = useState<House>();
   const [houseToManage, setHouseToManage] = useState<House>();
 
-  const inviteHouse = () => {
+  const openInviteUser = () => {
     setInviteModalOpen(true);
   };
 
-  const manageHouse = () => {
+  const openManageHouse = () => {
     setManageModalOpen(true);
   };
 
   const closeModal = () => {
-    setHouseToBeInvited(undefined);
+    setUserToBeInvited(undefined);
     setInviteModalOpen(false);
     setHouseToManage(undefined);
     setManageModalOpen(false);
@@ -90,7 +90,7 @@ function HousePage(props: Props) {
       </Modal>
       <button
         type="button"
-        onClick={() => manageHouse()}
+        onClick={() => openManageHouse()}
       >
         관리하기
       </button>
@@ -103,13 +103,13 @@ function HousePage(props: Props) {
       >
         <HouseInviteButton
           houseId={house.id}
-          houseToBeInvited={houseToBeInvited}
+          userToBeInvited={UserToBeInvited}
           users={house.users}
         />
       </Modal>
       <button
         type="button"
-        onClick={() => inviteHouse()}
+        onClick={() => openInviteUser()}
       >
         초대하기
       </button>

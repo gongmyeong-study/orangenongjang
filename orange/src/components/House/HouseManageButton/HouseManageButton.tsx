@@ -37,11 +37,11 @@ function HouseManageButton(props: Props) {
 
   useEffect(() => {
     if (leaveStatus === houseStatus.SUCCESS) {
-      alert('멀리 안나갑니다.');
+      alert('Dobby is Free!');
       window.location.reload();
     } if (leaveStatus === houseStatus.FAILURE_LEAVE_LEADER) {
       alert('Leader는 House를 나갈 수 없습니다.');
-      // FIXME : 관리하기 버튼 클릭 시에도 해당 메시지가 나오는 버그 수정할 것!
+      window.location.reload();
     } if (leaveStatus === houseStatus.FAILURE) {
       alert('잘못된 접근입니다.');
     }
@@ -53,6 +53,10 @@ function HouseManageButton(props: Props) {
       alert('자기 자신에게는 Leader를 양도할 수 없습니다.');
     } if (tossStatus === houseStatus.FAILURE_TOSS_LEADER) {
       alert('Leader만 다른 사람에게 Leader를 양도할 수 있습니다.');
+      window.location.reload();
+    } if (tossStatus === houseStatus.FAILURE) {
+      alert('실패!');
+      window.location.reload();
     }
   }, [leaveStatus, tossStatus]);
 

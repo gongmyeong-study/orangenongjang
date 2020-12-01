@@ -4,7 +4,7 @@ class WorkPage extends Component {
   render() {
     return (
       <div className="work-page">
-        가사노동 관리 페이지
+        <h2>준비중</h2>
       </div>
     );
   }

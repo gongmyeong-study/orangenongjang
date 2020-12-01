@@ -32,7 +32,9 @@ const inviteFailure = (error: AxiosError) => {
 export const inviteHouse = (
   houseId: number, email: string,
 ) => (dispatch: Dispatch) => axios.post(`/api/v1/house/${houseId}/invitation/`, { email })
-  .then((inviteResponse: AxiosResponse<House>) => dispatch(inviteSuccess(inviteResponse.data)))
+  .then((inviteResponse: AxiosResponse<House>) => {
+    dispatch(inviteSuccess(inviteResponse.data));
+  })
   .catch((inviteError) => dispatch(inviteFailure(inviteError)));
 
 // House 나가기

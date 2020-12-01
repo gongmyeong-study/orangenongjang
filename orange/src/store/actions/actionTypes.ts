@@ -38,10 +38,10 @@ export const houseConstants = {
   INVITE_FAILURE_EMAIL: 'INVITE_FAILURE_EMAIL', // 오렌지농장에 등록되지 않은 이메일입니다.
   INVITE_FAILURE_LEADER: 'INVITE_FAILURE_LEADER', // Leader만 초대장을 전송할 수 있습니다.
   INVITE_FAILURE_USERNAME: 'INVITE_FAILURE_USERNAME', // 이미 초대된 멤버입니다.
-  LEAVE_SUCCESS: 'LEAVE_SUCCESS',
+  LEAVE_SUCCESS: 'LEAVE_SUCCESS', // Dobby is Free!
   LEAVE_FAILURE: 'LEAVE_FAILURE',
   LEAVE_FAILURE_LEADER: 'LEAVE_FAILURE_LEADER', // Leader는 권한 위임 전까지는 House를 떠날 수 없습니다.
-  TOSS_SUCCESS: 'TOSS_SUCCESS',
+  TOSS_SUCCESS: 'TOSS_SUCCESS', // Leader가 변경되었습니다.
   TOSS_FAILURE: 'TOSS_FAILURE',
   TOSS_FAILURE_ME: 'TOSS_FAILURE_ME', // 자기 자신에게는 Leader를 양도할 수 없습니다.
   TOSS_FAILURE_LEADER: 'TOSS_FAILURE_LEADER', // Leader만 다른 사람에게 Leader를 양도할 수 있습니다.

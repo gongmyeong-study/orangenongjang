@@ -44,7 +44,7 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
       return {
         ...state,
         tossStatus: houseStatus.SUCCESS,
-        // house: data,
+        house: data,
       };
     case houseConstants.LEAVE_FAILURE:
       return { ...state, leaveStatus: houseStatus.FAILURE };
@@ -56,7 +56,7 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
       return {
         ...state,
         tossStatus: houseStatus.SUCCESS,
-        // house: data,
+        house: data,
       };
     case houseConstants.TOSS_FAILURE:
       return { ...state, tossStatus: houseStatus.FAILURE };

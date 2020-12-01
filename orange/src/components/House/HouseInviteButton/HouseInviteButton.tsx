@@ -12,7 +12,7 @@ import { OrangeGlobalState } from '../../../store/state';
 
 interface Props {
   houseId: number;
-  houseToBeInvited?: House;
+  userToBeInvited?: House;
   users?: User[];
 }
 
@@ -21,7 +21,7 @@ interface HouseInviteFormData {
 }
 
 function HouseInviteButton(props: Props) {
-  const { houseToBeInvited } = props;
+  const { userToBeInvited } = props;
   const {
     register, handleSubmit, errors,
   } = useForm<HouseInviteFormData>();
@@ -42,8 +42,10 @@ function HouseInviteButton(props: Props) {
       window.location.reload();
     } if (inviteStatus === houseStatus.FAILURE_AUTHENTICATION) {
       alert('메일주소 또는 인터넷 연결상태를 확인하고 다시 시도해주세요.');
+      window.location.reload();
     } if (inviteStatus === houseStatus.FAILURE_INVITE_LEADER) {
       alert('Leader만 멤버를 초대할 수 있습니다.');
+      window.location.reload();
     } if (inviteStatus === houseStatus.FAILURE_EMAIL) {
       alert('오렌지농장에 등록되지 않은 회원입니다. 우선 가입해주세요.');
     } if (inviteStatus === houseStatus.FAILURE) {
@@ -65,7 +67,7 @@ function HouseInviteButton(props: Props) {
       <form onSubmit={handleSubmit(onSubmitToInvite)}>
         <h4>이메일로 House 초대장이 전송됩니다.</h4>
         <TextField
-          name="name"
+          name="email"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -74,14 +76,12 @@ function HouseInviteButton(props: Props) {
             ),
           }}
           inputRef={register({ required: true })}
-          disabled={Boolean(houseToBeInvited)}
+          disabled={Boolean(userToBeInvited)}
           error={Boolean(errors.email)}
           helperText={errors.email && 'Email을 입력해주세요!'}
           className="text-input"
         />
-        <Button type="submit">
-          {submitIcon}
-        </Button>
+        <Button type="submit">{submitIcon}</Button>
       </form>
     </>
   );
