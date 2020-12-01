@@ -137,7 +137,7 @@ class HouseViewSet(viewsets.GenericViewSet):
         user_house = user.user_houses.filter(house=house).last()
         if user_house.is_leader:
             return Response({'error': "leader이므로 집을 떠날 수 없습니다. leader를 다른 유저에게 양도한 뒤 다시 시도해 주세요"},
-                            status=status.HTTP_400_BAD_REQUEST)
+                            status=status.HTTP_403_FORBIDDEN)
         user_house.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 

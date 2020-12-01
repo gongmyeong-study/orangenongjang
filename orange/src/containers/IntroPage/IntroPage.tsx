@@ -4,9 +4,9 @@ import {
 } from 'react-redux';
 
 import { Login, SignUpModal } from '../../components/index';
-import { OrangeGlobalState } from '../../store/state';
 import { userStatus } from '../../constants/constants';
 import { login, signUp } from '../../store/actions/user/user';
+import { OrangeGlobalState } from '../../store/state';
 
 function IntroPage() {
   const [showSignUpModal, setShowSignUpModal] = useState(false);

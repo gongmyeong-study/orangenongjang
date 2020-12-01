@@ -37,7 +37,7 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
     case houseConstants.INVITE_FAILURE_USERNAME:
       return { ...state, inviteStatus: houseStatus.FAILURE_USERNAME };
     case houseConstants.INVITE_FAILURE_LEADER:
-      return { ...state, inviteStatus: houseStatus.FAILURE_LEADER };
+      return { ...state, inviteStatus: houseStatus.FAILURE_INVITE_LEADER };
 
     // House 탈퇴
     case houseConstants.LEAVE_SUCCESS:
@@ -49,7 +49,7 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
     case houseConstants.LEAVE_FAILURE:
       return { ...state, leaveStatus: houseStatus.FAILURE };
     case houseConstants.LEAVE_FAILURE_LEADER:
-      return { ...state, leaveStatus: houseStatus.FAILURE_LEADER };
+      return { ...state, leaveStatus: houseStatus.FAILURE_LEAVE_LEADER };
 
     // Leader 양도
     case houseConstants.TOSS_SUCCESS:
@@ -63,7 +63,7 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
     case houseConstants.TOSS_FAILURE_ME:
       return { ...state, tossStatus: houseStatus.FAILURE_ME };
     case houseConstants.TOSS_FAILURE_LEADER:
-      return { ...state, tossStatus: houseStatus.FAILURE_LEADER };
+      return { ...state, tossStatus: houseStatus.FAILURE_TOSS_LEADER };
     default:
       return { ...state };
   }
