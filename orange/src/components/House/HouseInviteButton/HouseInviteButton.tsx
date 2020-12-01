@@ -48,6 +48,7 @@ function HouseInviteButton(props: Props) {
       window.location.reload();
     } if (inviteStatus === houseStatus.FAILURE_EMAIL) {
       alert('오렌지농장에 등록되지 않은 회원입니다. 우선 가입해주세요.');
+      window.location.reload();
     } if (inviteStatus === houseStatus.FAILURE) {
       alert('잘못된 접근입니다.');
       window.location.reload();
