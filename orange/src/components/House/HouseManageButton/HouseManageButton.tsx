@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
-import { AiOutlineCrown, AiOutlineLogout } from 'react-icons/ai';
+import { AiOutlineCrown } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { House, User } from '../../../api';
@@ -18,26 +18,22 @@ interface LeaderTossFormData {
 }
 
 function HouseManageButton(props: Props) {
-  const { houseToLeave, LeaderToToss } = props;
-  const {
-    register, handleSubmit, errors,
-  } = useForm<LeaderTossFormData>();
-
+  const { handleSubmit } = useForm<LeaderTossFormData>();
   const dispatch = useDispatch();
 
   const onLeaveHouse = (houseId: number) => { dispatch(leaveHouse(houseId)); };
   const onSubmitToLeave = () => onLeaveHouse(props.houseId);
 
-  const onTossLeader = (houseId: number, userId: number) => {
-    dispatch(tossLeader(houseId, userId));
-  };
-
-  const onSubmitToToss = (data: LeaderTossFormData) => onTossLeader(
-    props.houseId, data.userId,
-  );
+  const onTossLeader = (
+    houseId: number, userId: number,
+  ) => { dispatch(tossLeader(houseId, userId)); };
+  const onSubmitToToss = (
+    data: LeaderTossFormData,
+  ) => onTossLeader(props.houseId, data.userId);
 
   const formTitle = 'House 관리';
-  const LeaderTossIcon = <i className="far fa-handshake" />;
+  const LeaderTossIcon = <i className="far fa-handshake fa-2x" />;
+  const LeaveHouseIcon = <i className="fas fa-sign-out-alt fa-2x" />;
 
   return (
     <>
@@ -67,7 +63,7 @@ function HouseManageButton(props: Props) {
         <h4>
           House 떠나기
           <Button type="submit">
-            <AiOutlineLogout />
+            {LeaveHouseIcon}
           </Button>
         </h4>
       </form>
