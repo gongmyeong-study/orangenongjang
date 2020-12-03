@@ -6,7 +6,7 @@ import { Button } from '@material-ui/core';
 
 import { House, User } from '../../../api';
 import { houseStatus } from '../../../constants/constants';
-import { leaveHouse, tossLeader } from '../../../store/actions/house/house';
+import { houseActions } from '../../../store/actions/index';
 import { OrangeGlobalState } from '../../../store/state';
 
 interface Props {
@@ -25,12 +25,12 @@ function HouseManageButton(props: Props) {
   const dispatch = useDispatch();
   const { leaveStatus, tossStatus } = useSelector((state: OrangeGlobalState) => state.house);
 
-  const onLeaveHouse = (houseId: number) => { dispatch(leaveHouse(houseId)); };
+  const onLeaveHouse = (houseId: number) => { dispatch(houseActions.leaveHouse(houseId)); };
   const onSubmitToLeave = () => onLeaveHouse(props.houseId);
 
   const onTossLeader = (
     houseId: number, userId: number,
-  ) => { dispatch(tossLeader(houseId, userId)); };
+  ) => { dispatch(houseActions.tossLeader(houseId, userId)); };
   const onSubmitToToss = (
     data: LeaderTossFormData,
   ) => onTossLeader(props.houseId, data.userId);

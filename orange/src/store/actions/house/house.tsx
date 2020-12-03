@@ -3,25 +3,24 @@ import { Dispatch } from 'redux';
 import { houseConstants } from '../actionTypes';
 import { House } from '../../../api';
 
-// 멤버 초대
-const inviteSuccess = (house: House) => ({
-  type: houseConstants.INVITE_SUCCESS,
+const inviteHouseSuccess = (house: House) => ({
+  type: houseConstants.INVITE_HOUSE_SUCCESS,
   target: house,
 });
-const inviteFailure = (error: AxiosError) => {
+const inviteHouseFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {
     case 403:
-      actionType = houseConstants.INVITE_FAILURE_LEADER;
+      actionType = houseConstants.INVITE_HOUSE_FAILURE_LEADER;
       break;
     case 404:
-      actionType = houseConstants.INVITE_FAILURE_EMAIL;
+      actionType = houseConstants.INVITE_HOUSE_FAILURE_EMAIL;
       break;
     case 503:
-      actionType = houseConstants.INVITE_FAILURE_AUTHENTICATION;
+      actionType = houseConstants.INVITE_HOUSE_FAILURE_AUTHENTICATION;
       break;
     default:
-      actionType = houseConstants.INVITE_FAILURE;
+      actionType = houseConstants.INVITE_HOUSE_FAILURE;
       break;
   }
   return {
@@ -33,23 +32,22 @@ export const inviteHouse = (
   houseId: number, email: string,
 ) => (dispatch: Dispatch) => axios.post(`/api/v1/house/${houseId}/invitation/`, { email })
   .then((inviteResponse: AxiosResponse<House>) => {
-    dispatch(inviteSuccess(inviteResponse.data));
+    dispatch(inviteHouseSuccess(inviteResponse.data));
   })
-  .catch((inviteError) => dispatch(inviteFailure(inviteError)));
+  .catch((inviteError) => dispatch(inviteHouseFailure(inviteError)));
 
-// House 나가기
-const leaveSuccess = (house: House) => ({
-  type: houseConstants.LEAVE_SUCCESS,
+const leaveHouseSuccess = (house: House) => ({
+  type: houseConstants.LEAVE_HOUSE_SUCCESS,
   target: house,
 });
-const leaveFailure = (error: AxiosError) => {
+const leaveHouseFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {
     case 403:
-      actionType = houseConstants.LEAVE_FAILURE_LEADER;
+      actionType = houseConstants.LEAVE_HOUSE_FAILURE_LEADER;
       break;
     default:
-      actionType = houseConstants.LEAVE_FAILURE;
+      actionType = houseConstants.LEAVE_HOUSE_FAILURE;
       break;
   }
   return {
@@ -60,25 +58,24 @@ const leaveFailure = (error: AxiosError) => {
 export const leaveHouse = (
   houseId: number,
 ) => (dispatch: Dispatch) => axios.delete(`/api/v1/house/${houseId}/user/`)
-  .then((leaveResponse: AxiosResponse<House>) => dispatch(leaveSuccess(leaveResponse.data)))
-  .catch((leaveError) => dispatch(leaveFailure(leaveError)));
+  .then((leaveResponse: AxiosResponse<House>) => dispatch(leaveHouseSuccess(leaveResponse.data)))
+  .catch((leaveError) => dispatch(leaveHouseFailure(leaveError)));
 
-// Leader 양도
-const tossSuccess = (house: House) => ({
-  type: houseConstants.LEAVE_SUCCESS,
+const tossLeaderSuccess = (house: House) => ({
+  type: houseConstants.TOSS_LEADER_SUCCESS,
   target: house,
 });
-const tossFailure = (error: AxiosError) => {
+const tossLeaderFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {
     case 400:
-      actionType = houseConstants.TOSS_FAILURE_ME;
+      actionType = houseConstants.TOSS_LEADER_FAILURE_ME;
       break;
     case 403:
-      actionType = houseConstants.TOSS_FAILURE_LEADER;
+      actionType = houseConstants.TOSS_LEADER_FAILURE_LEADER;
       break;
     default:
-      actionType = houseConstants.TOSS_FAILURE;
+      actionType = houseConstants.TOSS_LEADER_FAILURE;
       break;
   }
   return {
@@ -89,5 +86,5 @@ const tossFailure = (error: AxiosError) => {
 export const tossLeader = (
   houseId: number, userId: number,
 ) => (dispatch: Dispatch) => axios.post(`/api/v1/house/${houseId}/user/${userId}/leader/`)
-  .then((tossResponse: AxiosResponse<House>) => dispatch(tossSuccess(tossResponse.data)))
-  .catch((tossError) => dispatch(tossFailure(tossError)));
+  .then((tossResponse: AxiosResponse<House>) => dispatch(tossLeaderSuccess(tossResponse.data)))
+  .catch((tossError) => dispatch(tossLeaderFailure(tossError)));

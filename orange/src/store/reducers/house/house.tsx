@@ -22,47 +22,47 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
   const data = action.target;
   switch (action.type) {
     // 멤버 초대
-    case houseConstants.INVITE_SUCCESS:
+    case houseConstants.INVITE_HOUSE_SUCCESS:
       return {
         ...state,
         inviteStatus: houseStatus.SUCCESS,
         house: data,
       };
-    case houseConstants.INVITE_FAILURE:
+    case houseConstants.INVITE_HOUSE_FAILURE:
       return { ...state, inviteStatus: houseStatus.FAILURE };
-    case houseConstants.INVITE_FAILURE_AUTHENTICATION:
+    case houseConstants.INVITE_HOUSE_FAILURE_AUTHENTICATION:
       return { ...state, inviteStatus: houseStatus.FAILURE_AUTHENTICATION };
-    case houseConstants.INVITE_FAILURE_EMAIL:
+    case houseConstants.INVITE_HOUSE_FAILURE_EMAIL:
       return { ...state, inviteStatus: houseStatus.FAILURE_EMAIL };
-    case houseConstants.INVITE_FAILURE_USERNAME:
+    case houseConstants.INVITE_HOUSE_FAILURE_USERNAME:
       return { ...state, inviteStatus: houseStatus.FAILURE_USERNAME };
-    case houseConstants.INVITE_FAILURE_LEADER:
+    case houseConstants.INVITE_HOUSE_FAILURE_LEADER:
       return { ...state, inviteStatus: houseStatus.FAILURE_INVITE_LEADER };
 
     // House 탈퇴
-    case houseConstants.LEAVE_SUCCESS:
+    case houseConstants.LEAVE_HOUSE_SUCCESS:
       return {
         ...state,
         tossStatus: houseStatus.SUCCESS,
         house: data,
       };
-    case houseConstants.LEAVE_FAILURE:
+    case houseConstants.LEAVE_HOUSE_FAILURE:
       return { ...state, leaveStatus: houseStatus.FAILURE };
-    case houseConstants.LEAVE_FAILURE_LEADER:
+    case houseConstants.LEAVE_HOUSE_FAILURE_LEADER:
       return { ...state, leaveStatus: houseStatus.FAILURE_LEAVE_LEADER };
 
     // Leader 양도
-    case houseConstants.TOSS_SUCCESS:
+    case houseConstants.TOSS_LEADER_SUCCESS:
       return {
         ...state,
         tossStatus: houseStatus.SUCCESS,
         house: data,
       };
-    case houseConstants.TOSS_FAILURE:
+    case houseConstants.TOSS_LEADER_FAILURE:
       return { ...state, tossStatus: houseStatus.FAILURE };
-    case houseConstants.TOSS_FAILURE_ME:
+    case houseConstants.TOSS_LEADER_FAILURE_ME:
       return { ...state, tossStatus: houseStatus.FAILURE_ME };
-    case houseConstants.TOSS_FAILURE_LEADER:
+    case houseConstants.TOSS_LEADER_FAILURE_LEADER:
       return { ...state, tossStatus: houseStatus.FAILURE_TOSS_LEADER };
     default:
       return { ...state };

@@ -3,7 +3,6 @@ import { Dispatch } from 'redux';
 import { userConstants } from '../actionTypes';
 import { User } from '../../../api';
 
-// 회원가입
 const signupSuccess = (user: User) => ({
   type: userConstants.SIGNUP_SUCCESS,
   target: user,
@@ -39,7 +38,6 @@ export const signUp = (
   .then((res: AxiosResponse<User>) => dispatch(signupSuccess(res.data)))
   .catch((err) => dispatch(signupFailure(err)));
 
-// 로그인
 const loginSuccess = (user: User) => ({
   type: userConstants.LOGIN_SUCCESS,
   target: user,
@@ -70,7 +68,6 @@ export const login = (
   .then((res: AxiosResponse<User>) => dispatch(loginSuccess(res.data)))
   .catch((err) => dispatch(loginFailure(err)));
 
-// 로그아웃
 const logoutSuccess = () => ({
   type: userConstants.LOGOUT_SUCCESS,
   target: null,
@@ -85,7 +82,6 @@ export const logout = () => (dispatch: Dispatch) => axios.get('/api/v1/user/logo
   .then(() => dispatch(logoutSuccess()))
   .catch((err) => dispatch(logoutFailure(err)));
 
-// 회원정보
 const getMeSuccess = (user: User) => ({
   type: userConstants.GET_ME_SUCCESS,
   target: user,

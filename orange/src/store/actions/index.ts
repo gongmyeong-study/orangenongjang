@@ -15,6 +15,8 @@ import {
 
 import {
   inviteHouse,
+  leaveHouse,
+  tossLeader,
 } from './house/house';
 
 export const userActions = {
@@ -34,4 +36,6 @@ export const necessityActions = {
 
 export const houseActions = {
   inviteHouse,
+  leaveHouse,
+  tossLeader,
 };

@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 
 import { House, User } from '../../../api';
 import { houseStatus } from '../../../constants/constants';
-import { inviteHouse } from '../../../store/actions/house/house';
+import { houseActions } from '../../../store/actions/index';
 import { OrangeGlobalState } from '../../../store/state';
 
 interface Props {
@@ -33,7 +33,7 @@ function HouseInviteButton(props: Props) {
     houseId: number,
     email: string,
   ) => {
-    dispatch(inviteHouse(houseId, email));
+    dispatch(houseActions.inviteHouse(houseId, email));
   };
 
   useEffect(() => {
