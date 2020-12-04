@@ -77,17 +77,26 @@ function HousePage(props: Props) {
       </button>
 
       <Modal
-        isOpen={isManageModalOpen}
+        isOpen={isManageModalOpen || isInviteModalOpen}
         onRequestClose={closeModal}
         className="create-modal"
         overlayClassName="create-modal-overlay"
       >
-        <HouseManageButton
-          houseId={house.id}
-          LeaderToToss={houseToManage}
-          users={house.users}
-        />
+        {isInviteModalOpen ? (
+          <HouseManageButton
+            houseId={house.id}
+            LeaderToToss={houseToManage}
+            users={house.users}
+          />
+        ) : (
+          <HouseInviteButton
+            houseId={house.id}
+            userToBeInvited={UserToBeInvited}
+            users={house.users}
+          />
+        )}
       </Modal>
+
       <button
         type="button"
         onClick={() => openManageHouse()}
@@ -95,18 +104,6 @@ function HousePage(props: Props) {
         관리하기
       </button>
 
-      <Modal
-        isOpen={isInviteModalOpen}
-        onRequestClose={closeModal}
-        className="create-modal"
-        overlayClassName="create-modal-overlay"
-      >
-        <HouseInviteButton
-          houseId={house.id}
-          userToBeInvited={UserToBeInvited}
-          users={house.users}
-        />
-      </Modal>
       <button
         type="button"
         onClick={() => openInviteUser()}
