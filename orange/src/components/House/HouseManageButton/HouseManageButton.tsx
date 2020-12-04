@@ -49,7 +49,7 @@ function HouseManageButton(props: Props) {
     if (tossStatus === houseStatus.SUCCESS) {
       alert('Leader가 변경되었습니다.');
       window.location.reload();
-    } if (tossStatus === houseStatus.FAILURE_ME) {
+    } if (tossStatus === houseStatus.FAILURE_INVITE_OR_TOSS_ME) {
       alert('자기 자신에게는 Leader를 양도할 수 없습니다.');
     } if (tossStatus === houseStatus.FAILURE_TOSS_LEADER) {
       alert('Leader만 다른 사람에게 Leader를 양도할 수 있습니다.');

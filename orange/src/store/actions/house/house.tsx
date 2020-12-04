@@ -10,6 +10,9 @@ const inviteHouseSuccess = (house: House) => ({
 const inviteHouseFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {
+    case 400:
+      actionType = houseConstants.INVITE_HOUSE_FAILURE_ME;
+      break;
     case 403:
       actionType = houseConstants.INVITE_HOUSE_FAILURE_LEADER;
       break;
