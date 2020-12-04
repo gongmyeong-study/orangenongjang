@@ -12,9 +12,6 @@ const initialState: HouseState = {
   inviteStatus: houseStatus.NONE,
   leaveStatus: houseStatus.NONE,
   tossStatus: houseStatus.NONE,
-  getStatus: houseStatus.NONE,
-  removeStatus: houseStatus.NONE,
-  updateStatus: houseStatus.NONE,
   house: {} as House,
 };
 
@@ -25,7 +22,6 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
       return {
         ...state,
         inviteStatus: houseStatus.SUCCESS,
-        house: data,
       };
     case houseConstants.INVITE_HOUSE_FAILURE:
       return { ...state, inviteStatus: houseStatus.FAILURE };
@@ -44,7 +40,6 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
       return {
         ...state,
         tossStatus: houseStatus.SUCCESS,
-        house: data,
       };
     case houseConstants.LEAVE_HOUSE_FAILURE:
       return { ...state, leaveStatus: houseStatus.FAILURE };
