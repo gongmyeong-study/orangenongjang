@@ -25,11 +25,7 @@ class NecessityPlace(models.Model):
     count = models.PositiveIntegerField(db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, db_index=True)
-
-    class Meta:
-        unique_together = (
-            ('place', 'necessity'),
-        )
+    is_hidden = models.BooleanField(default=False)
 
 
 class NecessityLog(models.Model):

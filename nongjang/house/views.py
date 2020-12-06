@@ -218,7 +218,7 @@ class PlaceViewSet(viewsets.GenericViewSet):
         if necessity_id:
             # GET /api/v1/necessity/ 등을 이용해 frontend가 이미 존재하는 Necessity들을 제시하고, 유저가 그것을 택했을 때 해당 id를 보내는 경우
             try:
-                necessity = Necessity.objects.get(id=necessity_id)
+                necessity = Necessity.objects.get(id=necessity_id, is_hidden=False)
             except Necessity.DoesNotExist:
                 return Response({'error': "해당하는 Necessity가 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
 
@@ -235,11 +235,13 @@ class PlaceViewSet(viewsets.GenericViewSet):
         serializer = NecessityOfPlaceWriteSerializer(data=data)
         serializer.is_valid(raise_exception=True)
 
-        try:
+        with transaction.atomic():
+            if NecessityPlace.objects.select_for_update().filter(
+                    place=place, necessity=necessity, is_hidden=False).exists():
+                return Response({'error': "집에 이미 존재하는 Necessity 정보입니다."}, status=status.HTTP_409_CONFLICT)
+
             necessity_place = NecessityPlace.objects.create(place=place, necessity=necessity,
                                                             description=description, price=price, count=count)
-        except IntegrityError:
-            return Response({'error': "집에 이미 존재하는 Necessity 정보입니다."}, status=status.HTTP_409_CONFLICT)
 
         NecessityLog.objects.create(house=place.house, necessity_place=necessity_place, user=user,
                                     action=NecessityLog.CREATE)
@@ -257,7 +259,7 @@ class PlaceNecessityView(APIView):
         user = request.user
 
         try:
-            necessity_place = NecessityPlace.objects.get(place_id=place_id, necessity_id=necessity_id)
+            necessity_place = NecessityPlace.objects.get(place_id=place_id, necessity_id=necessity_id, is_hidden=False)
         except NecessityPlace.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -281,7 +283,7 @@ class PlaceNecessityView(APIView):
         user = request.user
 
         try:
-            necessity_place = NecessityPlace.objects.get(place_id=place_id, necessity_id=necessity_id)
+            necessity_place = NecessityPlace.objects.get(place_id=place_id, necessity_id=necessity_id, is_hidden=False)
         except NecessityPlace.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -290,7 +292,8 @@ class PlaceNecessityView(APIView):
 
         NecessityLog.objects.create(house=necessity_place.place.house, necessity_place=necessity_place, user=user,
                                     action=NecessityLog.DELETE)
-        necessity_place.delete()
+        necessity_place.is_hidden = True
+        necessity_place.save()
 
         return Response(PlaceSerializer(necessity_place.place).data)
 
@@ -306,7 +309,7 @@ class PlaceNecessityCountView(APIView):
         user = request.user
 
         try:
-            necessity_place = NecessityPlace.objects.get(place_id=place_id, necessity_id=necessity_id)
+            necessity_place = NecessityPlace.objects.get(place_id=place_id, necessity_id=necessity_id, is_hidden=False)
         except NecessityPlace.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
