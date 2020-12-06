@@ -23,20 +23,21 @@ interface Props {
 function LogList(props: Props) {
   const { username } = props.logs.user;
   const necessityname = props.logs.necessity?.name;
+  const necessityplace = props.logs.necessity?.place_name;
   const createdAt = (new Date(props.logs.created_at)).toLocaleString();
 
   const activityCategory = () => {
     switch (props.logs.action) {
       case 'CREATE':
-        return '이/가 생필품 목록에 추가되었습니다.';
+        return `${necessityplace}에 ${necessityname} 추가`;
       case 'UPDATE':
-        return '이/가 수정되었습니다.';
+        return `${necessityplace}에서 ${necessityname} 정보 수정`;
       case 'DELETE':
-        return '이/가 생필품 목록에서 삭제되었습니다.';
+        return `${necessityplace}에서 ${necessityname} 삭제`;
       case 'COUNT':
-        return '의 수량이 변경되었습니다.';
+        return `${necessityplace}에서 ${necessityname}의 수량 변경`;
       default:
-        return '이/가 수정되었습니다.';
+        return `${necessityplace}에서 ${necessityname} 정보 수정`;
     }
   };
 
@@ -69,15 +70,13 @@ function LogList(props: Props) {
           </TimelineSeparator>
           <TimelineContent>
             <Paper elevation={3} className="log-message">
-              <Typography variant="h6" component="h1">
-                <b>{necessityname}</b>
+              <Typography variant="h5" component="h1">
                 {activityCategory()}
                 {' '}
               </Typography>
               <Typography>
-                (
+                by &nbsp;
                 {username}
-                )
               </Typography>
             </Paper>
             <Typography />
