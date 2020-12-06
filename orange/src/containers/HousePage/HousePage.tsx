@@ -35,6 +35,9 @@ function HousePage(props: Props) {
       .then((res) => {
         const { data } = res;
         goToTheRoom(data.id);
+      })
+      .catch(() => {
+        window.alert('같은 이름의 집을 가지고 있거나 요청에 문제가 있습니다.');
       });
   };
 
@@ -61,20 +64,20 @@ function HousePage(props: Props) {
       <section>
         <form onSubmit={createHouse}>
           <label>
-            Name:
+            이름:
             <input
               type="text"
               onChange={(e) => setNameToCreate(e.target.value)}
             />
           </label>
           <label>
-            Introduction:
+            소개:
             <input
               type="text"
               onChange={(e) => setIntroductionToCreate(e.target.value)}
             />
           </label>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="집 생성" disabled={!nameToCreate} />
         </form>
       </section>
       <section>

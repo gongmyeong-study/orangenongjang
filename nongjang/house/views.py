@@ -21,6 +21,7 @@ class HouseViewSet(viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated, )
 
     def get_queryset(self):
+        # 집에 join하는 경우에는 소속되지 않은 집도 조회되어야 함
         if self.action == 'user' and self.request.method == 'POST':
             return self.queryset
         return self.queryset.filter(user_houses__user=self.request.user)
@@ -36,45 +37,55 @@ class HouseViewSet(viewsets.GenericViewSet):
             return NecessityLogSerializer
         return self.serializer_class
 
-    # POST /api/v1/house/
     def create(self, request):
         user = request.user
 
-        name = request.data.get('name')
-        introduction = request.data.get('introduction')
-
-        if not name or not introduction:
-            return Response({'error': "name과 introduction은 필수 항목입니다."}, status=status.HTTP_400_BAD_REQUEST)
-
-        if UserHouse.objects.filter(user=user, house__name=name, house__is_hidden=False).exists():
-            return Response({'error': "같은 name의 집을 가지고 있습니다."}, status=status.HTTP_409_CONFLICT)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
         with transaction.atomic():
-            house = House.objects.create(name=name, introduction=introduction)
+            house = serializer.save()
             UserHouse.objects.create(user=user, house=house, is_leader=True)
 
         return Response(self.get_serializer(house).data, status=status.HTTP_201_CREATED)
 
-    # GET /api/v1/house/{house_id}/
     def retrieve(self, request, pk=None):
         """자신이 소속된 집을 열람하는 API"""
         house = self.get_object()
         return Response(self.get_serializer(house).data)
 
-    # GET /api/v1/house/
     def list(self, request):
         """자신이 소속된 집들을 열람하는 API"""
         houses = self.get_queryset()
         return Response(self.get_serializer(houses, many=True).data)
 
-    # DELETE /api/v1/house/{house_id}/
-    def destroy(self, request, pk=None):
+    def update(self, request, pk=None):
+        """leader가 집 정보를 수정하는 API"""
         user = request.user
         house = self.get_object()
 
         user_house = user.user_houses.filter(house=house).last()
         if not user_house.is_leader:
-            return Response({'error': "leader만 집을 삭제할 수 있습니다"}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'error': "leader만 집을 수정할 수 있습니다."}, status=status.HTTP_403_FORBIDDEN)
+
+        # 현재 name과 같은 경우 serializer의 validate_name에서 error가 발생하지 않도록 함
+        data = request.data.copy()
+        if house.name == data.get('name'):
+            data.pop('name')
+
+        serializer = self.get_serializer(house, data=data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.update(house, serializer.validated_data)
+        return Response(serializer.data)
+
+    def destroy(self, request, pk=None):
+        """leader가 집을 삭제하는 API"""
+        user = request.user
+        house = self.get_object()
+
+        user_house = user.user_houses.filter(house=house).last()
+        if not user_house.is_leader:
+            return Response({'error': "leader만 집을 삭제할 수 있습니다."}, status=status.HTTP_403_FORBIDDEN)
 
         house.is_hidden = True
         house.save()
@@ -85,6 +96,7 @@ class HouseViewSet(viewsets.GenericViewSet):
     # /api/v1/house/{house_id}/invitation/
     @action(detail=True, methods=['POST'])
     def invitation(self, request, pk=None):
+        """leader가 새로운 member를 초대하는 API - email 발송"""
         user = request.user
         house = self.get_object()
 
@@ -108,7 +120,6 @@ class HouseViewSet(viewsets.GenericViewSet):
                 return Response({'error': "Email 발송에 문제가 있습니다."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         return Response({'message': "입력하신 이메일로 초대장이 전송되었습니다."})
 
-    # /api/v1/house/{house_id}/user/
     @action(detail=True, methods=['POST', 'GET', 'DELETE'])
     def user(self, request, pk=None):
         house = self.get_object()
@@ -141,7 +152,6 @@ class HouseViewSet(viewsets.GenericViewSet):
         user_house.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    # /api/v1/house/{house_id}/place/
     @action(detail=True, methods=['POST', 'GET'])
     def place(self, request, pk=None):
         house = self.get_object()
@@ -169,7 +179,6 @@ class HouseViewSet(viewsets.GenericViewSet):
     def _get_places(self, house):
         return Response(self.get_serializer(house.places, many=True).data)
 
-    # GET /api/v1/house/{house_id}/necessity_log/
     @action(detail=True, methods=['GET'])
     def necessity_log(self, request, pk=None):
         log_order = self.request.query_params.get('necessity_order')
@@ -198,7 +207,6 @@ class PlaceViewSet(viewsets.GenericViewSet):
         place = self.get_object()
         return Response(self.get_serializer(place).data)
 
-    # POST /api/v1/place/{place_id}/necessity/
     @action(detail=True, methods=['POST'])
     def necessity(self, request, pk=None):
         place = self.get_object()
@@ -249,7 +257,6 @@ class PlaceViewSet(viewsets.GenericViewSet):
 class PlaceNecessityView(APIView):
     permission_classes = (IsAuthenticated, )
 
-    # PUT /api/v1/place/{place_id}/necessity/{necessity_id}/
     def put(self, request, *args, **kwargs):
         place_id = kwargs['place_id']
         necessity_id = kwargs['necessity_id']
@@ -273,7 +280,6 @@ class PlaceNecessityView(APIView):
 
         return Response(serializer.data)
 
-    # DELETE /api/v1/place/{place_id}/necessity/{necessity_id}/
     def delete(self, request, *args, **kwargs):
         place_id = kwargs['place_id']
         necessity_id = kwargs['necessity_id']
@@ -298,7 +304,6 @@ class PlaceNecessityView(APIView):
 class PlaceNecessityCountView(APIView):
     permission_classes = (IsAuthenticated, )
 
-    # PUT /api/v1/place/{place_id}/necessity/{necessity_id}/count/
     def put(self, request, *args, **kwargs):
         place_id = kwargs['place_id']
         necessity_id = kwargs['necessity_id']
@@ -326,7 +331,6 @@ class PlaceNecessityCountView(APIView):
 class HousePlaceView(APIView):
     permission_classes = (IsAuthenticated, )
 
-    # DELETE /api/v1/house/{house_id}/place/{place_id}/
     def delete(self, request, *args, **kwargs):
         house_id = kwargs['house_id']
         place_id = kwargs['place_id']
@@ -350,7 +354,6 @@ class HousePlaceView(APIView):
 class HouseUserLeaderView(APIView):
     permission_classes = (IsAuthenticated, )
 
-    # POST /api/v1/house/{house_id}/user/{user_id}/leader/
     def post(self, request, *args, **kwargs):
         house_id = kwargs['house_id']
         user_id = kwargs['user_id']
