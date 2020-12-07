@@ -74,7 +74,7 @@ class PlaceSerializer(SimplePlaceSerializer):
         fields = SimplePlaceSerializer.Meta.fields + ('necessities', )
 
     def get_necessities(self, place):
-        queryset = place.necessity_places.select_related('necessity')
+        queryset = place.necessity_places.filter(is_hidden=False).select_related('necessity')
 
         necessity_order = None
         if self.context.get('request'):
