@@ -1,0 +1,53 @@
+version: "3.3"
+services:
+  db:
+    restart: always
+    image: mysql:8
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_HOST=localhost
+      - MYSQL_PORT=3306
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=orangenongjang
+      - MYSQL_USER=orange
+      - MYSQL_PASSWORD=nongjang0412!
+      - MYSQL_ROOT_PASSWORD=nongjang0412!
+    ports:
+      - "3302:3306"
+    networks:
+      - db-net
+
+  nongjang:
+    restart: always
+    container_name: code
+    command : bash -c "python check_db.py --service-name db --ip db --port 3306 &&
+                       python manage.py migrate &&
+                       python manage.py runserver 0.0.0.0:8000"
+    build:
+      context: ./nongjang/
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - db-net
+
+  orange:
+    restart: always
+    command : yarn start
+    container_name: front
+    build:
+      context: ./orange/
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    depends_on:
+      - nongjang
+    networks:
+      - db-net
+
+networks:
+  db-net:
+    driver: bridge
