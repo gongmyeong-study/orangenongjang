@@ -27,6 +27,12 @@ class SimpleHouseSerializer(serializers.ModelSerializer):
     def get_places(self, house):
         return SimplePlaceSerializer(house.places, many=True).data
 
+    def validate_name(self, name):
+        user = self.context['request'].user
+        if UserHouse.objects.filter(user=user, house__name=name, house__is_hidden=False).exists():
+            raise serializers.ValidationError("같은 name의 집을 가지고 있습니다.")
+        return name
+
 
 class HouseSerializer(SimpleHouseSerializer):
 
@@ -74,7 +80,7 @@ class PlaceSerializer(SimplePlaceSerializer):
         fields = SimplePlaceSerializer.Meta.fields + ('necessities', )
 
     def get_necessities(self, place):
-        queryset = place.necessity_places.select_related('necessity')
+        queryset = place.necessity_places.filter(is_hidden=False).select_related('necessity')
 
         necessity_order = None
         if self.context.get('request'):
