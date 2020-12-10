@@ -16,7 +16,6 @@ class NecessityViewSet(viewsets.GenericViewSet):
             return IsAdminUser(),
         return super(NecessityViewSet, self).get_permissions()
 
-    # POST /api/v1/necessity/
     def create(self, request):
         """
         일반 유저용의 API가 아님.
@@ -27,10 +26,14 @@ class NecessityViewSet(viewsets.GenericViewSet):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    # GET /api/v1/necessity/{necessity_id}/
     def retrieve(self, request, pk=None):
         return Response(self.get_serializer(self.get_object()).data)
 
-    # GET /api/v1/necessity/
     def list(self, request):
         return Response(self.get_serializer(self.get_queryset(), many=True).data)
+
+    def destroy(self, request, pk=None):
+        necessity = self.get_object()
+        necessity.is_hidden = True
+        necessity.save()
+        return Response(self.get_serializer(necessity).data)

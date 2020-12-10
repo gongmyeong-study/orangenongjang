@@ -21,6 +21,7 @@ class NecessitySerializer(serializers.ModelSerializer):
 class NecessityOfPlaceWriteSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(source='necessity.id', read_only=True)
     place_id = serializers.IntegerField(source='place.id', read_only=True)
+    place_name = serializers.CharField(source='place.name', read_only=True)
     name = serializers.CharField(source='necessity.name', read_only=True)
     option = serializers.CharField(source='necessity.option', read_only=True)
 
@@ -29,6 +30,7 @@ class NecessityOfPlaceWriteSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'place_id',
+            'place_name',
             'name',
             'option',
             'description',
