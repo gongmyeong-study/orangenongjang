@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineCrown } from 'react-icons/ai';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
@@ -21,6 +21,7 @@ interface LeaderTossFormData {
 }
 
 function HouseManageButton(props: Props) {
+  const [nameToTossLeader, setNameToTossLeader] = useState('');
   const { handleSubmit } = useForm<LeaderTossFormData>();
   const dispatch = useDispatch();
   const { leaveStatus, tossStatus } = useSelector((state: OrangeGlobalState) => state.house);
@@ -41,7 +42,7 @@ function HouseManageButton(props: Props) {
       window.location.reload();
     } if (leaveStatus === houseStatus.FAILURE_LEAVE_LEADER) {
       alert('Leader는 House를 나갈 수 없습니다.');
-      window.location.reload();
+      // window.location.reload();
     } if (leaveStatus === houseStatus.FAILURE) {
       alert('잘못된 접근입니다.');
     }
@@ -56,7 +57,7 @@ function HouseManageButton(props: Props) {
       window.location.reload();
     } if (tossStatus === houseStatus.FAILURE) {
       alert('실패!');
-      window.location.reload();
+      // window.location.reload();
     }
   }, [leaveStatus, tossStatus]);
 
@@ -79,10 +80,19 @@ function HouseManageButton(props: Props) {
           )
         </div>
       ))}
+
       <form onSubmit={handleSubmit(onSubmitToToss)}>
         <h4>
-          Leader 넘기기
-          <Button type="submit">
+          Leader 넘기기&emsp;
+          <select value={nameToTossLeader} onChange={(e) => setNameToTossLeader(e.target.value)}>
+            {console.log(1, nameToTossLeader, 123)}
+            {props.users?.map((user) => (
+              <option value="7777">
+                {(user.is_leader) ? (user.username) : (user.username)}
+              </option>
+            ))}
+          </select>
+          <Button type="submit" disabled={!nameToTossLeader}>
             {LeaderTossIcon}
           </Button>
         </h4>

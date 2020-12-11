@@ -39,9 +39,8 @@ export const inviteHouse = (
   })
   .catch((inviteError) => dispatch(inviteHouseFailure(inviteError)));
 
-const leaveHouseSuccess = (house: House) => ({
+const leaveHouseSuccess = () => ({
   type: houseConstants.LEAVE_HOUSE_SUCCESS,
-  target: house,
 });
 const leaveHouseFailure = (error: AxiosError) => {
   let actionType = null;
@@ -61,7 +60,7 @@ const leaveHouseFailure = (error: AxiosError) => {
 export const leaveHouse = (
   houseId: number,
 ) => (dispatch: Dispatch) => axios.delete(`/api/v1/house/${houseId}/user/`)
-  .then((leaveResponse: AxiosResponse<House>) => dispatch(leaveHouseSuccess(leaveResponse.data)))
+  .then(() => dispatch(leaveHouseSuccess()))
   .catch((leaveError) => dispatch(leaveHouseFailure(leaveError)));
 
 const tossLeaderSuccess = (house: House) => ({

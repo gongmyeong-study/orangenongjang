@@ -85,7 +85,7 @@ function HousePage(props: Props) {
         className="create-modal"
         overlayClassName="create-modal-overlay"
       >
-        {isInviteModalOpen ? (
+        {isManageModalOpen ? (
           <HouseManageButton
             houseId={house.id}
             LeaderToToss={houseToManage}
