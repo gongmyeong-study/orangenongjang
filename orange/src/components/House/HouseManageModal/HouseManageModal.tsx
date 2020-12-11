@@ -89,19 +89,20 @@ function HouseManageModal(props: Props) {
       <form onSubmit={handleSubmit(onSubmitToToss)}>
         <h4>
           Leader 넘기기&emsp;
-          <div className="select-container">
-            <Select
-              options={props.users}
-              onOptionChange={onOptionChange}
-              getOptionValue={getOptionValue}
-              getOptionLabel={getOptionLabel}
-            />
-          </div>
-          <Button type="submit">
-            {LeaderTossIcon}
-          </Button>
-
         </h4>
+        <div className="container">
+          <Select
+            options={props.users}
+            placeholder="멤버 선택"
+            onOptionChange={onOptionChange}
+            getOptionValue={getOptionValue}
+            getOptionLabel={getOptionLabel}
+          />
+        </div>
+        <Button type="submit">
+          {LeaderTossIcon}
+        </Button>
+
       </form>
       <form onSubmit={handleSubmit(onSubmitToLeave)}>
         <h4>

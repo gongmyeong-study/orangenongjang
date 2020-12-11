@@ -1,5 +1,7 @@
-.select-container {
-    width: 150%;
-    margin-top: 0.5rem;
-    padding: 0.25rem
+.container {
+  width: 150%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.25rem
 }
