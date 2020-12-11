@@ -10,6 +10,8 @@ import { houseStatus } from '../../../constants/constants';
 import { houseActions } from '../../../store/actions/index';
 import { OrangeGlobalState } from '../../../store/state';
 
+import './HouseManageModal.css';
+
 interface Props {
   houseId: number;
   users?: User[];
@@ -87,15 +89,18 @@ function HouseManageModal(props: Props) {
       <form onSubmit={handleSubmit(onSubmitToToss)}>
         <h4>
           Leader 넘기기&emsp;
-          <Select
-            options={props.users}
-            onOptionChange={onOptionChange}
-            getOptionValue={getOptionValue}
-            getOptionLabel={getOptionLabel}
-          />
+          <div className="select-container">
+            <Select
+              options={props.users}
+              onOptionChange={onOptionChange}
+              getOptionValue={getOptionValue}
+              getOptionLabel={getOptionLabel}
+            />
+          </div>
           <Button type="submit">
             {LeaderTossIcon}
           </Button>
+
         </h4>
       </form>
       <form onSubmit={handleSubmit(onSubmitToLeave)}>
