@@ -1,40 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AiOutlineCrown } from 'react-icons/ai';
+import { Select } from 'react-functional-select';
 import { useForm } from 'react-hook-form';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@material-ui/core';
 
-import { House, User } from '../../../api';
+import { User } from '../../../api';
 import { houseStatus } from '../../../constants/constants';
 import { houseActions } from '../../../store/actions/index';
 import { OrangeGlobalState } from '../../../store/state';
 
 interface Props {
   houseId: number;
-  houseToLeave?: House;
-  LeaderToToss?: House;
   users?: User[];
 }
 
-interface LeaderTossFormData {
-  userId: number;
+interface UserToBeLeaderFormData {
+  id: number;
+  username: string;
 }
 
-function HouseManageButton(props: Props) {
-  const [nameToTossLeader, setNameToTossLeader] = useState('');
-  const { handleSubmit } = useForm<LeaderTossFormData>();
+function HouseManageModal(props: Props) {
+  const [selectedOption, setSelectedOption] = useState<UserToBeLeaderFormData | null>(null);
+  const getOptionValue = useCallback((option: UserToBeLeaderFormData): number => option.id, []);
+  const onOptionChange = useCallback(
+    (option: UserToBeLeaderFormData | null): void => setSelectedOption(option), [],
+  );
+  const getOptionLabel = useCallback((option: UserToBeLeaderFormData): string => `${option.username}`, []);
+
+  const { handleSubmit } = useForm<UserToBeLeaderFormData>();
   const dispatch = useDispatch();
   const { leaveStatus, tossStatus } = useSelector((state: OrangeGlobalState) => state.house);
 
   const onLeaveHouse = (houseId: number) => { dispatch(houseActions.leaveHouse(houseId)); };
   const onSubmitToLeave = () => onLeaveHouse(props.houseId);
 
-  const onTossLeader = (
-    houseId: number, userId: number,
-  ) => { dispatch(houseActions.tossLeader(houseId, userId)); };
-  const onSubmitToToss = (
-    data: LeaderTossFormData,
-  ) => onTossLeader(props.houseId, data.userId);
+  const onTossLeader = (houseId: number, userId: number) => {
+    dispatch(houseActions.tossLeader(houseId, userId));
+  };
+  const onSubmitToToss = () => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    onTossLeader(props.houseId, selectedOption!.id);
+  };
 
   useEffect(() => {
     if (leaveStatus === houseStatus.SUCCESS) {
@@ -42,7 +49,6 @@ function HouseManageButton(props: Props) {
       window.location.reload();
     } if (leaveStatus === houseStatus.FAILURE_LEAVE_LEADER) {
       alert('Leader는 House를 나갈 수 없습니다.');
-      // window.location.reload();
     } if (leaveStatus === houseStatus.FAILURE) {
       alert('잘못된 접근입니다.');
     }
@@ -54,10 +60,8 @@ function HouseManageButton(props: Props) {
       alert('자기 자신에게는 Leader를 양도할 수 없습니다.');
     } if (tossStatus === houseStatus.FAILURE_TOSS_LEADER) {
       alert('Leader만 다른 사람에게 Leader를 양도할 수 있습니다.');
-      window.location.reload();
     } if (tossStatus === houseStatus.FAILURE) {
       alert('실패!');
-      // window.location.reload();
     }
   }, [leaveStatus, tossStatus]);
 
@@ -80,19 +84,16 @@ function HouseManageButton(props: Props) {
           )
         </div>
       ))}
-
       <form onSubmit={handleSubmit(onSubmitToToss)}>
         <h4>
           Leader 넘기기&emsp;
-          <select value={nameToTossLeader} onChange={(e) => setNameToTossLeader(e.target.value)}>
-            {console.log(1, nameToTossLeader, 123)}
-            {props.users?.map((user) => (
-              <option value="7777">
-                {(user.is_leader) ? (user.username) : (user.username)}
-              </option>
-            ))}
-          </select>
-          <Button type="submit" disabled={!nameToTossLeader}>
+          <Select
+            options={props.users}
+            onOptionChange={onOptionChange}
+            getOptionValue={getOptionValue}
+            getOptionLabel={getOptionLabel}
+          />
+          <Button type="submit">
             {LeaderTossIcon}
           </Button>
         </h4>
@@ -109,4 +110,4 @@ function HouseManageButton(props: Props) {
   );
 }
 
-export default HouseManageButton;
+export default HouseManageModal;

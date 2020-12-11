@@ -3,7 +3,7 @@ import axios from 'axios';
 import { History } from 'history';
 import Modal from 'react-modal';
 import { House } from '../../api';
-import { HouseInviteButton, HouseManageButton } from '../../components';
+import { HouseInviteModal, HouseManageModal } from '../../components';
 
 interface Props {
   history: History;
@@ -14,24 +14,20 @@ function HousePage(props: Props) {
   const [houses, setHouses] = useState<[House]>();
   const [nameToCreate, setNameToCreate] = useState('');
   const [introductionToCreate, setIntroductionToCreate] = useState('');
-  const [isInviteModalOpen, setInviteModalOpen] = useState(false);
-  const [isManageModalOpen, setManageModalOpen] = useState(false);
-  const [UserToBeInvited, setUserToBeInvited] = useState<House>();
-  const [houseToManage, setHouseToManage] = useState<House>();
+  const [idInviteModalOpen, setInviteModalOpen] = useState(-1);
+  const [idManageModalOpen, setManageModalOpen] = useState(-1);
 
-  const openInviteUser = () => {
-    setInviteModalOpen(true);
+  const openInviteUser = (houseId: number) => {
+    setInviteModalOpen(houseId);
   };
 
-  const openManageHouse = () => {
-    setManageModalOpen(true);
+  const openManageHouse = (houseId: number) => {
+    setManageModalOpen(houseId);
   };
 
   const closeModal = () => {
-    setUserToBeInvited(undefined);
-    setInviteModalOpen(false);
-    setHouseToManage(undefined);
-    setManageModalOpen(false);
+    setInviteModalOpen(-1);
+    setManageModalOpen(-1);
   };
 
   useEffect(() => {
@@ -80,36 +76,40 @@ function HousePage(props: Props) {
       </button>
 
       <Modal
-        isOpen={isManageModalOpen || isInviteModalOpen}
+        isOpen={(idManageModalOpen === house.id)}
         onRequestClose={closeModal}
         className="create-modal"
         overlayClassName="create-modal-overlay"
       >
-        {isManageModalOpen ? (
-          <HouseManageButton
-            houseId={house.id}
-            LeaderToToss={houseToManage}
-            users={house.users}
-          />
-        ) : (
-          <HouseInviteButton
-            houseId={house.id}
-            userToBeInvited={UserToBeInvited}
-            users={house.users}
-          />
-        )}
+        <HouseManageModal
+          houseId={house.id}
+          users={house.users}
+        />
+      </Modal>
+
+      <Modal
+        isOpen={(idInviteModalOpen === house.id)}
+        onRequestClose={closeModal}
+        className="create-modal"
+        overlayClassName="create-modal-overlay"
+      >
+        <HouseInviteModal
+          houseId={house.id}
+          houseName={house.name}
+          users={house.users}
+        />
       </Modal>
 
       <button
         type="button"
-        onClick={() => openManageHouse()}
+        onClick={() => openManageHouse(house.id)}
       >
         관리하기
       </button>
 
       <button
         type="button"
-        onClick={() => openInviteUser()}
+        onClick={() => openInviteUser(house.id)}
       >
         초대하기
       </button>

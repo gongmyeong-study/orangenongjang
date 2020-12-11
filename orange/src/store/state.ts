@@ -19,13 +19,10 @@ export interface UserState {
 }
 
 export interface HouseState {
-  inviteStatus: string;
-  leaveStatus: string;
-  tossStatus: string;
-  getStatus?: string;
-  removeStatus?: string;
-  updateStatus?: string;
-  house: House;
+  inviteStatus?: string;
+  leaveStatus?: string;
+  tossStatus?: string;
+  house?: House;
 }
 
 export interface OrangeGlobalState {

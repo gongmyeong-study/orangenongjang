@@ -11,8 +11,8 @@ import PlaceCreateForm from './PlaceCreateForm/PlaceCreateForm';
 import NecessityRemoveButton from './Necessity/NecessityRemoveButton/NecessityRemoveButton';
 import NecessityUpdateButton from './Necessity/NecessityUpdateButton/NecessityUpdateButton';
 import NecessityCounterButton from './Necessity/NecessityCounterButton/NecessityCounterButton';
-import HouseInviteButton from './House/HouseInviteButton/HouseInviteButton';
-import HouseManageButton from './House/HouseManageButton/HouseManageButton';
+import HouseInviteModal from './House/HouseInviteModal/HouseInviteModal';
+import HouseManageModal from './House/HouseManageModal/HouseManageModal';
 
 export {
   Header,
@@ -28,6 +28,6 @@ export {
   NecessityRemoveButton,
   NecessityUpdateButton,
   NecessityCounterButton,
-  HouseInviteButton,
-  HouseManageButton,
+  HouseInviteModal,
+  HouseManageModal,
 };

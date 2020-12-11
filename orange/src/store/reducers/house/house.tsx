@@ -38,8 +38,7 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
 
     case houseConstants.LEAVE_HOUSE_SUCCESS:
       return {
-        ...state,
-        tossStatus: houseStatus.SUCCESS,
+        leaveStatus: houseStatus.SUCCESS,
       };
     case houseConstants.LEAVE_HOUSE_FAILURE:
       return { ...state, leaveStatus: houseStatus.FAILURE };
