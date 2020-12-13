@@ -1,0 +1,36 @@
+version: "3.3"
+services:
+  nongjang:
+    container_name: code
+    restart: always
+    environment:
+      - MODE=prod
+    build:
+      context: ./nongjang/
+      dockerfile: Dockerfile
+
+  orange:
+    container_name: front
+    restart: always
+    build:
+      context: ./orange/
+      dockerfile: Dockerfile
+    volumes:
+      - front_build:/app/frontend/build
+
+  nginx:
+    container_name: nginx
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - front_build:/var/www/frontend
+    depends_on:
+      - nongjang
+      - orange
+
+volumes:
+  front_build:
