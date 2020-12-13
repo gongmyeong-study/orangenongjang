@@ -1,10 +1,15 @@
 pipeline {
-  agent any
+  agent {
+    node {
+      label 'orangenongjang'
+    }
+
+  }
   stages {
     stage('Build') {
       steps {
         git(branch: 'master', url: 'https://github.com/gongmyeong-study/orangenongjang.git')
-        sh 'sudo docker-compose build'
+        sh 'docker-compose build'
       }
     }
 
