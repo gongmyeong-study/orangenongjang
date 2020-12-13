@@ -15,19 +15,25 @@ function HousePage(props: Props) {
   const [nameToCreate, setNameToCreate] = useState('');
   const [introductionToCreate, setIntroductionToCreate] = useState('');
   const [idInviteModalOpen, setInviteModalOpen] = useState(-1);
-  const [idManageModalOpen, setManageModalOpen] = useState(-1);
+  const [isManageModalOpen, setIsManageModalOpen] = useState(false);
+  const [houseToBeManaged, setHouseToBeManaged] = useState<House>();
+
+  const manageHouse = (house: House) => {
+    setHouseToBeManaged(house);
+    setIsManageModalOpen(true);
+  };
 
   const openInviteUser = (houseId: number) => {
     setInviteModalOpen(houseId);
   };
 
-  const openManageHouse = (houseId: number) => {
-    setManageModalOpen(houseId);
-  };
+  // const openManageHouse = () => {
+  //   setManageModalOpen(true);
+  // };
 
   const closeModal = () => {
     setInviteModalOpen(-1);
-    setManageModalOpen(-1);
+    setIsManageModalOpen(false);
   };
 
   useEffect(() => {
@@ -75,34 +81,9 @@ function HousePage(props: Props) {
         들어가기
       </button>
 
-      <Modal
-        isOpen={(idManageModalOpen === house.id)}
-        onRequestClose={closeModal}
-        className="create-modal"
-        overlayClassName="create-modal-overlay"
-      >
-        <HouseManageModal
-          houseId={house.id}
-          users={house.users}
-        />
-      </Modal>
-
-      <Modal
-        isOpen={(idInviteModalOpen === house.id)}
-        onRequestClose={closeModal}
-        className="create-modal"
-        overlayClassName="create-modal-overlay"
-      >
-        <HouseInviteModal
-          houseId={house.id}
-          houseName={house.name}
-          users={house.users}
-        />
-      </Modal>
-
       <button
         type="button"
-        onClick={() => openManageHouse(house.id)}
+        onClick={() => manageHouse(house)}
       >
         관리하기
       </button>
@@ -142,6 +123,29 @@ function HousePage(props: Props) {
       <section>
         {showUserHouses}
       </section>
+      <Modal
+        isOpen={(isManageModalOpen)}
+        onRequestClose={closeModal}
+        className="create-modal"
+        overlayClassName="create-modal-overlay"
+      >
+        <HouseManageModal
+          house={houseToBeManaged}
+        />
+      </Modal>
+
+      {/* <Modal
+        isOpen={(idInviteModalOpen === house.id)}
+        onRequestClose={closeModal}
+        className="create-modal"
+        overlayClassName="create-modal-overlay"
+      >
+        <HouseInviteModal
+          houseId={house.id}
+          houseName={house.name}
+          users={house.users}
+        />
+      </Modal> */}
     </main>
   );
 }

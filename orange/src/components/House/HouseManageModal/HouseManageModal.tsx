@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@material-ui/core';
 
-import { User } from '../../../api';
+import { House } from '../../../api';
 import { houseStatus } from '../../../constants/constants';
 import { houseActions } from '../../../store/actions/index';
 import { OrangeGlobalState } from '../../../store/state';
@@ -13,8 +13,7 @@ import { OrangeGlobalState } from '../../../store/state';
 import './HouseManageModal.css';
 
 interface Props {
-  houseId: number;
-  users?: User[];
+  house?: House;
 }
 
 interface UserToBeLeaderFormData {
@@ -35,14 +34,14 @@ function HouseManageModal(props: Props) {
   const { leaveStatus, tossStatus } = useSelector((state: OrangeGlobalState) => state.house);
 
   const onLeaveHouse = (houseId: number) => { dispatch(houseActions.leaveHouse(houseId)); };
-  const onSubmitToLeave = () => onLeaveHouse(props.houseId);
+  const onSubmitToLeave = () => onLeaveHouse(props.house!.id);
 
   const onTossLeader = (houseId: number, userId: number) => {
     dispatch(houseActions.tossLeader(houseId, userId));
   };
   const onSubmitToToss = () => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    onTossLeader(props.houseId, selectedOption!.id);
+    onTossLeader(props.house!.id, selectedOption!.id);
   };
 
   useEffect(() => {
@@ -70,11 +69,11 @@ function HouseManageModal(props: Props) {
   const formTitle = 'House 관리';
   const LeaderTossIcon = <i className="far fa-handshake fa-2x" />;
   const LeaveHouseIcon = <i className="fas fa-sign-out-alt fa-2x" />;
-
+  console.log('houseId', props.house!.id);
   return (
     <>
       <h2>{formTitle}</h2>
-      {props.users?.map((user) => (
+      {props.house!.users?.map((user) => (
         <div key={user.id}>
           {(user.is_leader) ? (<AiOutlineCrown />) : (null)}
           &emsp;
@@ -92,7 +91,7 @@ function HouseManageModal(props: Props) {
         </h4>
         <div className="container">
           <Select
-            options={props.users}
+            options={props.house!.users}
             placeholder="멤버 선택"
             onOptionChange={onOptionChange}
             getOptionValue={getOptionValue}
