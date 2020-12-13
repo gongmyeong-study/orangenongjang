@@ -113,7 +113,7 @@ elif os.path.exists(secret_file):
                     'NAME': secret_info['DATABASE_NAME'],
                     'USER': secret_info['DATABASE_USER'],
                     'PASSWORD': secret_info['DATABASE_PASSWORD'],
-                    'HOST': 'db',
+                    'HOST': 'localhost',
                     'PORT': '3306',
                 }
             }
