@@ -29,7 +29,7 @@ SECRET_KEY = '%$(uu1zk1f4*8wnljep5ug(5t7*2u3+&exurk*0t+af56vbued'
 DEBUG = True
 USE_DEBUG_TOOLBAR = os.getenv('DEBUG_TOOLBAR', '').lower() == 'true'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
