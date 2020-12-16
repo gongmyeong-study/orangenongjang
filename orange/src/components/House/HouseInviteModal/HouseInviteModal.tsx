@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form';
 
 import { House } from '../../../api';
 import { houseStatus } from '../../../constants/constants';
-import { houseActions } from '../../../store/actions/index';
 import { OrangeGlobalState } from '../../../store/state';
+import { houseActions } from '../../../store/actions';
 
 interface Props {
   house?: House;
