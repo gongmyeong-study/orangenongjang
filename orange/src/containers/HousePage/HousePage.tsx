@@ -14,25 +14,23 @@ function HousePage(props: Props) {
   const [houses, setHouses] = useState<[House]>();
   const [nameToCreate, setNameToCreate] = useState('');
   const [introductionToCreate, setIntroductionToCreate] = useState('');
-  const [idInviteModalOpen, setInviteModalOpen] = useState(-1);
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const [isManageModalOpen, setIsManageModalOpen] = useState(false);
   const [houseToBeManaged, setHouseToBeManaged] = useState<House>();
+  const [houseToBeInvited, setHouseToBeInvited] = useState<House>();
 
   const manageHouse = (house: House) => {
     setHouseToBeManaged(house);
     setIsManageModalOpen(true);
   };
 
-  const openInviteUser = (houseId: number) => {
-    setInviteModalOpen(houseId);
+  const InviteUser = (house: House) => {
+    setHouseToBeInvited(house);
+    setIsInviteModalOpen(true);
   };
 
-  // const openManageHouse = () => {
-  //   setManageModalOpen(true);
-  // };
-
   const closeModal = () => {
-    setInviteModalOpen(-1);
+    setIsInviteModalOpen(false);
     setIsManageModalOpen(false);
   };
 
@@ -90,7 +88,7 @@ function HousePage(props: Props) {
 
       <button
         type="button"
-        onClick={() => openInviteUser(house.id)}
+        onClick={() => InviteUser(house)}
       >
         초대하기
       </button>
@@ -123,29 +121,17 @@ function HousePage(props: Props) {
       <section>
         {showUserHouses}
       </section>
-      <Modal
-        isOpen={(isManageModalOpen)}
-        onRequestClose={closeModal}
-        className="create-modal"
-        overlayClassName="create-modal-overlay"
-      >
-        <HouseManageModal
-          house={houseToBeManaged}
-        />
-      </Modal>
 
-      {/* <Modal
-        isOpen={(idInviteModalOpen === house.id)}
+      <Modal
+        isOpen={(isManageModalOpen || isInviteModalOpen)}
         onRequestClose={closeModal}
         className="create-modal"
         overlayClassName="create-modal-overlay"
       >
-        <HouseInviteModal
-          houseId={house.id}
-          houseName={house.name}
-          users={house.users}
-        />
-      </Modal> */}
+        {(isManageModalOpen)
+          ? (<HouseManageModal house={houseToBeManaged} />)
+          : (<HouseInviteModal house={houseToBeInvited} />)}
+      </Modal>
     </main>
   );
 }

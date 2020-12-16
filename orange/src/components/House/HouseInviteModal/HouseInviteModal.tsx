@@ -1,19 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   TextField, Button, InputAdornment,
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
-import { User } from '../../../api';
+import { House } from '../../../api';
 import { houseStatus } from '../../../constants/constants';
 import { houseActions } from '../../../store/actions/index';
 import { OrangeGlobalState } from '../../../store/state';
 
 interface Props {
-  houseId: number;
-  houseName: string;
-  users?: User[];
+  house?: House;
 }
 
 interface HouseInviteFormData {
@@ -28,10 +26,7 @@ function HouseInviteModal(props: Props) {
   const dispatch = useDispatch();
   const { inviteStatus } = useSelector((state: OrangeGlobalState) => state.house);
 
-  const onInviteHouse = (
-    houseId: number,
-    email: string,
-  ) => {
+  const onInviteHouse = (houseId: number, email: string) => {
     dispatch(houseActions.inviteHouse(houseId, email));
   };
 
@@ -40,7 +35,6 @@ function HouseInviteModal(props: Props) {
       alert('입력한 이메일로 초대장을 전송했습니다.');
     } if (inviteStatus === houseStatus.FAILURE_AUTHENTICATION) {
       alert('메일주소 또는 인터넷 연결상태를 확인하고 다시 시도해주세요.');
-      window.location.reload();
     } if (inviteStatus === houseStatus.FAILURE_INVITE_LEADER) {
       alert('Leader만 멤버를 초대할 수 있습니다.');
     } if (inviteStatus === houseStatus.FAILURE_INVITE_OR_TOSS_ME) {
@@ -49,15 +43,20 @@ function HouseInviteModal(props: Props) {
       alert('오렌지농장에 등록되지 않은 회원입니다.');
     } if (inviteStatus === houseStatus.FAILURE) {
       alert('잘못된 접근입니다.');
-      window.location.reload();
     }
   }, [inviteStatus]);
 
+  useEffect(() => {
+    if (inviteStatus !== houseStatus.NONE) {
+      window.location.reload();
+    }
+  });
+
   const onSubmitToInvite = (data: HouseInviteFormData) => onInviteHouse(
-    props.houseId, data.email,
+    props.house!.id, data.email,
   );
 
-  const formTitle = 'House 초대';
+  const formTitle = `${props.house?.name} 초대`;
   const submitIcon = <i className="far fa-envelope fa-3x" />;
 
   return (
@@ -66,9 +65,9 @@ function HouseInviteModal(props: Props) {
       <form onSubmit={handleSubmit(onSubmitToInvite)}>
         <h4>
           이메일로
-          {' '}
-          {props.houseName}
-          {' '}
+          [
+          {props.house?.name}
+          ]
           초대장이 전송됩니다.
         </h4>
         <TextField

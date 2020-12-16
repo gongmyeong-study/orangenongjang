@@ -47,7 +47,6 @@ function HouseManageModal(props: Props) {
   useEffect(() => {
     if (leaveStatus === houseStatus.SUCCESS) {
       alert('Dobby is Free!');
-      window.location.reload();
     } if (leaveStatus === houseStatus.FAILURE_LEAVE_LEADER) {
       alert('Leader는 House를 나갈 수 없습니다.');
     } if (leaveStatus === houseStatus.FAILURE) {
@@ -56,7 +55,6 @@ function HouseManageModal(props: Props) {
 
     if (tossStatus === houseStatus.SUCCESS) {
       alert('Leader가 변경되었습니다.');
-      window.location.reload();
     } if (tossStatus === houseStatus.FAILURE_INVITE_OR_TOSS_ME) {
       alert('자기 자신에게는 Leader를 양도할 수 없습니다.');
     } if (tossStatus === houseStatus.FAILURE_TOSS_LEADER) {
@@ -66,10 +64,15 @@ function HouseManageModal(props: Props) {
     }
   }, [leaveStatus, tossStatus]);
 
-  const formTitle = 'House 관리';
-  const LeaderTossIcon = <i className="far fa-handshake fa-2x" />;
+  useEffect(() => {
+    if (leaveStatus !== houseStatus.NONE || tossStatus !== houseStatus.NONE) {
+      window.location.reload();
+    }
+  });
+
+  const formTitle = `${props.house?.name} 관리`;
+  const TossLeaderIcon = <i className="far fa-handshake fa-2x" />;
   const LeaveHouseIcon = <i className="fas fa-sign-out-alt fa-2x" />;
-  console.log('houseId', props.house!.id);
   return (
     <>
       <h2>{formTitle}</h2>
@@ -98,8 +101,11 @@ function HouseManageModal(props: Props) {
             getOptionLabel={getOptionLabel}
           />
         </div>
-        <Button type="submit">
-          {LeaderTossIcon}
+        <Button
+          type="submit"
+          disabled={!selectedOption}
+        >
+          {TossLeaderIcon}
         </Button>
 
       </form>
