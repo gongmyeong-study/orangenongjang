@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useCallback, useEffect, useState } from 'react';
 import { AiOutlineCrown } from 'react-icons/ai';
 import { Select } from 'react-functional-select';
@@ -40,7 +41,6 @@ function HouseManageModal(props: Props) {
     dispatch(houseActions.tossLeader(houseId, userId));
   };
   const onSubmitToToss = () => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     onTossLeader(props.house!.id, selectedOption!.id);
   };
 

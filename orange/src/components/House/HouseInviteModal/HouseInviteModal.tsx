@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   TextField, Button, InputAdornment,
 } from '@material-ui/core';
@@ -53,6 +53,7 @@ function HouseInviteModal(props: Props) {
   });
 
   const onSubmitToInvite = (data: HouseInviteFormData) => onInviteHouse(
+    /* eslint-disable @typescript-eslint/no-non-null-assertion */
     props.house!.id, data.email,
   );
 
