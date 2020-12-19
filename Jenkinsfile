@@ -1,8 +1,8 @@
+def applicationName = "orangenongjang"
 def ecrName = "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com"
 def repoName = "orangenongjang"
 def bucketName = "orangenongjang"
 def environmentName = "prod"
-def applicationName = "orangenongjang"
 
 pipeline {
   agent any
