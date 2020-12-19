@@ -1,6 +1,6 @@
 def ecrName = "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com"
 def repoName = "orangenongjang"
-def bucketName = ""
+def bucketName = "orangenongjang"
 def environmentName = ""
 def applicationName = "orangenongjang"
 
@@ -10,9 +10,15 @@ pipeline {
     stage('Build') {
       steps {
         git(branch: 'master', url: 'https://github.com/gongmyeong-study/orangenongjang.git')
-        sh "zip ${applicationName}.zip ${env.WORKSPACE}/Dockerrun.aws.json"
         sh "export AWS_REGION=ap-northeast-2"
         sh "docker-compose build"
+      }
+    }
+
+    stage('Upload') {
+      steps {
+        sh "zip ${applicationName}.zip ${env.WORKSPACE}/Dockerrun.aws.json"
+        sh "aws s3 cp ${applicationName}.zip s3://${bucketName}/${applicationName}/${JOB_NAME}-${BUILD_TIMESTAMP}.zip --region ap-northeast-2"
         sh "docker tag ${applicationName}_master_nongjang:latest ${ecrName}/${repoName}/${applicationName}_nongjang:latest"
         sh "docker tag ${applicationName}_master_orange:latest ${ecrName}/${repoName}/${applicationName}_orange:latest"
         sh "docker tag ${applicationName}_master_nginx:latest ${ecrName}/${repoName}/${applicationName}_nginx:latest"
@@ -24,6 +30,5 @@ pipeline {
         sh "docker push ${ecrName}/${repoName}/${applicationName}_nginx:latest"
       }
     }
-
   }
 }
