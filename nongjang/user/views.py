@@ -53,17 +53,18 @@ class UserViewSet(viewsets.GenericViewSet):
         username = request.data.get('username')
         password = request.data.get('password')
 
-        user = User.objects.filter(username=username, is_active=False)[0]
-        if check_password(password, user.password, "sha1"):
-            return Response({'error': "회원가입 인증이 완료되지 않았습니다."}, status=status.HTTP_401_UNAUTHORIZED)
-
         user = authenticate(request, username=username, password=password)
         if not user:
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                return Response(status=status.HTTP_403_FORBIDDEN)
+            if not user.is_active:
+                return Response({'error': "회원가입 인증이 완료되지 않았습니다."}, status=status.HTTP_401_UNAUTHORIZED)
             return Response(status=status.HTTP_403_FORBIDDEN)
 
-        if user.is_active:
-            login(request, user)
-            return Response(self.get_serializer(user).data)
+        return Response(self.get_serializer(user).data)
+
 
     @action(detail=False, methods=['GET'])
     def logout(self, request):
