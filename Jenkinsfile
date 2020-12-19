@@ -1,4 +1,4 @@
-def ecrName = "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang"
+def ecrName = "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com"
 def repoName = "orangenongjang"
 def bucketName = ""
 def environmentName = ""
