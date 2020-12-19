@@ -93,18 +93,19 @@ class UserActivateView(viewsets.GenericViewSet):
         """회원가입 메일 인증 API"""
         uidb64 = kwargs['uidb64']
         token = kwargs['token']
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(id=uid)
-        if user is None:
-            return Response({'error': "잘못된 접근입니다."}, status=status.HTTP_401_UNAUTHORIZED)
-        if user.is_active:
-            return Response({'error': "이미 인증된 회원입니다."}, status=status.HTTP_400_BAD_REQUEST)
         try:
-            if user_activation_token.check_token(user, token):
-                user.is_active = True
-                user.save()
-            else:
-                return Response({'error': "유효하지 않은 키입니다."}, status=status.HTTP_400_BAD_REQUEST)
-        except KeyError:
-            return Response({'error': "인증 키에 문제가 생겼습니다. 다시 시도해주세요."}, status=status.HTTP_400_BAD_REQUEST)
+            uid = force_text(urlsafe_base64_decode(uidb64))
+            user = User.objects.filter(id=uid).last()
+        except (UnicodeDecodeError, ValueError):
+            return Response({'error': "잘못된 접근입니다."}, status=status.HTTP_400_BAD_REQUEST)
+        if user is None:
+            return Response({'error': "잘못된 접근입니다."}, status=status.HTTP_400_BAD_REQUEST)
+        if user.is_active:
+            return Response({'error': "이미 인증된 회원입니다."}, status=status.HTTP_409_CONFLICT)
+
+        if user_activation_token.check_token(user, token):
+            user.is_active = True
+            user.save()
+        else:
+            return Response({'error': "유효하지 않은 키입니다."}, status=status.HTTP_400_BAD_REQUEST)
         return redirect(settings.REDIRECT_PAGE)
