@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core import mail
@@ -62,9 +61,8 @@ class UserViewSet(viewsets.GenericViewSet):
             if not user.is_active:
                 return Response({'error': "회원가입 인증이 완료되지 않았습니다."}, status=status.HTTP_401_UNAUTHORIZED)
             return Response(status=status.HTTP_403_FORBIDDEN)
-
+        login(request, user)
         return Response(self.get_serializer(user).data)
-
 
     @action(detail=False, methods=['GET'])
     def logout(self, request):
