@@ -2,7 +2,7 @@ def applicationName = "orangenongjang"
 def ecrName = "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com"
 def repoName = "orangenongjang"
 def bucketName = "orangenongjang"
-def environmentName = "prod"
+def environmentName = "production"
 
 pipeline {
   agent any
@@ -36,13 +36,13 @@ pipeline {
         sh "aws elasticbeanstalk create-application-version \
             --region ap-northeast-2 \
             --application-name ${applicationName} \
-            --version-label ${JOB_NAME}-${BUILD_NUMBER} \
+            --version-label ${environmentName}-${BUILD_NUMBER} \
             --description ${BUILD_TAG} \
             --source-bundle S3Bucket='${bucketName}',S3Key='${applicationName}/deploy.zip'"
         sh "aws elasticbeanstalk update-environment \
             --region ap-northeast-2 \
             --environment-name ${applicationName}-${environmentName} \
-            --version-label ${JOB_NAME}-${BUILD_NUMBER}"  
+            --version-label ${environmentName}-${BUILD_NUMBER}"  
       }
     }
   }
