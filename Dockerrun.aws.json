@@ -11,7 +11,7 @@
   "containerDefinitions": [
     {
       "name": "nongjang",
-      "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_nongjang:",
+      "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_nongjang:latest",
       "environment": [],
       "essential": true,
       "memory": 128,
@@ -24,7 +24,7 @@
     },
     {
       "name": "orange",
-      "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_orange/:",
+      "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_orange/:latest",
       "environment": [],
       "essential": true,
       "memory": 128,
@@ -41,7 +41,7 @@
     },
     {
       "name": "nginx",
-      "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_nginx:",
+      "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_nginx:latest",
       "essential": true,
       "memory": 128,
       "portMappings": [
