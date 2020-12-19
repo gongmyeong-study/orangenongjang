@@ -24,7 +24,7 @@
     },
     {
       "name": "orange",
-      "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_orange/:latest",
+      "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_orange:latest",
       "environment": [],
       "essential": true,
       "memory": 128,
