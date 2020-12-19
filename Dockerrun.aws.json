@@ -27,7 +27,7 @@
       "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_orange:latest",
       "environment": [],
       "essential": true,
-      "memory": 128,
+      "memory": 256,
       "mountPoints": [
         {
           "sourceVolume": "front_build",
@@ -54,14 +54,12 @@
           "containerPort": 443
         }
       ],
-      "links": [
-        "nongjang",
-        "orange"
-      ],
+      "links": [],
       "mountPoints": [
         {
           "sourceVolume": "front_build",
-          "containerPath": "/var/www/frontend"
+          "containerPath": "/var/www/frontend",
+          "readOnly": true
         },
         {
           "sourceVolume": "awseb-logs-nginx",
