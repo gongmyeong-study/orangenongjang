@@ -135,7 +135,7 @@ class HouseViewSet(viewsets.GenericViewSet):
                 EmailMessage(subject, message, to=[email], connection=connection).send()
             except SMTPException:
                 return Response({'error': "Email 발송에 문제가 있습니다."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
-            return Response({'message': "입력하신 이메일로 초대장이 전송되었습니다."})
+        return Response({'message': "입력하신 이메일로 초대장이 전송되었습니다."})
 
     @action(detail=True, methods=['GET', 'DELETE'])
     def user(self, request, pk=None):
