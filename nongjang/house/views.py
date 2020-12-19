@@ -21,6 +21,7 @@ from necessity.serializers import NecessitySerializer, NecessityLogSerializer, N
 from house.text import house_invite_message
 from user.token import user_activation_token
 
+
 class HouseViewSet(viewsets.GenericViewSet):
     queryset = House.objects.filter(is_hidden=False)
     serializer_class = HouseSerializer
@@ -118,22 +119,22 @@ class HouseViewSet(viewsets.GenericViewSet):
         if not invited_user:
             return Response({'error': "등록되지 않은 Email입니다."}, status=status.HTTP_404_NOT_FOUND)
         elif not invited_user.is_active:
-            return Response({'error': "초대장을 받으려면 회원 인증을 완료해야 합니다."}, status=status.HTTP_401_UNAUTHORIZED)
-        else:
-            if UserHouse.objects.filter(house=house, user=invited_user).exists():
-                return Response({'error': "이미 House에 등록된 멤버입니다."}, status=status.HTTP_409_CONFLICT)
+            return Response({'error': "초대장을 받을 유저가 우선 회원 인증을 완료해야 합니다."}, status=status.HTTP_401_UNAUTHORIZED)
 
-            with mail.get_connection() as connection:
-                subject = "오렌지농장 House에 초대합니다."
-                domain = get_current_site(request).domain
-                user_uidb64 = urlsafe_base64_encode(force_bytes(invited_user.id))
-                house_uidb64 = urlsafe_base64_encode(force_bytes(house.id))
-                token = user_activation_token.make_token(invited_user)
-                message = house_invite_message(domain, house_uidb64, user_uidb64, token, user, house, invited_user)
-                try:
-                    EmailMessage(subject, message, to=[email], connection=connection).send()
-                except SMTPException:
-                    return Response({'error': "Email 발송에 문제가 있습니다."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        if UserHouse.objects.filter(house=house, user=invited_user).exists():
+            return Response({'error': "이미 House에 등록된 멤버입니다."}, status=status.HTTP_409_CONFLICT)
+
+        with mail.get_connection() as connection:
+            subject = "오렌지농장 House에 초대합니다."
+            domain = get_current_site(request).domain
+            user_uidb64 = urlsafe_base64_encode(force_bytes(invited_user.id))
+            house_uidb64 = urlsafe_base64_encode(force_bytes(house.id))
+            token = user_activation_token.make_token(invited_user)
+            message = house_invite_message(domain, house_uidb64, user_uidb64, token, user, house, invited_user)
+            try:
+                EmailMessage(subject, message, to=[email], connection=connection).send()
+            except SMTPException:
+                return Response({'error': "Email 발송에 문제가 있습니다."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
             return Response({'message': "입력하신 이메일로 초대장이 전송되었습니다."})
 
     @action(detail=True, methods=['GET', 'DELETE'])
@@ -398,19 +399,22 @@ class HouseUserActivateView(viewsets.GenericViewSet):
         house_uidb64 = kwargs['house_uidb64']
         user_uidb64 = kwargs['user_uidb64']
         token = kwargs['token']
-        house = House.objects.get(id=force_text(urlsafe_base64_decode(house_uidb64)))
-        user = User.objects.get(id=force_text(urlsafe_base64_decode(user_uidb64)))
 
-        if not house or not user:
-            return Response({'error': "잘못된 접근입니다."}, status=status.HTTP_401_UNAUTHORIZED)
         try:
-            if user_activation_token.check_token(user, token):
-                try:
-                    UserHouse.objects.create(user=user, house=house)
-                except IntegrityError:
-                    return Response({'error': "이미 House에 등록된 멤버입니다."}, status=status.HTTP_409_CONFLICT)
-            else:
-                return Response({'error': "유효하지 않은 키입니다."}, status=status.HTTP_400_BAD_REQUEST)
-        except KeyError:
-            return Response({'error': "인증 키에 문제가 생겼습니다. 다시 시도해주세요."}, status=status.HTTP_400_BAD_REQUEST)
+            house_id = force_text(urlsafe_base64_decode(house_uidb64))
+            user_id = force_text(urlsafe_base64_decode(user_uidb64))
+            house = House.objects.filter(id=house_id).last()
+            user = User.objects.filter(id=user_id).last()
+        except (UnicodeDecodeError, ValueError):
+            return Response({'error': "잘못된 접근입니다."}, status=status.HTTP_400_BAD_REQUEST)
+        if not house or not user:
+            return Response({'error': "잘못된 접근입니다."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if user_activation_token.check_token(user, token):
+            try:
+                UserHouse.objects.create(user=user, house=house)
+            except IntegrityError:
+                return Response({'error': "이미 House에 등록된 멤버입니다."}, status=status.HTTP_409_CONFLICT)
+        else:
+            return Response({'error': "유효하지 않은 키입니다."}, status=status.HTTP_400_BAD_REQUEST)
         return redirect(settings.REDIRECT_PAGE)
