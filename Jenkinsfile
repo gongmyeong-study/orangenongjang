@@ -10,10 +10,7 @@ pipeline {
     stage('Build') {
       steps {
         git(branch: 'master', url: 'https://github.com/gongmyeong-study/orangenongjang.git')
-        sh "pwd"
-        sh "ls"
-        sh "zip ${applicationName}.zip ${env.WORKSPACE}/Dockerrun.json"
-        sh "ls"
+        sh "zip ${applicationName}.zip ${env.WORKSPACE}/Dockerrun.aws.json"
         sh "export AWS_REGION=ap-northeast-2"
         sh "docker-compose build"
         sh "docker tag ${applicationName}_master_nongjang:latest ${ecrName}/${repoName}/${applicationName}_nongjang:latest"
