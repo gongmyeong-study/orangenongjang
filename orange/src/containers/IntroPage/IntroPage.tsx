@@ -27,7 +27,7 @@ function IntroPage() {
     if (loginStatus === userStatus.SUCCESS) {
       window.location.reload();
     } if (loginStatus === userStatus.FAILURE_INACTIVE) {
-      alert('회원 인증을 완료해주세요!');
+      alert('메일을 확인하여 회원 인증을 완료해주세요!');
       window.location.reload();
     } if (loginStatus === userStatus.FAILURE_INFO) {
       alert('잘못된 이름 또는 비밀번호입니다.');

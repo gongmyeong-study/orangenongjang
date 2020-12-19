@@ -22,7 +22,6 @@ class UserViewSet(viewsets.GenericViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
-    # POST /api/v1/user/
     def create(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -48,24 +47,23 @@ class UserViewSet(viewsets.GenericViewSet):
                                 status=status.HTTP_503_SERVICE_UNAVAILABLE)
         return Response({'message': "회원 인증 메일이 전송되었습니다!"}, status=status.HTTP_201_CREATED)
 
-    # PUT /api/v1/user/login/
     @action(detail=False, methods=['PUT'])
     def login(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
 
-        # authenticate라는 함수는 username, password가 올바르면 해당 user를, 그렇지 않으면 None을 return
         user = authenticate(request, username=username, password=password)
         if not user:
-            # 존재하지 않는 사용자이거나 비밀번호가 틀린 경우
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                return Response(status=status.HTTP_403_FORBIDDEN)
+            if not user.is_active:
+                return Response({'error': "회원가입 인증이 완료되지 않았습니다."}, status=status.HTTP_401_UNAUTHORIZED)
             return Response(status=status.HTTP_403_FORBIDDEN)
+        login(request, user)
+        return Response(self.get_serializer(user).data)
 
-        if user.is_active:
-            login(request, user)
-            return Response(self.get_serializer(user).data)
-        return Response({'error': "회원가입 인증이 완료되지 않았습니다."}, status=status.HTTP_401_UNAUTHORIZED)
-
-    # GET /api/v1/user/logout/
     @action(detail=False, methods=['GET'])
     def logout(self, request):
         if request.user.is_authenticated:
@@ -73,7 +71,6 @@ class UserViewSet(viewsets.GenericViewSet):
             return Response()
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    # GET /api/v1/user/{pk}/
     def retrieve(self, request, pk=None):
         if pk == 'me':
             user = request.user
@@ -91,9 +88,9 @@ class UserActivateView(viewsets.GenericViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
-    # GET /api/v1/user/{uidb64}/activate/{token}/
     @action(detail=False, methods=['GET'])
     def activate(self, request, *args, **kwargs):
+        """회원가입 메일 인증 API"""
         uidb64 = kwargs['uidb64']
         token = kwargs['token']
         uid = force_text(urlsafe_base64_decode(uidb64))
@@ -110,5 +107,4 @@ class UserActivateView(viewsets.GenericViewSet):
                 return Response({'error': "유효하지 않은 키입니다."}, status=status.HTTP_400_BAD_REQUEST)
         except KeyError:
             return Response({'error': "인증 키에 문제가 생겼습니다. 다시 시도해주세요."}, status=status.HTTP_400_BAD_REQUEST)
-        redirect(settings.REDIRECT_PAGE)
-        return Response(self.get_serializer(user).data)
+        return redirect(settings.REDIRECT_PAGE)
