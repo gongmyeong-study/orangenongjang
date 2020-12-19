@@ -18,7 +18,7 @@ pipeline {
     stage('Upload') {
       steps {
         sh "zip ${applicationName}.zip ${env.WORKSPACE}/Dockerrun.aws.json"
-        sh "aws s3 cp ${applicationName}.zip s3://${bucketName}/${applicationName}/${JOB_NAME}-${BUILD_TIMESTAMP}.zip --region ap-northeast-2"
+        sh "aws s3 cp ${applicationName}.zip s3://${bucketName}/${applicationName}/${JOB_NAME}.zip --region ap-northeast-2"
         sh "docker tag ${applicationName}_master_nongjang:latest ${ecrName}/${repoName}/${applicationName}_nongjang:latest"
         sh "docker tag ${applicationName}_master_orange:latest ${ecrName}/${repoName}/${applicationName}_orange:latest"
         sh "docker tag ${applicationName}_master_nginx:latest ${ecrName}/${repoName}/${applicationName}_nginx:latest"
