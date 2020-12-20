@@ -1,0 +1,71 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "volumes": [
+    {
+      "name": "front_build",
+      "host": {
+        "sourcePath": "/var/app/current/frontend/build"
+      }
+    }
+  ],
+  "containerDefinitions": [
+    {
+      "name": "nongjang",
+      "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_nongjang:latest",
+      "environment": [],
+      "essential": true,
+      "memory": 128,
+      "mountPoints": [
+        {
+          "sourceVolume": "awseb-logs-nongjang",
+          "containerPath": "/var/log/nongjang"
+        }
+      ]
+    },
+    {
+      "name": "orange",
+      "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_orange:latest",
+      "environment": [],
+      "essential": true,
+      "memory": 256,
+      "mountPoints": [
+        {
+          "sourceVolume": "front_build",
+          "containerPath": "/app/frontend/build"
+        },
+        {
+          "sourceVolume": "awseb-logs-orange",
+          "containerPath": "/var/log/orange"
+        }
+      ]
+    },
+    {
+      "name": "nginx",
+      "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_nginx:latest",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        },
+        {
+          "hostPort": 443,
+          "containerPort": 443
+        }
+      ],
+      "links": [],
+      "mountPoints": [
+        {
+          "sourceVolume": "front_build",
+          "containerPath": "/var/www/frontend",
+          "readOnly": true
+        },
+        {
+          "sourceVolume": "awseb-logs-nginx",
+          "containerPath": "/var/log/nginx"
+        }
+      ]
+    }
+  ]
+}

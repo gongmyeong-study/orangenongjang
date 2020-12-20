@@ -5,4 +5,5 @@
 ![Node.js CI](https://github.com/gongmyeong-study/orangenongjang/workflows/Node.js%20CI/badge.svg)
 ![Django CI](https://github.com/gongmyeong-study/orangenongjang/workflows/Django%20CI/badge.svg)
 
-- 다빈, 영현, 진섭
+- **다빈, 영현, 진섭**
+- https://orangenongjang.com
