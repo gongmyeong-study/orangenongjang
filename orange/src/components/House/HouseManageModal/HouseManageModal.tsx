@@ -45,22 +45,32 @@ function HouseManageModal(props: Props) {
   };
 
   useEffect(() => {
-    if (leaveStatus === houseStatus.SUCCESS) {
-      alert('Dobby is Free!');
-    } if (leaveStatus === houseStatus.FAILURE_LEAVE_LEADER) {
-      alert('Leader는 House를 나갈 수 없습니다.');
-    } if (leaveStatus === houseStatus.FAILURE) {
-      alert('잘못된 접근입니다.');
+    switch (leaveStatus) {
+      case houseStatus.NONE:
+        break;
+      case houseStatus.SUCCESS:
+        alert('Dobby is Free!');
+        break;
+      case houseStatus.FAILURE_LEAVE_LEADER:
+        alert('Leader는 House를 나갈 수 없습니다.');
+        break;
+      default:
+        alert('잘못된 접근입니다.');
     }
-
-    if (tossStatus === houseStatus.SUCCESS) {
-      alert('Leader가 변경되었습니다.');
-    } if (tossStatus === houseStatus.FAILURE_INVITE_OR_TOSS_ME) {
-      alert('자기 자신에게는 Leader를 양도할 수 없습니다.');
-    } if (tossStatus === houseStatus.FAILURE_TOSS_LEADER) {
-      alert('Leader만 다른 사람에게 Leader를 양도할 수 있습니다.');
-    } if (tossStatus === houseStatus.FAILURE) {
-      alert('실패!');
+    switch (tossStatus) {
+      case houseStatus.NONE:
+        break;
+      case houseStatus.SUCCESS:
+        alert('Leader가 변경되었습니다.');
+        break;
+      case houseStatus.FAILURE_INVITE_OR_TOSS_ME:
+        alert('자기 자신에게는 Leader를 양도할 수 없습니다.');
+        break;
+      case houseStatus.FAILURE_TOSS_LEADER:
+        alert('Leader만 다른 사람에게 Leader를 양도할 수 있습니다.');
+        break;
+      default:
+        alert('잘못된 접근입니다.');
     }
   }, [leaveStatus, tossStatus]);
 

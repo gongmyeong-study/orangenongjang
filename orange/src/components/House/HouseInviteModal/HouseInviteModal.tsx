@@ -31,18 +31,26 @@ function HouseInviteModal(props: Props) {
   };
 
   useEffect(() => {
-    if (inviteStatus === houseStatus.SUCCESS) {
-      alert('입력한 이메일로 초대장을 전송했습니다.');
-    } if (inviteStatus === houseStatus.FAILURE_AUTHENTICATION) {
-      alert('메일주소 또는 인터넷 연결상태를 확인하고 다시 시도해주세요.');
-    } if (inviteStatus === houseStatus.FAILURE_INVITE_LEADER) {
-      alert('Leader만 멤버를 초대할 수 있습니다.');
-    } if (inviteStatus === houseStatus.FAILURE_INVITE_OR_TOSS_ME) {
-      alert('자기 자신은 초대할 수 없습니다.');
-    } if (inviteStatus === houseStatus.FAILURE_EMAIL) {
-      alert('오렌지농장에 등록되지 않은 회원입니다.');
-    } if (inviteStatus === houseStatus.FAILURE) {
-      alert('잘못된 접근입니다.');
+    switch (inviteStatus) {
+      case houseStatus.NONE:
+        break;
+      case houseStatus.SUCCESS:
+        alert('입력한 이메일로 초대장을 전송했습니다.');
+        break;
+      case houseStatus.FAILURE_AUTHENTICATION:
+        alert('메일주소 또는 인터넷 연결상태를 확인하고 다시 시도해주세요.');
+        break;
+      case houseStatus.FAILURE_INVITE_LEADER:
+        alert('Leader만 멤버를 초대할 수 있습니다.');
+        break;
+      case houseStatus.FAILURE_INVITE_OR_TOSS_ME:
+        alert('자기 자신은 초대할 수 없습니다.');
+        break;
+      case houseStatus.FAILURE_EMAIL:
+        alert('오렌지농장에 등록되지 않은 회원입니다.');
+        break;
+      default:
+        alert('잘못된 접근입니다.');
     }
   }, [inviteStatus]);
 
