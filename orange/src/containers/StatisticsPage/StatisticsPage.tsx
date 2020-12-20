@@ -4,7 +4,8 @@ class StatisticsPage extends Component {
   render() {
     return (
       <div className="statistics-page">
-        통계 페이지
+        <h1>준비중</h1>
+        <h3>Coming soon ...</h3>
       </div>
     );
   }

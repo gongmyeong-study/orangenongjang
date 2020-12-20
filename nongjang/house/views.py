@@ -154,7 +154,7 @@ class HouseViewSet(viewsets.GenericViewSet):
         user_house = user.user_houses.filter(house=house).last()
         if user_house.is_leader:
             return Response({'error': "leader이므로 집을 떠날 수 없습니다. leader를 다른 유저에게 양도한 뒤 다시 시도해 주세요"},
-                            status=status.HTTP_400_BAD_REQUEST)
+                            status=status.HTTP_403_FORBIDDEN)
         user_house.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -368,8 +368,6 @@ class HouseUserLeaderView(APIView):
         user_id = kwargs['user_id']
 
         user = self.request.user
-        if user.id == user_id:
-            return Response({'error': "자기 자신에게는 양도할 수 없습니다."}, status=status.HTTP_400_BAD_REQUEST)
 
         user_houses = UserHouse.objects.filter(house_id=house_id)
         from_user_house = user_houses.filter(user=user).last()
@@ -377,6 +375,9 @@ class HouseUserLeaderView(APIView):
             return Response({'error': "소속되어 있지 않은 집입니다."}, status=status.HTTP_403_FORBIDDEN)
         if not from_user_house.is_leader:
             return Response({'error': "leader만 leader 권한을 양도할 수 있습니다."}, status=status.HTTP_403_FORBIDDEN)
+
+        if user.id == user_id:
+            return Response({'error': "자기 자신에게는 양도할 수 없습니다."}, status=status.HTTP_400_BAD_REQUEST)
 
         to_user_house = user_houses.filter(user_id=user_id).last()
         if not to_user_house:

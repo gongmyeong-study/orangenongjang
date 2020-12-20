@@ -30,6 +30,7 @@
     "lodash": "4.17.19",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-functional-select": "^2.9.4",
     "react-hook-form": "^6.11.2",
     "react-icons": "^3.10.0",
     "react-modal": "^3.12.1",
@@ -37,10 +38,11 @@
     "react-router-dom": "^5.1.5",
     "react-scripts": "3.4.1",
     "react-slick": "^0.27.13",
+    "react-window": "^1.8.6",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "slick-carousel": "^1.8.1",
-    "styled-components": "^5.1.1",
+    "styled-components": "^5.2.1",
     "typescript": "~3.7.2"
   },
   "scripts": {

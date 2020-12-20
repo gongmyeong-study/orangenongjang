@@ -1,5 +1,5 @@
 import { RouterState } from 'connected-react-router';
-import { Place, User } from '../api';
+import { House, Place, User } from '../api';
 
 export interface NecessityState {
   createStatus: string;
@@ -18,8 +18,16 @@ export interface UserState {
   getMeStatus: string;
 }
 
+export interface HouseState {
+  inviteStatus?: string;
+  leaveStatus?: string;
+  tossStatus?: string;
+  house?: House;
+}
+
 export interface OrangeGlobalState {
   user: UserState;
   necessity: NecessityState;
+  house: HouseState;
   router: RouterState;
 }

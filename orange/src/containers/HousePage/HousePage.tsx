@@ -1,18 +1,41 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import axios from 'axios';
 import { History } from 'history';
+import Modal from 'react-modal';
 import { House } from '../../api';
+import { HouseInviteModal, HouseManageModal } from '../../components';
 
 interface Props {
   history: History;
+  house: House;
 }
 
 function HousePage(props: Props) {
   const [houses, setHouses] = useState<[House]>();
   const [nameToCreate, setNameToCreate] = useState('');
   const [introductionToCreate, setIntroductionToCreate] = useState('');
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+  const [isManageModalOpen, setIsManageModalOpen] = useState(false);
+  const [houseToBeManaged, setHouseToBeManaged] = useState<House>();
+  const [houseToBeInvited, setHouseToBeInvited] = useState<House>();
+
+  const manageHouse = (house: House) => {
+    setHouseToBeManaged(house);
+    setIsManageModalOpen(true);
+  };
+
+  const InviteUser = (house: House) => {
+    setHouseToBeInvited(house);
+    setIsInviteModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsInviteModalOpen(false);
+    setIsManageModalOpen(false);
+  };
 
   useEffect(() => {
+    Modal.setAppElement('body');
     const { CancelToken } = axios;
     const source = CancelToken.source();
 
@@ -55,6 +78,20 @@ function HousePage(props: Props) {
       >
         들어가기
       </button>
+
+      <button
+        type="button"
+        onClick={() => manageHouse(house)}
+      >
+        관리하기
+      </button>
+
+      <button
+        type="button"
+        onClick={() => InviteUser(house)}
+      >
+        초대하기
+      </button>
       <hr />
     </div>
   ));
@@ -70,6 +107,7 @@ function HousePage(props: Props) {
               onChange={(e) => setNameToCreate(e.target.value)}
             />
           </label>
+          &emsp;
           <label>
             소개:
             <input
@@ -83,6 +121,17 @@ function HousePage(props: Props) {
       <section>
         {showUserHouses}
       </section>
+
+      <Modal
+        isOpen={(isManageModalOpen || isInviteModalOpen)}
+        onRequestClose={closeModal}
+        className="create-modal"
+        overlayClassName="create-modal-overlay"
+      >
+        {(isManageModalOpen)
+          ? (<HouseManageModal house={houseToBeManaged} />)
+          : (<HouseInviteModal house={houseToBeInvited} />)}
+      </Modal>
     </main>
   );
 }
