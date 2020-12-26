@@ -99,7 +99,6 @@ if ENV_MODE == 'prod':
             'PORT': get_credential('prod/DB/farm', 'port'),
         }
     }
-    REDIRECT_PAGE = 'https://orangenongjang.com/main/'
 elif ENV_MODE == 'test':
     DATABASES = {
         'default': {
@@ -107,7 +106,6 @@ elif ENV_MODE == 'test':
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-    REDIRECT_PAGE = 'https://orangenongjang.com/'
 else:
     DATABASES = {
         'default': {
@@ -119,7 +117,7 @@ else:
             'PORT': '3306',
         }
     }
-    REDIRECT_PAGE = 'https://orangenongjang.com/main/'
+
 
 # Django Mail
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -130,6 +128,7 @@ EMAIL_HOST_USER = get_credential('prod/nongjang', 'EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = get_credential('prod/nongjang', 'EMAIL_HOST_PASSWORD')
 SERVER_EMAIL = get_credential('prod/nongjang', 'SERVER_EMAIL')
 DEFAULT_FROM_MAIL = 'orangenongjang'
+REDIRECT_PAGE = 'https://orangenongjang.com/main/'
 
 
 CACHES = {
