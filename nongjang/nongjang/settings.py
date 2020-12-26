@@ -33,7 +33,9 @@ USE_DEBUG_TOOLBAR = os.getenv('DEBUG_TOOLBAR', '').lower() == 'true'
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'http://orangenongjang-env.eba-vc2yptpy.ap-northeast-2.elasticbeanstalk.com',
+    'orangenongjang.com',
+    'www.orangenongjang.com',
+    'orangenongjang-env.eba-vc2yptpy.ap-northeast-2.elasticbeanstalk.com',
 ]
 
 
