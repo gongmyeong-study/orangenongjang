@@ -92,3 +92,10 @@ class PlaceSerializer(SimplePlaceSerializer):
             necessity_places = queryset.order_by('-created_at')
 
         return NecessityOfPlaceSerializer(necessity_places, many=True, context=self.context).data
+
+
+class PlaceEditSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Place
+        fields = ('name', )

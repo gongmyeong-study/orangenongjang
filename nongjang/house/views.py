@@ -15,7 +15,7 @@ from rest_framework.views import APIView
 from smtplib import SMTPException
 
 from house.models import House, Place, UserHouse
-from house.serializers import HouseSerializer, PlaceSerializer, SimpleHouseSerializer, UserOfHouseSerializer
+from house.serializers import HouseSerializer, PlaceSerializer, PlaceEditSerializer, SimpleHouseSerializer, UserOfHouseSerializer
 from necessity.models import Necessity, NecessityPlace, NecessityLog
 from necessity.serializers import NecessitySerializer, NecessityLogSerializer, NecessityOfPlaceWriteSerializer
 from house.text import house_invite_message
@@ -340,7 +340,7 @@ class PlaceNecessityCountView(APIView):
 class HousePlaceView(APIView):
     permission_classes = (IsAuthenticated, )
 
-    def delete(self, request, *args, **kwargs):
+    def put(self, request, *args, **kwargs):
         house_id = kwargs['house_id']
         place_id = kwargs['place_id']
 
@@ -354,10 +354,38 @@ class HousePlaceView(APIView):
         except Place.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+        data = request.data.copy()
+        place_name = data.get('name')
+        if not place_name:
+            data['name'] = place.name
+        serializer = PlaceEditSerializer(place, data=data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(PlaceSerializer(place).data)
+
+
+    def delete(self, request, *args, **kwargs):
+        house_id = kwargs['house_id']
+        place_id = kwargs['place_id']
+
+        user = self.request.user
+
+        user_house = user.user_houses.filter(house_id=house_id).last()
+        if not user_house:
+            return Response({'error': "소속되어 있지 않은 집입니다."}, status=status.HTTP_403_FORBIDDEN)
+        if not user_house.is_leader:
+            return Response({'error': "Leader만 place를 삭제할 수 있습니다."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            place = Place.objects.get(id=place_id, house_id=house_id)
+        except Place.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
         place.delete()
 
         places = Place.objects.filter(house_id=house_id)
-        return Response(PlaceSerializer(places, many=True))
+        return Response(PlaceSerializer(places, many=True).data)
 
 
 class HouseUserLeaderView(APIView):
