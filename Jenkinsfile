@@ -35,7 +35,7 @@ pipeline {
             --application-name ${applicationName} \
             --version-label ${environmentName}-${BUILD_NUMBER} \
             --description ${BUILD_TAG} \
-            --source-bundle S3Bucket='${bucketName}',S3Key='${applicationName}/deplo.zip'"
+            --source-bundle S3Bucket='${bucketName}',S3Key='${applicationName}/deploy.zip'"
         sh "aws elasticbeanstalk update-environment \
             --region ap-northeast-2 \
             --environment-name Orangenongjang-env \
@@ -45,10 +45,10 @@ pipeline {
   }
   post {
     success {
-      slackSend (channel: '#developers', color: '#00FF00', message: "SUCCESSFUL: Job '${JOB_NAME} [${BUILD_NUMBER}]' (${BUILD_URL})")
+      slackSend (channel: '#developers', color: '#00FF00', message: "SUCCESS: Job '${JOB_NAME} [${BUILD_NUMBER}]' (${BUILD_URL})")
     }
     failure {
-      slackSend (channel: '#developers', color: '#FF0000', message: "FAILED: Job '${JOB_NAME} [${BUILD_NUMBER}]' (${BUILD_URL})")
+      slackSend (channel: '#developers', color: '#FF0000', message: "FAILURE: Job '${JOB_NAME} [${BUILD_NUMBER}]' (${BUILD_URL})")
     }
   }
 }
