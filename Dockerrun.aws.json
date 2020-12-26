@@ -8,10 +8,16 @@
       "environment": [],
       "essential": true,
       "memory": 256,
+      "portMappings": [
+        {
+          "hostPort": 8000,
+          "containerPort": 8000
+        }
+      ],
       "mountPoints": [
         {
           "sourceVolume": "awseb-logs-code",
-          "containerPath": "/var/log/nongjang"
+          "containerPath": "/var/log/code"
         }
       ]
     },
