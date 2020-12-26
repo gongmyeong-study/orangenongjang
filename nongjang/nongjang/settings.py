@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import json
+
+from nongjang.secrets import get_credential
 
 ENV_MODE = os.getenv('MODE', 'dev')
 
@@ -23,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '%$(uu1zk1f4*8wnljep5ug(5t7*2u3+&exurk*0t+af56vbued'
+SECRET_KEY = get_credential('prod/nongjang', 'SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -85,8 +86,21 @@ WSGI_APPLICATION = 'nongjang.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-secret_file = os.path.join(os.path.dirname(__file__), 'secret_info.json')
-if ENV_MODE == 'test':
+
+print(f"*** MODE: {ENV_MODE} ***")
+if ENV_MODE == 'prod':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': get_credential('prod/DB/farm', 'dbname'),
+            'USER': get_credential('prod/DB/farm', 'username'),
+            'PASSWORD': get_credential('prod/DB/farm', 'password'),
+            'HOST': get_credential('prod/DB/farm', 'host'),
+            'PORT': get_credential('prod/DB/farm', 'port'),
+        }
+    }
+    REDIRECT_PAGE = 'https://orangenongjang.com/main/'
+elif ENV_MODE == 'test':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -94,45 +108,29 @@ if ENV_MODE == 'test':
         }
     }
     REDIRECT_PAGE = 'https://orangenongjang.com/'
-    
-elif os.path.exists(secret_file):
-    with open(secret_file) as f:
-        secret_info = json.loads(f.read())
-        print(f"*** MODE: {ENV_MODE} ***")
-        if ENV_MODE == 'prod':
-            DATABASES = {
-                'default': {
-                    'ENGINE': 'django.db.backends.mysql',
-                    'NAME': secret_info['DATABASE_NAME'],
-                    'USER': secret_info['DATABASE_USER'],
-                    'PASSWORD': secret_info['DATABASE_PASSWORD'],
-                    'HOST': secret_info['DATABASE_HOST'],
-                    'PORT': secret_info['DATABASE_PORT'],
-                }
-            }
-        else:
-            DATABASES = {
-                'default': {
-                    'ENGINE': 'django.db.backends.mysql',
-                    'NAME': secret_info['DATABASE_NAME'],
-                    'USER': secret_info['DATABASE_USER'],
-                    'PASSWORD': secret_info['DATABASE_PASSWORD'],
-                    'HOST': 'localhost',
-                    'PORT': '3306',
-                }
-            }
-        # Django Mail
-        EMAIL_BACKEND = secret_info['EMAIL_BACKEND']
-        EMAIL_USE_TLS = True
-        EMAIL_HOST = 'smtp.gmail.com'
-        EMAIL_PORT = 587
-        EMAIL_HOST_USER = secret_info['EMAIL_HOST_USER']
-        EMAIL_HOST_PASSWORD = secret_info['EMAIL_HOST_PASSWORD']
-        SERVER_EMAIL = secret_info['SERVER_EMAIL']
-        DEFAULT_FROM_MAIL = secret_info['DEFAULT_FROM_MAIL']
-        REDIRECT_PAGE = 'https://orangenongjang.com/main/'
 else:
-    raise Exception("Check your 'secret_info.json' file!")
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': get_credential('prod/DB/farm', 'dbname'),
+            'USER': get_credential('prod/DB/farm', 'username'),
+            'PASSWORD': get_credential('prod/DB/farm', 'password'),
+            'HOST': 'localhost',
+            'PORT': '3306',
+        }
+    }
+    REDIRECT_PAGE = 'https://orangenongjang.com/main/'
+
+# Django Mail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = get_credential('prod/nongjang', 'EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = get_credential('prod/nongjang', 'EMAIL_HOST_PASSWORD')
+SERVER_EMAIL = get_credential('prod/nongjang', 'SERVER_EMAIL')
+DEFAULT_FROM_MAIL = 'orangenongjang'
+
 
 CACHES = {
     'default': {
