@@ -17,7 +17,7 @@
       "mountPoints": [
         {
           "sourceVolume": "awseb-logs-code",
-          "containerPath": "/tmp/nongjang_uwsgi.log"
+          "containerPath": "/var/log/code"
         }
       ]
     },
