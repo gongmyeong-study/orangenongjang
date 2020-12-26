@@ -60,10 +60,6 @@
           "containerPort": 443
         }
       ],
-      "links": [
-        "code",
-        "front"
-      ],
       "mountPoints": [
         {
           "sourceVolume": "front_build",
