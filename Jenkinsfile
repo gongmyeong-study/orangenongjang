@@ -35,7 +35,7 @@ pipeline {
             --application-name ${applicationName} \
             --version-label ${environmentName}-${BUILD_NUMBER} \
             --description ${BUILD_TAG} \
-            --source-bundle S3Bucket='${bucketName}',S3Key='${applicationName}/deploy.zip'"
+            --source-bundle S3Bucket='${bucketName}',S3Key='${applicationName}/deplo.zip'"
         sh "aws elasticbeanstalk update-environment \
             --region ap-northeast-2 \
             --environment-name Orangenongjang-env \
