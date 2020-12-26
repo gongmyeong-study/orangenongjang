@@ -361,9 +361,7 @@ class HousePlaceView(APIView):
         serializer = PlaceEditSerializer(place, data=data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-
         return Response(PlaceSerializer(place).data)
-
 
     def delete(self, request, *args, **kwargs):
         house_id = kwargs['house_id']
@@ -383,7 +381,6 @@ class HousePlaceView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         place.delete()
-
         places = Place.objects.filter(house_id=house_id)
         return Response(PlaceSerializer(places, many=True).data)
 
