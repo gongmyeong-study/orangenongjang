@@ -10,7 +10,7 @@
   ],
   "containerDefinitions": [
     {
-      "name": "nongjang",
+      "name": "code",
       "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_nongjang:latest",
       "environment": [],
       "essential": true,
@@ -23,7 +23,7 @@
       ]
     },
     {
-      "name": "orange",
+      "name": "front",
       "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_orange:latest",
       "environment": [],
       "essential": true,
@@ -54,7 +54,10 @@
           "containerPort": 443
         }
       ],
-      "links": [],
+      "links": [
+        "code",
+        "front"
+      ],
       "mountPoints": [
         {
           "sourceVolume": "front_build",
