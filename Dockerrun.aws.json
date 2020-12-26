@@ -5,7 +5,12 @@
     {
       "name": "code",
       "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_nongjang:latest",
-      "environment": [],
+      "environment": [
+        {
+          "name": "MODE",
+          "value": "prod"
+        }
+      ],
       "essential": true,
       "memory": 256,
       "portMappings": [
