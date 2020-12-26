@@ -17,7 +17,7 @@
       "memory": 128,
       "mountPoints": [
         {
-          "sourceVolume": "awseb-logs-nongjang",
+          "sourceVolume": "awseb-logs-code",
           "containerPath": "/var/log/nongjang"
         }
       ]
@@ -34,7 +34,7 @@
           "containerPath": "/app/frontend/build"
         },
         {
-          "sourceVolume": "awseb-logs-orange",
+          "sourceVolume": "awseb-logs-front",
           "containerPath": "/var/log/orange"
         }
       ]
