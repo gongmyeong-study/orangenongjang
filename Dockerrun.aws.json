@@ -14,7 +14,13 @@
       "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_nongjang:latest",
       "environment": [],
       "essential": true,
-      "memory": 128,
+      "memory": 256,
+      "portMappings": [
+        {
+          "hostPort": 8000,
+          "containerPort": 8000
+        }
+      ],
       "mountPoints": [
         {
           "sourceVolume": "awseb-logs-code",
@@ -27,7 +33,7 @@
       "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_orange:latest",
       "environment": [],
       "essential": true,
-      "memory": 128,
+      "memory": 256,
       "mountPoints": [
         {
           "sourceVolume": "front_build",
