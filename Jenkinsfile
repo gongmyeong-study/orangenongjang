@@ -20,13 +20,10 @@ pipeline {
         sh "zip ${applicationName}.zip Dockerrun.aws.json"
         sh "aws s3 cp ${applicationName}.zip s3://${bucketName}/${applicationName}/deploy.zip --region ap-northeast-2"
         sh "docker tag ${applicationName}_master_nongjang:latest ${ecrName}/${repoName}/${applicationName}_nongjang:latest"
-        sh "docker tag ${applicationName}_master_orange:latest ${ecrName}/${repoName}/${applicationName}_orange:latest"
         sh "docker tag ${applicationName}_master_nginx:latest ${ecrName}/${repoName}/${applicationName}_nginx:latest"
         sh "aws ecr describe-repositories --repository-names ${repoName}/${applicationName}_nongjang || aws ecr create-repository --repository-name ${repoName}/${applicationName}_nongjang"
-        sh "aws ecr describe-repositories --repository-names ${repoName}/${applicationName}_orange || aws ecr create-repository --repository-name ${repoName}/${applicationName}_orange"
         sh "aws ecr describe-repositories --repository-names ${repoName}/${applicationName}_nginx || aws ecr create-repository --repository-name ${repoName}/${applicationName}_nginx"
         sh "docker push ${ecrName}/${repoName}/${applicationName}_nongjang:latest"
-        sh "docker push ${ecrName}/${repoName}/${applicationName}_orange:latest"
         sh "docker push ${ecrName}/${repoName}/${applicationName}_nginx:latest"
       }
     }

@@ -1,13 +1,6 @@
 {
   "AWSEBDockerrunVersion": 2,
-  "volumes": [
-    {
-      "name": "front_build",
-      "host": {
-        "sourcePath": "/var/app/current/frontend/build"
-      }
-    }
-  ],
+  "volumes": [],
   "containerDefinitions": [
     {
       "name": "code",
@@ -29,23 +22,6 @@
       ]
     },
     {
-      "name": "front",
-      "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_orange:latest",
-      "environment": [],
-      "essential": true,
-      "memory": 256,
-      "mountPoints": [
-        {
-          "sourceVolume": "front_build",
-          "containerPath": "/app/frontend/build"
-        },
-        {
-          "sourceVolume": "awseb-logs-front",
-          "containerPath": "/var/log/orange"
-        }
-      ]
-    },
-    {
       "name": "nginx",
       "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_nginx:latest",
       "essential": true,
@@ -60,12 +36,10 @@
           "containerPort": 443
         }
       ],
+      "links": [
+        "code"
+      ],
       "mountPoints": [
-        {
-          "sourceVolume": "front_build",
-          "containerPath": "/var/www/frontend",
-          "readOnly": true
-        },
         {
           "sourceVolume": "awseb-logs-nginx",
           "containerPath": "/var/log/nginx"
