@@ -10,5 +10,5 @@ COPY --from=builder /app/build /var/www/frontend
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx-app.conf /etc/nginx/conf.d/default.conf
 COPY nongjang/uwsgi_params /etc/nginx/uwsgi_params
-EXPOSE 80
+EXPOSE 80 443
 CMD ["nginx", "-g", "daemon off;"]
