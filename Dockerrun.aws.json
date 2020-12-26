@@ -27,7 +27,7 @@
       "image": "165498330170.dkr.ecr.ap-northeast-2.amazonaws.com/orangenongjang/orangenongjang_orange:latest",
       "environment": [],
       "essential": true,
-      "memory": 256,
+      "memory": 128,
       "mountPoints": [
         {
           "sourceVolume": "front_build",
