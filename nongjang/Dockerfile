@@ -7,4 +7,5 @@ RUN apt-get update \
     && pip install -r requirements.txt \
     && pip install -U pip uwsgi
 COPY . ./
+EXPOSE 8000
 CMD ["uwsgi", "--ini", "uwsgi.ini"]
