@@ -7,6 +7,7 @@ def environmentName = "production"
 pipeline {
   agent any
   stages {
+    when { branch 'master' }
     stage('Build') {
       steps {
         git(branch: 'master', url: 'https://github.com/gongmyeong-study/orangenongjang.git')
