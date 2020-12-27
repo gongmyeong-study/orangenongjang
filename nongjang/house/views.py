@@ -90,9 +90,12 @@ class HouseViewSet(viewsets.GenericViewSet):
         user = request.user
         house = self.get_object()
 
-        user_house = user.user_houses.filter(house=house).last()
+        try:
+            user_house = user.user_houses.get(house=house)
+        except UserHouse.DoesNotExist:
+            return Response({'error': "소속되어 있지 않은 집입니다."}, status=status.HTTP_400_BAD_REQUEST)
         if not user_house.is_leader:
-            return Response({'error': "leader만 집을 삭제할 수 있습니다."}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'error': "Leader만 집을 삭제할 수 있습니다."}, status=status.HTTP_403_FORBIDDEN)
 
         house.is_hidden = True
         house.save()
@@ -340,13 +343,14 @@ class PlaceNecessityCountView(APIView):
 class HousePlaceView(APIView):
     permission_classes = (IsAuthenticated, )
 
-    def delete(self, request, *args, **kwargs):
+    def put(self, request, *args, **kwargs):
         house_id = kwargs['house_id']
         place_id = kwargs['place_id']
 
         user = self.request.user
-        user_house = user.user_houses.filter(house_id=house_id).last()
-        if not user_house:
+        try:
+            user_house = user.user_houses.get(house_id=house_id)
+        except UserHouse.DoesNotExist:
             return Response({'error': "소속되어 있지 않은 집입니다."}, status=status.HTTP_403_FORBIDDEN)
 
         try:
@@ -354,10 +358,33 @@ class HousePlaceView(APIView):
         except Place.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        place.delete()
+        data = request.data.copy()
+        serializer = PlaceSerializer(place, data=data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(PlaceSerializer(place).data)
 
+    def delete(self, request, *args, **kwargs):
+        house_id = kwargs['house_id']
+        place_id = kwargs['place_id']
+
+        user = self.request.user
+        try:
+            user_house = user.user_houses.get(house_id=house_id)
+        except UserHouse.DoesNotExist:
+            return Response({'error': "소속되어 있지 않은 집입니다."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not user_house.is_leader:
+            return Response({'error': "Leader만 place를 삭제할 수 있습니다."}, status=status.HTTP_403_FORBIDDEN)
+
+        try:
+            place = Place.objects.get(id=place_id, house_id=house_id)
+        except Place.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        place.delete()
         places = Place.objects.filter(house_id=house_id)
-        return Response(PlaceSerializer(places, many=True))
+        return Response(PlaceSerializer(places, many=True).data)
 
 
 class HouseUserLeaderView(APIView):
