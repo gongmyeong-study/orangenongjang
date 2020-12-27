@@ -7,8 +7,8 @@ def environmentName = "production"
 pipeline {
   agent any
   stages {
-    when { branch 'master' }
     stage('Build') {
+      when { branch 'master' }
       steps {
         git(branch: 'master', url: 'https://github.com/gongmyeong-study/orangenongjang.git')
         sh "export AWS_REGION=ap-northeast-2"
@@ -17,6 +17,7 @@ pipeline {
     }
 
     stage('Upload') {
+      when { branch 'master' }
       steps {
         sh "zip ${applicationName}.zip Dockerrun.aws.json"
         sh "aws s3 cp ${applicationName}.zip s3://${bucketName}/${applicationName}/deploy.zip --region ap-northeast-2"
@@ -30,6 +31,7 @@ pipeline {
     }
     
     stage('Deploy') {
+      when { branch 'master' }
       steps {
         sh "aws elasticbeanstalk create-application-version \
             --region ap-northeast-2 \
@@ -45,11 +47,15 @@ pipeline {
     }
   }
   post {
-    success {
-      slackSend (channel: '#developers', color: '#00FF00', message: "SUCCESS: Job '${JOB_NAME} [${BUILD_NUMBER}]' (${BUILD_URL})")
-    }
-    failure {
-      slackSend (channel: '#developers', color: '#FF0000', message: "FAILURE: Job '${JOB_NAME} [${BUILD_NUMBER}]' (${BUILD_URL})")
+    script {
+      if (${BRANCH_NAME} == 'master') {
+        success {
+          slackSend (channel: '#developers', color: '#00FF00', message: "SUCCESS: Job '${JOB_NAME} [${BUILD_NUMBER}]' (${BUILD_URL})")
+        }
+        failure {
+          slackSend (channel: '#developers', color: '#FF0000', message: "FAILURE: Job '${JOB_NAME} [${BUILD_NUMBER}]' (${BUILD_URL})")
+        }
+      }
     }
   }
 }
