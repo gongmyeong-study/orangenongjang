@@ -47,12 +47,16 @@ pipeline {
     }
   }
   post {
-    script {
-      if (${BRANCH_NAME} == 'master') {
-        success {
+    success {
+      script {
+        if (${BRANCH_NAME} == 'master') {
           slackSend (channel: '#developers', color: '#00FF00', message: "SUCCESS: Job '${JOB_NAME} [${BUILD_NUMBER}]' (${BUILD_URL})")
         }
-        failure {
+      }
+    }
+    failure {
+      script {
+        if (${BRANCH_NAME} == 'master') {
           slackSend (channel: '#developers', color: '#FF0000', message: "FAILURE: Job '${JOB_NAME} [${BUILD_NUMBER}]' (${BUILD_URL})")
         }
       }
