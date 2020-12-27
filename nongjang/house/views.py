@@ -359,10 +359,6 @@ class HousePlaceView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         data = request.data.copy()
-        place_name = data.get('name')
-        if not place_name:
-            data['name'] = place.name
-            
         serializer = PlaceSerializer(place, data=data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
