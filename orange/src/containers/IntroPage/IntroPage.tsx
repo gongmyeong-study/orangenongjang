@@ -4,7 +4,7 @@ import {
 } from 'react-redux';
 import Modal from 'react-modal';
 
-import { SignUpForm } from '../../components/index';
+import { SignUpForm, SignInForm } from '../../components/index';
 import { userStatus } from '../../constants/constants';
 import { OrangeGlobalState } from '../../store/state';
 import './IntroPage.scss';
@@ -19,8 +19,12 @@ function IntroPage() {
     setIsSignUpModalOpen(!isSignUpModalOpen);
   };
 
+  const toggleSignInModal = () => {
+    setIsSignInModalOpen(!isSignInModalOpen);
+  };
+
   const closeModal = () => {
-    isSignInModalOpen ? toggleSignUpModal() : toggleSignUpModal();
+    isSignInModalOpen ? toggleSignInModal() : toggleSignUpModal();
   };
 
   useEffect(() => {
@@ -63,6 +67,7 @@ function IntroPage() {
       >
         <button className="close-button" type="button" onClick={closeModal}><i className="fas fa-times fa-2x" /></button>
         {isSignUpModalOpen && <SignUpForm />}
+        {isSignInModalOpen && <SignInForm />}
       </Modal>
       <div className="logo" />
       <div className="main">
@@ -76,7 +81,7 @@ function IntroPage() {
         </h1>
 
         <div className="buttons">
-          <button type="button">
+          <button type="button" onClick={toggleSignInModal}>
             Sign In
           </button>
           <button type="button" onClick={toggleSignUpModal}>

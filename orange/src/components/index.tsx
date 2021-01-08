@@ -13,6 +13,7 @@ import NecessityCounterButton from './Necessity/NecessityCounterButton/Necessity
 import HouseInviteModal from './House/HouseInviteModal/HouseInviteModal';
 import HouseManageModal from './House/HouseManageModal/HouseManageModal';
 import SignUpForm from './SignUpForm/SignUpForm';
+import SignInForm from './SignInForm/SignInForm';
 
 export {
   Header,
@@ -30,4 +31,5 @@ export {
   HouseInviteModal,
   HouseManageModal,
   SignUpForm,
+  SignInForm,
 };
