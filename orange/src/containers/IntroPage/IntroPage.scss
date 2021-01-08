@@ -61,11 +61,13 @@
     font-family: 'Noto Sans KR', Helvetica, sans-serif;
     outline: none;
 
-    .fas {
+    .close-button {
         position: absolute;
         right: 40px;
         margin-top: 20px;
         color: rgba(0, 0, 0, 0.86);
+        background: none;
+        border: none;
     }
 }
   

@@ -1,31 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import {
-  useSelector, useDispatch,
+  useSelector,
 } from 'react-redux';
 import Modal from 'react-modal';
 
-import { Login, SignUpForm } from '../../components/index';
+import { SignUpForm } from '../../components/index';
 import { userStatus } from '../../constants/constants';
-import { login, signUp } from '../../store/actions/user/user';
 import { OrangeGlobalState } from '../../store/state';
+import './IntroPage.scss';
 
 function IntroPage() {
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
 
-  const dispatch = useDispatch();
   const { loginStatus, signupStatus } = useSelector((state: OrangeGlobalState) => state.user);
-
-  const onLogin = (username: string, password: string) => {
-    dispatch(login(username, password));
-  };
 
   const toggleSignUpModal = () => {
     setIsSignUpModalOpen(!isSignUpModalOpen);
   };
 
-  const toggleSignInModal = () => {
-    setIsSignInModalOpen(!isSignInModalOpen);
+  const closeModal = () => {
+    isSignInModalOpen ? toggleSignUpModal() : toggleSignUpModal();
   };
 
   useEffect(() => {
@@ -62,13 +57,12 @@ function IntroPage() {
     <div className="intro-wrapper">
       <Modal
         isOpen={isSignUpModalOpen || isSignInModalOpen}
-        onRequestClose={isSignInModalOpen ? toggleSignUpModal : toggleSignUpModal}
+        onRequestClose={closeModal}
         className="sign-modal"
         overlayClassName="sign-modal-overlay"
       >
-        <i className="fas fa-times fa-2x" />
+        <button className="close-button" type="button" onClick={closeModal}><i className="fas fa-times fa-2x" /></button>
         {isSignUpModalOpen && <SignUpForm />}
-        {/* {isSignInModalOpen && <SignInForm />} */}
       </Modal>
       <div className="logo" />
       <div className="main">
