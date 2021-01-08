@@ -22,11 +22,11 @@ function IntroPage() {
 
   const toggleSignUpModal = () => {
     setIsSignUpModalOpen(!isSignUpModalOpen);
-  }
+  };
 
   const toggleSignInModal = () => {
     setIsSignInModalOpen(!isSignInModalOpen);
-  }
+  };
 
   useEffect(() => {
     if (loginStatus === userStatus.SUCCESS) {
@@ -60,13 +60,13 @@ function IntroPage() {
 
   return (
     <div className="intro-wrapper">
-       <Modal
+      <Modal
         isOpen={isSignUpModalOpen || isSignInModalOpen}
         onRequestClose={isSignInModalOpen ? toggleSignUpModal : toggleSignUpModal}
         className="sign-modal"
         overlayClassName="sign-modal-overlay"
       >
-        <i className="fas fa-times fa-2x"></i>
+        <i className="fas fa-times fa-2x" />
         {isSignUpModalOpen && <SignUpForm />}
         {/* {isSignInModalOpen && <SignInForm />} */}
       </Modal>
