@@ -24,7 +24,11 @@ function IntroPage() {
   };
 
   const closeModal = () => {
-    isSignInModalOpen ? toggleSignInModal() : toggleSignUpModal();
+    if (isSignInModalOpen) {
+      toggleSignInModal();
+    } else {
+      toggleSignUpModal();
+    }
   };
 
   useEffect(() => {
@@ -65,6 +69,7 @@ function IntroPage() {
         className="sign-modal"
         overlayClassName="sign-modal-overlay"
       >
+        {/*  eslint-disable-next-line jsx-a11y/control-has-associated-label */}
         <button className="close-button" type="button" onClick={closeModal}><i className="fas fa-times fa-2x" /></button>
         {isSignUpModalOpen && <SignUpForm />}
         {isSignInModalOpen && <SignInForm />}
@@ -79,7 +84,6 @@ function IntroPage() {
         <h1 className="title">
           오렌지 농장
         </h1>
-
         <div className="buttons">
           <button type="button" onClick={toggleSignInModal}>
             Sign In
