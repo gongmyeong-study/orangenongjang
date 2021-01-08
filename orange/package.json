@@ -69,7 +69,8 @@
     ]
   },
   "devDependencies": {
-    "husky": "^4.3.0"
+    "husky": "^4.3.0",
+    "node-sass": "^4.0.0"
   },
   "husky": {
     "hooks": {

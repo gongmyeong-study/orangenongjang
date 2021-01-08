@@ -1,0 +1,33 @@
+.signup-form {
+    height: 100%;
+    width: 100%;
+    padding: 30px 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .textfield {
+        margin: 12px;
+        border-radius: 8px;
+
+        & .MuiOutlinedInput-root{
+            & fieldset {
+              color: 'red',
+            }
+        }
+    }
+
+    .submit-button {
+        margin: 12px;
+        border: 1px solid #ff7245;
+        border-radius: 20px;
+
+        h2 {
+            margin: 4px;
+        }
+    }
+
+    .submit-button:hover {
+        background-color: #ff7245;
+    }
+}

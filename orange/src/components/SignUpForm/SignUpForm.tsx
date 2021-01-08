@@ -1,14 +1,12 @@
 import React from 'react';
-import './SignUpModal.css';
-import { useForm } from 'react-hook-form';
-import { Button, InputAdornment, TextField } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { TextField, InputAdornment, Button } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
-
-interface Props {
-  onSignUp: (email: string, username: string, password: string) => any; // for redux dispatch
-}
+import { useForm } from 'react-hook-form';
+import { signUp } from '../../store/actions/user/user';
+import './SignUpForm.scss';
 
 interface SignUpFormData {
   email: string;
@@ -16,21 +14,29 @@ interface SignUpFormData {
   password: string;
 }
 
-function SignUpModal(props: Props) {
+function SignUpForm() {
+  const dispatch = useDispatch();
+
+  const onSignUp = (email: string, username: string, password: string) => {
+    dispatch(signUp(email, username, password));
+  };
+
   const {
     register, handleSubmit, errors,
   } = useForm<SignUpFormData>();
 
-  const onSubmit = (data: SignUpFormData) => props.onSignUp(
-    data.email, data.username, data.password,
-  );
+  const onSubmit = (data: SignUpFormData) => {
+    onSignUp(data.email, data.username, data.password);
+  };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <form className="signup-form" onSubmit={handleSubmit(onSubmit)}>
+        <h1>회원가입</h1>
         <TextField
+          className="textfield"
           name="email"
           placeholder="이메일"
+          color="secondary"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -51,8 +57,10 @@ function SignUpModal(props: Props) {
           helperText={errors.email && errors.email.message}
         />
         <TextField
+          className="textfield"
           name="username"
           placeholder="이름"
+          color="secondary"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -66,8 +74,10 @@ function SignUpModal(props: Props) {
           helperText={errors.username && '이름을 입력해주세요!'}
         />
         <TextField
+          className="textfield"
           name="password"
           placeholder="비밀번호"
+          color="secondary"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -81,10 +91,11 @@ function SignUpModal(props: Props) {
           error={Boolean(errors.password)}
           helperText={errors.password && '비밀번호를 입력해주세요!'}
         />
-        <Button type="submit">인증 메일 전송</Button>
-      </form>
-    </>
+      <Button className="submit-button" type="submit">
+        <h2>인증 메일 전송</h2>
+      </Button>
+    </form>
   );
 }
 
-export default SignUpModal;
+export default SignUpForm;

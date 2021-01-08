@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react';
 import {
   useSelector, useDispatch,
 } from 'react-redux';
+import Modal from 'react-modal';
 
-import { Login, SignUpModal } from '../../components/index';
+import { Login, SignUpForm } from '../../components/index';
 import { userStatus } from '../../constants/constants';
 import { login, signUp } from '../../store/actions/user/user';
 import { OrangeGlobalState } from '../../store/state';
 
 function IntroPage() {
-  const [showSignUpModal, setShowSignUpModal] = useState(false);
-  const showModal = () => setShowSignUpModal(true);
+  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+  const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
 
   const dispatch = useDispatch();
   const { loginStatus, signupStatus } = useSelector((state: OrangeGlobalState) => state.user);
@@ -19,9 +20,13 @@ function IntroPage() {
     dispatch(login(username, password));
   };
 
-  const onSignUp = (email: string, username: string, password: string) => {
-    dispatch(signUp(email, username, password));
-  };
+  const toggleSignUpModal = () => {
+    setIsSignUpModalOpen(!isSignUpModalOpen);
+  }
+
+  const toggleSignInModal = () => {
+    setIsSignInModalOpen(!isSignInModalOpen);
+  }
 
   useEffect(() => {
     if (loginStatus === userStatus.SUCCESS) {
@@ -54,16 +59,37 @@ function IntroPage() {
   }, [loginStatus, signupStatus]);
 
   return (
-    <div>
-      <Login onLogin={onLogin} />
-      <button
-        onClick={showModal}
-        type="button"
+    <div className="intro-wrapper">
+       <Modal
+        isOpen={isSignUpModalOpen || isSignInModalOpen}
+        onRequestClose={isSignInModalOpen ? toggleSignUpModal : toggleSignUpModal}
+        className="sign-modal"
+        overlayClassName="sign-modal-overlay"
       >
-        회원가입
-        {' '}
-      </button>
-      {showSignUpModal && <SignUpModal onSignUp={onSignUp} /> }
+        <i className="fas fa-times fa-2x"></i>
+        {isSignUpModalOpen && <SignUpForm />}
+        {/* {isSignInModalOpen && <SignInForm />} */}
+      </Modal>
+      <div className="logo" />
+      <div className="main">
+        <p className="text">
+          당신과 함께 사는,
+          <br />
+          편안하고 영감 가득한 공간
+        </p>
+        <h1 className="title">
+          오렌지 농장
+        </h1>
+
+        <div className="buttons">
+          <button type="button">
+            Sign In
+          </button>
+          <button type="button" onClick={toggleSignUpModal}>
+            Sign Up
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
