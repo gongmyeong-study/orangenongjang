@@ -86,10 +86,10 @@ function IntroPage() {
         </h1>
         <div className="buttons">
           <button type="button" onClick={toggleSignInModal}>
-            Sign In
+            로그인
           </button>
           <button type="button" onClick={toggleSignUpModal}>
-            Sign Up
+            회원가입
           </button>
         </div>
       </div>
