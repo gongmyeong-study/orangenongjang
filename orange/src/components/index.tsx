@@ -4,7 +4,6 @@ import NecessityCreateOrUpdateForm from './Necessity/NecessityCreateOrUpdateForm
 import PlaceBox from './PlaceBox/PlaceBox';
 import NecessityItem from './Necessity/NecessityItem/NecessityItem';
 import NecessityList from './Necessity/NecessityList/NecessityList';
-import SignUpModal from './SignUpModal/SignUpModal';
 import StudyInfo from './StudyInfo/StudyInfo';
 import LogList from './LogList/LogList';
 import PlaceCreateForm from './PlaceCreateForm/PlaceCreateForm';
@@ -13,6 +12,8 @@ import NecessityUpdateButton from './Necessity/NecessityUpdateButton/NecessityUp
 import NecessityCounterButton from './Necessity/NecessityCounterButton/NecessityCounterButton';
 import HouseInviteModal from './House/HouseInviteModal/HouseInviteModal';
 import HouseManageModal from './House/HouseManageModal/HouseManageModal';
+import SignUpForm from './SignUpForm/SignUpForm';
+import SignInForm from './SignInForm/SignInForm';
 
 export {
   Header,
@@ -21,7 +22,6 @@ export {
   PlaceBox,
   NecessityItem,
   NecessityList,
-  SignUpModal,
   StudyInfo,
   LogList,
   PlaceCreateForm,
@@ -30,4 +30,6 @@ export {
   NecessityCounterButton,
   HouseInviteModal,
   HouseManageModal,
+  SignUpForm,
+  SignInForm,
 };
