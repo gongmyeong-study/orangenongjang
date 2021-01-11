@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import EdiText from 'react-editext';
 import {
   useSelector,
 } from 'react-redux';
@@ -17,6 +18,8 @@ interface Props {
 function PlaceBox(props: Props) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [necessityToBeUpdated, setNecessityToBeUpdated] = useState<Necessity>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [placeToBeRenamed, setPlaceToBeRenamed] = useState<Place>();
 
   const { createStatus, updateStatus } = useSelector((state: OrangeGlobalState) => state.necessity);
 
@@ -25,6 +28,10 @@ function PlaceBox(props: Props) {
   const updateNecessity = (necessity: Necessity) => {
     setNecessityToBeUpdated(necessity);
     setModalOpen(true);
+  };
+
+  const renamePlace = (placeName: Place) => {
+    setPlaceToBeRenamed(placeName);
   };
 
   const createNecessity = () => {
@@ -63,7 +70,13 @@ function PlaceBox(props: Props) {
       >
         <NecessityCreateOrUpdateForm placeId={place.id} necessityToBeUpdated={necessityToBeUpdated} type={necessityToBeUpdated ? 'UPDATE' : 'CREATE'} />
       </Modal>
-      <h1>{place.name}</h1>
+      <h1>
+        <EdiText
+          type="text"
+          value={place.name}
+          onSave={renamePlace}
+        />
+      </h1>
       <NecessityList
         place={place}
         updateNecessity={updateNecessity}

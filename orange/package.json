@@ -30,6 +30,7 @@
     "lodash": "4.17.19",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-editext": "^3.17.1",
     "react-functional-select": "^2.9.4",
     "react-hook-form": "^6.11.2",
     "react-icons": "^3.10.0",
