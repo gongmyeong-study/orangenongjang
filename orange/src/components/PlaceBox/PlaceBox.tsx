@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import EdiText from 'react-editext';
-import {
-  useSelector,
-} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { Necessity, Place } from '../../api';
+import { renamePlace } from '../../store/actions/necessity/necessity';
 import { OrangeGlobalState } from '../../store/state';
 import NecessityList from '../Necessity/NecessityList/NecessityList';
 import './PlaceBox.css';
@@ -16,10 +15,11 @@ interface Props {
 }
 
 function PlaceBox(props: Props) {
+  const dispatch = useDispatch();
   const [isModalOpen, setModalOpen] = useState(false);
   const [necessityToBeUpdated, setNecessityToBeUpdated] = useState<Necessity>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [placeToBeRenamed, setPlaceToBeRenamed] = useState<Place>();
+  const [placeToBeRenamed, setPlaceToBeRenamed] = useState('');
 
   const { createStatus, updateStatus } = useSelector((state: OrangeGlobalState) => state.necessity);
 
@@ -30,8 +30,13 @@ function PlaceBox(props: Props) {
     setModalOpen(true);
   };
 
-  const renamePlace = (placeName: Place) => {
+  const RenamedPlace = (placeName: string) => {
     setPlaceToBeRenamed(placeName);
+  };
+
+  const onRenamePlace = (houseId: number, placeId: number, placeName: string) => {
+    // setPlaceToBeRenamed(placeName);
+    dispatch(renamePlace(houseId, placeId, placeName));
   };
 
   const createNecessity = () => {
@@ -68,13 +73,28 @@ function PlaceBox(props: Props) {
         className="create-modal"
         overlayClassName="create-modal-overlay"
       >
-        <NecessityCreateOrUpdateForm placeId={place.id} necessityToBeUpdated={necessityToBeUpdated} type={necessityToBeUpdated ? 'UPDATE' : 'CREATE'} />
+        <NecessityCreateOrUpdateForm
+          placeId={place.id}
+          necessityToBeUpdated={necessityToBeUpdated}
+          type={necessityToBeUpdated ? 'UPDATE' : 'CREATE'}
+        />
       </Modal>
       <h1>
         <EdiText
           type="text"
+          editButtonClassName="far fa-pencil-alt"
+          showButtonsOnHover
+          submitOnUnfocus
+          submitOnEnter
+          cancelOnEscape
+          inputProps={{
+            className: 'text',
+            placeholder: 'Place 이름을 입력하세요.',
+          }}
+          validationMessage="한 글자 이상 입력하세요."
+          validation={(val) => val.length > 0}
           value={place.name}
-          onSave={renamePlace}
+          onSave={RenamedPlace}
         />
       </h1>
       <NecessityList
