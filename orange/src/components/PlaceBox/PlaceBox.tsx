@@ -15,15 +15,15 @@ interface Props {
 }
 
 function PlaceBox(props: Props) {
+  const { place } = props;
   const dispatch = useDispatch();
   const [isModalOpen, setModalOpen] = useState(false);
   const [necessityToBeUpdated, setNecessityToBeUpdated] = useState<Necessity>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [placeToBeRenamed, setPlaceToBeRenamed] = useState('');
+  const [isPlaceRenamed, setIsPlaceRenamed] = useState(false);
+  const [placeToBeRenamed, setPlaceToBeRenamed] = useState(place.name);
 
   const { createStatus, updateStatus } = useSelector((state: OrangeGlobalState) => state.necessity);
-
-  const { place } = props;
 
   const updateNecessity = (necessity: Necessity) => {
     setNecessityToBeUpdated(necessity);
@@ -32,11 +32,12 @@ function PlaceBox(props: Props) {
 
   const RenamedPlace = (placeName: string) => {
     setPlaceToBeRenamed(placeName);
+    setIsPlaceRenamed(true);
   };
 
   const onRenamePlace = (houseId: number, placeId: number, placeName: string) => {
-    // setPlaceToBeRenamed(placeName);
     dispatch(renamePlace(houseId, placeId, placeName));
+    setIsPlaceRenamed(false);
   };
 
   const createNecessity = () => {
@@ -97,6 +98,9 @@ function PlaceBox(props: Props) {
           onSave={RenamedPlace}
         />
       </h1>
+      {(isPlaceRenamed)
+        ? (onRenamePlace(place.house_id, place.id, placeToBeRenamed))
+        : (null)}
       <NecessityList
         place={place}
         updateNecessity={updateNecessity}

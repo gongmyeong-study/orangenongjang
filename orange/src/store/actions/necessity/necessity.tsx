@@ -186,9 +186,9 @@ const renamePlaceFailure = (error: AxiosError) => {
   };
 };
 export const renamePlace = (
-  houseId: number, placeId: number, placename: string,
+  houseId: number, placeId: number, name: string,
 ) => (dispatch: Dispatch) => axios.put(
-  `/api/v1/house/${houseId}/place/${placeId}/`, { houseId, placeId, placename },
+  `/api/v1/house/${houseId}/place/${placeId}/`, { houseId, placeId, name },
 )
   .then((renamePlaceResponse: AxiosResponse<Place>) => dispatch(
     renamePlaceSuccess(renamePlaceResponse.data),
