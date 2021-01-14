@@ -19,7 +19,6 @@ function PlaceBox(props: Props) {
   const dispatch = useDispatch();
   const [isModalOpen, setModalOpen] = useState(false);
   const [necessityToBeUpdated, setNecessityToBeUpdated] = useState<Necessity>();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isPlaceRenamed, setIsPlaceRenamed] = useState(false);
   const [placeToBeRenamed, setPlaceToBeRenamed] = useState(place.name);
 
