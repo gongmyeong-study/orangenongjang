@@ -1,6 +1,13 @@
 {
   "AWSEBDockerrunVersion": 2,
-  "volumes": [],
+  "volumes": [
+     {
+       "name": "django_static",
+       "host": {
+         "sourcePath": "/var/app/current/nongjang/static"
+       }
+     }
+   ],
   "containerDefinitions": [
     {
       "name": "code",
@@ -14,6 +21,10 @@
       "essential": true,
       "memory": 256,
       "mountPoints": [
+        {
+          "sourceVolume": "django_static",
+          "containerPath": "/app/api/nongjang/static"
+        },
         {
           "sourceVolume": "awseb-logs-code",
           "containerPath": "/var/log/code"
@@ -39,6 +50,11 @@
         "code"
       ],
       "mountPoints": [
+        {
+          "sourceVolume": "django_static",
+          "containerPath": "/var/www/django_static",
+          "readOnly": true
+        },
         {
           "sourceVolume": "awseb-logs-nginx",
           "containerPath": "/var/log/nginx"
