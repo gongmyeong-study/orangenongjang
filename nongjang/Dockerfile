@@ -7,5 +7,4 @@ RUN apt-get update \
     && pip install -r requirements.txt \
     && pip install -U pip uwsgi
 COPY . ./
-RUN python manage.py collectstatic
 CMD ["uwsgi", "--ini", "uwsgi.ini"]
