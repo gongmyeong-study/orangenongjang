@@ -8,9 +8,6 @@ services:
     build:
       context: ./nongjang/
       dockerfile: Dockerfile
-    command: python manage.py collectstatic
-    volumes:
-      - django_static:/app/api/nongjang/static
 
   nginx:
     container_name: nginx
@@ -20,10 +17,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - "80:80"
-    volumes:
-      - django_static:/var/www/django_static
     depends_on:
       - nongjang
-
-volumes:
-  django_static:
