@@ -40,8 +40,8 @@ jobs:
       id: build-image
       run: |
         docker-compose build
-        docker tag orangenongjang_nongjang:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY_NONGJANG:$IMAGE_TAG .
-        docker tag orangenongjang_nginx:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG .
+        docker tag orangenongjang_nongjang:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY_NONGJANG:$IMAGE_TAG
+        docker tag orangenongjang_nginx:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY_NONGJANG:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG
 
