@@ -1,0 +1,74 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_TAG: latest
+      BUILD_NUMBER: ${{ github.run_number }}
+      ECR_REGISTRY: ${{ secrets.ECR_REGISTRY_URL }}
+      ECR_REPOSITORY_NONGJANG: orangenongjang/orangenongjang_nongjang
+      ECR_REPOSITORY_NGINX: orangenongjang/orangenongjang_nginx
+      S3_BUCKET_NAME: orangenongjang
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Upload Dockerrun.aws.json to S3
+      run: |
+        zip deploy.zip Dockerrun.aws.json
+        aws s3 cp deploy.zip s3://$S3_BUCKET_NAME/orangenongjang/deploy.zip
+
+    - name: Login to ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Docker Build, tag, and push image to ECR
+      id: build-image
+      run: |
+        docker-compose build
+        docker tag orangenongjang_nongjang:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY_NONGJANG:$IMAGE_TAG
+        docker tag orangenongjang_nginx:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY_NONGJANG:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG
+
+    - name: Delete untagged images in ECR
+      run: |
+        UNTAGGED_IMAGES=$( aws ecr list-images --repository-name $ECR_REPOSITORY_NONGJANG --filter "tagStatus=UNTAGGED" --query 'imageIds[*]' --output json )
+        aws ecr batch-delete-image --repository-name $ECR_REPOSITORY_NONGJANG --image-ids "$UNTAGGED_IMAGES" || true
+        UNTAGGED_IMAGES=$( aws ecr list-images --repository-name $ECR_REPOSITORY_NGINX --filter "tagStatus=UNTAGGED" --query 'imageIds[*]' --output json )
+        aws ecr batch-delete-image --repository-name $ECR_REPOSITORY_NGINX --image-ids "$UNTAGGED_IMAGES" || true
+
+    - name: Deploy to ElasticBeanstalk
+      run: |
+        aws elasticbeanstalk create-application-version \
+          --application-name orangenongjang \
+          --version-label $BUILD_NUMBER \
+          --description $BUILD_NUMBER \
+          --source-bundle S3Bucket=$S3_BUCKET_NAME,S3Key='orangenongjang/deploy.zip'
+        aws elasticbeanstalk update-environment \
+          --environment-name Orangenongjang-env \
+          --version-label $BUILD_NUMBER
+
+    - name: Slack Notify
+      uses: rtCamp/action-slack-notify@v2.1.2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_TITLE: NEW RELEASE
+        SLACK_USERNAME: GitHub Actions
+        SLACK_ICON: https://user-images.githubusercontent.com/35535636/103177470-2237cb00-48be-11eb-9211-3ffa567c8ac3.png
+        SLACK_MESSAGE: Check <https://ap-northeast-2.console.aws.amazon.com/elasticbeanstalk/home?region=ap-northeast-2#/environment/dashboard?applicationName=orangenongjang&environmentId=e-tdutjbpiuw|EB> for updated environment
+        SLACK_FOOTER: https://orangenongjang.com
