@@ -63,7 +63,7 @@ function HouseManageModal(props: Props) {
       case houseStatus.SUCCESS:
         alert('Leader가 변경되었습니다.');
         break;
-      case houseStatus.FAILURE_INVITE_OR_TOSS_ME:
+      case houseStatus.FAILURE_TOSS_ME:
         alert('자기 자신에게는 Leader를 양도할 수 없습니다.');
         break;
       case houseStatus.FAILURE_TOSS_LEADER:
