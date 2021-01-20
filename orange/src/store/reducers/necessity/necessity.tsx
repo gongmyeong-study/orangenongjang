@@ -16,6 +16,7 @@ const initialState: NecessityState = {
   removeStatus: necessityStatus.NONE,
   countStatus: necessityStatus.NONE,
   updateStatus: necessityStatus.NONE,
+  updatePlaceStatus: necessityStatus.NONE,
   places: [],
 };
 
@@ -57,7 +58,7 @@ function necessityreducer(state = initialState, action: Action): NecessityState 
     if (action.type === necessityConstants.RENAME_PLACE_SUCCESS) {
       return {
         ...state,
-        updateStatus: necessityStatus.SUCCESS,
+        updatePlaceStatus: necessityStatus.SUCCESS,
         places,
       };
     }
@@ -121,6 +122,21 @@ function necessityreducer(state = initialState, action: Action): NecessityState 
       return {
         ...state,
         createStatus: necessityStatus.FAILURE_NAME,
+      };
+    case necessityConstants.RENAME_PLACE_FAILURE:
+      return {
+        ...state,
+        updatePlaceStatus: necessityStatus.FAILURE,
+      };
+    case necessityConstants.RENAME_PLACE_FAILURE_MEMBER:
+      return {
+        ...state,
+        updatePlaceStatus: necessityStatus.FAILURE,
+      };
+    case necessityConstants.RENAME_PLACE_FAILURE_NOT_FOUND:
+      return {
+        ...state,
+        updatePlaceStatus: necessityStatus.FAILURE,
       };
     case necessityConstants.REMOVE_NECESSITYPLACE_FAILURE:
       return {

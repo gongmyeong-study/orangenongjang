@@ -22,7 +22,9 @@ function PlaceBox(props: Props) {
   const [isPlaceRenamed, setIsPlaceRenamed] = useState(false);
   const [placeToBeRenamed, setPlaceToBeRenamed] = useState(place.name);
 
-  const { createStatus, updateStatus } = useSelector((state: OrangeGlobalState) => state.necessity);
+  const { createStatus, updateStatus, updatePlaceStatus } = useSelector(
+    (state: OrangeGlobalState) => state.necessity,
+  );
 
   const updateNecessity = (necessity: Necessity) => {
     setNecessityToBeUpdated(necessity);
@@ -61,7 +63,10 @@ function PlaceBox(props: Props) {
     } if (updateStatus === necessityStatus.FAILURE) {
       alert(`생필품 수정에 실패했어요ㅠㅠ\n 에러 메시지 : ${updateStatus}`);
     }
-  }, [createStatus, updateStatus]);
+    if (updatePlaceStatus === necessityStatus.FAILURE) {
+      alert(`Place 이름 변경에 실패했어요ㅠㅠ\n 에러 메시지 : ${updatePlaceStatus}`);
+    }
+  }, [createStatus, updateStatus, updatePlaceStatus]);
 
   return (
     <div
@@ -97,9 +102,7 @@ function PlaceBox(props: Props) {
           onSave={RenamedPlace}
         />
       </h1>
-      {(isPlaceRenamed)
-        ? (onRenamePlace(place.house_id, place.id, placeToBeRenamed))
-        : (null)}
+      {isPlaceRenamed && onRenamePlace(place.house_id, place.id, placeToBeRenamed)}
       <NecessityList
         place={place}
         updateNecessity={updateNecessity}
