@@ -24,10 +24,10 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
       return { ...state, inviteStatus: houseStatus.FAILURE_EMAIL };
     case houseConstants.INVITE_HOUSE_FAILURE_LEADER:
       return { ...state, inviteStatus: houseStatus.FAILURE_INVITE_LEADER };
-    case houseConstants.INVITE_HOUSE_FAILURE_ME:
-      return { ...state, inviteStatus: houseStatus.FAILURE_INVITE_OR_TOSS_ME };
     case houseConstants.INVITE_HOUSE_FAILURE_USERNAME:
       return { ...state, inviteStatus: houseStatus.FAILURE_USERNAME };
+    case houseConstants.INVITE_HOUSE_FAILURE_INACTIVE_USER:
+      return { ...state, inviteStatus: houseStatus.FAILURE_INACTIVE };
 
     case houseConstants.LEAVE_HOUSE_SUCCESS:
       return { ...state, leaveStatus: houseStatus.SUCCESS };
@@ -41,7 +41,7 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
     case houseConstants.TOSS_LEADER_FAILURE:
       return { ...state, tossStatus: houseStatus.FAILURE };
     case houseConstants.TOSS_LEADER_FAILURE_ME:
-      return { ...state, tossStatus: houseStatus.FAILURE_INVITE_OR_TOSS_ME };
+      return { ...state, tossStatus: houseStatus.FAILURE_TOSS_ME };
     case houseConstants.TOSS_LEADER_FAILURE_LEADER:
       return { ...state, tossStatus: houseStatus.FAILURE_TOSS_LEADER };
     default:

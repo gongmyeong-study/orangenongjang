@@ -43,11 +43,14 @@ function HouseInviteModal(props: Props) {
       case houseStatus.FAILURE_INVITE_LEADER:
         alert('Leader만 멤버를 초대할 수 있습니다.');
         break;
-      case houseStatus.FAILURE_INVITE_OR_TOSS_ME:
-        alert('자기 자신은 초대할 수 없습니다.');
-        break;
       case houseStatus.FAILURE_EMAIL:
         alert('오렌지농장에 등록되지 않은 회원입니다.');
+        break;
+      case houseStatus.FAILURE_USERNAME:
+        alert('이미 초대된 멤버입니다.');
+        break;
+      case houseStatus.FAILURE_INACTIVE:
+        alert('초대장을 받을 유저가 우선 회원 인증을 완료해야 합니다.');
         break;
       default:
         alert('잘못된 접근입니다.');
