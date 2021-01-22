@@ -57,7 +57,6 @@ function HouseCreateForm() {
         error={Boolean(errors.name)}
         helperText={errors.name && '집 소개를 입력해주세요!'}
         className="text-input intro"
-        inputProps={{ disableUnderline: true }}
         multiline
         rows={4}
         rowsMax={4}

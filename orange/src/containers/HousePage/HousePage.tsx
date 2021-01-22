@@ -57,6 +57,13 @@ function HousePage(props: Props) {
     props.history.push(url);
   };
 
+  const showInitialContets = () => (
+    <div className="initial-contents">
+      <p>동거인과 함께 사는 당신의 집을 생성해 주세요 🤝</p>
+      <button className="create-button" type="button" onClick={() => setIsCreateHouseModalOpen(true)}>집 생성하기</button>
+    </div>
+  );
+
   const showUserHouses = houses?.map((house, index) => (
     <div className="house-card" key={index} onClick={(e) => goToTheRoom(house.id)}>
       <div className="text-info">
@@ -86,20 +93,24 @@ function HousePage(props: Props) {
 
   return (
     <main className="house-page-wrapper">
-      <section>
-        <div className="header-wrapper">
-          <h1>집 목록</h1>
-          <button className="create-button" type="button" onClick={() => setIsCreateHouseModalOpen(true)}>추가</button>
-        </div>
-        {showUserHouses}
-      </section>
-
+      {houses?.length
+        ? (
+          <section>
+            <div className="header-wrapper">
+              <h1>집 목록</h1>
+              <button className="create-button" type="button" onClick={() => setIsCreateHouseModalOpen(true)}>추가</button>
+            </div>
+            {showUserHouses}
+          </section>
+        )
+        : showInitialContets()}
       <Modal
         isOpen={(isManageModalOpen || isInviteModalOpen) || isCreateHouseModalOpen}
         onRequestClose={closeModal}
         className="create-modal"
         overlayClassName="create-modal-overlay"
       >
+        {/*  eslint-disable-next-line jsx-a11y/control-has-associated-label */}
         <button className="close-button" type="button" onClick={closeModal}><i className="fas fa-times fa-2x" /></button>
         {isManageModalOpen && <HouseManageModal house={houseToBeManaged} />}
         {isInviteModalOpen && <HouseInviteModal house={houseToBeInvited} />}

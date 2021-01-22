@@ -9,12 +9,42 @@ button {
 .house-page-wrapper {
   display: flex;
   justify-content: center;
+  font-family: 'Noto Sans KR', Helvetica, sans-serif;
+
+  .initial-contents {
+    margin-top: 30vh;
+    padding: 0 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      line-height: 2.7rem;
+      font-size: 1.5rem;
+    }
+
+    .create-button {
+      margin-top: 40px;
+      border: solid 1px $orange;
+      border-radius: 100px;
+      font-size: 2rem;
+      font-weight: bold;
+      height: 4.4rem;
+      width: 13rem;
+      color: $orange;
+      line-height: 1rem;
+
+      &:hover {
+        background-color: $orange;
+        color: white;
+      }
+    }
+  }
 
   .header-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: 'Noto Sans KR', Helvetica, sans-serif;
     margin: 0 24px;
     max-width: 600px;
 
@@ -55,7 +85,6 @@ button {
       overflow: hidden;
 
       .house-name, .house-intro {
-        font-family: 'Noto Sans KR', Helvetica, sans-serif;
         text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
         margin: 0;
       }
@@ -99,68 +128,77 @@ button {
 }
 
 @media(max-width: 800px) {
-  .create-modal {
-    display: flex;
-    width: 92vw;
-    height: 110vw;
-    margin: auto;
-    background: white;
-    border-radius: 16px;
-    font-family: 'Noto Sans KR', Helvetica, sans-serif;
-    outline: none;
+  .house-page-wrapper {
+    section {
+      width: 100vw;
+    }
 
-    .close-button {
-      position: absolute;
-      right: 24px;
-      margin-top: -105%;
-      color: rgba(0, 0, 0, 0.86);
-      background: none;
-      border: none;
+    .create-modal {
+      display: flex;
+      width: 92vw;
+      height: 110vw;
+      margin: auto;
+      background: white;
+      border-radius: 16px;
       outline: none;
 
-    }
-  }
+      .close-button {
+        position: absolute;
+        right: 24px;
+        margin-top: -105%;
+        color: rgba(0, 0, 0, 0.86);
+        background: none;
+        border: none;
+        outline: none;
 
-  .create-modal-overlay {
-    top: 0;
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    background: rgba(0, 0, 0, 0.5);
+      }
+    }
+
+    .create-modal-overlay {
+      top: 0;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      background: rgba(0, 0, 0, 0.5);
+    }
   }
 }
 
 @media(min-width: 800px) {
-  .create-modal {
-    display: flex;
-    width: 40vw;
-    height: 50vw;
-    margin: auto;
-    background: white;
-    border-radius: 16px;
-    font-family: 'Noto Sans KR', Helvetica, sans-serif;
-    outline: none;
-
-    .close-button {
-      position: absolute;
-      margin-top: -50%;
-      margin-left: 35%;
-      color: rgba(0, 0, 0, 0.86);
-      background: none;
-      border: none;
-      outline: none;
+  .house-page-wrapper {
+    section {
+      width: 50vw;
     }
-  }
+    .create-modal {
+      display: flex;
+      width: 40vw;
+      height: 50vw;
+      margin: auto;
+      background: white;
+      border-radius: 16px;
+      outline: none;
 
-  .create-modal-overlay {
-    top: 0;
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    background: rgba(0, 0, 0, 0.5);
+      .close-button {
+        position: absolute;
+        margin-top: -50%;
+        margin-left: 35%;
+        color: rgba(0, 0, 0, 0.86);
+        background: none;
+        border: none;
+        outline: none;
+      }
+    }
+
+    .create-modal-overlay {
+      top: 0;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      background: rgba(0, 0, 0, 0.5);
+    }
   }
 }
