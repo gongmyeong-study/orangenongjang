@@ -4,6 +4,7 @@ import { History } from 'history';
 import Modal from 'react-modal';
 import { House } from '../../api';
 import { HouseInviteModal, HouseManageModal } from '../../components';
+import './HousePage.scss';
 
 interface Props {
   history: History;
@@ -65,40 +66,45 @@ function HousePage(props: Props) {
   };
 
   const showUserHouses = houses?.map((house, index) => (
-    <div key={index}>
-      <h1>
-        {house.name}
-      </h1>
-      <h2>
-        {house.introduction}
-      </h2>
-      <button
-        type="button"
-        onClick={() => goToTheRoom(house.id)}
-      >
-        들어가기
-      </button>
-
-      <button
-        type="button"
-        onClick={() => manageHouse(house)}
-      >
-        관리하기
-      </button>
-
-      <button
-        type="button"
-        onClick={() => InviteUser(house)}
-      >
-        초대하기
-      </button>
-      <hr />
+    <div className="house-card" key={index}>
+      <div className="text-info">
+        <h1 className="house-name">
+          {house.name}
+        </h1>
+        <p className="house-intro">
+          {house.introduction}
+        </p>
+      </div>
+      {/* <button */}
+      {/* type="button" */}
+      {/* onClick={() => goToTheRoom(house.id)} */}
+      {/* > */}
+      {/* 들어가기 */}
+      {/* </button> */}
+      <div className="button-wrapper">
+        <button
+          type="button"
+          onClick={() => manageHouse(house)}
+        >
+          설정
+        </button>
+        <button
+          type="button"
+          onClick={() => InviteUser(house)}
+        >
+          초대
+        </button>
+      </div>
     </div>
   ));
 
   return (
     <main>
       <section>
+        <div className="header-wrapper">
+          <h1>방 목록</h1>
+          <button className="create-button" type="button">추가</button>
+        </div>
         <form onSubmit={createHouse}>
           <label>
             이름:

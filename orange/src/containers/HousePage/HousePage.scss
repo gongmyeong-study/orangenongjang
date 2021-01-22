@@ -1,0 +1,70 @@
+$orange: rgb(255, 114, 69);
+$light-orange: rgba(255, 114, 69, 0.67);
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Noto Sans KR', Helvetica, sans-serif;
+  margin: 0 24px;
+
+  .create-button {
+    border: solid 1px $orange;
+    border-radius: 100px;
+    font-size: 1rem;
+    height: 2.2rem;
+    width: 4rem;
+    color: $orange;
+    line-height: 1rem;
+  }
+}
+
+.house-card {
+  background-color: $light-orange;
+  border-radius: 12px;
+  display: flex;
+  margin: 0 21px 21px;
+  justify-content: space-between;
+  height: 50vw;
+  color: white;
+
+  .text-info {
+    margin: 21px;
+
+    .house-name, .house-intro {
+      font-family: 'Noto Sans KR', Helvetica, sans-serif;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+      margin: 0;
+    }
+
+    .house-name {
+      margin-bottom: 18px;
+    }
+
+    .house-intro {
+      font-size: 1.125rem;
+    }
+  }
+
+  .button-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin: 0 21px 21px 0;
+
+    button:first-child {
+      margin-bottom: 16px;
+    }
+
+    button {
+      background-color: rgba(255, 255, 255, 0.8);
+      font-size: 1rem;
+      width: 3.6rem;
+      height: 1.8rem;
+      border: none;
+      border-radius: 100px;
+      color: $orange;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
