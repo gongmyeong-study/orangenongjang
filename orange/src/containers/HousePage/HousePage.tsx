@@ -59,13 +59,16 @@ function HousePage(props: Props) {
 
   const showInitialContets = () => (
     <div className="initial-contents">
-      <p>동거인과 함께 사는 당신의 집을 생성해 주세요 🤝</p>
+      <p>
+        동거인과 함께 사는 당신의 집을 생성해 주세요
+        <span role="img" aria-label="handshake"> 🤝</span>
+      </p>
       <button className="create-button" type="button" onClick={() => setIsCreateHouseModalOpen(true)}>집 생성하기</button>
     </div>
   );
 
   const showUserHouses = houses?.map((house, index) => (
-    <div className="house-card" key={index} onClick={(e) => goToTheRoom(house.id)}>
+    <div className="house-card" key={index} onClick={() => goToTheRoom(house.id)}>
       <div className="text-info">
         <h1 className="house-name">
           {house.name}
