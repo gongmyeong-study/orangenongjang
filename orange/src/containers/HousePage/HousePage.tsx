@@ -1,9 +1,9 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { History } from 'history';
 import Modal from 'react-modal';
 import { House } from '../../api';
-import { HouseInviteModal, HouseManageModal } from '../../components';
+import { HouseCreateForm, HouseInviteModal, HouseManageModal } from '../../components';
 import './HousePage.scss';
 
 interface Props {
@@ -13,26 +13,30 @@ interface Props {
 
 function HousePage(props: Props) {
   const [houses, setHouses] = useState<[House]>();
-  const [nameToCreate, setNameToCreate] = useState('');
-  const [introductionToCreate, setIntroductionToCreate] = useState('');
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const [isManageModalOpen, setIsManageModalOpen] = useState(false);
+  const [isCreateHouseModalOpen, setIsCreateHouseModalOpen] = useState(false);
   const [houseToBeManaged, setHouseToBeManaged] = useState<House>();
   const [houseToBeInvited, setHouseToBeInvited] = useState<House>();
 
-  const manageHouse = (house: House) => {
+  const manageHouse = (e: any, house: House) => {
+    e.stopPropagation();
     setHouseToBeManaged(house);
     setIsManageModalOpen(true);
   };
 
-  const InviteUser = (house: House) => {
+  const InviteUser = (e: any, house: House) => {
+    e.stopPropagation();
     setHouseToBeInvited(house);
     setIsInviteModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsInviteModalOpen(false);
-    setIsManageModalOpen(false);
+    if (isInviteModalOpen) {
+      setIsInviteModalOpen(false);
+    } else if (isManageModalOpen) {
+      setIsManageModalOpen(false);
+    } else setIsCreateHouseModalOpen(false);
   };
 
   useEffect(() => {
@@ -53,20 +57,8 @@ function HousePage(props: Props) {
     props.history.push(url);
   };
 
-  const createHouse = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    axios.post('/api/v1/house/', { name: nameToCreate, introduction: introductionToCreate })
-      .then((res) => {
-        const { data } = res;
-        goToTheRoom(data.id);
-      })
-      .catch(() => {
-        window.alert('같은 이름의 집을 가지고 있거나 요청에 문제가 있습니다.');
-      });
-  };
-
   const showUserHouses = houses?.map((house, index) => (
-    <div className="house-card" key={index}>
+    <div className="house-card" key={index} onClick={(e) => goToTheRoom(house.id)}>
       <div className="text-info">
         <h1 className="house-name">
           {house.name}
@@ -75,22 +67,16 @@ function HousePage(props: Props) {
           {house.introduction}
         </p>
       </div>
-      {/* <button */}
-      {/* type="button" */}
-      {/* onClick={() => goToTheRoom(house.id)} */}
-      {/* > */}
-      {/* 들어가기 */}
-      {/* </button> */}
       <div className="button-wrapper">
         <button
           type="button"
-          onClick={() => manageHouse(house)}
+          onClick={(e) => manageHouse(e, house)}
         >
-          설정
+          관리
         </button>
         <button
           type="button"
-          onClick={() => InviteUser(house)}
+          onClick={(e) => InviteUser(e, house)}
         >
           초대
         </button>
@@ -99,44 +85,25 @@ function HousePage(props: Props) {
   ));
 
   return (
-    <main>
+    <main className="house-page-wrapper">
       <section>
         <div className="header-wrapper">
-          <h1>방 목록</h1>
-          <button className="create-button" type="button">추가</button>
+          <h1>집 목록</h1>
+          <button className="create-button" type="button" onClick={() => setIsCreateHouseModalOpen(true)}>추가</button>
         </div>
-        <form onSubmit={createHouse}>
-          <label>
-            이름:
-            <input
-              type="text"
-              onChange={(e) => setNameToCreate(e.target.value)}
-            />
-          </label>
-          &emsp;
-          <label>
-            소개:
-            <input
-              type="text"
-              onChange={(e) => setIntroductionToCreate(e.target.value)}
-            />
-          </label>
-          <input type="submit" value="집 생성" disabled={!nameToCreate} />
-        </form>
-      </section>
-      <section>
         {showUserHouses}
       </section>
 
       <Modal
-        isOpen={(isManageModalOpen || isInviteModalOpen)}
+        isOpen={(isManageModalOpen || isInviteModalOpen) || isCreateHouseModalOpen}
         onRequestClose={closeModal}
         className="create-modal"
         overlayClassName="create-modal-overlay"
       >
-        {(isManageModalOpen)
-          ? (<HouseManageModal house={houseToBeManaged} />)
-          : (<HouseInviteModal house={houseToBeInvited} />)}
+        <button className="close-button" type="button" onClick={closeModal}><i className="fas fa-times fa-2x" /></button>
+        {isManageModalOpen && <HouseManageModal house={houseToBeManaged} />}
+        {isInviteModalOpen && <HouseInviteModal house={houseToBeInvited} />}
+        {isCreateHouseModalOpen && <HouseCreateForm />}
       </Modal>
     </main>
   );

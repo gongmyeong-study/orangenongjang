@@ -1,70 +1,166 @@
 $orange: rgb(255, 114, 69);
-$light-orange: rgba(255, 114, 69, 0.67);
+$light-orange: rgba(255, 114, 69, 0.7);
+$light-orange-hover: rgba(255, 114, 69, 0.88);
 
-.header-wrapper {
+button {
+  outline: none;
+}
+
+.house-page-wrapper {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: 'Noto Sans KR', Helvetica, sans-serif;
-  margin: 0 24px;
+  justify-content: center;
 
-  .create-button {
-    border: solid 1px $orange;
-    border-radius: 100px;
-    font-size: 1rem;
-    height: 2.2rem;
-    width: 4rem;
-    color: $orange;
-    line-height: 1rem;
+  .header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Noto Sans KR', Helvetica, sans-serif;
+    margin: 0 24px;
+    max-width: 600px;
+
+    .create-button {
+      border: solid 1px $orange;
+      border-radius: 100px;
+      font-size: 1rem;
+      height: 2.2rem;
+      width: 4rem;
+      color: $orange;
+      line-height: 1rem;
+
+      &:hover {
+        background-color: $orange;
+        color: white;
+      }
+    }
+  }
+
+  .house-card {
+    background-color: $light-orange;
+    border-radius: 12px;
+    display: flex;
+    margin: 0 21px 21px;
+    justify-content: space-between;
+    height: 50vw;
+    color: white;
+    max-width: 600px;
+    max-height: 300px;
+
+    &:hover {
+      background-color: $light-orange-hover;
+    }
+
+    .text-info {
+      margin: 21px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      .house-name, .house-intro {
+        font-family: 'Noto Sans KR', Helvetica, sans-serif;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        margin: 0;
+      }
+
+      .house-name {
+        margin-bottom: 18px;
+      }
+
+      .house-intro {
+        font-size: 1.125rem;
+      }
+    }
+
+    .button-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      margin: 0 21px 21px 0;
+
+      button:first-child {
+        margin-bottom: 16px;
+      }
+
+      button {
+        background-color: rgba(255, 255, 255, 0.8);
+        font-size: 1rem;
+        width: 3.6rem;
+        height: 1.8rem;
+        border: none;
+        border-radius: 100px;
+        color: $orange;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+          background-color: $orange;
+          color: white;
+        }
+      }
+    }
   }
 }
 
-.house-card {
-  background-color: $light-orange;
-  border-radius: 12px;
-  display: flex;
-  margin: 0 21px 21px;
-  justify-content: space-between;
-  height: 50vw;
-  color: white;
+@media(max-width: 800px) {
+  .create-modal {
+    display: flex;
+    width: 92vw;
+    height: 110vw;
+    margin: auto;
+    background: white;
+    border-radius: 16px;
+    font-family: 'Noto Sans KR', Helvetica, sans-serif;
+    outline: none;
 
-  .text-info {
-    margin: 21px;
+    .close-button {
+      position: absolute;
+      right: 24px;
+      margin-top: -105%;
+      color: rgba(0, 0, 0, 0.86);
+      background: none;
+      border: none;
+      outline: none;
 
-    .house-name, .house-intro {
-      font-family: 'Noto Sans KR', Helvetica, sans-serif;
-      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-      margin: 0;
-    }
-
-    .house-name {
-      margin-bottom: 18px;
-    }
-
-    .house-intro {
-      font-size: 1.125rem;
     }
   }
 
-  .button-wrapper {
+  .create-modal-overlay {
+    top: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    margin: 0 21px 21px 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
 
-    button:first-child {
-      margin-bottom: 16px;
-    }
+@media(min-width: 800px) {
+  .create-modal {
+    display: flex;
+    width: 40vw;
+    height: 50vw;
+    margin: auto;
+    background: white;
+    border-radius: 16px;
+    font-family: 'Noto Sans KR', Helvetica, sans-serif;
+    outline: none;
 
-    button {
-      background-color: rgba(255, 255, 255, 0.8);
-      font-size: 1rem;
-      width: 3.6rem;
-      height: 1.8rem;
+    .close-button {
+      position: absolute;
+      margin-top: -50%;
+      margin-left: 35%;
+      color: rgba(0, 0, 0, 0.86);
+      background: none;
       border: none;
-      border-radius: 100px;
-      color: $orange;
-      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+      outline: none;
     }
+  }
+
+  .create-modal-overlay {
+    top: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    background: rgba(0, 0, 0, 0.5);
   }
 }
