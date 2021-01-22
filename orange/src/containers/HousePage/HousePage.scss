@@ -132,37 +132,36 @@ button {
     section {
       width: 100vw;
     }
+  }
+  .create-modal {
+    display: flex;
+    width: 92vw;
+    height: 110vw;
+    margin: auto;
+    background: white;
+    border-radius: 16px;
+    outline: none;
 
-    .create-modal {
-      display: flex;
-      width: 92vw;
-      height: 110vw;
-      margin: auto;
-      background: white;
-      border-radius: 16px;
+    .close-button {
+      position: absolute;
+      right: 24px;
+      margin-top: -105%;
+      color: rgba(0, 0, 0, 0.86);
+      background: none;
+      border: none;
       outline: none;
 
-      .close-button {
-        position: absolute;
-        right: 24px;
-        margin-top: -105%;
-        color: rgba(0, 0, 0, 0.86);
-        background: none;
-        border: none;
-        outline: none;
-
-      }
     }
+  }
 
-    .create-modal-overlay {
-      top: 0;
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      display: flex;
-      background: rgba(0, 0, 0, 0.5);
-    }
+  .create-modal-overlay {
+    top: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    background: rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -171,34 +170,35 @@ button {
     section {
       width: 50vw;
     }
-    .create-modal {
-      display: flex;
-      width: 40vw;
-      height: 50vw;
-      margin: auto;
-      background: white;
-      border-radius: 16px;
+  }
+  
+  .create-modal {
+    display: flex;
+    width: 40vw;
+    height: 50vw;
+    margin: auto;
+    background: white;
+    border-radius: 16px;
+    outline: none;
+
+    .close-button {
+      position: absolute;
+      margin-top: -50%;
+      margin-left: 35%;
+      color: rgba(0, 0, 0, 0.86);
+      background: none;
+      border: none;
       outline: none;
-
-      .close-button {
-        position: absolute;
-        margin-top: -50%;
-        margin-left: 35%;
-        color: rgba(0, 0, 0, 0.86);
-        background: none;
-        border: none;
-        outline: none;
-      }
     }
+  }
 
-    .create-modal-overlay {
-      top: 0;
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      display: flex;
-      background: rgba(0, 0, 0, 0.5);
-    }
+  .create-modal-overlay {
+    top: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    background: rgba(0, 0, 0, 0.5);
   }
 }
