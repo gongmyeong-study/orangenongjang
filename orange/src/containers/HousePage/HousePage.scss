@@ -79,7 +79,7 @@ button {
       background-color: $light-orange-hover;
     }
 
-    .text-info {
+    .left-info {
       margin: 21px;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -98,11 +98,21 @@ button {
       }
     }
 
+    .right-info {
+      margin: 28px 21px 21px 21px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      p {
+        margin: 0;
+        text-align: center;
+      }
+    }
+
     .button-wrapper {
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      margin: 0 21px 21px 0;
 
       button:first-child {
         margin-bottom: 16px;

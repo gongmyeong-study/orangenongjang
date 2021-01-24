@@ -69,7 +69,7 @@ function HousePage(props: Props) {
 
   const showUserHouses = houses?.map((house, index) => (
     <div className="house-card" key={index} onClick={() => goToTheRoom(house.id)}>
-      <div className="text-info">
+      <div className="left-info">
         <h1 className="house-name">
           {house.name}
         </h1>
@@ -77,19 +77,27 @@ function HousePage(props: Props) {
           {house.introduction}
         </p>
       </div>
-      <div className="button-wrapper">
-        <button
-          type="button"
-          onClick={(e) => manageHouse(e, house)}
-        >
-          관리
-        </button>
-        <button
-          type="button"
-          onClick={(e) => InviteUser(e, house)}
-        >
-          초대
-        </button>
+      <div className="right-info">
+        <p>
+          멤버
+          {' '}
+          {house.users.length}
+          명
+        </p>
+        <div className="button-wrapper">
+          <button
+            type="button"
+            onClick={(e) => manageHouse(e, house)}
+          >
+            관리
+          </button>
+          <button
+            type="button"
+            onClick={(e) => InviteUser(e, house)}
+          >
+            초대
+          </button>
+        </div>
       </div>
     </div>
   ));
