@@ -14,6 +14,7 @@ import HouseInviteModal from './House/HouseInviteModal/HouseInviteModal';
 import HouseManageModal from './House/HouseManageModal/HouseManageModal';
 import SignUpForm from './SignUpForm/SignUpForm';
 import SignInForm from './SignInForm/SignInForm';
+import HouseCreateForm from './CreateHouseForm/HouseCreateForm';
 
 export {
   Header,
@@ -32,4 +33,5 @@ export {
   HouseManageModal,
   SignUpForm,
   SignInForm,
+  HouseCreateForm,
 };

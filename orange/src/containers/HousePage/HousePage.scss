@@ -1,0 +1,213 @@
+$orange: rgb(255, 114, 69);
+$light-orange: rgba(255, 114, 69, 0.7);
+$light-orange-hover: rgba(255, 114, 69, 0.88);
+
+button {
+  outline: none;
+  line-height: 1px;
+}
+
+.house-page-wrapper {
+  display: flex;
+  justify-content: center;
+  font-family: 'Noto Sans KR', Helvetica, sans-serif;
+
+  .initial-contents {
+    margin-top: 30vh;
+    padding: 0 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      line-height: 2.7rem;
+      font-size: 1.5rem;
+    }
+
+    .create-button {
+      margin-top: 40px;
+      border: solid 1px $orange;
+      border-radius: 100px;
+      font-size: 2rem;
+      font-weight: bold;
+      height: 4.4rem;
+      width: 13rem;
+      color: $orange;
+
+      &:hover {
+        background-color: $orange;
+        color: white;
+      }
+    }
+  }
+
+  .header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 24px;
+    max-width: 600px;
+
+    .create-button {
+      border: solid 1px $orange;
+      border-radius: 100px;
+      font-size: 1rem;
+      height: 2.2rem;
+      width: 4rem;
+      color: $orange;
+
+      &:hover {
+        background-color: $orange;
+        color: white;
+      }
+    }
+  }
+
+  .house-card {
+    background-color: $light-orange;
+    border-radius: 12px;
+    display: flex;
+    margin: 0 21px 21px;
+    justify-content: space-between;
+    height: 50vw;
+    color: white;
+    max-width: 600px;
+    max-height: 300px;
+
+    &:hover {
+      background-color: $light-orange-hover;
+    }
+
+    .left-info {
+      margin: 21px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      .house-name, .house-intro {
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        margin: 0;
+      }
+
+      .house-name {
+        margin-bottom: 18px;
+      }
+
+      .house-intro {
+        font-size: 1.125rem;
+      }
+    }
+
+    .right-info {
+      margin: 28px 21px 21px 21px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      p {
+        margin: 0;
+        text-align: center;
+      }
+    }
+
+    .button-wrapper {
+      display: flex;
+      flex-direction: column;
+
+      button:first-child {
+        margin-bottom: 16px;
+      }
+
+      button {
+        background-color: rgba(255, 255, 255, 0.8);
+        font-size: 1rem;
+        width: 3.6rem;
+        height: 1.8rem;
+        border: none;
+        border-radius: 100px;
+        color: $orange;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+          background-color: $orange;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+@media(max-width: 800px) {
+  .house-page-wrapper {
+    section {
+      width: 100vw;
+    }
+  }
+  .create-modal {
+    display: flex;
+    width: 92vw;
+    height: 110vw;
+    margin: auto;
+    background: white;
+    border-radius: 16px;
+    outline: none;
+
+    .close-button {
+      position: absolute;
+      right: 24px;
+      margin-top: -105%;
+      color: rgba(0, 0, 0, 0.86);
+      background: none;
+      border: none;
+      outline: none;
+
+    }
+  }
+
+  .create-modal-overlay {
+    top: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+@media(min-width: 800px) {
+  .house-page-wrapper {
+    section {
+      width: 50vw;
+    }
+  }
+  
+  .create-modal {
+    display: flex;
+    width: 40vw;
+    height: 60vh;
+    margin: auto;
+    background: white;
+    border-radius: 16px;
+    outline: none;
+
+    .close-button {
+      position: absolute;
+      top: 20%;
+      right: 31%;
+      color: rgba(0, 0, 0, 0.86);
+      background: none;
+      border: none;
+      outline: none;
+    }
+  }
+
+  .create-modal-overlay {
+    top: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    background: rgba(0, 0, 0, 0.5);
+  }
+}

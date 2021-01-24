@@ -1,0 +1,37 @@
+$orange: rgb(255, 114, 69);
+
+.create-house-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 30px 26px;
+  justify-content: center;
+  font-family: 'Noto Sans KR', Helvetica, sans-serif;
+
+  .text-input {
+    width: 60%;
+    margin-bottom: 32px;
+  }
+
+  .text-input.intro {
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .create-button {
+    color: $orange;
+    border-radius: 8px;
+    border: 1px solid $orange;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 8px 16px;
+
+    &:hover {
+      background-color: $orange;
+      color: white;
+    }
+  }
+}
