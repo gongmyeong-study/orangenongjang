@@ -19,8 +19,6 @@ function PlaceBox(props: Props) {
   const dispatch = useDispatch();
   const [isModalOpen, setModalOpen] = useState(false);
   const [necessityToBeUpdated, setNecessityToBeUpdated] = useState<Necessity>();
-  const [isPlaceRenamed, setIsPlaceRenamed] = useState(false);
-  const [placeToBeRenamed, setPlaceToBeRenamed] = useState(place.name);
 
   const { createStatus, updateStatus, updatePlaceStatus } = useSelector(
     (state: OrangeGlobalState) => state.necessity,
@@ -31,14 +29,12 @@ function PlaceBox(props: Props) {
     setModalOpen(true);
   };
 
-  const RenamedPlace = (placeName: string) => {
-    setPlaceToBeRenamed(placeName);
-    setIsPlaceRenamed(true);
-  };
-
   const onRenamePlace = (houseId: number, placeId: number, placeName: string) => {
     dispatch(renamePlace(houseId, placeId, placeName));
-    setIsPlaceRenamed(false);
+  };
+
+  const savePlace = (placeName: string) => {
+    onRenamePlace(place.house_id, place.id, placeName);
   };
 
   const createNecessity = () => {
@@ -99,10 +95,9 @@ function PlaceBox(props: Props) {
           validationMessage="한 글자 이상 입력하세요."
           validation={(val) => val.length > 0}
           value={place.name}
-          onSave={RenamedPlace}
+          onSave={savePlace}
         />
       </h1>
-      {isPlaceRenamed && onRenamePlace(place.house_id, place.id, placeToBeRenamed)}
       <NecessityList
         place={place}
         updateNecessity={updateNecessity}
