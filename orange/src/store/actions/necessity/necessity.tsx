@@ -162,3 +162,35 @@ export const createPlace = (houseId: number, name: string) => (dispatch: Dispatc
   dispatch(createPlaceSuccess(createResponse.data));
 })
   .catch((createError) => dispatch(createPlaceFailure(createError)));
+
+const renamePlaceSuccess = (place: Place) => ({
+  type: necessityConstants.RENAME_PLACE_SUCCESS,
+  target: place,
+});
+const renamePlaceFailure = (error: AxiosError) => {
+  let actionType = null;
+  switch (error.response?.status) {
+    case 404:
+      actionType = necessityConstants.RENAME_PLACE_FAILURE_NOT_FOUND;
+      break;
+    case 403:
+      actionType = necessityConstants.RENAME_PLACE_FAILURE_MEMBER;
+      break;
+    default:
+      actionType = necessityConstants.RENAME_PLACE_FAILURE;
+      break;
+  }
+  return {
+    type: actionType,
+    target: error,
+  };
+};
+export const renamePlace = (
+  houseId: number, placeId: number, name: string,
+) => (dispatch: Dispatch) => axios.put(
+  `/api/v1/house/${houseId}/place/${placeId}/`, { houseId, placeId, name },
+)
+  .then((renamePlaceResponse: AxiosResponse<Place>) => dispatch(
+    renamePlaceSuccess(renamePlaceResponse.data),
+  ))
+  .catch((renamePlaceError) => dispatch(renamePlaceFailure(renamePlaceError)));

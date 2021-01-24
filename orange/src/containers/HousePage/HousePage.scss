@@ -4,6 +4,7 @@ $light-orange-hover: rgba(255, 114, 69, 0.88);
 
 button {
   outline: none;
+  line-height: 1px;
 }
 
 .house-page-wrapper {
@@ -33,7 +34,6 @@ button {
       height: 4.4rem;
       width: 13rem;
       color: $orange;
-      line-height: 1rem;
 
       &:hover {
         background-color: $orange;
@@ -56,7 +56,6 @@ button {
       height: 2.2rem;
       width: 4rem;
       color: $orange;
-      line-height: 1rem;
 
       &:hover {
         background-color: $orange;
@@ -80,7 +79,7 @@ button {
       background-color: $light-orange-hover;
     }
 
-    .text-info {
+    .left-info {
       margin: 21px;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -99,11 +98,21 @@ button {
       }
     }
 
+    .right-info {
+      margin: 28px 21px 21px 21px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      p {
+        margin: 0;
+        text-align: center;
+      }
+    }
+
     .button-wrapper {
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      margin: 0 21px 21px 0;
 
       button:first-child {
         margin-bottom: 16px;
@@ -176,7 +185,7 @@ button {
   .create-modal {
     display: flex;
     width: 40vw;
-    height: 50vw;
+    height: 60vh;
     margin: auto;
     background: white;
     border-radius: 16px;
@@ -184,8 +193,8 @@ button {
 
     .close-button {
       position: absolute;
-      margin-top: -50%;
-      margin-left: 35%;
+      top: 20%;
+      right: 31%;
       color: rgba(0, 0, 0, 0.86);
       background: none;
       border: none;
