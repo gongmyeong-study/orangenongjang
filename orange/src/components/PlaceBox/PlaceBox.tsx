@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import {
-  useSelector,
-} from 'react-redux';
+import EdiText from 'react-editext';
+import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { Necessity, Place } from '../../api';
+import { renamePlace } from '../../store/actions/necessity/necessity';
 import { OrangeGlobalState } from '../../store/state';
 import NecessityList from '../Necessity/NecessityList/NecessityList';
 import './PlaceBox.css';
@@ -15,16 +15,26 @@ interface Props {
 }
 
 function PlaceBox(props: Props) {
+  const { place } = props;
+  const dispatch = useDispatch();
   const [isModalOpen, setModalOpen] = useState(false);
   const [necessityToBeUpdated, setNecessityToBeUpdated] = useState<Necessity>();
 
-  const { createStatus, updateStatus } = useSelector((state: OrangeGlobalState) => state.necessity);
-
-  const { place } = props;
+  const { createStatus, updateStatus, updatePlaceStatus } = useSelector(
+    (state: OrangeGlobalState) => state.necessity,
+  );
 
   const updateNecessity = (necessity: Necessity) => {
     setNecessityToBeUpdated(necessity);
     setModalOpen(true);
+  };
+
+  const onRenamePlace = (houseId: number, placeId: number, placeName: string) => {
+    dispatch(renamePlace(houseId, placeId, placeName));
+  };
+
+  const savePlace = (placeName: string) => {
+    onRenamePlace(place.house_id, place.id, placeName);
   };
 
   const createNecessity = () => {
@@ -49,7 +59,10 @@ function PlaceBox(props: Props) {
     } if (updateStatus === necessityStatus.FAILURE) {
       alert(`생필품 수정에 실패했어요ㅠㅠ\n 에러 메시지 : ${updateStatus}`);
     }
-  }, [createStatus, updateStatus]);
+    if (updatePlaceStatus === necessityStatus.FAILURE) {
+      alert(`Place 이름 변경에 실패했어요ㅠㅠ\n 에러 메시지 : ${updatePlaceStatus}`);
+    }
+  }, [createStatus, updateStatus, updatePlaceStatus]);
 
   return (
     <div
@@ -61,9 +74,30 @@ function PlaceBox(props: Props) {
         className="create-modal"
         overlayClassName="create-modal-overlay"
       >
-        <NecessityCreateOrUpdateForm placeId={place.id} necessityToBeUpdated={necessityToBeUpdated} type={necessityToBeUpdated ? 'UPDATE' : 'CREATE'} />
+        <NecessityCreateOrUpdateForm
+          placeId={place.id}
+          necessityToBeUpdated={necessityToBeUpdated}
+          type={necessityToBeUpdated ? 'UPDATE' : 'CREATE'}
+        />
       </Modal>
-      <h1>{place.name}</h1>
+      <h1>
+        <EdiText
+          type="text"
+          editButtonClassName="far fa-pencil-alt"
+          showButtonsOnHover
+          submitOnUnfocus
+          submitOnEnter
+          cancelOnEscape
+          inputProps={{
+            className: 'text',
+            placeholder: 'Place 이름을 입력하세요.',
+          }}
+          validationMessage="한 글자 이상 입력하세요."
+          validation={(val) => val.length > 0}
+          value={place.name}
+          onSave={savePlace}
+        />
+      </h1>
       <NecessityList
         place={place}
         updateNecessity={updateNecessity}
