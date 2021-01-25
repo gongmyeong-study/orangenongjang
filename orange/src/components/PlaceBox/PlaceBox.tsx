@@ -82,15 +82,20 @@ function PlaceBox(props: Props) {
       </Modal>
       <h1>
         <EdiText
+          viewContainerClassName="place-update-box"
+          editButtonContent={<i className="fas fa-pencil-alt" />}
+          saveButtonContent={<i className="fas fa-check" />}
+          cancelButtonContent={<i className="fas fa-times" />}
+          hideIcons
           type="text"
-          editButtonClassName="far fa-pencil-alt"
           showButtonsOnHover
           submitOnUnfocus
           submitOnEnter
           cancelOnEscape
           inputProps={{
-            className: 'text',
+            className: 'place-update-input',
             placeholder: 'Place 이름을 입력하세요.',
+            style: { fontSize: 18 },
           }}
           validationMessage="한 글자 이상 입력하세요."
           validation={(val) => val.length > 0}
