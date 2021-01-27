@@ -102,7 +102,14 @@ function PlaceBox(props: Props) {
           value={place.name}
           onSave={savePlace}
         />
+        <button
+          className="place-delete-button"
+          type="button"
+        >
+          <i className="fas fa-times fa-2x" />
+        </button>
       </h1>
+
       <NecessityList
         place={place}
         updateNecessity={updateNecessity}
