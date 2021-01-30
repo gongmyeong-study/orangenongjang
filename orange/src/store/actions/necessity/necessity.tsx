@@ -194,3 +194,39 @@ export const renamePlace = (
     renamePlaceSuccess(renamePlaceResponse.data),
   ))
   .catch((renamePlaceError) => dispatch(renamePlaceFailure(renamePlaceError)));
+
+const removePlaceSuccess = (places: Array<Place>) => ({
+  type: necessityConstants.REMOVE_PLACE_SUCCESS,
+  target: places,
+});
+
+const removePlaceFailure = (error: AxiosError) => {
+  let actionType = null;
+  switch (error.response?.status) {
+    case 400:
+      actionType = necessityConstants.REMOVE_PLACE_FAILURE_MEMBER;
+      break;
+    case 403:
+      actionType = necessityConstants.REMOVE_PLACE_FAILURE_LEADER;
+      break;
+    case 404:
+      actionType = necessityConstants.REMOVE_PLACE_FAILURE_NOT_FOUND;
+      break;
+    default:
+      actionType = necessityConstants.REMOVE_PLACE_FAILURE;
+      break;
+  }
+  return {
+    type: actionType,
+    target: error,
+  };
+};
+export const removePlace = (
+  houseId: number, placeId: number,
+) => (dispatch: Dispatch) => axios.delete(
+  `/api/v1/house/${houseId}/place/${placeId}/`,
+)
+  .then((removePlaceResponse: AxiosResponse<[Place]>) => dispatch(
+    removePlaceSuccess(removePlaceResponse.data),
+  ))
+  .catch((removePlaceError) => dispatch(removePlaceFailure(removePlaceError)));

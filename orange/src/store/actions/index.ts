@@ -11,6 +11,8 @@ import {
   removeNecessityPlace,
   countNecessityPlace,
   updateNecessityPlace,
+  renamePlace,
+  removePlace,
 } from './necessity/necessity';
 
 import {
@@ -32,6 +34,8 @@ export const necessityActions = {
   removeNecessityPlace,
   countNecessityPlace,
   updateNecessityPlace,
+  renamePlace,
+  removePlace,
 };
 
 export const houseActions = {

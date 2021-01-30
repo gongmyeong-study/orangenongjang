@@ -8,6 +8,7 @@ export interface NecessityState {
   countStatus: string;
   updateStatus: string;
   updatePlaceStatus: string;
+  removePlaceStatus: string;
   places: Place[];
 }
 

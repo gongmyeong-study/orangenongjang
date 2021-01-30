@@ -16,6 +16,9 @@ export const necessityStatus = {
   SUCCESS: 'SUCCESS',
   FAILURE: 'FAILURE',
   FAILURE_NAME: 'FAILURE_NAME',
+  FAILURE_LEADER: 'FAILURE_LEADER',
+  FAILURE_MEMBER: 'FAILURE_MEMBER',
+  FAILURE_NOT_FOUND: 'FAILURE_NOT_FOUND',
 };
 
 export const necessityUserLogStatus = {
