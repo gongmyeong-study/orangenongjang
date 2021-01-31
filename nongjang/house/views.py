@@ -129,7 +129,7 @@ class HouseViewSet(viewsets.GenericViewSet):
 
         with mail.get_connection() as connection:
             subject = "오렌지농장 House에 초대합니다."
-            domain = get_current_site(request).domain
+            domain = request.build_absolute_uri('/api/v1/house')
             user_uidb64 = urlsafe_base64_encode(force_bytes(invited_user.id))
             house_uidb64 = urlsafe_base64_encode(force_bytes(house.id))
             token = user_activation_token.make_token(invited_user)
