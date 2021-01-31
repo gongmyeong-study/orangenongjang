@@ -36,7 +36,7 @@ class UserViewSet(viewsets.GenericViewSet):
             return Response({'error': "같은 정보의 사용자가 이미 존재합니다."}, status=status.HTTP_400_BAD_REQUEST)
 
         with mail.get_connection():
-            domain = request.build_absolute_uri('/api/v1/user')
+            domain = request.build_absolute_uri('/')
             uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
             token = user_activation_token.make_token(user)
             message = user_invite_message(domain, uidb64, token, user)

@@ -1,5 +1,5 @@
 def user_invite_message(domain, uidb64, token, user):
-    link = f"{domain}/{uidb64}/activate/{token}/"
+    link = f"{domain}api/v1/user/{uidb64}/activate/{token}/"
 
     return f"To. [ {user} ]\n\n\n\n" \
            f"아래 링크를 클릭하면 회원 인증이 완료됩니다.\n\n" \

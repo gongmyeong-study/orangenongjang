@@ -110,6 +110,9 @@ class HouseViewSet(viewsets.GenericViewSet):
         user = request.user
         house = self.get_object()
 
+        print(request.build_absolute_uri('/'))
+        print(request.build_absolute_uri(''))
+
         user_house = user.user_houses.filter(house=house).last()
         if not user_house.is_leader:
             return Response({'error': "leader만 초대장을 전송할 수 있습니다."}, status=status.HTTP_403_FORBIDDEN)
@@ -129,7 +132,7 @@ class HouseViewSet(viewsets.GenericViewSet):
 
         with mail.get_connection() as connection:
             subject = "오렌지농장 House에 초대합니다."
-            domain = request.build_absolute_uri('/api/v1/house')
+            domain = request.build_absolute_uri('/')
             user_uidb64 = urlsafe_base64_encode(force_bytes(invited_user.id))
             house_uidb64 = urlsafe_base64_encode(force_bytes(house.id))
             token = user_activation_token.make_token(invited_user)
