@@ -7,7 +7,7 @@ import { NecessityState } from '../../state';
 
 type Action = {
   type: string;
-  target: House | Necessity | Place;
+  target: House | Necessity | Place | Place[];
 };
 
 const initialState: NecessityState = {
@@ -45,6 +45,14 @@ function necessityreducer(state = initialState, action: Action): NecessityState 
   }
 
   if (PlaceResponseCases.includes(action.type)) {
+    if (action.type === necessityConstants.REMOVE_PLACE_SUCCESS) {
+      const places = action.target as Place[];
+      return {
+        ...state,
+        removePlaceStatus: necessityStatus.SUCCESS,
+        places,
+      };
+    }
     let { places } = state;
     const data = action.target as Place;
     places = places.map((place) => (place.id === data.id ? data : place));
@@ -68,13 +76,6 @@ function necessityreducer(state = initialState, action: Action): NecessityState 
       return {
         ...state,
         removeStatus: necessityStatus.SUCCESS,
-        places,
-      };
-    }
-    if (action.type === necessityConstants.REMOVE_PLACE_SUCCESS) {
-      return {
-        ...state,
-        removePlaceStatus: necessityStatus.SUCCESS,
         places,
       };
     }

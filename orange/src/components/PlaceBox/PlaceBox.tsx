@@ -42,10 +42,7 @@ function PlaceBox(props: Props) {
     onRenamePlace(place.house_id, place.id, placeName);
   };
 
-  const onRemovePlace = (
-    houseId: number,
-    placeId: number,
-  ) => {
+  const onRemovePlace = (houseId: number, placeId: number) => {
     dispatch(removePlace(houseId, placeId));
   };
 
@@ -89,9 +86,6 @@ function PlaceBox(props: Props) {
       alert('House 멤버만 Place를 삭제할 수 있습니다.');
     } if (removePlaceStatus === necessityStatus.FAILURE_LEADER) {
       alert('Leader만 Place를 삭제할 수 있습니다.');
-    }
-    if (removePlaceStatus !== necessityStatus.NONE) {
-      window.location.reload();
     }
   }, [createStatus, updateStatus, updatePlaceStatus, removePlaceStatus]);
 
