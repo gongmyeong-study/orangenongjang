@@ -21,6 +21,7 @@ export interface UserState {
 }
 
 export interface HouseState {
+  getHouseStatus: string;
   inviteStatus?: string;
   leaveStatus?: string;
   tossStatus?: string;

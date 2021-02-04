@@ -3,9 +3,10 @@ import EdiText from 'react-editext';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import {
-  Necessity, Place, User,
+  Necessity, Place, House, User,
 } from '../../api';
-import { renamePlace, removePlace } from '../../store/actions/necessity/necessity';
+import { getHouse, renamePlace, removePlace } from '../../store/actions/necessity/necessity';
+import { getMe } from '../../store/actions/user/user';
 import { OrangeGlobalState } from '../../store/state';
 import NecessityList from '../Necessity/NecessityList/NecessityList';
 import './PlaceBox.css';
@@ -14,7 +15,8 @@ import { necessityStatus } from '../../constants/constants';
 
 interface Props {
   place: Place;
-  me?: User;
+  myHouse?: House;
+  me? : User;
 }
 
 function PlaceBox(props: Props) {
@@ -22,7 +24,8 @@ function PlaceBox(props: Props) {
   const dispatch = useDispatch();
   const [isModalOpen, setModalOpen] = useState(false);
   const [necessityToBeUpdated, setNecessityToBeUpdated] = useState<Necessity>();
-
+  const { getHouseStatus, house } = useSelector((state: OrangeGlobalState) => state.house);
+  const { getMeStatus, me } = useSelector((state: OrangeGlobalState) => state.user);
   const {
     createStatus, updateStatus, updatePlaceStatus, removePlaceStatus,
   } = useSelector(
@@ -89,6 +92,14 @@ function PlaceBox(props: Props) {
     }
   }, [createStatus, updateStatus, updatePlaceStatus, removePlaceStatus]);
 
+  useEffect(() => {
+    getHouse(props.place.house_id);
+  }, [getHouseStatus, props.place.house_id]);
+
+  useEffect(() => {
+    getMe();
+  }, [getMeStatus]);
+
   return (
     <div
       className="PlaceBox"
@@ -127,13 +138,17 @@ function PlaceBox(props: Props) {
           value={place.name}
           onSave={savePlace}
         />
-        <button
-          className="place-delete-button"
-          type="button"
-          onClick={deletePlace}
-        >
-          <i className="fas fa-times fa-2x" />
-        </button>
+        {house?.users.map(
+          (user) => (user.username === me.username && user.is_leader)).includes(true)
+          && (
+          <button
+            className="place-delete-button"
+            type="button"
+            onClick={deletePlace}
+          >
+            <i className="fas fa-times fa-2x" />
+          </button>
+        )}
       </h1>
 
       <NecessityList

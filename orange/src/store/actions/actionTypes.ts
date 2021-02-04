@@ -41,6 +41,8 @@ export const necessityConstants = {
 };
 
 export const houseConstants = {
+  GET_HOUSE_SUCCESS: 'GET_HOUSE_SUCCESS',
+  GET_HOUSE_FAILURE: 'GET_HOUSE_FAILURE',
   INVITE_HOUSE_SUCCESS: 'INVITE_HOUSE_SUCCESS', // 멤버 초대 메일이 전송되었습니다.
   INVITE_HOUSE_FAILURE: 'INVITE_HOUSE_FAILURE', // 멤버 초대를 실패했습니다. 다시 시도해주세요.
   INVITE_HOUSE_FAILURE_AUTHENTICATION: 'INVITE_HOUSE_FAILURE_AUTHENTICATION', // 멤버 초대 메일에 문제가 있습니다. 다시 시도해주세요.
