@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import EdiText from 'react-editext';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
-import { Necessity, Place } from '../../api';
-import { renamePlace } from '../../store/actions/necessity/necessity';
+import {
+  Necessity, Place, House, User,
+} from '../../api';
+import { getHouse, renamePlace, removePlace } from '../../store/actions/necessity/necessity';
+import { getMe } from '../../store/actions/user/user';
 import { OrangeGlobalState } from '../../store/state';
 import NecessityList from '../Necessity/NecessityList/NecessityList';
 import './PlaceBox.css';
@@ -12,6 +15,8 @@ import { necessityStatus } from '../../constants/constants';
 
 interface Props {
   place: Place;
+  myHouse?: House;
+  me? : User;
 }
 
 function PlaceBox(props: Props) {
@@ -19,8 +24,11 @@ function PlaceBox(props: Props) {
   const dispatch = useDispatch();
   const [isModalOpen, setModalOpen] = useState(false);
   const [necessityToBeUpdated, setNecessityToBeUpdated] = useState<Necessity>();
-
-  const { createStatus, updateStatus, updatePlaceStatus } = useSelector(
+  const { getHouseStatus, house } = useSelector((state: OrangeGlobalState) => state.house);
+  const { getMeStatus, me } = useSelector((state: OrangeGlobalState) => state.user);
+  const {
+    createStatus, updateStatus, updatePlaceStatus, removePlaceStatus,
+  } = useSelector(
     (state: OrangeGlobalState) => state.necessity,
   );
 
@@ -35,6 +43,16 @@ function PlaceBox(props: Props) {
 
   const savePlace = (placeName: string) => {
     onRenamePlace(place.house_id, place.id, placeName);
+  };
+
+  const onRemovePlace = (houseId: number, placeId: number) => {
+    dispatch(removePlace(houseId, placeId));
+  };
+
+  const deletePlace = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    window.confirm(`[ ${props.place.name} ]을/를 정말 삭제하시겠습니까?`)
+      && onRemovePlace(place.house_id, place.id);
   };
 
   const createNecessity = () => {
@@ -62,7 +80,25 @@ function PlaceBox(props: Props) {
     if (updatePlaceStatus === necessityStatus.FAILURE) {
       alert(`Place 이름 변경에 실패했어요ㅠㅠ\n 에러 메시지 : ${updatePlaceStatus}`);
     }
-  }, [createStatus, updateStatus, updatePlaceStatus]);
+
+    if (removePlaceStatus === necessityStatus.FAILURE) {
+      alert(`Place 삭제에 실패했어요ㅠㅠ\n 에러 메시지 : ${removePlaceStatus}`);
+    } if (removePlaceStatus === necessityStatus.FAILURE_NOT_FOUND) {
+      alert('존재하지 않는 Place입니다.');
+    } if (removePlaceStatus === necessityStatus.FAILURE_MEMBER) {
+      alert('House 멤버만 Place를 삭제할 수 있습니다.');
+    } if (removePlaceStatus === necessityStatus.FAILURE_LEADER) {
+      alert('Leader만 Place를 삭제할 수 있습니다.');
+    }
+  }, [createStatus, updateStatus, updatePlaceStatus, removePlaceStatus]);
+
+  useEffect(() => {
+    getHouse(props.place.house_id);
+  }, [getHouseStatus, props.place.house_id]);
+
+  useEffect(() => {
+    getMe();
+  }, [getMeStatus]);
 
   return (
     <div
@@ -102,7 +138,19 @@ function PlaceBox(props: Props) {
           value={place.name}
           onSave={savePlace}
         />
+        {house?.users.map(
+          (user) => (user.username === me.username && user.is_leader)).includes(true)
+          && (
+          <button
+            className="place-delete-button"
+            type="button"
+            onClick={deletePlace}
+          >
+            <i className="fas fa-times fa-2x" />
+          </button>
+        )}
       </h1>
+
       <NecessityList
         place={place}
         updateNecessity={updateNecessity}

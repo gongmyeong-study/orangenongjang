@@ -7,7 +7,7 @@ import { NecessityState } from '../../state';
 
 type Action = {
   type: string;
-  target: House | Necessity | Place;
+  target: House | Necessity | Place | Place[];
 };
 
 const initialState: NecessityState = {
@@ -17,6 +17,7 @@ const initialState: NecessityState = {
   countStatus: necessityStatus.NONE,
   updateStatus: necessityStatus.NONE,
   updatePlaceStatus: necessityStatus.NONE,
+  removePlaceStatus: necessityStatus.NONE,
   places: [],
 };
 
@@ -25,6 +26,7 @@ const PlaceResponseCases = [
   necessityConstants.REMOVE_NECESSITYPLACE_SUCCESS,
   necessityConstants.CREATE_PLACE_SUCCESS,
   necessityConstants.RENAME_PLACE_SUCCESS,
+  necessityConstants.REMOVE_PLACE_SUCCESS,
 ];
 
 const NecessityResponseCases = [
@@ -43,6 +45,14 @@ function necessityreducer(state = initialState, action: Action): NecessityState 
   }
 
   if (PlaceResponseCases.includes(action.type)) {
+    if (action.type === necessityConstants.REMOVE_PLACE_SUCCESS) {
+      const places = action.target as Place[];
+      return {
+        ...state,
+        removePlaceStatus: necessityStatus.SUCCESS,
+        places,
+      };
+    }
     let { places } = state;
     const data = action.target as Place;
     places = places.map((place) => (place.id === data.id ? data : place));
@@ -123,21 +133,7 @@ function necessityreducer(state = initialState, action: Action): NecessityState 
         ...state,
         createStatus: necessityStatus.FAILURE_NAME,
       };
-    case necessityConstants.RENAME_PLACE_FAILURE:
-      return {
-        ...state,
-        updatePlaceStatus: necessityStatus.FAILURE,
-      };
-    case necessityConstants.RENAME_PLACE_FAILURE_MEMBER:
-      return {
-        ...state,
-        updatePlaceStatus: necessityStatus.FAILURE,
-      };
-    case necessityConstants.RENAME_PLACE_FAILURE_NOT_FOUND:
-      return {
-        ...state,
-        updatePlaceStatus: necessityStatus.FAILURE,
-      };
+
     case necessityConstants.REMOVE_NECESSITYPLACE_FAILURE:
       return {
         ...state,
@@ -149,10 +145,40 @@ function necessityreducer(state = initialState, action: Action): NecessityState 
         ...state,
         countStatus: necessityStatus.FAILURE,
       };
+
     case necessityConstants.UPDATE_NECESSITYPLACE_FAILURE:
       return {
         ...state,
         updateStatus: necessityStatus.FAILURE,
+      };
+
+    case necessityConstants.RENAME_PLACE_FAILURE:
+    case necessityConstants.RENAME_PLACE_FAILURE_MEMBER:
+    case necessityConstants.RENAME_PLACE_FAILURE_NOT_FOUND:
+      return {
+        ...state,
+        updatePlaceStatus: necessityStatus.FAILURE,
+      };
+
+    case necessityConstants.REMOVE_PLACE_FAILURE:
+      return {
+        ...state,
+        removePlaceStatus: necessityStatus.FAILURE,
+      };
+    case necessityConstants.REMOVE_PLACE_FAILURE_LEADER:
+      return {
+        ...state,
+        removePlaceStatus: necessityStatus.FAILURE_LEADER,
+      };
+    case necessityConstants.REMOVE_PLACE_FAILURE_MEMBER:
+      return {
+        ...state,
+        removePlaceStatus: necessityStatus.FAILURE_MEMBER,
+      };
+    case necessityConstants.REMOVE_PLACE_FAILURE_NOT_FOUND:
+      return {
+        ...state,
+        removePlaceStatus: necessityStatus.FAILURE_NOT_FOUND,
       };
 
     default:

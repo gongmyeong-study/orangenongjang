@@ -1,19 +1,27 @@
 import { houseConstants } from '../../actions/actionTypes';
 import { houseStatus } from '../../../constants/constants';
 import { HouseState } from '../../state';
+import { House } from '../../../api';
 
 type Action = {
   type: string;
+  target: House;
 };
 
 const initialState: HouseState = {
+  getHouseStatus: houseStatus.NONE,
   inviteStatus: houseStatus.NONE,
   leaveStatus: houseStatus.NONE,
   tossStatus: houseStatus.NONE,
 };
 
 const houseReducer = (state = initialState, action: Action): HouseState => {
+  const house = action.target;
   switch (action.type) {
+    case houseConstants.GET_HOUSE_SUCCESS:
+      return { ...state, getHouseStatus: houseStatus.SUCCESS, house };
+    case houseConstants.GET_HOUSE_FAILURE:
+      return { ...state, inviteStatus: houseStatus.FAILURE };
     case houseConstants.INVITE_HOUSE_SUCCESS:
       return { ...state, inviteStatus: houseStatus.SUCCESS };
     case houseConstants.INVITE_HOUSE_FAILURE:

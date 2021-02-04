@@ -54,3 +54,15 @@
     width: 18vw;
     height: 4vh;
 }
+
+.place-delete-button {
+    position: relative;
+    cursor: pointer;
+    top: -80px;
+    right: -93%;
+    color: rgba(0, 0, 0, 0.86);
+    background: none;
+    border: none;
+    outline: none;
+    transition:all 0.9s, color 0.3;
+}
