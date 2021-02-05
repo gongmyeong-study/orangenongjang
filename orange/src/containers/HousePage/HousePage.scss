@@ -56,6 +56,7 @@ button {
       height: 2.2rem;
       width: 4rem;
       color: $orange;
+      cursor: pointer;
 
       &:hover {
         background-color: $orange;
@@ -74,6 +75,7 @@ button {
     color: white;
     max-width: 600px;
     max-height: 300px;
+    cursor: pointer;
 
     &:hover {
       background-color: $light-orange-hover;
@@ -127,6 +129,7 @@ button {
         border-radius: 100px;
         color: $orange;
         text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
 
         &:hover {
           background-color: $orange;

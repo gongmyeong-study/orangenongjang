@@ -16,6 +16,7 @@
   padding: 0;
   margin: auto;
   font: 500 1em 'Noto Sans KR', sans-serif;
+  cursor: pointer;
 }
 
 .main-header-li-hello {
