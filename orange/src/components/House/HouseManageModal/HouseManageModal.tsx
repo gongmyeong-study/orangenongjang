@@ -101,7 +101,9 @@ function HouseManageModal(props: Props) {
   }, [leaveStatus, removeHouseStatus, tossStatus]);
 
   useEffect(() => {
-    if (leaveStatus !== houseStatus.NONE || tossStatus !== houseStatus.NONE) {
+    if (leaveStatus !== houseStatus.NONE
+      || tossStatus !== houseStatus.NONE
+      || removeHouseStatus !== houseStatus.NONE) {
       window.location.reload();
     }
   });
