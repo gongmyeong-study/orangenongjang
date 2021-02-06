@@ -129,38 +129,41 @@ function HouseManageModal(props: Props) {
           )
         </div>
       ))}
-      <form onSubmit={handleSubmit(onSubmitToToss)}>
-        <h4>
-          Leader 넘기기&emsp;
-        </h4>
-        <div className="container">
-          <Select
-            options={props.house!.users}
-            placeholder="멤버 선택"
-            onOptionChange={onOptionChange}
-            getOptionValue={getOptionValue}
-            getOptionLabel={getOptionLabel}
-          />
-        </div>
-        <Button
-          type="submit"
-          disabled={!selectedOption}
-        >
-          {TossLeaderIcon}
-        </Button>
-      </form>
 
       {props.house?.users.map(
           (user) => (user.username === me.username && user.is_leader)).includes(true)
         ? (
-          <form onSubmit={handleSubmit(onSubmitToRemove)}>
-            <h4>
-              House 삭제하기
-              <Button type="submit">
-                {RemoveHouseIcon}
+          <>
+            <form onSubmit={handleSubmit(onSubmitToToss)}>
+              <h4>
+                Leader 넘기기&emsp;
+              </h4>
+              <div className="container">
+                <Select
+                  options={props.house.users}
+                  placeholder="멤버 선택"
+                  onOptionChange={onOptionChange}
+                  getOptionValue={getOptionValue}
+                  getOptionLabel={getOptionLabel}
+                />
+              </div>
+              <Button
+                type="submit"
+                disabled={!selectedOption}
+              >
+                {TossLeaderIcon}
               </Button>
-            </h4>
-          </form>
+            </form>
+
+            <form onSubmit={handleSubmit(onSubmitToRemove)}>
+              <h4>
+                House 삭제하기
+                <Button type="submit">
+                  {RemoveHouseIcon}
+                </Button>
+              </h4>
+            </form>
+          </>
         )
         : (
           <form onSubmit={handleSubmit(onSubmitToLeave)}>
