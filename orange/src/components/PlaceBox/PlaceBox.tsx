@@ -81,7 +81,9 @@ function PlaceBox(props: Props) {
       alert(`Place 이름 변경에 실패했어요ㅠㅠ\n 에러 메시지 : ${updatePlaceStatus}`);
     }
 
-    if (removePlaceStatus === necessityStatus.FAILURE) {
+    if (removePlaceStatus === necessityStatus.SUCCESS) {
+      closeModal();
+    } if (removePlaceStatus === necessityStatus.FAILURE) {
       alert(`Place 삭제에 실패했어요ㅠㅠ\n 에러 메시지 : ${removePlaceStatus}`);
     } if (removePlaceStatus === necessityStatus.FAILURE_NOT_FOUND) {
       alert('존재하지 않는 Place입니다.');
@@ -140,6 +142,7 @@ function PlaceBox(props: Props) {
         />
         {house?.users.map(
           (user) => (user.username === me.username && user.is_leader)).includes(true)
+
           && (
           <button
             className="place-delete-button"
@@ -149,6 +152,7 @@ function PlaceBox(props: Props) {
             <i className="fas fa-times fa-2x" />
           </button>
         )}
+
       </h1>
 
       <NecessityList

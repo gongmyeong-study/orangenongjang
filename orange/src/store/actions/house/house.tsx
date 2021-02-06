@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
 import { houseConstants } from '../actionTypes';
-import { User } from '../../../api';
+import { House, User } from '../../../api';
 
 const inviteHouseSuccess = () => ({
   type: houseConstants.INVITE_HOUSE_SUCCESS,
@@ -90,3 +90,32 @@ export const tossLeader = (
 ) => (dispatch: Dispatch) => axios.post(`/api/v1/house/${houseId}/user/${userId}/leader/`)
   .then((tossResponse: AxiosResponse<[User]>) => dispatch(tossLeaderSuccess(tossResponse.data)))
   .catch((tossError) => dispatch(tossLeaderFailure(tossError)));
+
+const removeHouseSuccess = (houses: Array<House>) => ({
+  type: houseConstants.REMOVE_HOUSE_SUCCESS,
+  target: houses,
+});
+
+const removeHouseFailure = (error: AxiosError) => {
+  let actionType = null;
+  switch (error.response?.status) {
+    case 400:
+      actionType = houseConstants.REMOVE_HOUSE_FAILURE_MEMBER;
+      break;
+    case 403:
+      actionType = houseConstants.REMOVE_HOUSE_FAILURE_LEADER;
+      break;
+    default:
+      actionType = houseConstants.REMOVE_HOUSE_FAILURE;
+  }
+  return {
+    type: actionType,
+    target: error,
+  };
+};
+
+export const removeHouse = (houseId: number) => (dispatch: Dispatch) => axios.delete(`/api/v1/house/${houseId}/`)
+  .then((removeHouseResponse: AxiosResponse<[House]>) => {
+    dispatch(removeHouseSuccess(removeHouseResponse.data));
+  })
+  .catch((removeHouseError) => dispatch(removeHouseFailure(removeHouseError)));

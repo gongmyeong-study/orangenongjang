@@ -19,6 +19,7 @@ import {
   inviteHouse,
   leaveHouse,
   tossLeader,
+  removeHouse,
 } from './house/house';
 
 export const userActions = {
@@ -42,4 +43,5 @@ export const houseActions = {
   inviteHouse,
   leaveHouse,
   tossLeader,
+  removeHouse,
 };

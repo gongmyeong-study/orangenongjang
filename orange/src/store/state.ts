@@ -25,6 +25,7 @@ export interface HouseState {
   inviteStatus?: string;
   leaveStatus?: string;
   tossStatus?: string;
+  removeHouseStatus: string;
   house?: House;
 }
 

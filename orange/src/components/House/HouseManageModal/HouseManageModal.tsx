@@ -6,15 +6,16 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@material-ui/core';
 
-import { House } from '../../../api';
+import { House, User } from '../../../api';
 import { houseStatus } from '../../../constants/constants';
-import { houseActions } from '../../../store/actions/index';
+import { houseActions, userActions } from '../../../store/actions/index';
 import { OrangeGlobalState } from '../../../store/state';
 
 import './HouseManageModal.css';
 
 interface Props {
   house?: House;
+  me? : User;
 }
 
 interface UserToBeLeaderFormData {
@@ -24,6 +25,7 @@ interface UserToBeLeaderFormData {
 
 function HouseManageModal(props: Props) {
   const [selectedOption, setSelectedOption] = useState<UserToBeLeaderFormData | null>(null);
+  const { getMeStatus, me } = useSelector((state: OrangeGlobalState) => state.user);
   const getOptionValue = useCallback((option: UserToBeLeaderFormData): number => option.id, []);
   const onOptionChange = useCallback(
     (option: UserToBeLeaderFormData | null): void => setSelectedOption(option), [],
@@ -32,10 +34,19 @@ function HouseManageModal(props: Props) {
 
   const { handleSubmit } = useForm<UserToBeLeaderFormData>();
   const dispatch = useDispatch();
-  const { leaveStatus, tossStatus } = useSelector((state: OrangeGlobalState) => state.house);
+  const { leaveStatus, tossStatus, removeHouseStatus } = useSelector(
+    (state: OrangeGlobalState) => state.house,
+  );
 
   const onLeaveHouse = (houseId: number) => { dispatch(houseActions.leaveHouse(houseId)); };
   const onSubmitToLeave = () => onLeaveHouse(props.house!.id);
+
+  const onRemoveHouse = (houseId: number) => { dispatch(houseActions.removeHouse(houseId)); };
+  const onSubmitToRemove = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    window.confirm(`[ ${props.house!.name} ]을/를 정말 삭제하시겠습니까?`)
+    && onRemoveHouse(props.house!.id);
+  };
 
   const onTossLeader = (houseId: number, userId: number) => {
     dispatch(houseActions.tossLeader(houseId, userId));
@@ -72,7 +83,22 @@ function HouseManageModal(props: Props) {
       default:
         alert('잘못된 접근입니다.');
     }
-  }, [leaveStatus, tossStatus]);
+    switch (removeHouseStatus) {
+      case houseStatus.NONE:
+        break;
+      case houseStatus.SUCCESS:
+        alert('House가 삭제되었습니다.');
+        break;
+      case houseStatus.FAILURE_REMOVE_MEMBER:
+        alert('House 멤버가 아닙니다.');
+        break;
+      case houseStatus.FAILURE_REMOVE_LEADER:
+        alert('House Leader만 House를 삭제할 수 있습니다.');
+        break;
+      default:
+        alert('잘못된 접근입니다.');
+    }
+  }, [leaveStatus, removeHouseStatus, tossStatus]);
 
   useEffect(() => {
     if (leaveStatus !== houseStatus.NONE || tossStatus !== houseStatus.NONE) {
@@ -80,9 +106,14 @@ function HouseManageModal(props: Props) {
     }
   });
 
+  useEffect(() => {
+    userActions.getMe();
+  }, [getMeStatus]);
+
   const formTitle = `${props.house?.name} 관리`;
   const TossLeaderIcon = <i className="far fa-handshake fa-2x" />;
   const LeaveHouseIcon = <i className="fas fa-sign-out-alt fa-2x" />;
+  const RemoveHouseIcon = <i className="fas fa-trash-alt fa-2x" />;
   return (
     <>
       <h2>{formTitle}</h2>
@@ -117,16 +148,30 @@ function HouseManageModal(props: Props) {
         >
           {TossLeaderIcon}
         </Button>
+      </form>
 
-      </form>
-      <form onSubmit={handleSubmit(onSubmitToLeave)}>
-        <h4>
-          House 떠나기
-          <Button type="submit">
-            {LeaveHouseIcon}
-          </Button>
-        </h4>
-      </form>
+      {props.house?.users.map(
+          (user) => (user.username === me.username && user.is_leader)).includes(true)
+        ? (
+          <form onSubmit={handleSubmit(onSubmitToRemove)}>
+            <h4>
+              House 삭제하기
+              <Button type="submit">
+                {RemoveHouseIcon}
+              </Button>
+            </h4>
+          </form>
+        )
+        : (
+          <form onSubmit={handleSubmit(onSubmitToLeave)}>
+            <h4>
+              House 떠나기
+              <Button type="submit">
+                {LeaveHouseIcon}
+              </Button>
+            </h4>
+          </form>
+        )}
     </>
   );
 }

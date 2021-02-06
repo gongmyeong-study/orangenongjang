@@ -13,6 +13,7 @@ const initialState: HouseState = {
   inviteStatus: houseStatus.NONE,
   leaveStatus: houseStatus.NONE,
   tossStatus: houseStatus.NONE,
+  removeHouseStatus: houseStatus.NONE,
 };
 
 const houseReducer = (state = initialState, action: Action): HouseState => {
@@ -52,6 +53,15 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
       return { ...state, tossStatus: houseStatus.FAILURE_TOSS_ME };
     case houseConstants.TOSS_LEADER_FAILURE_LEADER:
       return { ...state, tossStatus: houseStatus.FAILURE_TOSS_LEADER };
+
+    case houseConstants.REMOVE_HOUSE_SUCCESS:
+      return { ...state, removeHouseStatus: houseStatus.SUCCESS, house };
+    case houseConstants.REMOVE_HOUSE_FAILURE:
+      return { ...state, removeHouseStatus: houseStatus.FAILURE };
+    case houseConstants.REMOVE_HOUSE_FAILURE_MEMBER:
+      return { ...state, removeHouseStatus: houseStatus.FAILURE_REMOVE_MEMBER };
+    case houseConstants.REMOVE_HOUSE_FAILURE_LEADER:
+      return { ...state, removeHouseStatus: houseStatus.FAILURE_REMOVE_LEADER };
     default:
       return { ...state };
   }

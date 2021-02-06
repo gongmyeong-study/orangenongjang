@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
-import { necessityConstants } from '../actionTypes';
+import { houseConstants, necessityConstants } from '../actionTypes';
 import { House, Necessity, Place } from '../../../api';
 
 const getHouseSuccess = (house: House) => ({
@@ -26,6 +26,30 @@ export const getHouse = (houseId: number) => (dispatch: Dispatch) => axios.get(`
     dispatch(getHouseSuccess(getResponse.data));
   })
   .catch((getError) => dispatch(getHouseFailure(getError)));
+
+const removeHouseSuccess = (house: House) => ({
+  type: houseConstants.REMOVE_HOUSE_SUCCESS,
+  target: house,
+});
+
+const removeHouseFailure = (error: AxiosError) => {
+  let actionType = null;
+  switch (error.response?.status) {
+    default:
+      actionType = houseConstants.REMOVE_HOUSE_FAILURE;
+      break;
+  }
+  return {
+    type: actionType,
+    target: error,
+  };
+};
+
+export const removeHouse = (houseId: number) => (dispatch: Dispatch) => axios.delete(`/api/v1/house/${houseId}/`)
+  .then((removeHouseResponse: AxiosResponse<House>) => {
+    dispatch(removeHouseSuccess(removeHouseResponse.data));
+  })
+  .catch((removeHouseError) => dispatch(removeHouseFailure(removeHouseError)));
 
 const createNecessityPlaceSuccess = (place: Place) => ({
   type: necessityConstants.CREATE_NECESSITYPLACE_SUCCESS,
