@@ -22,7 +22,7 @@
                 font-size: 24px;
                 line-height: 2em;
                 margin-top: 40px;
-                animation: fadeIn ease 2s;
+                animation: fadeIn ease 0.6s;
             }
 
             .title {
@@ -30,13 +30,13 @@
                 font-size: 32px;
                 text-align: center;
                 margin: 60px 0;
-                animation: fadeIn ease 3s;
+                animation: fadeIn ease 2s;
             }
 
             .buttons {
                 display: flex;
                 flex-direction: column;
-                animation: fadeIn ease 5s;
+                animation: fadeIn ease 2.5s;
 
                 button {
                     height: 54px;
@@ -118,7 +118,7 @@
                 font-size: 32px;
                 line-height: 2em;
                 margin-top: 40px;
-                animation: fadeIn ease 2s;
+                animation: fadeIn ease 0.6s;
             }
     
             .title {
@@ -126,13 +126,13 @@
                 font-size: 48px;
                 text-align: center;
                 margin: 60px 0;
-                animation: fadeIn ease 3s;
+                animation: fadeIn ease 2s;
             }
     
             .buttons {
                 display: flex;
                 align-items: center;
-                animation: fadeIn ease 5s;
+                animation: fadeIn ease 2.5s;
     
                 button {
                     height: 54px;
