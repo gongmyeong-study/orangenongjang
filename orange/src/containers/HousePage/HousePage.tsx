@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import EdiText from 'react-editext';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { History } from 'history';
 import Modal from 'react-modal';
-import { House } from '../../api';
-import { houseActions } from '../../store/actions/index';
+import { House, User } from '../../api';
+import { houseActions, userActions } from '../../store/actions/index';
+import { OrangeGlobalState } from '../../store/state';
 import { HouseCreateForm, HouseInviteModal, HouseManageModal } from '../../components';
 import './HousePage.scss';
 
 interface Props {
   history: History;
   house: House;
+  me: User;
 }
 
 function HousePage(props: Props) {
@@ -21,6 +23,7 @@ function HousePage(props: Props) {
   const [isCreateHouseModalOpen, setIsCreateHouseModalOpen] = useState(false);
   const [houseToBeManaged, setHouseToBeManaged] = useState<House>();
   const [houseToBeInvited, setHouseToBeInvited] = useState<House>();
+  const { getMeStatus, me } = useSelector((state: OrangeGlobalState) => state.user);
   const dispatch = useDispatch();
 
   const manageHouse = (e: any, house: House) => {
@@ -64,6 +67,10 @@ function HousePage(props: Props) {
     };
   }, []);
 
+  useEffect(() => {
+    userActions.getMe();
+  }, [getMeStatus]);
+
   const goToTheRoom = (houseId: number) => {
     const url = `/main/${houseId}`;
     props.history.push(url);
@@ -84,54 +91,64 @@ function HousePage(props: Props) {
       <div className="house-card" key={index}>
         <div className="house-name-intro">
           <h1 className="house-name">
-            <EdiText
-              viewContainerClassName="house-name-update-box"
-              editButtonContent={<i className="fas fa-pencil-alt" />}
-              saveButtonContent={<i className="fas fa-check" />}
-              cancelButtonContent={<i className="fas fa-times" />}
-              hideIcons
-              type="text"
-              showButtonsOnHover
-              submitOnUnfocus
-              submitOnEnter
-              cancelOnEscape
-              inputProps={{
-                className: 'house-name-update-input',
-                placeholder: 'House 이름을 입력하세요.',
-                style: { fontSize: 18 },
-              }}
-              validationMessage="한 글자 이상 입력하세요."
-              validation={(val) => val.length > 0}
-              value={house.name}
-              onSave={(houseName: string) => {
-                onRenameHouse(house.id, houseName);
-              }}
-            />
+            {house.users.map((user) => (
+              user.username === me.username && user.is_leader)).includes(true)
+              ? (
+                <EdiText
+                  viewContainerClassName="house-name-update-box"
+                  editButtonContent={<i className="fas fa-pencil-alt" />}
+                  saveButtonContent={<i className="fas fa-check" />}
+                  cancelButtonContent={<i className="fas fa-times" />}
+                  hideIcons
+                  type="text"
+                  showButtonsOnHover
+                  submitOnUnfocus
+                  submitOnEnter
+                  cancelOnEscape
+                  inputProps={{
+                    className: 'house-name-update-input',
+                    placeholder: 'House 이름을 입력하세요.',
+                    style: { fontSize: 18 },
+                  }}
+                  validationMessage="한 글자 이상 입력하세요."
+                  validation={(val) => val.length > 0}
+                  value={house.name}
+                  onSave={(houseName: string) => {
+                    onRenameHouse(house.id, houseName);
+                  }}
+                />
+              )
+              : house.name}
           </h1>
           <br />
           <br />
           <p className="house-intro">
-            <EdiText
-              viewContainerClassName="house-intro-update-box"
-              editButtonContent={<i className="fas fa-pencil-alt" />}
-              saveButtonContent={<i className="fas fa-check" />}
-              cancelButtonContent={<i className="fas fa-times" />}
-              hideIcons
-              type="text"
-              showButtonsOnHover
-              submitOnUnfocus
-              submitOnEnter
-              cancelOnEscape
-              inputProps={{
-                className: 'house-intro-update-input',
-                placeholder: 'House 소개를 입력하세요.',
-                style: { fontSize: 15 },
-              }}
-              value={house.introduction}
-              onSave={(houseIntroduction: string) => {
-                onReintroduceHouse(house.id, houseIntroduction);
-              }}
-            />
+            {house.users.map((user) => (
+              user.username === me.username && user.is_leader)).includes(true)
+              ? (
+                <EdiText
+                  viewContainerClassName="house-intro-update-box"
+                  editButtonContent={<i className="fas fa-pencil-alt" />}
+                  saveButtonContent={<i className="fas fa-check" />}
+                  cancelButtonContent={<i className="fas fa-times" />}
+                  hideIcons
+                  type="text"
+                  showButtonsOnHover
+                  submitOnUnfocus
+                  submitOnEnter
+                  cancelOnEscape
+                  inputProps={{
+                    className: 'house-intro-update-input',
+                    placeholder: 'House 소개를 입력하세요.',
+                    style: { fontSize: 15 },
+                  }}
+                  value={house.introduction}
+                  onSave={(houseIntroduction: string) => {
+                    onReintroduceHouse(house.id, houseIntroduction);
+                  }}
+                />
+              )
+              : house.introduction}
           </p>
         </div>
         <div
