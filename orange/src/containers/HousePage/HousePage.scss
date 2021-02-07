@@ -80,34 +80,46 @@ button {
     &:hover {
       background-color: $light-orange-hover;
     }
+    .house-update-box {
+      z-index: 1;
+      position: absolute;
+      display: flex;
+      margin: 0px 0px 0px 5px;
 
-    .left-info {
-      margin: 21px;
-      text-overflow: ellipsis;
-      overflow: hidden;
-
-      .house-name, .house-intro {
-        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-        margin: 0;
+      div:last-child {
+        display: flex;
+        justify-content: center;
+        margin-top: 4px;
       }
 
-      .house-name {
-        margin-bottom: 18px;
+      button {
+        width: 4vw;
+        height: 3vh;
+        border-radius: 5px;
       }
+    }
 
-      .house-intro {
-        font-size: 1.125rem;
-      }
+    .house-update-input {
+      width: 18vw;
+      height: 4vh;
+    }
+
+    .house-intro {
+      position: absolute;
+      display: flex;
+      margin: 0px 0px 0px 5px;
+      font-size: 1.125rem;
     }
 
     .right-info {
       margin: 28px 21px 21px 21px;
+      width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
 
       p {
-        margin: 0;
+        margin: 0 0 0 80%;
         text-align: center;
       }
     }
@@ -115,6 +127,7 @@ button {
     .button-wrapper {
       display: flex;
       flex-direction: column;
+      margin: 0 0 0 80%;
 
       button:first-child {
         margin-bottom: 16px;

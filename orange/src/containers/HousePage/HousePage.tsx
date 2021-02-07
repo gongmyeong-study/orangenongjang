@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import EdiText from 'react-editext';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { History } from 'history';
 import Modal from 'react-modal';
 import { House } from '../../api';
+import { houseActions } from '../../store/actions/index';
 import { HouseCreateForm, HouseInviteModal, HouseManageModal } from '../../components';
 import './HousePage.scss';
 
@@ -18,6 +21,7 @@ function HousePage(props: Props) {
   const [isCreateHouseModalOpen, setIsCreateHouseModalOpen] = useState(false);
   const [houseToBeManaged, setHouseToBeManaged] = useState<House>();
   const [houseToBeInvited, setHouseToBeInvited] = useState<House>();
+  const dispatch = useDispatch();
 
   const manageHouse = (e: any, house: House) => {
     e.stopPropagation();
@@ -29,6 +33,14 @@ function HousePage(props: Props) {
     e.stopPropagation();
     setHouseToBeInvited(house);
     setIsInviteModalOpen(true);
+  };
+
+  const onRenameHouseName = (houseId: number, houseName: string) => {
+    dispatch(houseActions.renameHouseName(houseId, houseName));
+  };
+
+  const saveHouseName = (houseName: string) => {
+    onRenameHouseName(props.house.id, houseName);
   };
 
   const closeModal = () => {
@@ -68,38 +80,65 @@ function HousePage(props: Props) {
   );
 
   const showUserHouses = houses?.map((house, index) => (
-    <div className="house-card" key={index} onClick={() => goToTheRoom(house.id)}>
-      <div className="left-info">
-        <h1 className="house-name">
-          {house.name}
-        </h1>
-        <p className="house-intro">
-          {house.introduction}
-        </p>
-      </div>
-      <div className="right-info">
-        <p>
-          멤버
-          {' '}
-          {house.users.length}
-          명
-        </p>
-        <div className="button-wrapper">
-          <button
-            type="button"
-            onClick={(e) => manageHouse(e, house)}
-          >
-            관리
-          </button>
-          <button
-            type="button"
-            onClick={(e) => InviteUser(e, house)}
-          >
-            초대
-          </button>
+    <>
+      <div className="house-card" key={index}>
+        <div>
+          <h1 className="house-name">
+            <EdiText
+              viewContainerClassName="house-update-box"
+              editButtonContent={<i className="fas fa-pencil-alt" />}
+              saveButtonContent={<i className="fas fa-check" />}
+              cancelButtonContent={<i className="fas fa-times" />}
+              hideIcons
+              type="text"
+              showButtonsOnHover
+              submitOnUnfocus
+              submitOnEnter
+              cancelOnEscape
+              inputProps={{
+                className: 'house-update-input',
+                placeholder: 'House 이름을 입력하세요.',
+                style: { fontSize: 18 },
+              }}
+              validationMessage="한 글자 이상 입력하세요."
+              validation={(val) => val.length > 0}
+              value={house.name}
+              onSave={saveHouseName}
+            />
+          </h1>
+          <br />
+          <br />
+          <p className="house-intro">
+            {house.introduction}
+          </p>
+        </div>
+        <div
+          className="right-info"
+          onClick={() => goToTheRoom(house.id)}
+        >
+          <p>
+            멤버
+            {' '}
+            {house.users.length}
+            명
+          </p>
+          <div className="button-wrapper">
+            <button
+              type="button"
+              onClick={(e) => manageHouse(e, house)}
+            >
+              관리
+            </button>
+            <button
+              type="button"
+              onClick={(e) => InviteUser(e, house)}
+            >
+              초대
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   ));
 
   return (

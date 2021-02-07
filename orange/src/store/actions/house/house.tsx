@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
 import { houseConstants } from '../actionTypes';
-import { User } from '../../../api';
+import { User, House } from '../../../api';
 
 const inviteHouseSuccess = () => ({
   type: houseConstants.INVITE_HOUSE_SUCCESS,
@@ -90,3 +90,32 @@ export const tossLeader = (
 ) => (dispatch: Dispatch) => axios.post(`/api/v1/house/${houseId}/user/${userId}/leader/`)
   .then((tossResponse: AxiosResponse<[User]>) => dispatch(tossLeaderSuccess(tossResponse.data)))
   .catch((tossError) => dispatch(tossLeaderFailure(tossError)));
+
+const renameHouseSuccess = (house: House) => ({
+  type: houseConstants.RENAME_HOUSE_SUCCESS,
+  target: house,
+});
+const renameHouseFailure = (error: AxiosError) => {
+  let actionType = null;
+  switch (error.response?.status) {
+    case 403:
+      actionType = houseConstants.RENAME_HOUSE_FAILURE_LEADER;
+      break;
+    default:
+      actionType = houseConstants.RENAME_HOUSE_FAILURE;
+      break;
+  }
+  return {
+    type: actionType,
+    target: error,
+  };
+};
+export const renameHouseName = (
+  houseId: number, name: string,
+) => (dispatch: Dispatch) => axios.put(
+  `/api/v1/house/${houseId}/`, { houseId, name },
+)
+  .then((renameHouseResponse: AxiosResponse<House>) => dispatch(
+    renameHouseSuccess(renameHouseResponse.data),
+  ))
+  .catch((renameHouseError) => dispatch(renameHouseFailure(renameHouseError)));
