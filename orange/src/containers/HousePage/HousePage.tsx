@@ -110,8 +110,8 @@ function HousePage(props: Props) {
                     placeholder: 'House 이름을 입력하세요.',
                     style: { fontSize: 18 },
                   }}
-                  validationMessage="한 글자 이상 입력하세요."
-                  validation={(val) => val.length > 0}
+                  validationMessage="한 글자 이상, 열 글자 이하로 입력하세요."
+                  validation={(val) => (val.length > 0 && val.length <= 10)}
                   value={house.name}
                   onSave={(houseName: string) => {
                     onRenameHouse(house.id, houseName);
@@ -120,6 +120,7 @@ function HousePage(props: Props) {
               )
               : house.name}
           </h1>
+          <br />
           <br />
           <br />
           <p className="house-intro">
@@ -142,6 +143,8 @@ function HousePage(props: Props) {
                     placeholder: 'House 소개를 입력하세요.',
                     style: { fontSize: 15 },
                   }}
+                  validationMessage="스무 글자 이하로 입력하세요."
+                  validation={(val) => val.length <= 20}
                   value={house.introduction}
                   onSave={(houseIntroduction: string) => {
                     onReintroduceHouse(house.id, houseIntroduction);

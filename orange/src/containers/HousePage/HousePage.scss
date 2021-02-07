@@ -110,6 +110,7 @@ button {
         .house-name-update-input {
           width: 18vw;
           height: 4vh;
+          outline: none,
         }
       }
 
@@ -136,8 +137,9 @@ button {
       }
 
       .house-intro-update-input {
-        width: 20vw;
+        width: 30vw;
         height: 2vh;
+        outline: none;
       }
 
     .right-info {
