@@ -85,35 +85,52 @@ button {
       margin: 0px 0px 0px 10px;
       font-size: 1.125rem;
     }
-    .house-update-box {
-      position: absolute;
-      display: flex;
-      margin: 0px 0px 0px 5px;
 
-      div:last-child {
+      .house-name-update-box {
+        position: absolute;
         display: flex;
-        justify-content: center;
-        margin-top: 4px;
+        margin: 0px 0px 0px 5px;
+
+        div:last-child {
+          display: flex;
+          justify-content: center;
+          margin-top: 4px;
+        }
+
+        button {
+          width: 4vw;
+          height: 3vh;
+          border-radius: 5px;
+        }
       }
 
-      button {
-        width: 4vw;
-        height: 3vh;
-        border-radius: 5px;
+      .house-name-update-input {
+        width: 18vw;
+        height: 4vh;
       }
-    }
 
-    .house-update-input {
-      width: 18vw;
-      height: 4vh;
-    }
+      .house-intro-update-box {
+        position: absolute;
+        display: flex;
+        margin: 0px 0px 0px 5px;
 
-    .house-intro {
-      position: absolute;
-      display: flex;
-      margin: 0px 0px 0px 5px;
-      font-size: 1.125rem;
-    }
+        div:last-child {
+          display: flex;
+          justify-content: center;
+          margin-top: 4px;
+        }
+
+        button {
+          width: 3vw;
+          height: 2.5vh;
+          border-radius: 5px;
+        }
+      }
+
+      .house-intro-update-input {
+        width: 20vw;
+        height: 2vh;
+      }
 
     .right-info {
       margin: 28px 21px 21px 21px;

@@ -110,7 +110,7 @@ const renameHouseFailure = (error: AxiosError) => {
     target: error,
   };
 };
-export const renameHouseName = (
+export const renameHouse = (
   houseId: number, name: string,
 ) => (dispatch: Dispatch) => axios.put(
   `/api/v1/house/${houseId}/`, { houseId, name },
@@ -119,3 +119,32 @@ export const renameHouseName = (
     renameHouseSuccess(renameHouseResponse.data),
   ))
   .catch((renameHouseError) => dispatch(renameHouseFailure(renameHouseError)));
+
+const reintroduceHouseSuccess = (house: House) => ({
+  type: houseConstants.REINTRODUCE_HOUSE_SUCCESS,
+  target: house,
+});
+const reintroduceHouseFailure = (error: AxiosError) => {
+  let actionType = null;
+  switch (error.response?.status) {
+    case 403:
+      actionType = houseConstants.REINTRODUCE_HOUSE_FAILURE_LEADER;
+      break;
+    default:
+      actionType = houseConstants.REINTRODUCE_HOUSE_FAILURE;
+      break;
+  }
+  return {
+    type: actionType,
+    target: error,
+  };
+};
+export const reintroduceHouse = (
+  houseId: number, introduction: string,
+) => (dispatch: Dispatch) => axios.put(
+  `/api/v1/house/${houseId}/`, { houseId, introduction },
+)
+  .then((reintroduceHouseResponse: AxiosResponse<House>) => dispatch(
+    reintroduceHouseSuccess(reintroduceHouseResponse.data),
+  ))
+  .catch((reintroduceHouseError) => dispatch(reintroduceHouseFailure(reintroduceHouseError)));

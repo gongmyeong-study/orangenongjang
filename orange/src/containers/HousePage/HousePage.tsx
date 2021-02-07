@@ -35,12 +35,12 @@ function HousePage(props: Props) {
     setIsInviteModalOpen(true);
   };
 
-  const onRenameHouseName = (houseId: number, houseName: string) => {
-    dispatch(houseActions.renameHouseName(houseId, houseName));
+  const onRenameHouse = (houseId: number, houseName: string) => {
+    dispatch(houseActions.renameHouse(houseId, houseName));
   };
 
-  const saveHouseName = (houseName: string) => {
-    onRenameHouseName(props.house.id, houseName);
+  const onReintroduceHouse = (houseId: number, houseIntroduction: string) => {
+    dispatch(houseActions.reintroduceHouse(houseId, houseIntroduction));
   };
 
   const closeModal = () => {
@@ -85,7 +85,7 @@ function HousePage(props: Props) {
         <div className="house-name-intro">
           <h1 className="house-name">
             <EdiText
-              viewContainerClassName="house-update-box"
+              viewContainerClassName="house-name-update-box"
               editButtonContent={<i className="fas fa-pencil-alt" />}
               saveButtonContent={<i className="fas fa-check" />}
               cancelButtonContent={<i className="fas fa-times" />}
@@ -96,20 +96,42 @@ function HousePage(props: Props) {
               submitOnEnter
               cancelOnEscape
               inputProps={{
-                className: 'house-update-input',
+                className: 'house-name-update-input',
                 placeholder: 'House 이름을 입력하세요.',
                 style: { fontSize: 18 },
               }}
               validationMessage="한 글자 이상 입력하세요."
               validation={(val) => val.length > 0}
               value={house.name}
-              onSave={saveHouseName}
+              onSave={(houseName: string) => {
+                onRenameHouse(house.id, houseName);
+              }}
             />
           </h1>
           <br />
           <br />
           <p className="house-intro">
-            {house.introduction}
+            <EdiText
+              viewContainerClassName="house-intro-update-box"
+              editButtonContent={<i className="fas fa-pencil-alt" />}
+              saveButtonContent={<i className="fas fa-check" />}
+              cancelButtonContent={<i className="fas fa-times" />}
+              hideIcons
+              type="text"
+              showButtonsOnHover
+              submitOnUnfocus
+              submitOnEnter
+              cancelOnEscape
+              inputProps={{
+                className: 'house-intro-update-input',
+                placeholder: 'House 소개를 입력하세요.',
+                style: { fontSize: 15 },
+              }}
+              value={house.introduction}
+              onSave={(houseIntroduction: string) => {
+                onReintroduceHouse(house.id, houseIntroduction);
+              }}
+            />
           </p>
         </div>
         <div
