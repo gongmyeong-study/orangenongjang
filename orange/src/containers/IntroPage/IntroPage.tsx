@@ -74,7 +74,11 @@ function IntroPage() {
         {isSignUpModalOpen && <SignUpForm />}
         {isSignInModalOpen && <SignInForm />}
       </Modal>
-      <div className="logo" />
+      <img
+        className="logo"
+        src="https://orangenongjang.s3.ap-northeast-2.amazonaws.com/orangenongjang/logo/%EC%98%A4%EB%A0%8C%EC%A7%80%EB%86%8D%EC%9E%A5_%EB%A1%9C%EA%B3%A0.png"
+        alt="오렌지농장 로고"
+      />
       <div className="main">
         <p className="text">
           당신과 함께 사는,
