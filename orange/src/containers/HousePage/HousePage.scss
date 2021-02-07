@@ -69,7 +69,7 @@ button {
     background-color: $light-orange;
     border-radius: 12px;
     display: flex;
-    margin: 0 21px 21px;
+    margin: 0 21px 30px;
     justify-content: space-between;
     height: 50vw;
     color: white;
@@ -79,6 +79,11 @@ button {
 
     &:hover {
       background-color: $light-orange-hover;
+    }
+
+    .house-name-intro {
+      margin: 0px 0px 0px 10px;
+      font-size: 1.125rem;
     }
     .house-update-box {
       z-index: 1;
@@ -119,15 +124,16 @@ button {
       justify-content: space-between;
 
       p {
-        margin: 0 0 0 80%;
+        margin: 0 0 0 85%;
         text-align: center;
+        font-size: 1.125rem;
       }
     }
 
     .button-wrapper {
       display: flex;
       flex-direction: column;
-      margin: 0 0 0 80%;
+      margin: 0 0 0 85%;
 
       button:first-child {
         margin-bottom: 16px;
@@ -136,8 +142,8 @@ button {
       button {
         background-color: rgba(255, 255, 255, 0.8);
         font-size: 1rem;
-        width: 3.6rem;
-        height: 1.8rem;
+        width: 4rem;
+        height: 2rem;
         border: none;
         border-radius: 100px;
         color: $orange;

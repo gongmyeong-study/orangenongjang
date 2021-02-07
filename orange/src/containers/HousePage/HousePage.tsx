@@ -82,7 +82,7 @@ function HousePage(props: Props) {
   const showUserHouses = houses?.map((house, index) => (
     <>
       <div className="house-card" key={index}>
-        <div>
+        <div className="house-name-intro">
           <h1 className="house-name">
             <EdiText
               viewContainerClassName="house-update-box"
