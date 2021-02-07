@@ -20,7 +20,7 @@ interface Props {
 function NecessityPage(props: Props) {
   const [isModalOpen, setModalOpen] = useState(false);
   const { createStatus, places } = useSelector((state: OrangeGlobalState) => state.necessity);
-  const { getHouseStatus, house } = useSelector((state: OrangeGlobalState) => state.house);
+  const { house } = useSelector((state: OrangeGlobalState) => state.house);
   const dispatch = useDispatch();
 
   const onGetHouse = (
