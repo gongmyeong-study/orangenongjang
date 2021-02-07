@@ -19,8 +19,8 @@ interface Props {
 
 function NecessityPage(props: Props) {
   const [isModalOpen, setModalOpen] = useState(false);
-
   const { createStatus, places } = useSelector((state: OrangeGlobalState) => state.necessity);
+  const { getHouseStatus, house } = useSelector((state: OrangeGlobalState) => state.house);
   const dispatch = useDispatch();
 
   const onGetHouse = (
@@ -37,6 +37,10 @@ function NecessityPage(props: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createStatus]);
 
+  useEffect(() => {
+    getHouse(props.houseId);
+  }, [props.houseId]);
+
   return (
     <>
       <Modal
@@ -48,7 +52,7 @@ function NecessityPage(props: Props) {
         <PlaceCreateForm houseId={props.houseId} />
       </Modal>
       <div className="placebox-wrapper">
-        <h1 className="NecessityPageBlock">집집</h1>
+        <h1 className="NecessityPageBlock">{house?.name}</h1>
         <Slider className="slider" dots slidesToShow={1.6} slidesToScroll={1} infinite={false}>
           {Boolean(places) && places.map((place) => <PlaceBox place={place} key={place.id} />)}
           <div
