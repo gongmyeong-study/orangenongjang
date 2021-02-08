@@ -24,8 +24,8 @@ function NecessityList(props: Props) {
             <i className="fas fa-plus" />
           </Button>
         </div>
-        { place.necessities.length
-          ? place.necessities.map((necessity: Necessity) => (
+        { place.necessities?.length
+          ? place.necessities?.map((necessity: Necessity) => (
             <div className="necessity-item-and-counter-wrapper" key={necessity.id}>
               <div className="necessity-item-wrapper">
                 <NecessityItem necessity={necessity} />

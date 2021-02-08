@@ -34,7 +34,7 @@ const NecessityResponseCases = [
   necessityConstants.UPDATE_NECESSITYPLACE_SUCCESS,
 ];
 
-function necessityreducer(state = initialState, action: Action): NecessityState {
+function necessityReducer(state = initialState, action: Action): NecessityState {
   if (action.type === necessityConstants.GET_HOUSE_SUCCESS) {
     const house = action.target as House;
     return {
@@ -90,7 +90,7 @@ function necessityreducer(state = initialState, action: Action): NecessityState 
     places = places.map((place) => {
       if (place.id === data.place_id) {
         const newPlace = place;
-        newPlace.necessities = place.necessities.map((necessity) => (
+        newPlace.necessities = place.necessities?.map((necessity) => (
           necessity.id === data.id ? data : necessity));
         return newPlace;
       }
@@ -186,4 +186,4 @@ function necessityreducer(state = initialState, action: Action): NecessityState 
   }
 }
 
-export default necessityreducer;
+export default necessityReducer;

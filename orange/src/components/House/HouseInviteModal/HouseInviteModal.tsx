@@ -24,14 +24,14 @@ function HouseInviteModal(props: Props) {
   } = useForm<HouseInviteFormData>();
 
   const dispatch = useDispatch();
-  const { inviteStatus } = useSelector((state: OrangeGlobalState) => state.house);
+  const { inviteHouseStatus } = useSelector((state: OrangeGlobalState) => state.house);
 
   const onInviteHouse = (houseId: number, email: string) => {
     dispatch(houseActions.inviteHouse(houseId, email));
   };
 
   useEffect(() => {
-    switch (inviteStatus) {
+    switch (inviteHouseStatus) {
       case houseStatus.NONE:
         break;
       case houseStatus.SUCCESS:
@@ -55,10 +55,10 @@ function HouseInviteModal(props: Props) {
       default:
         alert('잘못된 접근입니다.');
     }
-  }, [inviteStatus]);
+  }, [inviteHouseStatus]);
 
   useEffect(() => {
-    if (inviteStatus !== houseStatus.NONE) {
+    if (inviteHouseStatus !== houseStatus.NONE) {
       window.location.reload();
     }
   });

@@ -8,14 +8,14 @@ import { Button } from '@material-ui/core';
 
 import { House, User } from '../../../api';
 import { houseStatus } from '../../../constants/constants';
-import { houseActions, userActions } from '../../../store/actions/index';
+import { houseActions, necessityActions, userActions } from '../../../store/actions/index';
 import { OrangeGlobalState } from '../../../store/state';
 
 import './HouseManageModal.css';
 
 interface Props {
   house?: House;
-  me? : User;
+  me?: User;
 }
 
 interface UserToBeLeaderFormData {
@@ -26,6 +26,7 @@ interface UserToBeLeaderFormData {
 function HouseManageModal(props: Props) {
   const [selectedOption, setSelectedOption] = useState<UserToBeLeaderFormData | null>(null);
   const { getMeStatus, me } = useSelector((state: OrangeGlobalState) => state.user);
+
   const getOptionValue = useCallback((option: UserToBeLeaderFormData): number => option.id, []);
   const onOptionChange = useCallback(
     (option: UserToBeLeaderFormData | null): void => setSelectedOption(option), [],
@@ -34,7 +35,7 @@ function HouseManageModal(props: Props) {
 
   const { handleSubmit } = useForm<UserToBeLeaderFormData>();
   const dispatch = useDispatch();
-  const { leaveStatus, tossStatus, removeHouseStatus } = useSelector(
+  const { leaveHouseStatus, tossLeaderStatus, removeHouseStatus } = useSelector(
     (state: OrangeGlobalState) => state.house,
   );
 
@@ -56,7 +57,7 @@ function HouseManageModal(props: Props) {
   };
 
   useEffect(() => {
-    switch (leaveStatus) {
+    switch (leaveHouseStatus) {
       case houseStatus.NONE:
         break;
       case houseStatus.SUCCESS:
@@ -68,7 +69,7 @@ function HouseManageModal(props: Props) {
       default:
         alert('잘못된 접근입니다.');
     }
-    switch (tossStatus) {
+    switch (tossLeaderStatus) {
       case houseStatus.NONE:
         break;
       case houseStatus.SUCCESS:
@@ -98,11 +99,11 @@ function HouseManageModal(props: Props) {
       default:
         alert('잘못된 접근입니다.');
     }
-  }, [leaveStatus, removeHouseStatus, tossStatus]);
+  }, [leaveHouseStatus, removeHouseStatus, tossLeaderStatus]);
 
   useEffect(() => {
-    if (leaveStatus !== houseStatus.NONE
-      || tossStatus !== houseStatus.NONE
+    if (leaveHouseStatus !== houseStatus.NONE
+      || tossLeaderStatus !== houseStatus.NONE
       || removeHouseStatus !== houseStatus.NONE) {
       window.location.reload();
     }

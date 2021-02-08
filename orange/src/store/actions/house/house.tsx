@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
 import { houseConstants } from '../actionTypes';
-import { House, User } from '../../../api';
+import { House, UserHouse } from '../../../api';
 
 const inviteHouseSuccess = () => ({
   type: houseConstants.INVITE_HOUSE_SUCCESS,
@@ -63,9 +63,9 @@ export const leaveHouse = (
   .then(() => dispatch(leaveHouseSuccess()))
   .catch((leaveError) => dispatch(leaveHouseFailure(leaveError)));
 
-const tossLeaderSuccess = (users: Array<User>) => ({
+const tossLeaderSuccess = (userHouse: Array<UserHouse>) => ({
   type: houseConstants.TOSS_LEADER_SUCCESS,
-  target: users,
+  target: userHouse,
 });
 const tossLeaderFailure = (error: AxiosError) => {
   let actionType = null;
@@ -88,7 +88,9 @@ const tossLeaderFailure = (error: AxiosError) => {
 export const tossLeader = (
   houseId: number, userId: number,
 ) => (dispatch: Dispatch) => axios.post(`/api/v1/house/${houseId}/user/${userId}/leader/`)
-  .then((tossResponse: AxiosResponse<[User]>) => dispatch(tossLeaderSuccess(tossResponse.data)))
+  .then((tossResponse: AxiosResponse<[UserHouse]>) => dispatch(
+    tossLeaderSuccess(tossResponse.data),
+  ))
   .catch((tossError) => dispatch(tossLeaderFailure(tossError)));
 
 const renameHouseSuccess = (house: House) => ({
