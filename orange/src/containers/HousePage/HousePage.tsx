@@ -123,7 +123,7 @@ function HousePage(props: Props) {
           <br />
           <br />
           <br />
-          <p className="house-intro">
+          <div className="house-intro">
             {house.users.map((user) => (
               user.username === me.username && user.is_leader)).includes(true)
               ? (
@@ -152,7 +152,7 @@ function HousePage(props: Props) {
                 />
               )
               : house.introduction}
-          </p>
+          </div>
         </div>
         <div
           className="right-info"
