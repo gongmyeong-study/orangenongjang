@@ -140,6 +140,7 @@ function PlaceBox(props: Props) {
         />
         {house?.users.map(
           (user) => (user.username === me.username && user.is_leader)).includes(true)
+
           && (
           <button
             className="place-delete-button"
@@ -149,6 +150,7 @@ function PlaceBox(props: Props) {
             <i className="fas fa-times fa-2x" />
           </button>
         )}
+
       </h1>
 
       <NecessityList

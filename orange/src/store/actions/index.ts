@@ -21,6 +21,7 @@ import {
   tossLeader,
   renameHouse,
   reintroduceHouse,
+  removeHouse,
 } from './house/house';
 
 export const userActions = {
@@ -46,4 +47,5 @@ export const houseActions = {
   tossLeader,
   renameHouse,
   reintroduceHouse,
+  removeHouse,
 };
