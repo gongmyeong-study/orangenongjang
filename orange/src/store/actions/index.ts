@@ -19,6 +19,8 @@ import {
   inviteHouse,
   leaveHouse,
   tossLeader,
+  renameHouse,
+  reintroduceHouse,
   removeHouse,
 } from './house/house';
 
@@ -43,5 +45,7 @@ export const houseActions = {
   inviteHouse,
   leaveHouse,
   tossLeader,
+  renameHouse,
+  reintroduceHouse,
   removeHouse,
 };

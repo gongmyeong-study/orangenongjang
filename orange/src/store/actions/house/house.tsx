@@ -91,6 +91,65 @@ export const tossLeader = (
   .then((tossResponse: AxiosResponse<[User]>) => dispatch(tossLeaderSuccess(tossResponse.data)))
   .catch((tossError) => dispatch(tossLeaderFailure(tossError)));
 
+const renameHouseSuccess = (house: House) => ({
+  type: houseConstants.RENAME_HOUSE_SUCCESS,
+  target: house,
+});
+const renameHouseFailure = (error: AxiosError) => {
+  let actionType = null;
+  switch (error.response?.status) {
+    case 403:
+      actionType = houseConstants.RENAME_HOUSE_FAILURE_LEADER;
+      break;
+    default:
+      actionType = houseConstants.RENAME_HOUSE_FAILURE;
+      break;
+  }
+  return {
+    type: actionType,
+    target: error,
+  };
+};
+
+export const renameHouse = (
+  houseId: number, name: string,
+) => (dispatch: Dispatch) => axios.put(
+  `/api/v1/house/${houseId}/`, { houseId, name },
+)
+  .then((renameHouseResponse: AxiosResponse<House>) => dispatch(
+    renameHouseSuccess(renameHouseResponse.data),
+  ))
+  .catch((renameHouseError) => dispatch(renameHouseFailure(renameHouseError)));
+
+const reintroduceHouseSuccess = (house: House) => ({
+  type: houseConstants.REINTRODUCE_HOUSE_SUCCESS,
+  target: house,
+});
+const reintroduceHouseFailure = (error: AxiosError) => {
+  let actionType = null;
+  switch (error.response?.status) {
+    case 403:
+      actionType = houseConstants.REINTRODUCE_HOUSE_FAILURE_LEADER;
+      break;
+    default:
+      actionType = houseConstants.REINTRODUCE_HOUSE_FAILURE;
+      break;
+  }
+  return {
+    type: actionType,
+    target: error,
+  };
+};
+export const reintroduceHouse = (
+  houseId: number, introduction: string,
+) => (dispatch: Dispatch) => axios.put(
+  `/api/v1/house/${houseId}/`, { houseId, introduction },
+)
+  .then((reintroduceHouseResponse: AxiosResponse<House>) => dispatch(
+    reintroduceHouseSuccess(reintroduceHouseResponse.data),
+  ))
+  .catch((reintroduceHouseError) => dispatch(reintroduceHouseFailure(reintroduceHouseError)));
+
 const removeHouseSuccess = (houses: Array<House>) => ({
   type: houseConstants.REMOVE_HOUSE_SUCCESS,
   target: houses,
@@ -113,7 +172,6 @@ const removeHouseFailure = (error: AxiosError) => {
     target: error,
   };
 };
-
 export const removeHouse = (houseId: number) => (dispatch: Dispatch) => axios.delete(`/api/v1/house/${houseId}/`)
   .then((removeHouseResponse: AxiosResponse<[House]>) => {
     dispatch(removeHouseSuccess(removeHouseResponse.data));
