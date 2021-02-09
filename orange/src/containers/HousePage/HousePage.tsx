@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { History } from 'history';
 import Modal from 'react-modal';
+
 import { House, User } from '../../api';
 import { houseActions, userActions } from '../../store/actions/index';
 import { OrangeGlobalState } from '../../store/state';
 import { HouseCreateForm, HouseInviteModal, HouseManageModal } from '../../components';
+
 import './HousePage.scss';
 
 interface Props {

@@ -1,7 +1,29 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
-import { houseConstants } from '../actionTypes';
+import { houseConstants, necessityConstants } from '../actionTypes';
 import { House, UserHouse } from '../../../api';
+
+const getHouseSuccess = (house: House) => ({
+  type: necessityConstants.GET_HOUSE_SUCCESS,
+  target: house,
+});
+const getHouseFailure = (error: AxiosError) => {
+  let actionType = null;
+  switch (error.response?.status) {
+    default:
+      actionType = necessityConstants.GET_HOUSE_FAILURE;
+      break;
+  }
+  return {
+    type: actionType,
+    target: error,
+  };
+};
+export const getHouse = (houseId: number) => (dispatch: Dispatch) => axios.get(`/api/v1/house/${houseId}/`)
+  .then((getResponse: AxiosResponse<House>) => {
+    dispatch(getHouseSuccess(getResponse.data));
+  })
+  .catch((getError) => dispatch(getHouseFailure(getError)));
 
 const inviteHouseSuccess = () => ({
   type: houseConstants.INVITE_HOUSE_SUCCESS,

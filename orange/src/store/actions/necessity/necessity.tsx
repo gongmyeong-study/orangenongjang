@@ -1,51 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
-import { houseConstants, necessityConstants } from '../actionTypes';
-import { House, Necessity, Place } from '../../../api';
-
-const getHouseSuccess = (house: House) => ({
-  type: necessityConstants.GET_HOUSE_SUCCESS,
-  target: house,
-});
-const getHouseFailure = (error: AxiosError) => {
-  let actionType = null;
-  switch (error.response?.status) {
-    default:
-      actionType = necessityConstants.GET_HOUSE_FAILURE;
-      break;
-  }
-  return {
-    type: actionType,
-    target: error,
-  };
-};
-export const getHouse = (houseId: number) => (dispatch: Dispatch) => axios.get(`/api/v1/house/${houseId}/`)
-  .then((getResponse: AxiosResponse<House>) => {
-    dispatch(getHouseSuccess(getResponse.data));
-  })
-  .catch((getError) => dispatch(getHouseFailure(getError)));
-
-const removeHouseSuccess = (house: House) => ({
-  type: houseConstants.REMOVE_HOUSE_SUCCESS,
-  target: house,
-});
-const removeHouseFailure = (error: AxiosError) => {
-  let actionType = null;
-  switch (error.response?.status) {
-    default:
-      actionType = houseConstants.REMOVE_HOUSE_FAILURE;
-      break;
-  }
-  return {
-    type: actionType,
-    target: error,
-  };
-};
-export const removeHouse = (houseId: number) => (dispatch: Dispatch) => axios.delete(`/api/v1/house/${houseId}/`)
-  .then((removeHouseResponse: AxiosResponse<House>) => {
-    dispatch(removeHouseSuccess(removeHouseResponse.data));
-  })
-  .catch((removeHouseError) => dispatch(removeHouseFailure(removeHouseError)));
+import { necessityConstants } from '../actionTypes';
+import { Necessity, Place } from '../../../api';
 
 const createNecessityPlaceSuccess = (place: Place) => ({
   type: necessityConstants.CREATE_NECESSITYPLACE_SUCCESS,

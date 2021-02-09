@@ -7,7 +7,6 @@ import {
 
 import {
   createNecessityPlace,
-  getHouse,
   removeNecessityPlace,
   countNecessityPlace,
   updateNecessityPlace,
@@ -16,6 +15,7 @@ import {
 } from './necessity/necessity';
 
 import {
+  getHouse,
   inviteHouse,
   leaveHouse,
   tossLeader,
@@ -42,6 +42,7 @@ export const necessityActions = {
 };
 
 export const houseActions = {
+  getHouse,
   inviteHouse,
   leaveHouse,
   tossLeader,

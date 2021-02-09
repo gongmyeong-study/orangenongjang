@@ -5,8 +5,7 @@ import Modal from 'react-modal';
 import {
   Necessity, Place, House, User,
 } from '../../api';
-import { getHouse, renamePlace, removePlace } from '../../store/actions/necessity/necessity';
-import { getMe } from '../../store/actions/user/user';
+import { houseActions, necessityActions, userActions } from '../../store/actions/index';
 import { OrangeGlobalState } from '../../store/state';
 import NecessityList from '../Necessity/NecessityList/NecessityList';
 import './PlaceBox.css';
@@ -38,7 +37,7 @@ function PlaceBox(props: Props) {
   };
 
   const onRenamePlace = (houseId: number, placeId: number, placeName: string) => {
-    dispatch(renamePlace(houseId, placeId, placeName));
+    dispatch(necessityActions.renamePlace(houseId, placeId, placeName));
   };
 
   const savePlace = (placeName: string) => {
@@ -46,7 +45,7 @@ function PlaceBox(props: Props) {
   };
 
   const onRemovePlace = (houseId: number, placeId: number) => {
-    dispatch(removePlace(houseId, placeId));
+    dispatch(necessityActions.removePlace(houseId, placeId));
   };
 
   const deletePlace = () => {
@@ -93,11 +92,11 @@ function PlaceBox(props: Props) {
   }, [createStatus, updateStatus, updatePlaceStatus, removePlaceStatus]);
 
   useEffect(() => {
-    getHouse(props.place.house_id);
+    houseActions.getHouse(props.place.house_id);
   }, [getHouseStatus, props.place.house_id]);
 
   useEffect(() => {
-    getMe();
+    userActions.getMe();
   }, [getMeStatus]);
 
   return (
