@@ -8,7 +8,7 @@ import { Button } from '@material-ui/core';
 
 import { House, User } from '../../../api';
 import { houseStatus } from '../../../constants/constants';
-import { houseActions, necessityActions, userActions } from '../../../store/actions/index';
+import { houseActions, userActions } from '../../../store/actions/index';
 import { OrangeGlobalState } from '../../../store/state';
 
 import './HouseManageModal.css';
