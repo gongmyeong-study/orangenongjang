@@ -7,7 +7,6 @@ const getHouseSuccess = (house: House) => ({
   type: necessityConstants.GET_HOUSE_SUCCESS,
   target: house,
 });
-
 const getHouseFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {
@@ -20,7 +19,6 @@ const getHouseFailure = (error: AxiosError) => {
     target: error,
   };
 };
-
 export const getHouse = (houseId: number) => (dispatch: Dispatch) => axios.get(`/api/v1/house/${houseId}/`)
   .then((getResponse: AxiosResponse<House>) => {
     dispatch(getHouseSuccess(getResponse.data));
@@ -31,7 +29,6 @@ const removeHouseSuccess = (house: House) => ({
   type: houseConstants.REMOVE_HOUSE_SUCCESS,
   target: house,
 });
-
 const removeHouseFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {
@@ -44,7 +41,6 @@ const removeHouseFailure = (error: AxiosError) => {
     target: error,
   };
 };
-
 export const removeHouse = (houseId: number) => (dispatch: Dispatch) => axios.delete(`/api/v1/house/${houseId}/`)
   .then((removeHouseResponse: AxiosResponse<House>) => {
     dispatch(removeHouseSuccess(removeHouseResponse.data));
@@ -55,12 +51,12 @@ const createNecessityPlaceSuccess = (place: Place) => ({
   type: necessityConstants.CREATE_NECESSITYPLACE_SUCCESS,
   target: place,
 });
-
 const createNecessityPlaceFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {
     case 409:
       actionType = necessityConstants.CREATE_NECESSITYPLACE_FAILURE_NAME;
+      window.alert('이미 존재하는 생필품입니다.');
       break;
     default:
       actionType = necessityConstants.CREATE_NECESSITYPLACE_FAILURE;
@@ -70,7 +66,6 @@ const createNecessityPlaceFailure = (error: AxiosError) => {
     target: error,
   };
 };
-
 export const createNecessityPlace = (
   placeId: number, name: string, option: string, description: string, price: number, count: number,
 ) => (dispatch: Dispatch) => axios.post(`/api/v1/place/${placeId}/necessity/`, {
@@ -85,7 +80,6 @@ const countNecessityPlaceSuccess = (necessity: Necessity) => ({
   type: necessityConstants.COUNT_NECESSITYPLACE_SUCCESS,
   target: necessity,
 });
-
 const countNecessityPlaceFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {
@@ -98,7 +92,6 @@ const countNecessityPlaceFailure = (error: AxiosError) => {
     target: error,
   };
 };
-
 export const countNecessityPlace = (
   placeId: number, necessityId: number, count: number,
 ) => (dispatch: Dispatch) => axios.put(`/api/v1/place/${placeId}/necessity/${necessityId}/count/`, { count })
@@ -111,7 +104,6 @@ const updateNecessityPlaceSuccess = (necessity: Necessity) => ({
   type: necessityConstants.UPDATE_NECESSITYPLACE_SUCCESS,
   target: necessity,
 });
-
 const updateNecessityPlaceFailure = (error: AxiosError) => {
   let actionType = null;
   window.alert('수정 내역을 다시 확인해주세요.');
@@ -125,7 +117,6 @@ const updateNecessityPlaceFailure = (error: AxiosError) => {
     target: error,
   };
 };
-
 export const updateNecessityPlace = (
   placeId: number, necessityId: number, description: string, price?: number, count?: number,
 ) => (dispatch: Dispatch) => axios.put(`/api/v1/place/${placeId}/necessity/${necessityId}/`, { description, price, count })
@@ -141,7 +132,6 @@ const removeNecessityPlaceSuccess = (place: Place) => {
     target: place,
   };
 };
-
 const removeNecessityPlaceFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {
@@ -155,7 +145,6 @@ const removeNecessityPlaceFailure = (error: AxiosError) => {
     target: error,
   };
 };
-
 export const removeNecessityPlace = (
   placeId: number, necessityId: number,
 ) => (dispatch: Dispatch) => axios.delete(`/api/v1/place/${placeId}/necessity/${necessityId}/`)
@@ -168,10 +157,13 @@ const createPlaceSuccess = (place: Place) => ({
   type: necessityConstants.CREATE_PLACE_SUCCESS,
   target: place,
 });
-
 const createPlaceFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {
+    case 409:
+      actionType = necessityConstants.CREATE_PLACE_FAILURE_NAME;
+      window.alert('이미 존재하는 생필품입니다.');
+      break;
     default:
       actionType = necessityConstants.CREATE_PLACE_FAILURE;
       break;
@@ -181,7 +173,6 @@ const createPlaceFailure = (error: AxiosError) => {
     target: error,
   };
 };
-
 export const createPlace = (houseId: number, name: string) => (dispatch: Dispatch) => axios.post(`/api/v1/house/${houseId}/place/`, { name }).then((createResponse: AxiosResponse<Place>) => {
   dispatch(createPlaceSuccess(createResponse.data));
 })
@@ -223,7 +214,6 @@ const removePlaceSuccess = (places: Array<Place>) => ({
   type: necessityConstants.REMOVE_PLACE_SUCCESS,
   target: places,
 });
-
 const removePlaceFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {

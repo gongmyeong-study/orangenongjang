@@ -1,12 +1,13 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import {
   TextField, Button, InputAdornment,
 } from '@material-ui/core';
-import { useForm } from 'react-hook-form';
-import './NecessityCreateOrUpdateForm.css';
-import { useDispatch } from 'react-redux';
+
 import { Necessity } from '../../../api';
-import { createNecessityPlace, updateNecessityPlace } from '../../../store/actions/necessity/necessity';
+import { necessityActions } from '../../../store/actions/index';
+import './NecessityCreateOrUpdateForm.css';
 
 type CreateOrUpdate = 'CREATE' | 'UPDATE';
 
@@ -40,7 +41,9 @@ function NecessityCreateOrUpdateForm(props: Props) {
     price: number,
     count: number,
   ) => {
-    dispatch(createNecessityPlace(placeId, name, option, description, price, count));
+    dispatch(necessityActions.createNecessityPlace(
+      placeId, name, option, description, price, count,
+    ));
   };
 
   const onUpdateNecessityPlace = (
@@ -50,7 +53,9 @@ function NecessityCreateOrUpdateForm(props: Props) {
     price: number,
     count: number,
   ) => {
-    dispatch(updateNecessityPlace(placeId, necessityId, description, price, count));
+    dispatch(necessityActions.updateNecessityPlace(
+      placeId, necessityId, description, price, count,
+    ));
   };
 
   const onSubmitToCreate = (data: NecessityCreateOrUpdateFormData) => onCreateNecessityPlace(

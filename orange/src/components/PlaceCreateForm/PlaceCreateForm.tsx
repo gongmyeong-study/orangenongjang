@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import './PlaceCreateForm.css';
 import { TextField, InputAdornment, Button } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
-import { createPlace } from '../../store/actions/necessity/necessity';
+import { necessityActions } from '../../store/actions/index';
 
 interface Props {
   houseId: number;
@@ -20,7 +20,7 @@ function PlaceCreateForm(props: Props) {
     houseId: number,
     name: string,
   ) => {
-    dispatch(createPlace(houseId, name));
+    dispatch(necessityActions.createPlace(houseId, name));
   };
 
   const {

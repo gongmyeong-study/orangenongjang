@@ -152,6 +152,17 @@ function necessityreducer(state = initialState, action: Action): NecessityState 
         updateStatus: necessityStatus.FAILURE,
       };
 
+    case necessityConstants.CREATE_PLACE_FAILURE:
+      return {
+        ...state,
+        createStatus: necessityStatus.FAILURE,
+      };
+    case necessityConstants.CREATE_PLACE_FAILURE_NAME:
+      return {
+        ...state,
+        createStatus: necessityStatus.FAILURE_NAME,
+      };
+
     case necessityConstants.RENAME_PLACE_FAILURE:
     case necessityConstants.RENAME_PLACE_FAILURE_MEMBER:
     case necessityConstants.RENAME_PLACE_FAILURE_NOT_FOUND:
