@@ -1,52 +1,51 @@
 import {
-  signUp,
-  login,
-  logout,
-  getMe,
-} from './user/user';
-
-import {
-  createNecessityPlace,
-  removeNecessityPlace,
-  countNecessityPlace,
-  updateNecessityPlace,
-  renamePlace,
-  removePlace,
-} from './necessity/necessity';
-
-import {
   getHouse,
   inviteHouse,
   leaveHouse,
-  tossLeader,
-  renameHouse,
   reintroduceHouse,
   removeHouse,
+  renameHouse,
+  tossLeader,
 } from './house/house';
 
-export const userActions = {
-  signUp,
+import {
+  countNecessityPlace,
+  createNecessityPlace,
+  removePlace,
+  removeNecessityPlace,
+  renamePlace,
+  updateNecessityPlace,
+} from './necessity/necessity';
+
+import {
+  getMe,
   login,
   logout,
-  getMe,
-};
-
-export const necessityActions = {
-  createNecessityPlace,
-  getHouse,
-  removeNecessityPlace,
-  countNecessityPlace,
-  updateNecessityPlace,
-  renamePlace,
-  removePlace,
-};
+  signUp,
+} from './user/user';
 
 export const houseActions = {
   getHouse,
   inviteHouse,
   leaveHouse,
-  tossLeader,
-  renameHouse,
   reintroduceHouse,
   removeHouse,
+  renameHouse,
+  tossLeader,
+};
+
+export const necessityActions = {
+  countNecessityPlace,
+  createNecessityPlace,
+  removePlace,
+  removeNecessityPlace,
+  renamePlace,
+  updateNecessityPlace,
+};
+
+export const userActions = {
+  getMe,
+  login,
+  logout,
+  signUp,
 };

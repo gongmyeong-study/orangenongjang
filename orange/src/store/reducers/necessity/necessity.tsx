@@ -124,11 +124,13 @@ function necessityReducer(state = initialState, action: Action): NecessityState 
       };
 
     case necessityConstants.CREATE_NECESSITYPLACE_FAILURE:
+    case necessityConstants.CREATE_PLACE_FAILURE:
       return {
         ...state,
         createStatus: necessityStatus.FAILURE,
       };
     case necessityConstants.CREATE_NECESSITYPLACE_FAILURE_NAME:
+    case necessityConstants.CREATE_PLACE_FAILURE_NAME:
       return {
         ...state,
         createStatus: necessityStatus.FAILURE_NAME,
