@@ -162,7 +162,7 @@ const createPlaceFailure = (error: AxiosError) => {
   switch (error.response?.status) {
     case 409:
       actionType = necessityConstants.CREATE_PLACE_FAILURE_NAME;
-      window.alert('이미 존재하는 생필품입니다.');
+      window.alert('이미 존재하는 공간입니다.');
       break;
     default:
       actionType = necessityConstants.CREATE_PLACE_FAILURE;
