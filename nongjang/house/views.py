@@ -1,8 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.contrib.sites.shortcuts import get_current_site
 from django.core import mail
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMultiAlternatives
 from django.db import IntegrityError, transaction
 from django.shortcuts import redirect
 from django.utils.encoding import force_bytes, force_text
@@ -18,7 +17,7 @@ from house.models import House, Place, UserHouse
 from house.serializers import HouseSerializer, PlaceSerializer, SimpleHouseSerializer, UserOfHouseSerializer
 from necessity.models import Necessity, NecessityPlace, NecessityLog
 from necessity.serializers import NecessitySerializer, NecessityLogSerializer, NecessityOfPlaceWriteSerializer
-from house.text import house_invite_message
+from house.text import *
 from user.token import user_activation_token
 
 
@@ -110,9 +109,6 @@ class HouseViewSet(viewsets.GenericViewSet):
         user = request.user
         house = self.get_object()
 
-        print(request.build_absolute_uri('/'))
-        print(request.build_absolute_uri(''))
-
         user_house = user.user_houses.filter(house=house).last()
         if not user_house.is_leader:
             return Response({'error': "leader만 초대장을 전송할 수 있습니다."}, status=status.HTTP_403_FORBIDDEN)
@@ -131,14 +127,16 @@ class HouseViewSet(viewsets.GenericViewSet):
             return Response({'error': "이미 House에 등록된 멤버입니다."}, status=status.HTTP_409_CONFLICT)
 
         with mail.get_connection() as connection:
-            subject = "오렌지농장 House에 초대합니다."
+            subject = house_invite_subject(self)
             domain = request.build_absolute_uri('/')
             user_uidb64 = urlsafe_base64_encode(force_bytes(invited_user.id))
             house_uidb64 = urlsafe_base64_encode(force_bytes(house.id))
             token = user_activation_token.make_token(invited_user)
             message = house_invite_message(domain, house_uidb64, user_uidb64, token, user, house, invited_user)
             try:
-                EmailMessage(subject, message, to=[email], connection=connection).send()
+                msg = EmailMultiAlternatives(subject, message, to=[email])
+                msg.attach_alternative(message, "text/html")
+                msg.send()
             except SMTPException:
                 return Response({'error': "Email 발송에 문제가 있습니다."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         return Response({'message': "입력하신 이메일로 초대장이 전송되었습니다."})
