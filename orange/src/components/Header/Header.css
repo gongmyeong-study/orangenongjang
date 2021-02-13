@@ -1,35 +1,62 @@
-.main-header {
-  margin-top: 3%;
-  display: flex;
-  justify-content: flex-end;
-}
+@media screen and (min-width: 540px)  {
+  .main-header {
+    margin-top: 3%;
+    display: flex;
+    justify-content: flex-end;
+  }
 
-.main-header-li {
-  width: 10em;
-  text-align: center;
-  font: 500 1.14em 'Noto Sans KR', sans-serif;
-}
+  .main-header-li {
+    width: 10em;
+    text-align: center;
+    font: 500 1.14em 'Noto Sans KR', sans-serif;
+  }
 
-.main-header-li > button {
-  border: none;
-  background: none;
-  padding: 0;
-  margin: auto;
-  font: 500 1em 'Noto Sans KR', sans-serif;
-  cursor: pointer;
-}
+  .main-header-li > button {
+    border: none;
+    background: none;
+    padding: 0;
+    margin: auto;
+    font: 500 1em 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+  }
 
-.main-header-li-hello {
-  font: 400 1.14em 'Noto Sans KR', sans-serif;
+  .main-header-li-hello {
+    font: 400 1.14em 'Noto Sans KR', sans-serif;
+  }
+
+  .only-on-mobile {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 540px) {
+  .main-header {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  .main-header .logo {
+    width: 80px;
+    height: auto;
+  }
+
+  .main-header .navbar-burger {
+    position: absolute;
+    right: 24px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: rgba(0, 0, 0, 0.76);
+  }
+
   .main-header-li {
     width: 7em;
     text-align: center;
     font: 500 1em 'Noto Sans KR', sans-serif;
   }
-  .main-header-li-hello {
+
+  .only-on-desktop {
     display: none;
   }
 }

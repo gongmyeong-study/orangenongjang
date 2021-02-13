@@ -28,6 +28,8 @@ class Header extends Component<Props> {
     let whereToGoDisplay = '오렌지농장 소개';
     let logoutButton = null;
 
+    const isNotOnIntro =  this.props.getMeStatus === userStatus.SUCCESS && this.props.pathname === '/';
+
     // if not logged-in, userStatus would be FAILURE
     if (this.props.getMeStatus === userStatus.FAILURE) {
       if (this.props.pathname === '/info') {
@@ -77,19 +79,31 @@ class Header extends Component<Props> {
     }
 
     return (
-      <ul className="main-header">
-        {helloUser}
-        <li className="main-header-li">
-          <button
-            className="header-page-button"
-            type="button"
-            onClick={() => this.props.history.push(whereToGo)}
-          >
-            {whereToGoDisplay}
-          </button>
-        </li>
-        {logoutButton}
-      </ul>
+      <>
+        <ul className="main-header only-on-desktop">
+          {helloUser}
+          <li className="main-header-li">
+            <button
+              className="header-page-button"
+              type="button"
+              onClick={() => this.props.history.push(whereToGo)}
+            >
+              {whereToGoDisplay}
+            </button>
+          </li>
+          {logoutButton}
+        </ul>
+        {isNotOnIntro &&
+        <div className="main-header only-on-mobile">
+          <img
+            className="logo"
+            src="https://orangenongjang-static.s3.ap-northeast-2.amazonaws.com/image/orangenongjang_logo_1.png"
+            alt="orangenongjang_logo"
+          />
+          <button className="navbar-burger" type="button"><i className="fas fa-bars" /></button>
+        </div>
+        }
+      </>
     );
   }
 }
