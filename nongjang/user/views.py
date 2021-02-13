@@ -1,9 +1,8 @@
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.contrib.sites.shortcuts import get_current_site
 from django.core import mail
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMultiAlternatives
 from django.db import IntegrityError
 from django.shortcuts import redirect
 from django.utils.encoding import force_bytes, force_text
@@ -14,7 +13,7 @@ from rest_framework.response import Response
 from smtplib import SMTPException
 
 from user.serializers import UserSerializer
-from user.text import user_invite_message
+from user.text import *
 from user.token import user_activation_token
 
 
@@ -36,12 +35,15 @@ class UserViewSet(viewsets.GenericViewSet):
             return Response({'error': "같은 정보의 사용자가 이미 존재합니다."}, status=status.HTTP_400_BAD_REQUEST)
 
         with mail.get_connection():
+            subject = user_invite_subject(self)
             domain = request.build_absolute_uri('/')
             uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
             token = user_activation_token.make_token(user)
             message = user_invite_message(domain, uidb64, token, user)
             try:
-                EmailMessage("오렌지농장에 초대합니다.", message, to=[email]).send()
+                msg = EmailMultiAlternatives(subject, message, to=[email])
+                msg.attach_alternative(message, "text/html")
+                msg.send()
             except SMTPException:
                 return Response({'error': "Email 발송에 문제가 있습니다. 다시 시도해주세요."},
                                 status=status.HTTP_503_SERVICE_UNAVAILABLE)
