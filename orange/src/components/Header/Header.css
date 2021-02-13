@@ -48,6 +48,7 @@
     border: none;
     font-size: 24px;
     color: rgba(0, 0, 0, 0.76);
+    cursor: pointer;
   }
 
   .main-header-li {
@@ -56,7 +57,55 @@
     font: 500 1em 'Noto Sans KR', sans-serif;
   }
 
+  .main-header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
   .only-on-desktop {
     display: none;
+  }
+
+  .modal {
+    position: absolute;
+    top: 1%;
+    right: 4%;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: solid 1px rgba(0, 0, 0, 0.3);
+    outline: none;
+    animation: fadein 0.5s;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: none;
+    z-index: 150;
+  }
+
+  .menu-list button {
+    background: none;
+    border: none;
+    font: 500 1em 'Noto Sans KR', sans-serif;
+
+  }
+
+  .menu-list button:first-child {
+    margin-bottom: 4px;
+  }
+
+  @keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
   }
 }
