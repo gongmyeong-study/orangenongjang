@@ -1,9 +1,9 @@
-import React from "react";
-import { TextField, Button } from "@material-ui/core";
-import { useForm } from "react-hook-form";
-import axios from "axios";
-import { useHistory } from "react-router-dom";
-import "./HouseCreateForm.scss";
+import React from 'react';
+import { TextField, Button } from '@material-ui/core';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import './HouseCreateForm.scss';
 
 interface HouseCreateFormData {
   name: string;
@@ -20,13 +20,13 @@ function HouseCreateForm() {
 
   const createHouse = (name: string, introduction: string) => {
     axios
-      .post("/api/v1/house/", { name, introduction })
+      .post('/api/v1/house/', { name, introduction })
       .then((res) => {
         const { data } = res;
         goToTheHouse(data.id);
       })
       .catch(() => {
-        window.alert("같은 이름의 집을 가지고 있거나 요청에 문제가 있습니다.");
+        window.alert('같은 이름의 집을 가지고 있거나 요청에 문제가 있습니다.');
       });
   };
 
@@ -43,7 +43,7 @@ function HouseCreateForm() {
         name="name"
         inputRef={register({ required: true })}
         error={Boolean(errors.name)}
-        helperText={errors.name && "집 이름을 입력해주세요!"}
+        helperText={errors.name && '집 이름을 입력해주세요!'}
         className="text-input"
       />
       <h3>소개</h3>
@@ -51,7 +51,7 @@ function HouseCreateForm() {
         name="introduction"
         inputRef={register({ required: true })}
         error={Boolean(errors.introduction)}
-        helperText={errors.introduction && "집 소개를 입력해주세요!"}
+        helperText={errors.introduction && '집 소개를 입력해주세요!'}
         className="text-input intro"
         multiline
         rows={4}
