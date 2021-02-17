@@ -8,7 +8,11 @@ interface Props {
 
 function NecessityUpdateButton(props: Props) {
   return (
-    <i className="far fa-edit fa-lg" onClick={() => props.updateNecessity(props.necessity)} />
+    <i
+      className="far fa-edit fa-lg"
+      style={{ cursor: 'pointer' }}
+      onClick={() => props.updateNecessity(props.necessity)}
+    />
   );
 }
 
