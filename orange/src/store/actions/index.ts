@@ -11,6 +11,7 @@ import {
 import {
   countNecessityPlace,
   createNecessityPlace,
+  createPlace,
   removePlace,
   removeNecessityPlace,
   renamePlace,
@@ -37,6 +38,7 @@ export const houseActions = {
 export const necessityActions = {
   countNecessityPlace,
   createNecessityPlace,
+  createPlace,
   removePlace,
   removeNecessityPlace,
   renamePlace,
