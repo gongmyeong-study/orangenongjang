@@ -22,9 +22,15 @@ interface Props {
 
 function LogList(props: Props) {
   const { username } = props.logs.user;
-  const necessityname = props.logs.necessity?.name;
-  const necessityplace = props.logs.necessity?.place_name;
-  const createdAt = (new Date(props.logs.created_at)).toLocaleString();
+  let necessityname = props.logs.necessity?.name;
+  if (necessityname && necessityname?.length > 10) {
+    necessityname = `${necessityname?.substring(0, 9)}...`;
+  }
+  let necessityplace = props.logs.necessity?.place_name;
+  if (necessityplace && necessityplace?.length > 10) {
+    necessityplace = `${necessityplace?.substring(0, 9)}...`;
+  }
+  const createdAt = new Date(props.logs.created_at).toLocaleString();
 
   const activityCategory = () => {
     switch (props.logs.action) {

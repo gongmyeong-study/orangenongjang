@@ -7,9 +7,13 @@ interface Props {
 }
 
 function NecessityItem(props: Props) {
+  let necessityname = props.necessity.name;
+  if (necessityname.length > 10) {
+    necessityname = `${necessityname?.substring(0, 9)}...`;
+  }
   return (
     <div className="necessity">
-      <h4>{props.necessity.name}</h4>
+      <h4>{necessityname}</h4>
     </div>
   );
 }
