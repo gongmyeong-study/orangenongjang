@@ -25,7 +25,7 @@ class SimpleHouseSerializer(serializers.ModelSerializer):
         return UserOfHouseSerializer(user_houses, many=True, context=self.context).data
 
     def get_places(self, house):
-        return SimplePlaceSerializer(house.places, many=True).data
+        return SimplePlaceSerializer(house.places.filter(is_hidden=False), many=True).data
 
     def validate_name(self, name):
         user = self.context['request'].user
@@ -41,7 +41,7 @@ class HouseSerializer(SimpleHouseSerializer):
         fields = SimpleHouseSerializer.Meta.fields
 
     def get_places(self, house):
-        return PlaceSerializer(house.places, many=True).data
+        return PlaceSerializer(house.places.filter(is_hidden=False), many=True).data
 
 
 class UserOfHouseSerializer(serializers.ModelSerializer):

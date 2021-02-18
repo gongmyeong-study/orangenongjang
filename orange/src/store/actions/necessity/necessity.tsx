@@ -68,7 +68,7 @@ const createNecessityPlaceFailure = (error: AxiosError) => {
   switch (error.response?.status) {
     case 409:
       actionType = necessityConstants.CREATE_NECESSITYPLACE_FAILURE_NAME;
-      alert('같은 이름의 Necessity가 존재합니다.');
+      alert('이름과 설명이 같은 Necessity가 존재합니다.');
       break;
     default:
       actionType = necessityConstants.CREATE_NECESSITYPLACE_FAILURE;
