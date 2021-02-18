@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@material-ui/core';
 
 import { House, User } from '../../../api';
-import { houseStatus } from '../../../constants/constants';
 import { houseActions, userActions } from '../../../store/actions/index';
 import { OrangeGlobalState } from '../../../store/state';
 
@@ -15,7 +14,7 @@ import './HouseManageModal.css';
 
 interface Props {
   house?: House;
-  me? : User;
+  me?: User;
 }
 
 interface UserToBeLeaderFormData {
@@ -26,6 +25,7 @@ interface UserToBeLeaderFormData {
 function HouseManageModal(props: Props) {
   const [selectedOption, setSelectedOption] = useState<UserToBeLeaderFormData | null>(null);
   const { getMeStatus, me } = useSelector((state: OrangeGlobalState) => state.user);
+
   const getOptionValue = useCallback((option: UserToBeLeaderFormData): number => option.id, []);
   const onOptionChange = useCallback(
     (option: UserToBeLeaderFormData | null): void => setSelectedOption(option), [],
@@ -34,12 +34,13 @@ function HouseManageModal(props: Props) {
 
   const { handleSubmit } = useForm<UserToBeLeaderFormData>();
   const dispatch = useDispatch();
-  const { leaveStatus, tossStatus, removeHouseStatus } = useSelector(
-    (state: OrangeGlobalState) => state.house,
-  );
 
   const onLeaveHouse = (houseId: number) => { dispatch(houseActions.leaveHouse(houseId)); };
-  const onSubmitToLeave = () => onLeaveHouse(props.house!.id);
+  const onSubmitToLeave = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    window.confirm(`[ ${props.house!.name} ]을/를 정말 탈퇴하시겠습니까?`)
+    && onLeaveHouse(props.house!.id);
+  };
 
   const onRemoveHouse = (houseId: number) => { dispatch(houseActions.removeHouse(houseId)); };
   const onSubmitToRemove = () => {
@@ -54,59 +55,6 @@ function HouseManageModal(props: Props) {
   const onSubmitToToss = () => {
     onTossLeader(props.house!.id, selectedOption!.id);
   };
-
-  useEffect(() => {
-    switch (leaveStatus) {
-      case houseStatus.NONE:
-        break;
-      case houseStatus.SUCCESS:
-        alert('Dobby is Free!');
-        break;
-      case houseStatus.FAILURE_LEAVE_LEADER:
-        alert('Leader는 House를 나갈 수 없습니다.');
-        break;
-      default:
-        alert('잘못된 접근입니다.');
-    }
-    switch (tossStatus) {
-      case houseStatus.NONE:
-        break;
-      case houseStatus.SUCCESS:
-        alert('Leader가 변경되었습니다.');
-        break;
-      case houseStatus.FAILURE_TOSS_ME:
-        alert('자기 자신에게는 Leader를 양도할 수 없습니다.');
-        break;
-      case houseStatus.FAILURE_TOSS_LEADER:
-        alert('Leader만 다른 사람에게 Leader를 양도할 수 있습니다.');
-        break;
-      default:
-        alert('잘못된 접근입니다.');
-    }
-    switch (removeHouseStatus) {
-      case houseStatus.NONE:
-        break;
-      case houseStatus.SUCCESS:
-        alert('House가 삭제되었습니다.');
-        break;
-      case houseStatus.FAILURE_REMOVE_MEMBER:
-        alert('House 멤버가 아닙니다.');
-        break;
-      case houseStatus.FAILURE_REMOVE_LEADER:
-        alert('House Leader만 House를 삭제할 수 있습니다.');
-        break;
-      default:
-        alert('잘못된 접근입니다.');
-    }
-  }, [leaveStatus, removeHouseStatus, tossStatus]);
-
-  useEffect(() => {
-    if (leaveStatus !== houseStatus.NONE
-      || tossStatus !== houseStatus.NONE
-      || removeHouseStatus !== houseStatus.NONE) {
-      window.location.reload();
-    }
-  });
 
   useEffect(() => {
     userActions.getMe();
