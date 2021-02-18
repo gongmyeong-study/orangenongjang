@@ -1,10 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+
 import { TextField, InputAdornment, Button } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
-import { useForm } from 'react-hook-form';
-import { login } from '../../store/actions/user/user';
+
+import { userActions } from '../../store/actions/index';
 import './SignInForm.scss';
 
 interface SigInFormData {
@@ -16,7 +18,7 @@ function SignInForm() {
   const dispatch = useDispatch();
 
   const onLogin = (username: string, password: string) => {
-    dispatch(login(username, password));
+    dispatch(userActions.login(username, password));
   };
 
   const {

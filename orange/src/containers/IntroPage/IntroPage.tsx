@@ -1,19 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import {
-  useSelector,
-} from 'react-redux';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 
 import { SignUpForm, SignInForm } from '../../components/index';
-import { userStatus } from '../../constants/constants';
-import { OrangeGlobalState } from '../../store/state';
 import './IntroPage.scss';
 
 function IntroPage() {
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
-
-  const { loginStatus, signupStatus } = useSelector((state: OrangeGlobalState) => state.user);
 
   const toggleSignUpModal = () => {
     setIsSignUpModalOpen(!isSignUpModalOpen);
@@ -30,36 +23,6 @@ function IntroPage() {
       toggleSignUpModal();
     }
   };
-
-  useEffect(() => {
-    if (loginStatus === userStatus.SUCCESS) {
-      window.location.reload();
-    } if (loginStatus === userStatus.FAILURE_INACTIVE) {
-      alert('메일을 확인하여 회원 인증을 완료해주세요!');
-      window.location.reload();
-    } if (loginStatus === userStatus.FAILURE_INFO) {
-      alert('잘못된 이름 또는 비밀번호입니다.');
-      window.location.reload();
-    } if (loginStatus === userStatus.FAILURE) {
-      alert('잘못된 이름 또는 비밀번호입니다.');
-      window.location.reload();
-    }
-
-    if (signupStatus === userStatus.SUCCESS) {
-      alert('회원 인증 메일이 전송되었습니다!');
-      window.location.reload();
-    } if (signupStatus === userStatus.WAITING) {
-      alert('이미 인증이 진행 중인 회원입니다.');
-    } if (signupStatus === userStatus.FAILURE_AUTHENTICATION) {
-      alert('회원 인증에 문제가 있습니다. 다시 시도해주세요.');
-    } if (signupStatus === userStatus.FAILURE_EMAIL) {
-      alert('이미 등록된 메일입니다.');
-    } if (signupStatus === userStatus.FAILURE_USERNAME) {
-      alert('이미 등록된 이름입니다.');
-    } if (signupStatus === userStatus.FAILURE) {
-      alert('회원가입에 실패하였습니다. 다시 시도해주세요.');
-    }
-  }, [loginStatus, signupStatus]);
 
   return (
     <div className="intro-wrapper">

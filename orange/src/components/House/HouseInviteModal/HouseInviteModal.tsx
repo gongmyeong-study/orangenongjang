@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   TextField, Button, InputAdornment,
 } from '@material-ui/core';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import { House } from '../../../api';
-import { houseStatus } from '../../../constants/constants';
-import { OrangeGlobalState } from '../../../store/state';
 import { houseActions } from '../../../store/actions';
 
 interface Props {
@@ -24,44 +22,10 @@ function HouseInviteModal(props: Props) {
   } = useForm<HouseInviteFormData>();
 
   const dispatch = useDispatch();
-  const { inviteStatus } = useSelector((state: OrangeGlobalState) => state.house);
 
   const onInviteHouse = (houseId: number, email: string) => {
     dispatch(houseActions.inviteHouse(houseId, email));
   };
-
-  useEffect(() => {
-    switch (inviteStatus) {
-      case houseStatus.NONE:
-        break;
-      case houseStatus.SUCCESS:
-        alert('입력한 이메일로 초대장을 전송했습니다.');
-        break;
-      case houseStatus.FAILURE_AUTHENTICATION:
-        alert('메일주소 또는 인터넷 연결상태를 확인하고 다시 시도해주세요.');
-        break;
-      case houseStatus.FAILURE_INVITE_LEADER:
-        alert('Leader만 멤버를 초대할 수 있습니다.');
-        break;
-      case houseStatus.FAILURE_EMAIL:
-        alert('오렌지농장에 등록되지 않은 회원입니다.');
-        break;
-      case houseStatus.FAILURE_USERNAME:
-        alert('이미 초대된 멤버입니다.');
-        break;
-      case houseStatus.FAILURE_INACTIVE:
-        alert('초대장을 받을 유저가 우선 회원 인증을 완료해야 합니다.');
-        break;
-      default:
-        alert('잘못된 접근입니다.');
-    }
-  }, [inviteStatus]);
-
-  useEffect(() => {
-    if (inviteStatus !== houseStatus.NONE) {
-      window.location.reload();
-    }
-  });
 
   const onSubmitToInvite = (data: HouseInviteFormData) => onInviteHouse(
     /* eslint-disable @typescript-eslint/no-non-null-assertion */
