@@ -28,7 +28,10 @@ function NecessityCounterButton(props: Props) {
   };
 
   return (
-    <Button onClick={props.countType === 'add' ? addCount : subtractCount}>
+    <Button
+      onClick={props.countType === 'add' ? addCount : subtractCount}
+      disabled={props.countType === 'subtract' && props.count === 0}
+    >
       <i className={`far ${props.countType === 'add' ? 'fa-plus-square' : 'fa-minus-square'} fa-2x`} />
     </Button>
   );
