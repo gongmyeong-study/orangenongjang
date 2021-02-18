@@ -4,13 +4,15 @@ import Slider from 'react-slick';
 import Modal from 'react-modal';
 import { History } from 'history';
 import { Button } from '@material-ui/core';
+
 import { PlaceBox, PlaceCreateForm } from '../../components';
+import { necessityStatus } from '../../constants/constants';
 import { OrangeGlobalState } from '../../store/state';
+import { houseActions } from '../../store/actions/index';
+
 import './NecessityPage.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { getHouse } from '../../store/actions/necessity/necessity';
-import { necessityStatus } from '../../constants/constants';
 
 interface Props {
   houseId: number;
@@ -26,7 +28,7 @@ function NecessityPage(props: Props) {
   const onGetHouse = (
     houseId: number,
   ) => {
-    dispatch(getHouse(houseId));
+    dispatch(houseActions.getHouse(houseId));
   };
 
   useEffect(() => {
@@ -38,7 +40,7 @@ function NecessityPage(props: Props) {
   }, [createStatus]);
 
   useEffect(() => {
-    getHouse(props.houseId);
+    houseActions.getHouse(props.houseId);
   }, [props.houseId]);
 
   return (

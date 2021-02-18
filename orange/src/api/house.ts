@@ -7,7 +7,7 @@ export interface Place {
   house_id: number;
   created_at: string;
   updated_at: string;
-  necessities: Necessity[];
+  necessities?: Necessity[];
 }
 
 export interface House {
@@ -16,4 +16,11 @@ export interface House {
   introduction: string;
   users: User[];
   places: Place[];
+}
+
+export interface UserHouse {
+  id: number;
+  username: string;
+  is_leader: boolean;
+  joined_at: string;
 }
