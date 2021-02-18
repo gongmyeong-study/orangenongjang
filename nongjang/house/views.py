@@ -180,14 +180,14 @@ class HouseViewSet(viewsets.GenericViewSet):
         if not name:
             return Response({'error': "name은 필수 항목입니다."}, status=status.HTTP_400_BAD_REQUEST)
 
-        try:
+        with transaction.atomic():
+            if Place.objects.select_for_update().filter(house=house, name=name, is_hidden=False).exists():
+                return Response({'error': "같은 name의 공간을 이 집에가지고 있습니다."}, status=status.HTTP_409_CONFLICT)
             place = Place.objects.create(house=house, name=name)
-        except IntegrityError:
-            return Response({'error': "같은 name의 공간을 이 집에가지고 있습니다."}, status=status.HTTP_409_CONFLICT)
         return Response(self.get_serializer(place).data, status=status.HTTP_201_CREATED)
 
     def _get_places(self, house):
-        return Response(self.get_serializer(house.places, many=True).data)
+        return Response(self.get_serializer(house.places.filter(is_hidden=False), many=True).data)
 
     @action(detail=True, methods=['GET'])
     def necessity_log(self, request, pk=None):
@@ -206,7 +206,7 @@ class HouseViewSet(viewsets.GenericViewSet):
 
 
 class PlaceViewSet(viewsets.GenericViewSet):
-    queryset = Place.objects.all()
+    queryset = Place.objects.filter(is_hidden=False)
     serializer_class = PlaceSerializer
     permission_classes = (IsAuthenticated, )
 
@@ -276,7 +276,8 @@ class PlaceNecessityView(APIView):
         user = request.user
 
         try:
-            necessity_place = NecessityPlace.objects.get(place_id=place_id, necessity_id=necessity_id, is_hidden=False)
+            necessity_place = NecessityPlace.objects.get(place_id=place_id, place__is_hidden=False,
+                                                         necessity_id=necessity_id, is_hidden=False)
         except NecessityPlace.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -299,7 +300,8 @@ class PlaceNecessityView(APIView):
         user = request.user
 
         try:
-            necessity_place = NecessityPlace.objects.get(place_id=place_id, necessity_id=necessity_id, is_hidden=False)
+            necessity_place = NecessityPlace.objects.get(place_id=place_id, place__is_hidden=False,
+                                                         necessity_id=necessity_id, is_hidden=False)
         except NecessityPlace.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -324,7 +326,8 @@ class PlaceNecessityCountView(APIView):
         user = request.user
 
         try:
-            necessity_place = NecessityPlace.objects.get(place_id=place_id, necessity_id=necessity_id, is_hidden=False)
+            necessity_place = NecessityPlace.objects.get(place_id=place_id, place__is_hidden=False,
+                                                         necessity_id=necessity_id, is_hidden=False)
         except NecessityPlace.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -355,7 +358,7 @@ class HousePlaceView(APIView):
             return Response({'error': "소속되어 있지 않은 집입니다."}, status=status.HTTP_403_FORBIDDEN)
 
         try:
-            place = Place.objects.get(id=place_id, house_id=house_id)
+            place = Place.objects.get(id=place_id, house_id=house_id, is_hidden=False)
         except Place.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -379,12 +382,13 @@ class HousePlaceView(APIView):
             return Response({'error': "Leader만 place를 삭제할 수 있습니다."}, status=status.HTTP_403_FORBIDDEN)
 
         try:
-            place = Place.objects.get(id=place_id, house_id=house_id)
+            place = Place.objects.get(id=place_id, house_id=house_id, is_hidden=False)
         except Place.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        place.delete()
-        places = Place.objects.filter(house_id=house_id)
+        place.is_hidden = True
+        place.save()
+        places = Place.objects.filter(house_id=house_id, is_hidden=False)
         return Response(PlaceSerializer(places, many=True).data)
 
 

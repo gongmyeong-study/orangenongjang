@@ -27,8 +27,4 @@ class Place(models.Model):
     house = models.ForeignKey(House, related_name="places", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        unique_together = (
-            ('house', 'name'),
-        )
+    is_hidden = models.BooleanField(default=False)
