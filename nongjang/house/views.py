@@ -182,7 +182,7 @@ class HouseViewSet(viewsets.GenericViewSet):
 
         with transaction.atomic():
             if Place.objects.select_for_update().filter(house=house, name=name, is_hidden=False).exists():
-                return Response({'error': "같은 name의 공간을 이 집에가지고 있습니다."}, status=status.HTTP_409_CONFLICT)
+                return Response({'error': "같은 name의 공간을 이 집에 가지고 있습니다."}, status=status.HTTP_409_CONFLICT)
             place = Place.objects.create(house=house, name=name)
         return Response(self.get_serializer(place).data, status=status.HTTP_201_CREATED)
 
@@ -348,8 +348,11 @@ class HousePlaceView(APIView):
     permission_classes = (IsAuthenticated, )
 
     def put(self, request, *args, **kwargs):
+        name = self.request.data.get('name')
         house_id = kwargs['house_id']
         place_id = kwargs['place_id']
+        if Place.objects.select_for_update().filter(house_id=house_id, name=name, is_hidden=False).exists():
+            return Response({'error': "같은 name의 공간을 이 집에 가지고 있습니다."}, status=status.HTTP_409_CONFLICT)
 
         user = self.request.user
         try:
