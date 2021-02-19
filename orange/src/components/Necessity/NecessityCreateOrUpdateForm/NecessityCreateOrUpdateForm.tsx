@@ -130,14 +130,24 @@ function NecessityCreateOrUpdateForm(props: Props) {
                 <h4 style={{ marginRight: '3em' }}>가격</h4>
               </InputAdornment>
             ),
+            inputMode: 'numeric',
           }}
           name="price"
-          inputRef={register({ required: true })}
-          error={Boolean(errors.price)}
           type="number"
-          defaultValue={necessityToBeUpdated && necessityToBeUpdated.price}
+          inputRef={register({
+            min: {
+              value: 0,
+              message: 'Value should be at least 1',
+            },
+            max: {
+              value: 4294967295,
+              message: 'Value should be at most 2^32 - 1 (= 4294967295)',
+            },
+          })}
+          error={Boolean(errors.price)}
           className="text-input"
-          helperText={errors.count && '가격을 입력해주세요!'}
+          defaultValue={necessityToBeUpdated ? necessityToBeUpdated.price : 0}
+          helperText={errors.price && '올바른 양의 정수값을 입력해주세요!'}
         />
         <TextField
           InputProps={{
@@ -149,11 +159,21 @@ function NecessityCreateOrUpdateForm(props: Props) {
           }}
           name="count"
           type="number"
-          inputRef={register({ required: true })}
+          inputRef={register({
+            required: true,
+            min: {
+              value: 0,
+              message: 'Count should be at least 0',
+            },
+            max: {
+              value: 4294967295,
+              message: 'Count should be at most 2^32 - 1 (= 4294967295)',
+            },
+          })}
           error={Boolean(errors.count)}
           className="text-input"
-          defaultValue={necessityToBeUpdated && necessityToBeUpdated.count}
-          helperText={errors.count && '개수를 입력해주세요!'}
+          defaultValue={necessityToBeUpdated ? necessityToBeUpdated.count : 0}
+          helperText={errors.count && '올바른 양의 정수값을 입력해주세요!'}
         />
         <Button type="submit">{submitIcon}</Button>
       </form>
