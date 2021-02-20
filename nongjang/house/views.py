@@ -14,6 +14,7 @@ from rest_framework.views import APIView
 from smtplib import SMTPException
 
 from house.models import House, Place, UserHouse
+from house.paginations import NecessityLogPagination
 from house.serializers import HouseSerializer, PlaceSerializer, SimpleHouseSerializer, UserOfHouseSerializer
 from necessity.models import Necessity, NecessityPlace, NecessityLog
 from necessity.serializers import NecessitySerializer, NecessityLogSerializer, NecessityOfPlaceWriteSerializer
@@ -25,6 +26,17 @@ class HouseViewSet(viewsets.GenericViewSet):
     queryset = House.objects.filter(is_hidden=False)
     serializer_class = HouseSerializer
     permission_classes = (IsAuthenticated, )
+
+    @property
+    def paginator(self):
+        if not hasattr(self, '_paginator'):
+            if self.action == 'necessity_log':
+                self._paginator = NecessityLogPagination()
+            elif self.pagination_class is None:
+                self._paginator = None
+            else:
+                self._paginator = self.pagination_class()
+        return self._paginator
 
     def get_queryset(self):
         # 집에 join하는 경우에는 소속되지 않은 집도 조회되어야 함
@@ -183,8 +195,10 @@ class HouseViewSet(viewsets.GenericViewSet):
         with transaction.atomic():
             if Place.objects.select_for_update().filter(house=house, name=name, is_hidden=False).exists():
                 return Response({'error': "같은 name의 공간을 이 집에가지고 있습니다."}, status=status.HTTP_409_CONFLICT)
-            place = Place.objects.create(house=house, name=name)
-        return Response(self.get_serializer(place).data, status=status.HTTP_201_CREATED)
+            Place.objects.create(house=house, name=name)
+
+        return Response(self.get_serializer(house.places.filter(is_hidden=False), many=True).data,
+                        status=status.HTTP_201_CREATED)
 
     def _get_places(self, house):
         return Response(self.get_serializer(house.places.filter(is_hidden=False), many=True).data)
@@ -202,7 +216,9 @@ class HouseViewSet(viewsets.GenericViewSet):
             logs = queryset.order_by('created_at')
         else:
             logs = queryset.order_by('-created_at')
-        return Response(self.get_serializer(logs, many=True).data)
+
+        logs = self.paginate_queryset(logs)
+        return self.get_paginated_response(self.get_serializer(logs, many=True).data)
 
 
 class PlaceViewSet(viewsets.GenericViewSet):
