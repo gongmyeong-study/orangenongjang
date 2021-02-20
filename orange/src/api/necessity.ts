@@ -18,3 +18,9 @@ export interface NecessityLog {
   necessity?: Necessity;
   created_at: string;
 }
+
+export interface PaginatedNecessityLog {
+  next: number;
+  count: number;
+  results: NecessityLog[];
+}
