@@ -137,10 +137,10 @@ function NecessityCreateOrUpdateForm(props: Props) {
           inputRef={register({
             min: {
               value: 0,
-              message: 'Value should be at least 1',
+              message: 'Value should be at least 0',
             },
             max: {
-              value: 4294967295,
+              value: 2 ** 32 - 1,
               message: 'Value should be at most 2^32 - 1 (= 4294967295)',
             },
           })}
@@ -166,7 +166,7 @@ function NecessityCreateOrUpdateForm(props: Props) {
               message: 'Count should be at least 0',
             },
             max: {
-              value: 4294967295,
+              value: 2 ** 32 - 1,
               message: 'Count should be at most 2^32 - 1 (= 4294967295)',
             },
           })}
