@@ -74,7 +74,17 @@ class InfoPage extends Component {
             <br />
             <div>
               <h2>진섭</h2>
+              <span>
+                소프트웨어 개발과 UX/UI 디자인에 관심이 많습니다.
+                <br />
+                서양사학 / 정보문화학 전공
+                <br />
+                @와플스튜디오
+                <br />
+                @Decipher
+              </span>
             </div>
+            <br />
           </div>
         </main>
       </div>
