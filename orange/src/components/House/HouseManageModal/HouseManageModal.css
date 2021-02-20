@@ -1,7 +1,8 @@
-.container {
-  width: 160%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0.25rem
+.house-toss-leader-form {
+  display: grid;
+  }
+
+.house-user-container {
+  width: 180%;
+  padding-bottom: 0.5em;
 }

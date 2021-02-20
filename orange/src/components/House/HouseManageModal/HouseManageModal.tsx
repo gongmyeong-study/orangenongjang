@@ -84,17 +84,22 @@ function HouseManageModal(props: Props) {
           (user) => (user.username === me.username && user.is_leader)).includes(true)
         ? (
           <>
-            <form onSubmit={handleSubmit(onSubmitToToss)}>
+            <form
+              onSubmit={handleSubmit(onSubmitToToss)}
+              className="house-toss-leader-form"
+            >
               <h4>
                 Leader 넘기기&emsp;
               </h4>
-              <div className="container">
+              <div className="house-user-container">
                 <Select
                   options={props.house.users}
                   placeholder="멤버 선택"
                   onOptionChange={onOptionChange}
                   getOptionValue={getOptionValue}
                   getOptionLabel={getOptionLabel}
+                  menuItemSize={45}
+                  menuMaxHeight={500}
                 />
               </div>
               <Button
