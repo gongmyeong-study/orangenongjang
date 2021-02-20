@@ -1,8 +1,6 @@
 import { necessityConstants } from '../../actions/actionTypes';
 import { necessityStatus } from '../../../constants/constants';
-import {
-  House, Necessity, Place,
-} from '../../../api';
+import { House, Necessity, Place } from '../../../api';
 import { NecessityState } from '../../state';
 
 type Action = {
@@ -16,6 +14,7 @@ const initialState: NecessityState = {
   removeStatus: necessityStatus.NONE,
   countStatus: necessityStatus.NONE,
   updateStatus: necessityStatus.NONE,
+  createPlaceStatus: necessityStatus.NONE,
   updatePlaceStatus: necessityStatus.NONE,
   removePlaceStatus: necessityStatus.NONE,
   places: [],
@@ -34,7 +33,10 @@ const NecessityResponseCases = [
   necessityConstants.UPDATE_NECESSITYPLACE_SUCCESS,
 ];
 
-function necessityReducer(state = initialState, action: Action): NecessityState {
+function necessityReducer(
+  state = initialState,
+  action: Action,
+): NecessityState {
   if (action.type === necessityConstants.GET_HOUSE_SUCCESS) {
     const house = action.target as House;
     return {
@@ -53,12 +55,19 @@ function necessityReducer(state = initialState, action: Action): NecessityState 
         places,
       };
     }
+    if (action.type === necessityConstants.CREATE_PLACE_SUCCESS) {
+      const places = action.target as Place[];
+      return {
+        ...state,
+        createPlaceStatus: necessityStatus.SUCCESS,
+        places,
+      };
+    }
+
     let { places } = state;
     const data = action.target as Place;
     places = places.map((place) => (place.id === data.id ? data : place));
-
-    if (action.type === necessityConstants.CREATE_NECESSITYPLACE_SUCCESS
-      || action.type === necessityConstants.CREATE_PLACE_SUCCESS) {
+    if (action.type === necessityConstants.CREATE_NECESSITYPLACE_SUCCESS) {
       return {
         ...state,
         createStatus: necessityStatus.SUCCESS,
@@ -90,8 +99,8 @@ function necessityReducer(state = initialState, action: Action): NecessityState 
     places = places.map((place) => {
       if (place.id === data.place_id) {
         const newPlace = place;
-        newPlace.necessities = place.necessities?.map((necessity) => (
-          necessity.id === data.id ? data : necessity));
+        newPlace.necessities = place.necessities?.map((necessity) => (necessity.id === data.id ? data : necessity)
+        );
         return newPlace;
       }
       return place;
@@ -124,16 +133,24 @@ function necessityReducer(state = initialState, action: Action): NecessityState 
       };
 
     case necessityConstants.CREATE_NECESSITYPLACE_FAILURE:
-    case necessityConstants.CREATE_PLACE_FAILURE:
       return {
         ...state,
         createStatus: necessityStatus.FAILURE,
       };
+    case necessityConstants.CREATE_PLACE_FAILURE:
+      return {
+        ...state,
+        createPlaceStatus: necessityStatus.FAILURE,
+      };
     case necessityConstants.CREATE_NECESSITYPLACE_FAILURE_NAME:
-    case necessityConstants.CREATE_PLACE_FAILURE_NAME:
       return {
         ...state,
         createStatus: necessityStatus.FAILURE_NAME,
+      };
+    case necessityConstants.CREATE_PLACE_FAILURE_NAME:
+      return {
+        ...state,
+        createPlaceStatus: necessityStatus.FAILURE_NAME,
       };
 
     case necessityConstants.REMOVE_NECESSITYPLACE_FAILURE:
