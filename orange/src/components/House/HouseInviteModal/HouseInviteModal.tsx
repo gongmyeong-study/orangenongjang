@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  TextField, Button, InputAdornment,
+  Button, CircularProgress, InputAdornment, TextField,
 } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import { House } from '../../../api';
 import { houseActions } from '../../../store/actions';
+import { OrangeGlobalState } from '../../../store/state';
+import { houseStatus } from '../../../constants/constants';
 
 interface Props {
   house?: House;
@@ -21,10 +23,18 @@ function HouseInviteModal(props: Props) {
     register, handleSubmit, errors,
   } = useForm<HouseInviteFormData>();
 
+  const [isMailSended, setisMailSended] = useState(false);
+
+  const {
+    inviteHouseStatus,
+  } = useSelector(
+    (state: OrangeGlobalState) => state.house,
+  );
   const dispatch = useDispatch();
 
   const onInviteHouse = (houseId: number, email: string) => {
     dispatch(houseActions.inviteHouse(houseId, email));
+    setisMailSended(true);
   };
 
   const onSubmitToInvite = (data: HouseInviteFormData) => onInviteHouse(
@@ -35,9 +45,21 @@ function HouseInviteModal(props: Props) {
   const formTitle = `${props.house?.name} 초대`;
   const submitIcon = <i className="far fa-envelope fa-3x" />;
 
+  useEffect(() => {
+    if (inviteHouseStatus === houseStatus.SUCCESS
+      || inviteHouseStatus === houseStatus.FAILURE_EMAIL
+      || inviteHouseStatus === houseStatus.FAILURE_USERNAME
+      || inviteHouseStatus === houseStatus.FAILURE_AUTHENTICATION) {
+      setisMailSended(false);
+    }
+  }, [inviteHouseStatus]);
+
   return (
     <>
       <h2>{formTitle}</h2>
+      {/* 상태변화 체크를 위한 console log */}
+      {console.log(isMailSended, inviteHouseStatus)}
+      {isMailSended && <CircularProgress className="spinner" /> }
       <form onSubmit={handleSubmit(onSubmitToInvite)}>
         <h4>
           이메일로
