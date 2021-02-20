@@ -21,23 +21,23 @@ interface Props {
 
 function NecessityPage(props: Props) {
   const [isModalOpen, setModalOpen] = useState(false);
-  const { createStatus, places } = useSelector((state: OrangeGlobalState) => state.necessity);
+  const { createPlaceStatus, places } = useSelector(
+    (state: OrangeGlobalState) => state.necessity,
+  );
   const { house } = useSelector((state: OrangeGlobalState) => state.house);
   const dispatch = useDispatch();
 
-  const onGetHouse = (
-    houseId: number,
-  ) => {
+  const onGetHouse = (houseId: number) => {
     dispatch(houseActions.getHouse(houseId));
   };
 
   useEffect(() => {
     onGetHouse(props.houseId);
-    if (createStatus === necessityStatus.SUCCESS) {
+    if (createPlaceStatus === necessityStatus.SUCCESS) {
       setModalOpen(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [createStatus]);
+  }, [createPlaceStatus]);
 
   useEffect(() => {
     houseActions.getHouse(props.houseId);
@@ -55,8 +55,15 @@ function NecessityPage(props: Props) {
       </Modal>
       <div className="placebox-wrapper">
         <h1 className="NecessityPageBlock">{house?.name}</h1>
-        <Slider className="slider" dots slidesToShow={1.6} slidesToScroll={1} infinite={false}>
-          {Boolean(places) && places.map((place) => <PlaceBox place={place} key={place.id} />)}
+        <Slider
+          className="slider"
+          dots
+          slidesToShow={1.6}
+          slidesToScroll={1}
+          infinite={false}
+        >
+          {Boolean(places)
+            && places.map((place) => <PlaceBox place={place} key={place.id} />)}
           <div
             className="create-place-box"
             style={{
