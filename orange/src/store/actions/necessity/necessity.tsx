@@ -12,7 +12,9 @@ const countNecessityPlaceFailure = (error: AxiosError) => {
   switch (error.response?.status) {
     default:
       actionType = necessityConstants.COUNT_NECESSITYPLACE_FAILURE;
-      alert(`Necessity 수량 변경에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
+      alert(
+        `Necessity 수량 변경에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
+      );
       break;
   }
   return {
@@ -21,18 +23,19 @@ const countNecessityPlaceFailure = (error: AxiosError) => {
   };
 };
 export const countNecessityPlace = (
-  placeId: number, necessityId: number, count: number,
-) => (dispatch: Dispatch) => axios.put(`/api/v1/place/${placeId}/necessity/${necessityId}/count/`, { count })
+  placeId: number,
+  necessityId: number,
+  count: number,
+) => (dispatch: Dispatch) => axios
+  .put(`/api/v1/place/${placeId}/necessity/${necessityId}/count/`, { count })
   .then((countNecessityPlaceResponse: AxiosResponse<Necessity>) => {
     dispatch(countNecessityPlaceSuccess(countNecessityPlaceResponse.data));
   })
-  .catch((countNecessityPlaceError) => dispatch(
-    countNecessityPlaceFailure(countNecessityPlaceError),
-  ));
+  .catch((countNecessityPlaceError) => dispatch(countNecessityPlaceFailure(countNecessityPlaceError)));
 
-const createPlaceSuccess = (place: Place) => ({
+const createPlaceSuccess = (places: Array<Place>) => ({
   type: necessityConstants.CREATE_PLACE_SUCCESS,
-  target: place,
+  target: places,
 });
 const createPlaceFailure = (error: AxiosError) => {
   let actionType = null;
@@ -43,7 +46,9 @@ const createPlaceFailure = (error: AxiosError) => {
       break;
     default:
       actionType = necessityConstants.CREATE_PLACE_FAILURE;
-      alert(`Place 생성에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
+      alert(
+        `Place 생성에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
+      );
       break;
   }
   return {
@@ -51,10 +56,11 @@ const createPlaceFailure = (error: AxiosError) => {
     target: error,
   };
 };
-export const createPlace = (
-  houseId: number, name: string,
-) => (dispatch: Dispatch) => axios.post(`/api/v1/house/${houseId}/place/`, { name })
-  .then((createPlaceResponse: AxiosResponse<Place>) => {
+export const createPlace = (houseId: number, name: string) => (
+  dispatch: Dispatch,
+) => axios
+  .post(`/api/v1/house/${houseId}/place/`, { name })
+  .then((createPlaceResponse: AxiosResponse<[Place]>) => {
     dispatch(createPlaceSuccess(createPlaceResponse.data));
   })
   .catch((createPlaceError) => dispatch(createPlaceFailure(createPlaceError)));
@@ -72,7 +78,9 @@ const createNecessityPlaceFailure = (error: AxiosError) => {
       break;
     default:
       actionType = necessityConstants.CREATE_NECESSITYPLACE_FAILURE;
-      alert(`Necessity 생성에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
+      alert(
+        `Necessity 생성에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
+      );
   }
   return {
     type: actionType,
@@ -80,16 +88,25 @@ const createNecessityPlaceFailure = (error: AxiosError) => {
   };
 };
 export const createNecessityPlace = (
-  placeId: number, name: string, option: string, description: string, price: number, count: number,
-) => (dispatch: Dispatch) => axios.post(`/api/v1/place/${placeId}/necessity/`, {
-  placeId, name, option, description, price, count,
-})
+  placeId: number,
+  name: string,
+  option: string,
+  description: string,
+  price: number,
+  count: number,
+) => (dispatch: Dispatch) => axios
+  .post(`/api/v1/place/${placeId}/necessity/`, {
+    placeId,
+    name,
+    option,
+    description,
+    price,
+    count,
+  })
   .then((createNecessityPlaceResponse: AxiosResponse<Place>) => {
     dispatch(createNecessityPlaceSuccess(createNecessityPlaceResponse.data));
   })
-  .catch((createNecessityPlaceError) => dispatch(
-    createNecessityPlaceFailure(createNecessityPlaceError),
-  ));
+  .catch((createNecessityPlaceError) => dispatch(createNecessityPlaceFailure(createNecessityPlaceError)));
 
 const removePlaceSuccess = (places: Array<Place>) => ({
   type: necessityConstants.REMOVE_PLACE_SUCCESS,
@@ -112,7 +129,9 @@ const removePlaceFailure = (error: AxiosError) => {
       break;
     default:
       actionType = necessityConstants.REMOVE_PLACE_FAILURE;
-      alert(`Place 삭제에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
+      alert(
+        `Place 삭제에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
+      );
       break;
   }
   return {
@@ -120,14 +139,11 @@ const removePlaceFailure = (error: AxiosError) => {
     target: error,
   };
 };
-export const removePlace = (
-  houseId: number, placeId: number,
-) => (dispatch: Dispatch) => axios.delete(
-  `/api/v1/house/${houseId}/place/${placeId}/`,
-)
-  .then((removePlaceResponse: AxiosResponse<[Place]>) => dispatch(
-    removePlaceSuccess(removePlaceResponse.data),
-  ))
+export const removePlace = (houseId: number, placeId: number) => (
+  dispatch: Dispatch,
+) => axios
+  .delete(`/api/v1/house/${houseId}/place/${placeId}/`)
+  .then((removePlaceResponse: AxiosResponse<[Place]>) => dispatch(removePlaceSuccess(removePlaceResponse.data)))
   .catch((removePlaceError) => dispatch(removePlaceFailure(removePlaceError)));
 
 const removeNecessityPlaceSuccess = (place: Place) => {
@@ -142,7 +158,9 @@ const removeNecessityPlaceFailure = (error: AxiosError) => {
   switch (error.response?.status) {
     default:
       actionType = necessityConstants.REMOVE_NECESSITYPLACE_FAILURE;
-      alert(`Necessity 삭제에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
+      alert(
+        `Necessity 삭제에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
+      );
       break;
   }
   return {
@@ -150,16 +168,15 @@ const removeNecessityPlaceFailure = (error: AxiosError) => {
     target: error,
   };
 };
-export const removeNecessityPlace = (
-  placeId: number, necessityId: number,
-) => (dispatch: Dispatch) => axios.delete(`/api/v1/place/${placeId}/necessity/${necessityId}/`)
+export const removeNecessityPlace = (placeId: number, necessityId: number) => (
+  dispatch: Dispatch,
+) => axios
+  .delete(`/api/v1/place/${placeId}/necessity/${necessityId}/`)
   .then((removeNecessityPlaceResponse: AxiosResponse<Place>) => {
     dispatch(removeNecessityPlaceSuccess(removeNecessityPlaceResponse.data));
   })
   .catch((removeNecessityPlaceError) => {
-    dispatch(
-      removeNecessityPlaceFailure(removeNecessityPlaceError),
-    );
+    dispatch(removeNecessityPlaceFailure(removeNecessityPlaceError));
   });
 
 const renamePlaceSuccess = (place: Place) => ({
@@ -179,7 +196,9 @@ const renamePlaceFailure = (error: AxiosError) => {
       break;
     default:
       actionType = necessityConstants.RENAME_PLACE_FAILURE;
-      alert(`Place 이름 수정에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
+      alert(
+        `Place 이름 수정에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
+      );
       break;
   }
   return {
@@ -187,14 +206,15 @@ const renamePlaceFailure = (error: AxiosError) => {
     target: error,
   };
 };
-export const renamePlace = (
-  houseId: number, placeId: number, name: string,
-) => (dispatch: Dispatch) => axios.put(
-  `/api/v1/house/${houseId}/place/${placeId}/`, { houseId, placeId, name },
-)
-  .then((renamePlaceResponse: AxiosResponse<Place>) => dispatch(
-    renamePlaceSuccess(renamePlaceResponse.data),
-  ))
+export const renamePlace = (houseId: number, placeId: number, name: string) => (
+  dispatch: Dispatch,
+) => axios
+  .put(`/api/v1/house/${houseId}/place/${placeId}/`, {
+    houseId,
+    placeId,
+    name,
+  })
+  .then((renamePlaceResponse: AxiosResponse<Place>) => dispatch(renamePlaceSuccess(renamePlaceResponse.data)))
   .catch((renamePlaceError) => dispatch(renamePlaceFailure(renamePlaceError)));
 
 const updateNecessityPlaceSuccess = (necessity: Necessity) => ({
@@ -209,7 +229,9 @@ const updateNecessityPlaceFailure = (error: AxiosError) => {
       break;
     default:
       actionType = necessityConstants.UPDATE_NECESSITYPLACE_FAILURE;
-      alert(`Necessity 수정에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
+      alert(
+        `Necessity 수정에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
+      );
       break;
   }
   return {
@@ -218,11 +240,18 @@ const updateNecessityPlaceFailure = (error: AxiosError) => {
   };
 };
 export const updateNecessityPlace = (
-  placeId: number, necessityId: number, description: string, price?: number, count?: number,
-) => (dispatch: Dispatch) => axios.put(`/api/v1/place/${placeId}/necessity/${necessityId}/`, { description, price, count })
+  placeId: number,
+  necessityId: number,
+  description: string,
+  price?: number,
+  count?: number,
+) => (dispatch: Dispatch) => axios
+  .put(`/api/v1/place/${placeId}/necessity/${necessityId}/`, {
+    description,
+    price,
+    count,
+  })
   .then((updateNecessityPlaceResponse: AxiosResponse<Necessity>) => {
     dispatch(updateNecessityPlaceSuccess(updateNecessityPlaceResponse.data));
   })
-  .catch((updateNecessityPlaceError) => dispatch(
-    updateNecessityPlaceFailure(updateNecessityPlaceError),
-  ));
+  .catch((updateNecessityPlaceError) => dispatch(updateNecessityPlaceFailure(updateNecessityPlaceError)));

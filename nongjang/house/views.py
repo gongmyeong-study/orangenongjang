@@ -184,7 +184,9 @@ class HouseViewSet(viewsets.GenericViewSet):
             if Place.objects.select_for_update().filter(house=house, name=name, is_hidden=False).exists():
                 return Response({'error': "같은 name의 공간을 이 집에가지고 있습니다."}, status=status.HTTP_409_CONFLICT)
             place = Place.objects.create(house=house, name=name)
-        return Response(self.get_serializer(place).data, status=status.HTTP_201_CREATED)
+
+        places = Place.objects.filter(house=house, is_hidden=False)
+        return Response(self.get_serializer(places, many=True).data, status=status.HTTP_201_CREATED)
 
     def _get_places(self, house):
         return Response(self.get_serializer(house.places.filter(is_hidden=False), many=True).data)
