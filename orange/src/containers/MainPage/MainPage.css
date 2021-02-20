@@ -5,26 +5,23 @@
 }
 
 .main-tabs {
-    margin: 3% 20%;
+    margin-top: 60px;
     display: flex;
+    justify-content: space-evenly;
+    width: 56vw;
     cursor: pointer;
 }
 
 .main-tab {
-    margin: 0 auto;
     background-color: #ffffff;
-
-    width: 9em;
+    width: 8em;
     padding: 0.8em 0;
-
-    border: 0.2px solid rgba(0, 0, 0, 0.16);
-    box-sizing: border-box;
-    border-radius: 12px;
-
-    line-height: normal;
     text-align: center;
+    border: 0.2px solid rgba(0, 0, 0, 0.16);
+    border-radius: 12px;
     font: 500 1.2em 'Noto Sans KR', sans-serif;
 }
+
 .main-tab:hover {
     background-color: rgb(255, 165, 0);
 }
@@ -32,19 +29,18 @@
     background-color: rgb(255, 150, 0);
 }
 
-@media screen and (max-width: 1080px) and (min-width: 540px) {
-    .main-tabs {
-         margin: 3% 10%;
-    }
-}
-
 @media screen and (max-width: 540px) {
     .main-tabs {
-         margin: 3% 2%;
+         display: flex;
+         justify-content: space-evenly;
+         margin-top: 21px;
+         width: 100vw;
     }
 
     .main-tab {
-        width: 7em;
-        font: 500 0.8em 'Noto Sans KR', sans-serif;
+        font: 500 16px 'Noto Sans KR', sans-serif;
+        width: 20vw;
+        min-width: 74px;
+        padding: 0.5em 0;
     }
 }
