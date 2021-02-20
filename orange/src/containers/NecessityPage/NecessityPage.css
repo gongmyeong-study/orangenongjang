@@ -3,6 +3,12 @@
     display: flex;
     flex-direction: column;
     width: 60vw;
+    border-radius: 18px;
+    background-color: rgba(0,0,0,0.02);
+}
+
+.placebox-wrapper .NecessityPageBlock {
+    margin-left: 32px;
 }
 
 .slick-list {
@@ -38,12 +44,17 @@
 
 @media screen and (max-width: 540px) {
     .placebox-wrapper {
-        margin-top: 48px;
-        margin-left: 32px;
+        /* margin-top: 48px;
+        margin-left: 32px; */
         display: flex;
         flex-direction: column;
         width: 100vw;
     }
+
+    .placebox-wrapper .NecessityPageBlock {
+        margin-left: 32px;
+    }
+
     
     .slider {
         width: 100%;
