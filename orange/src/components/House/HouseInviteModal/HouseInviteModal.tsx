@@ -23,7 +23,7 @@ function HouseInviteModal(props: Props) {
     register, handleSubmit, errors,
   } = useForm<HouseInviteFormData>();
 
-  const [isMailSended, setisMailSended] = useState(false);
+  const [isMailSended, setIsMailSended] = useState(false);
 
   const {
     inviteHouseStatus,
@@ -34,7 +34,7 @@ function HouseInviteModal(props: Props) {
 
   const onInviteHouse = (houseId: number, email: string) => {
     dispatch(houseActions.inviteHouse(houseId, email));
-    setisMailSended(true);
+    setIsMailSended(true);
   };
 
   const onSubmitToInvite = (data: HouseInviteFormData) => onInviteHouse(
@@ -50,7 +50,7 @@ function HouseInviteModal(props: Props) {
       || inviteHouseStatus === houseStatus.FAILURE_EMAIL
       || inviteHouseStatus === houseStatus.FAILURE_USERNAME
       || inviteHouseStatus === houseStatus.FAILURE_AUTHENTICATION) {
-      setisMailSended(false);
+      setIsMailSended(false);
     }
   }, [inviteHouseStatus]);
 
