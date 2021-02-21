@@ -197,22 +197,28 @@ button {
   }
   .create-modal {
     display: flex;
+    flex-direction: column;
     width: 92vw;
+    max-width: 500px;
+    max-height: 500px;
     height: 110vw;
     margin: auto;
     background: white;
     border-radius: 16px;
     outline: none;
+    position: relative;
+    align-items: center;
+    justify-content: space-around;
 
     .close-button {
       position: absolute;
-      right: 24px;
-      margin-top: -105%;
+      top: 21px;
+      right: 21px;
       color: rgba(0, 0, 0, 0.86);
       background: none;
       border: none;
       outline: none;
-
+      cursor: pointer;
     }
   }
 
@@ -239,21 +245,26 @@ button {
   
   .create-modal {
     display: flex;
+    flex-direction: column;
     width: 40vw;
     height: 60vh;
     margin: auto;
     background: white;
     border-radius: 16px;
     outline: none;
+    position: relative;
+    align-items: center;
+    justify-content: space-around;
 
     .close-button {
       position: absolute;
-      top: 20%;
-      right: 31%;
+      top: 21px;
+      right: 21px;
       color: rgba(0, 0, 0, 0.86);
       background: none;
       border: none;
       outline: none;
+      cursor: pointer;
     }
   }
 

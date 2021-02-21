@@ -15,7 +15,7 @@ import {
   userActions,
 } from '../../store/actions/index';
 import { OrangeGlobalState } from '../../store/state';
-import './PlaceBox.css';
+import './PlaceBox.scss';
 
 interface Props {
   place: Place;
@@ -97,13 +97,14 @@ function PlaceBox(props: Props) {
       <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
-        className="create-modal"
-        overlayClassName="create-modal-overlay"
+        className="create-modal-place"
+        overlayClassName="create-modal-overlay-place"
       >
         <NecessityCreateOrUpdateForm
           placeId={place.id}
           necessityToBeUpdated={necessityToBeUpdated}
           type={necessityToBeUpdated ? 'UPDATE' : 'CREATE'}
+          closeModal={closeModal}
         />
       </Modal>
       <div className="title-wrapper">

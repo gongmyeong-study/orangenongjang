@@ -13,6 +13,7 @@ interface Props {
   placeId: number;
   necessityToBeUpdated?: Necessity;
   type: CreateOrUpdate;
+  closeModal: () => void;
 }
 
 interface NecessityCreateOrUpdateFormData {
@@ -80,7 +81,12 @@ function NecessityCreateOrUpdateForm(props: Props) {
 
   return (
     <>
-      <h3 className="create-form-title">{formTitle}</h3>
+      <div className="title-wrapper">
+        <h3 className="create-form-title">{formTitle}</h3>
+        <button className="close-button" type="button" onClick={props.closeModal}>
+          <i className="fas fa-times" />
+        </button>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} className="create-form">
         <TextField
           name="name"

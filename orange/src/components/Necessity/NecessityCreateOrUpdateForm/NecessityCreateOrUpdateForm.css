@@ -6,7 +6,8 @@
 
 .create-form .text-input {
   margin-bottom: 2em;
-  width: 30vw;
+  width: 90%;
+  max-width: 500px;
 }
 
 .create-form .fa-plus-circle {
