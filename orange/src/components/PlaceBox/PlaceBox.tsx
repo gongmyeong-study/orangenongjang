@@ -9,14 +9,18 @@ import {
 import { necessityStatus } from '../../constants/constants';
 import NecessityList from '../Necessity/NecessityList/NecessityList';
 import NecessityCreateOrUpdateForm from '../Necessity/NecessityCreateOrUpdateForm/NecessityCreateOrUpdateForm';
-import { houseActions, necessityActions, userActions } from '../../store/actions/index';
+import {
+  houseActions,
+  necessityActions,
+  userActions,
+} from '../../store/actions/index';
 import { OrangeGlobalState } from '../../store/state';
 import './PlaceBox.css';
 
 interface Props {
   place: Place;
   myHouse?: House;
-  me? : User;
+  me?: User;
 }
 
 function PlaceBox(props: Props) {
@@ -24,11 +28,13 @@ function PlaceBox(props: Props) {
   const dispatch = useDispatch();
   const [isModalOpen, setModalOpen] = useState(false);
   const [necessityToBeUpdated, setNecessityToBeUpdated] = useState<Necessity>();
-  const { getHouseStatus, house } = useSelector((state: OrangeGlobalState) => state.house);
-  const { getMeStatus, me } = useSelector((state: OrangeGlobalState) => state.user);
-  const {
-    createStatus,
-  } = useSelector(
+  const { getHouseStatus, house } = useSelector(
+    (state: OrangeGlobalState) => state.house,
+  );
+  const { getMeStatus, me } = useSelector(
+    (state: OrangeGlobalState) => state.user,
+  );
+  const { createStatus, updateStatus } = useSelector(
     (state: OrangeGlobalState) => state.necessity,
   );
 
@@ -37,7 +43,11 @@ function PlaceBox(props: Props) {
     setModalOpen(true);
   };
 
-  const onRenamePlace = (houseId: number, placeId: number, placeName: string) => {
+  const onRenamePlace = (
+    houseId: number,
+    placeId: number,
+    placeName: string,
+  ) => {
     dispatch(necessityActions.renamePlace(houseId, placeId, placeName));
   };
 
@@ -69,8 +79,10 @@ function PlaceBox(props: Props) {
 
     if (createStatus === necessityStatus.SUCCESS) {
       closeModal();
+    } else if (updateStatus === necessityStatus.SUCCESS) {
+      closeModal();
     }
-  }, [createStatus]);
+  }, [createStatus, updateStatus]);
 
   useEffect(() => {
     houseActions.getHouse(props.place.house_id);
@@ -81,9 +93,7 @@ function PlaceBox(props: Props) {
   }, [getMeStatus]);
 
   return (
-    <div
-      className="PlaceBox"
-    >
+    <div className="PlaceBox">
       <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
@@ -120,10 +130,9 @@ function PlaceBox(props: Props) {
             onSave={savePlace}
           />
         </h3>
-        {house?.users.map(
-          (user) => (user.username === me.username && user.is_leader)).includes(true)
-
-          && (
+        {house?.users
+          .map((user) => user.username === me.username && user.is_leader)
+          .includes(true) && (
           <button
             className="place-delete-button"
             type="button"
@@ -132,7 +141,6 @@ function PlaceBox(props: Props) {
             <i className="fas fa-times fa-2x" />
           </button>
         )}
-
       </div>
 
       <NecessityList
