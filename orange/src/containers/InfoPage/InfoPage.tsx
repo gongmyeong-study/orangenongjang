@@ -117,6 +117,94 @@ class InfoPage extends Component {
 
     return (
       <div className="info-ui">
+        <div className="orangenongjang-introduction-box">
+          <h2>
+            <img
+              className="orangenongjang_logo_3"
+              src="https://orangenongjang-static.s3.ap-northeast-2.amazonaws.com/image/orangenongjang_logo_3.png"
+              alt="yeonghyeon_profile"
+              height="30"
+              width="30"
+            />
+            오렌지농장
+            <img
+              className="orangenongjang_logo_3"
+              src="https://orangenongjang-static.s3.ap-northeast-2.amazonaws.com/image/orangenongjang_logo_3.png"
+              alt="yeonghyeon_profile"
+              height="30"
+              width="30"
+            />
+          </h2>
+          <br />
+          <br />
+          <strong>오렌지농장</strong>
+          은
+          {' '}
+          <strong>공명반</strong>
+          {' '}
+          웹/앱 개발 공부모임에서 본격적으로 개발한 웹서비스입니다. 동거인 사이에서 생길 수 있는 가사노동 문제를 해결하고자 생필품을 관리하고, 가사노동을 효율적으로 분담해보자는 취지에서 탄생하게 되었어요.
+          그렇다면 오렌지농장이 어떤 서비스인지, 무엇을 할 수 있는지 알아볼까요?
+          <br />
+          <br />
+          <ul className="orangenongjang-introduction-details">
+            <li>
+              • 사용자들은 지인들과 함께
+              {' '}
+              <strong>House</strong>
+              라는 공동 공간에서
+              {' '}
+              <strong>생필품 관리</strong>
+              를 편리하게 할 수 있어요. House를 생성한 사용자가
+              {' '}
+              <strong>Leader</strong>
+              가 되고, Leader는 오렌지농장에 가입한 사용자에 한해 이메일로
+              {' '}
+              <strong>House 초대장</strong>
+              을 보낼 수 있어요. 어서 사용하고 싶은 마음은 충분히 이해하지만, House에 초대받고 싶다면 먼저 오렌지농장에 가입해야 한답니다.
+            </li>
+            <br />
+            <li>
+              • House에 여러 가지
+              {' '}
+              <strong>Place</strong>
+              를 생성할 수 있어요. 냉장고, 안방, 부엌, 책상 등 사용자가 관리하고 싶은 공간을 자유롭게 생성해보세요.
+            </li>
+            <br />
+            <li>
+              • 각 Place에
+              {' '}
+              <strong>생필품</strong>
+              을 추가할 수 있어요. 휴지나 지우개 연필은 물론 신선한 야채와 과일도 각 공간 안에 만들어 가격과 수량을 편리하게 관리할 수 있어요.
+            </li>
+            <br />
+            <li>
+              • 또한, House에 함께 거주하는 누군가가 생필품을 추가하거나 수량을 변경하고, 삭제하면
+              {' '}
+              <strong>타임라인</strong>
+              탭에서 그 기록을 확인할 수도 있어요.
+            </li>
+            <br />
+            <li>
+              • 현재
+              {' '}
+              <strong>가사노동</strong>
+              {' '}
+              탭과
+              {' '}
+              <strong>통계</strong>
+              {' '}
+              탭은 개발 단계에 있답니다. 지금까지 구상한 기능 외에도 새로운 아이디어, 사용 중 겪는 문제점 등 여러분의 피드백을 언제든지 기다리고 있으니 아래 이메일로 언제든지 연락주세요!
+              <br />
+              (
+              {' '}
+              <strong>orangenongjang@gmail.com</strong>
+              {' '}
+              )
+            </li>
+            <br />
+          </ul>
+        </div>
+
         <main className="info-box">
           <StudyInfo />
           <div className="user-profiles">{introduction}</div>

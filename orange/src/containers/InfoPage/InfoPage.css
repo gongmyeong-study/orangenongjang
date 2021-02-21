@@ -37,6 +37,10 @@
     font-family: 'Noto Sans KR', sans-serif;
   }
 
+  .orangenongjang-introduction-box {
+    padding-bottom: 3em;
+  }
+
   .user-profiles {
     padding-bottom: 5em;
   }
@@ -85,7 +89,7 @@
 
   .user-profiles {
     padding-bottom: 5em;
-    padding-right: 2em;
+    padding-right: 1em;
   }
 
   .user-profile-box {
