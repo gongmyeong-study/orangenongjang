@@ -16,6 +16,7 @@ import {
   removePlace,
   removeNecessityPlace,
   renamePlace,
+  SetStatusNull,
   updateNecessityPlace,
 } from './necessity/necessity';
 
@@ -45,6 +46,7 @@ export const necessityActions = {
   removePlace,
   removeNecessityPlace,
   renamePlace,
+  SetStatusNull,
   updateNecessityPlace,
 };
 
