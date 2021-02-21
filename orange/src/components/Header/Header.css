@@ -1,14 +1,32 @@
-@media screen and (min-width: 540px)  {
-  .main-header {
-    margin-top: 3%;
+@media screen and (min-width: 1080px)  {
+  .header-wrapper {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .main-header {
+    position: absolute;
+    right: 24px;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .logo-wrapper {
+    border: none;
+    background: none;
+    padding: 0;
+  }
+
+  .logo-wrapper .logo {
+    width: 120px;
+    height: auto;
   }
 
   .main-header-li {
-    width: 10em;
+    padding: 0 24px 0 0;
     text-align: center;
-    font: 500 1.14em 'Noto Sans KR', sans-serif;
+    font: 500 1rem 'Noto Sans KR', sans-serif;
   }
 
   .main-header-li > button {
@@ -29,7 +47,7 @@
   }
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 1080px) {
   .main-header {
     justify-content: center;
     display: flex;
@@ -56,12 +74,6 @@
     width: 7em;
     text-align: center;
     font: 500 1em 'Noto Sans KR', sans-serif;
-  }
-
-  .main-header button {
-    background: none;
-    border: none;
-    cursor: pointer;
   }
 
   .only-on-desktop {
@@ -109,4 +121,10 @@
         opacity: 1;
     }
   }
+}
+
+.main-header button {
+  background: none;
+  border: none;
+  cursor: pointer;
 }
