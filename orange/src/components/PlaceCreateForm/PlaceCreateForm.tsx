@@ -35,8 +35,8 @@ function PlaceCreateForm(props: Props) {
   };
 
   return (
-    <form className="create-place-form" onSubmit={handleSubmit(onSubmit)} onClick={props.closeModal}>
-      <button className="close-button" type="button">
+    <form className="create-place-form" onSubmit={handleSubmit(onSubmit)}>
+      <button className="close-button" type="button" onClick={props.closeModal}>
         <i className="fas fa-times" />
       </button>
       <div className="input-wrapper">
@@ -45,7 +45,7 @@ function PlaceCreateForm(props: Props) {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <h3 style={{ marginRight: '3em' }}>새 공간 이름</h3>
+                <h3 style={{ marginRight: '24px' }}>새 공간 이름</h3>
               </InputAdornment>
             ),
           }}
