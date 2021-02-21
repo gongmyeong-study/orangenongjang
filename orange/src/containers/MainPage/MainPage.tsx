@@ -58,7 +58,7 @@ class MainPage extends Component<Props, State> {
             onClick={() => this.setState({ activeTab: 0 })}
             style={this.state.activeTab === 0 ? { backgroundColor: 'orange' } : {}}
           >
-            생필품 관리
+            생필품
           </div>
           <div
             className="main-tab"
@@ -66,7 +66,7 @@ class MainPage extends Component<Props, State> {
             onClick={() => this.setState({ activeTab: 1 })}
             style={this.state.activeTab === 1 ? { backgroundColor: 'orange' } : {}}
           >
-            가사노동 관리
+            가사노동
           </div>
           <div
             className="main-tab"

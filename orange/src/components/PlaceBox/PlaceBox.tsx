@@ -96,28 +96,30 @@ function PlaceBox(props: Props) {
           type={necessityToBeUpdated ? 'UPDATE' : 'CREATE'}
         />
       </Modal>
-      <h1>
-        <EdiText
-          viewContainerClassName="place-update-box"
-          editButtonContent={<i className="fas fa-pencil-alt" />}
-          saveButtonContent={<i className="fas fa-check" />}
-          cancelButtonContent={<i className="fas fa-times" />}
-          hideIcons
-          type="text"
-          showButtonsOnHover
-          submitOnUnfocus
-          submitOnEnter
-          cancelOnEscape
-          inputProps={{
-            className: 'place-update-input',
-            placeholder: 'Place 이름을 입력하세요.',
-            style: { fontSize: 18 },
-          }}
-          validationMessage="한 글자 이상 입력하세요."
-          validation={(val) => val.length > 0}
-          value={place.name}
-          onSave={savePlace}
-        />
+      <div className="title-wrapper">
+        <h3>
+          <EdiText
+            viewContainerClassName="place-update-box"
+            editButtonContent={<i className="fas fa-pencil-alt" />}
+            saveButtonContent={<i className="fas fa-check" />}
+            cancelButtonContent={<i className="fas fa-times" />}
+            hideIcons
+            type="text"
+            showButtonsOnHover
+            submitOnUnfocus
+            submitOnEnter
+            cancelOnEscape
+            inputProps={{
+              className: 'place-update-input',
+              placeholder: 'Place 이름을 입력하세요.',
+              style: { fontSize: 18 },
+            }}
+            validationMessage="한 글자 이상 입력하세요."
+            validation={(val) => val.length > 0}
+            value={place.name}
+            onSave={savePlace}
+          />
+        </h3>
         {house?.users.map(
           (user) => (user.username === me.username && user.is_leader)).includes(true)
 
@@ -131,7 +133,7 @@ function PlaceBox(props: Props) {
           </button>
         )}
 
-      </h1>
+      </div>
 
       <NecessityList
         place={place}

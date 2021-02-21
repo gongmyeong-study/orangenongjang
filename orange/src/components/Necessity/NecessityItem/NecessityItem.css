@@ -1,6 +1,18 @@
 .necessity {
-  display: flex;
-  width: 100%;
-  align-items: center;
+  display: flex; 
   justify-content: space-around;
+}
+
+@media screen and (max-width: 540px) {
+  .necessity {
+    display: flex;
+    height: 12vw;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .necessity h4 {
+    margin: 0;
+    height: 12vw;
+  }
 }
