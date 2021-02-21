@@ -5,9 +5,15 @@
     align-items: center;
   }
 
+  .header-wrapper .hello-user {
+    position: absolute;
+    left: 20vw;
+    font-size: 1.125rem;
+  }
+
   .main-header {
     position: absolute;
-    right: 24px;
+    right: 20vw;
     display: flex;
     justify-content: space-around;
   }
@@ -26,7 +32,6 @@
   .main-header-li {
     padding: 0 24px 0 0;
     text-align: center;
-    font: 500 1rem 'Noto Sans KR', sans-serif;
   }
 
   .main-header-li > button {
@@ -34,7 +39,7 @@
     background: none;
     padding: 0;
     margin: auto;
-    font: 500 1em 'Noto Sans KR', sans-serif;
+    font: bold 1rem 'Noto Sans KR', sans-serif;
     cursor: pointer;
   }
 
