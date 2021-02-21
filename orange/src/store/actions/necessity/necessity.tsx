@@ -3,6 +3,16 @@ import { Dispatch } from 'redux';
 import { necessityConstants } from '../actionTypes';
 import { Necessity, Place } from '../../../api';
 
+const setStatusNullSuccess = () => {
+  const actionType = necessityConstants.NULL;
+  return {
+    type: actionType,
+  };
+};
+export const setStatusNull = (() => (dispatch: Dispatch) => dispatch(
+  setStatusNullSuccess(),
+));
+
 const countNecessityPlaceSuccess = (necessity: Necessity) => ({
   type: necessityConstants.COUNT_NECESSITYPLACE_SUCCESS,
   target: necessity,
@@ -65,10 +75,13 @@ export const createPlace = (houseId: number, name: string) => (
   })
   .catch((createPlaceError) => dispatch(createPlaceFailure(createPlaceError)));
 
-const createNecessityPlaceSuccess = (place: Place) => ({
-  type: necessityConstants.CREATE_NECESSITYPLACE_SUCCESS,
-  target: place,
-});
+const createNecessityPlaceSuccess = (place: Place) => {
+  alert('생필품이 생성되었습니다!');
+  return {
+    type: necessityConstants.CREATE_NECESSITYPLACE_SUCCESS,
+    target: place,
+  };
+};
 const createNecessityPlaceFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {
@@ -217,10 +230,13 @@ export const renamePlace = (houseId: number, placeId: number, name: string) => (
   .then((renamePlaceResponse: AxiosResponse<Place>) => dispatch(renamePlaceSuccess(renamePlaceResponse.data)))
   .catch((renamePlaceError) => dispatch(renamePlaceFailure(renamePlaceError)));
 
-const updateNecessityPlaceSuccess = (necessity: Necessity) => ({
-  type: necessityConstants.UPDATE_NECESSITYPLACE_SUCCESS,
-  target: necessity,
-});
+const updateNecessityPlaceSuccess = (necessity: Necessity) => {
+  alert('생필품이 수정되었습니다!');
+  return {
+    type: necessityConstants.UPDATE_NECESSITYPLACE_SUCCESS,
+    target: necessity,
+  };
+};
 const updateNecessityPlaceFailure = (error: AxiosError) => {
   let actionType = null;
   switch (error.response?.status) {

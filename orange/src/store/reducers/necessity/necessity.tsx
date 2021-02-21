@@ -132,6 +132,13 @@ function necessityReducer(
         getStatus: necessityStatus.FAILURE,
       };
 
+    case necessityConstants.NULL:
+      return {
+        ...state,
+        createPlaceStatus: necessityStatus.NONE,
+        createStatus: necessityStatus.NONE,
+        updateStatus: necessityStatus.NONE,
+      };
     case necessityConstants.CREATE_NECESSITYPLACE_FAILURE:
       return {
         ...state,
