@@ -20,6 +20,11 @@ const userReducer = (state = initialState, action: Action): UserState => {
   const data = action.target;
   switch (action.type) {
     // SIGNUP
+    case userConstants.NULL:
+      return {
+        ...state,
+        signupStatus: userStatus.NONE,
+      };
     case userConstants.SIGNUP_SUCCESS:
       return {
         ...state,

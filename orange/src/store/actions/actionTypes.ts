@@ -1,4 +1,5 @@
 export const userConstants = {
+  NULL: 'NULL',
   GET_ME_SUCCESS: 'GET_ME_SUCCESS',
   GET_ME_FAILURE: 'GET_ME_FAILURE',
 
@@ -19,6 +20,7 @@ export const userConstants = {
 };
 
 export const necessityConstants = {
+  NULL: 'NULL',
   COUNT_NECESSITYPLACE_SUCCESS: 'COUNT_NECESSITYPLACE_SUCCESS',
   COUNT_NECESSITYPLACE_FAILURE: 'COUNT_NECESSITYPLACE_FAILURE',
 
@@ -52,6 +54,7 @@ export const necessityConstants = {
 };
 
 export const houseConstants = {
+  NULL: 'NULL',
   GET_HOUSE_SUCCESS: 'GET_HOUSE_SUCCESS',
   GET_HOUSE_FAILURE: 'GET_HOUSE_FAILURE',
 

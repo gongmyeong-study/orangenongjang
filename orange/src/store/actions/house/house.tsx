@@ -72,6 +72,16 @@ export const inviteHouse = (
   .then(() => dispatch(inviteHouseSuccess()))
   .catch((inviteError) => dispatch(inviteHouseFailure(inviteError)));
 
+const inviteStatusNull = () => {
+  const actionType = houseConstants.NULL;
+  return {
+    type: actionType,
+  };
+};
+export const inviteSetStatusNull = (() => (dispatch: Dispatch) => dispatch(
+  inviteStatusNull(),
+));
+
 const leaveHouseSuccess = () => {
   alert('Dobby is Free!');
   window.location.reload();
