@@ -100,3 +100,13 @@ export const signUp = (
 ) => (dispatch: Dispatch) => axios.post('/api/v1/user/', { email, username, password })
   .then((res: AxiosResponse<User>) => dispatch(signupSuccess(res.data)))
   .catch((err) => dispatch(signupFailure(err)));
+
+const signUpStatusNull = () => {
+  const actionType = userConstants.NULL;
+  return {
+    type: actionType,
+  };
+};
+export const signUpSetStatusNull = (() => (dispatch: Dispatch) => dispatch(
+  signUpStatusNull(),
+));

@@ -6,6 +6,10 @@
     flex-direction: column;
     justify-content: center;
 
+    .signup-spinner-box {
+        display: flex;
+    }
+
     .textfield {
         margin: 12px;
         border-radius: 8px;
