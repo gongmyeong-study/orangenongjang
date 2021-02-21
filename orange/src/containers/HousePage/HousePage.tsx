@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react';
 import EdiText from 'react-editext';
 import { useDispatch, useSelector } from 'react-redux';
@@ -159,12 +160,16 @@ function HousePage(props: Props) {
         <div
           className="right-info"
         >
-          <p>
-            멤버
-            {' '}
-            {house.users.length}
-            명
-          </p>
+          <a
+            onClick={(e) => manageHouse(e, house)}
+          >
+            <p>
+              멤버
+              {' '}
+              {house.users.length}
+              명
+            </p>
+          </a>
           <div className="button-wrapper">
             <button
               type="button"

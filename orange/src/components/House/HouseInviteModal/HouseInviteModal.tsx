@@ -9,6 +9,7 @@ import { House } from '../../../api';
 import { houseActions } from '../../../store/actions';
 import { OrangeGlobalState } from '../../../store/state';
 import { houseStatus } from '../../../constants/constants';
+import './HouseInviteModal.css';
 
 interface Props {
   house?: House;
@@ -60,30 +61,32 @@ function HouseInviteModal(props: Props) {
     <>
       <h2>{formTitle}</h2>
       {isMailSended && <CircularProgress className="spinner" /> }
-      <form onSubmit={handleSubmit(onSubmitToInvite)}>
-        <h4>
-          이메일로
-          [
-          {props.house?.name}
-          ]
-          초대장이 전송됩니다.
-        </h4>
-        <TextField
-          name="email"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <h4 style={{ marginRight: '3em' }}>Email</h4>
-              </InputAdornment>
-            ),
-          }}
-          inputRef={register({ required: true })}
-          error={Boolean(errors.email)}
-          helperText={errors.email && 'Email을 입력해주세요!'}
-          className="text-input"
-        />
-        <Button type="submit">{submitIcon}</Button>
-      </form>
+      <div className="invitation-modal">
+        <form onSubmit={handleSubmit(onSubmitToInvite)}>
+          <h4>
+            이메일로
+            [
+            {props.house?.name}
+            ]
+            초대장이 전송됩니다.
+          </h4>
+          <TextField
+            name="email"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <h4 style={{ marginRight: '2em' }}>Email</h4>
+                </InputAdornment>
+              ),
+            }}
+            inputRef={register({ required: true })}
+            error={Boolean(errors.email)}
+            helperText={errors.email && 'Email을 입력해주세요!'}
+            className="text-input"
+          />
+          <Button type="submit">{submitIcon}</Button>
+        </form>
+      </div>
     </>
   );
 }
