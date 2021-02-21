@@ -1,6 +1,6 @@
 import {
   getHouse,
-  inviteSetStateNull,
+  inviteSetStatusNull,
   inviteHouse,
   leaveHouse,
   reintroduceHouse,
@@ -24,11 +24,11 @@ import {
   login,
   logout,
   signUp,
-  signUpSetStateNull,
+  signUpSetStatusNull,
 } from './user/user';
 
 export const houseActions = {
-  inviteSetStateNull,
+  inviteSetStatusNull,
   getHouse,
   inviteHouse,
   leaveHouse,
@@ -53,5 +53,5 @@ export const userActions = {
   login,
   logout,
   signUp,
-  signUpSetStateNull,
+  signUpSetStatusNull,
 };

@@ -78,7 +78,7 @@ const inviteStatusNull = () => {
     type: actionType,
   };
 };
-export const inviteSetStateNull = (() => (dispatch: Dispatch) => dispatch(
+export const inviteSetStatusNull = (() => (dispatch: Dispatch) => dispatch(
   inviteStatusNull(),
 ));
 

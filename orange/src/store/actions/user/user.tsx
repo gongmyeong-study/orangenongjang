@@ -107,6 +107,6 @@ const signUpStatusNull = () => {
     type: actionType,
   };
 };
-export const signUpSetStateNull = (() => (dispatch: Dispatch) => dispatch(
+export const signUpSetStatusNull = (() => (dispatch: Dispatch) => dispatch(
   signUpStatusNull(),
 ));

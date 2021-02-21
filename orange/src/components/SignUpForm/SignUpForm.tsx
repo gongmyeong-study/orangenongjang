@@ -9,7 +9,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 
-import { signUp, signUpSetStateNull } from '../../store/actions/user/user';
+import { userActions } from '../../store/actions';
 import { OrangeGlobalState } from '../../store/state';
 import './SignUpForm.scss';
 import { userStatus } from '../../constants/constants';
@@ -27,8 +27,8 @@ function SignUpForm() {
 
   const onSignUp = (email: string, username: string, password: string) => {
     setIsMailSended(true);
-    dispatch(signUp(email, username, password));
-    dispatch(signUpSetStateNull());
+    dispatch(userActions.signUp(email, username, password));
+    dispatch(userActions.signUpSetStatusNull());
   };
 
   const {
