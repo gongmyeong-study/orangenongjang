@@ -94,9 +94,11 @@ class TimelinePage extends Component<Props, State> {
       </div>
     ));
 
+    const logMessage = <h2>여기에 생필품 관련 기록이 쌓여요.</h2>;
+
     return (
       <div className="timeline-page">
-        {getLogStatus === necessityUserLogStatus.SUCCESS && logList}
+        {getLogStatus === necessityUserLogStatus.SUCCESS ? logList : logMessage}
       </div>
     );
   }
