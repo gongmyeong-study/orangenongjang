@@ -1,0 +1,114 @@
+.PlaceBox {
+    padding: 10px;
+    height: 40vh;
+    border: 2px solid #e9ecef;
+    border-radius: 16px;
+    overflow-y: auto;
+    font-family: 'Noto Sans KR', Helvetica, sans-serif;
+    margin-right: 24px;
+    background-color: white;
+    border: solid 1px rgba(0, 0, 0, 0.2);
+    
+    h3 {
+        margin: 0;
+    }
+    
+    .place-update-box {
+        display: flex;
+    }
+    
+    .place-update-box div:last-child {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+    }
+    
+    .place-update-box button {
+        width: 4vw;
+        height: 3vh;
+        border-radius: 5px;
+    }
+    
+    .place-update-input {
+        width: 18vw;
+        height: 4vh;
+    }
+    
+    .place-delete-button {
+        cursor: pointer;
+        top: -80px;
+        right: -93%;
+        color: rgba(0, 0, 0, 0.86);
+        background: none;
+        border: none;
+        outline: none;
+        transition:all 0.9s, color 0.3;
+    }
+
+    .title-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .PlaceBox {
+        width: 50vw;
+    }
+}
+
+.create-modal-place {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 80vw;
+    max-width: 500px;
+    height: 62vh;
+    min-height: 500px;
+    margin: 16vh auto;
+    background: white;
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding-bottom: 24px;
+    font-family: 'Noto Sans KR', Helvetica, sans-serif;
+    position: relative;
+    outline: none;
+
+    .title-wrapper {
+        display: flex;
+        justify-content: space-between;
+        margin: 4px 0;
+
+        .close-button {
+            position: absolute;
+            right: 16px;
+            top: 16px;
+            font-size: 21px;
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+
+            i {
+                font-size: 21px;
+            }
+        }
+
+        h3 {
+            margin: 48px 0 0 0;
+        }
+    }
+}
+  
+.create-modal-overlay-place {
+    top: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
