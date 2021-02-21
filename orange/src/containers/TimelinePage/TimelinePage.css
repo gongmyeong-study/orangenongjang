@@ -1,3 +1,9 @@
 .timeline-page {
     margin-top: 24px;
 }
+
+@media(min-width: 800px) {
+    .timeline-page {
+        width: 52%;
+    }
+}

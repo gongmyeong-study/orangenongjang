@@ -38,7 +38,7 @@ class Header extends Component<Props, State> {
 
   render() {
     let whereToGo = '/';
-    let whereToGoDisplay = '메인 페이지';
+    let whereToGoDisplay = '집 목록';
     let logoutButton = null;
 
     const isNotOnIntro = this.props.getMeStatus === userStatus.SUCCESS;
@@ -108,10 +108,10 @@ class Header extends Component<Props, State> {
     let helloUser = null;
     if (this.props.pathname !== '/intro' && this.props.pathname !== '/info') {
       helloUser = (
-        <li className="main-header-li main-header-li-hello">
+        <p className="hello-user only-on-desktop">
           {this.props.me.username}
           님 안녕하세요!&nbsp;&nbsp;
-        </li>
+        </p>
       );
     }
 
@@ -124,8 +124,8 @@ class Header extends Component<Props, State> {
             alt="orangenongjang_logo"
           />
         </button>
+        {helloUser}
         <ul className="main-header only-on-desktop">
-          {helloUser}
           <li className="main-header-li">
             <button
               type="button"
