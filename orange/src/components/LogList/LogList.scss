@@ -2,15 +2,10 @@
     display: flex;
     justify-content: space-around;
 
-    .MuiTimelineSeparator-root {
-        padding: 0 16px !important;
-    }
-
     .MuiPaper-elevation3 {
         border: 1px solid rgba(0, 0, 0, 0.3);
         border-radius: 12px;
         box-shadow: none;
-
     }
 
     .MuiTimelineOppositeContent-root {
