@@ -135,11 +135,10 @@ class InfoPage extends Component {
               width="30"
             />
           </h2>
-          2021년 02월 21일은 오렌지농장이 여러분을 만나는 날이에요.
           <br />
           <br />
           <strong>오렌지농장</strong>
-          은 2020년 04월 12일에 출범한
+          은
           {' '}
           <strong>공명반</strong>
           {' '}
@@ -194,9 +193,13 @@ class InfoPage extends Component {
               {' '}
               <strong>통계</strong>
               {' '}
-              탭은 개발 단계에 있답니다. 지금까지 구상한 기능 외에도 여러분의 피드백을 언제든지 기다리고 있으니 마음껏 의견을 남겨주세요.
+              탭은 개발 단계에 있답니다. 지금까지 구상한 기능 외에도 새로운 아이디어, 사용 중 겪는 문제점 등 여러분의 피드백을 언제든지 기다리고 있으니 아래 이메일로 언제든지 연락주세요!
               <br />
-              ( orangenongjang@gmail.com )
+              (
+              {' '}
+              <strong>orangenongjang@gmail.com</strong>
+              {' '}
+              )
             </li>
             <br />
           </ul>
