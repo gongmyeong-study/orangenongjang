@@ -14,7 +14,7 @@ import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
 import Typography from '@material-ui/core/Typography';
 
 import { NecessityLog } from '../../api';
-import './LogList.css';
+import './LogList.scss';
 
 interface Props {
   logs: NecessityLog;
@@ -76,7 +76,7 @@ function LogList(props: Props) {
           </TimelineSeparator>
           <TimelineContent>
             <Paper elevation={3} className="log-message">
-              <Typography variant="h5" component="h1">
+              <Typography variant="h5" component="h5">
                 {activityCategory()}
                 {' '}
               </Typography>
