@@ -89,8 +89,8 @@ class InfoPage extends Component {
 
     const introduction = profiles.map((profile) => (
       <>
-        <div className="user-profile-box">{profile}</div>
         <br />
+        <div className="user-profile-box">{profile}</div>
       </>
     ));
 
