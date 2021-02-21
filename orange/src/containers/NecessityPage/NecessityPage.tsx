@@ -33,7 +33,7 @@ function NecessityPage(props: Props) {
 
   const closeModal = () => {
     setModalOpen(false);
-  }
+  };
 
   useEffect(() => {
     onGetHouse(props.houseId);
@@ -55,7 +55,7 @@ function NecessityPage(props: Props) {
         className="create-modal"
         overlayClassName="create-modal-overlay"
       >
-        <PlaceCreateForm houseId={props.houseId} closeModal={closeModal}/>
+        <PlaceCreateForm houseId={props.houseId} closeModal={closeModal} />
       </Modal>
       <div className="placebox-wrapper">
         <h1 className="NecessityPageBlock">{house?.name}</h1>
