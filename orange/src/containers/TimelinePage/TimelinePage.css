@@ -1,6 +1,3 @@
-.log-list {
-    display: flex;
-    justify-content: center;
-    padding: 5px 0px;
-    /* padding-bottom: 5px; */
+.timeline-page {
+    margin-top: 24px;
 }
