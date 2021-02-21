@@ -67,19 +67,23 @@ function HouseManageModal(props: Props) {
   return (
     <>
       <h2>{formTitle}</h2>
-      {props.house!.users?.map((user) => (
-        <div key={user.id}>
-          {(user.is_leader) ? (<AiOutlineCrown />) : (null)}
-          &emsp;
-          {user.username}
-          &emsp;
-          ( House 가입일 :
-          &emsp;
-          {new Date(user.joined_at).toLocaleDateString()}
-          )
-        </div>
-      ))}
-
+      <div className="members-box">
+        {props.house!.users?.map((user) => (
+          <div
+            key={user.id}
+            className="member-box"
+          >
+            {(user.is_leader) ? (<AiOutlineCrown />) : (null)}
+            &emsp;
+            {user.username}
+            &emsp;
+            ( ~
+            {' '}
+            {new Date(user.joined_at).toLocaleDateString()}
+            )
+          </div>
+        ))}
+      </div>
       {props.house?.users.map(
           (user) => (user.username === me.username && user.is_leader)).includes(true)
         ? (

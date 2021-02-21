@@ -20,7 +20,7 @@ class InfoPage extends Component {
           아직 짧지만, 2020년에는 개발을 처음 해보는 사람들의 시작을 함께할
           기회가 많았던 것 같아요. ‘오렌지농장’은 개발을 처음하는 친구들과 함께
           공부와 실습을 목적으로 시작했던 프로젝트입니다. 경험이 제각각인
-          사람들이 함께 한다는 것이 여러 모로 힘들기도 했지만, 그 과정에서 저
+          사람들이 함께 한다는 것이 여러모로 힘들기도 했지만, 그 과정에서 저
           역시 얻은 것도 분명 있었던 것 같네요. 여전히 부족한 점이 있으나
           진행해오던 프로젝트를 한 단계 일단락해두게 되어 뿌듯합니다.
         </span>
@@ -28,7 +28,7 @@ class InfoPage extends Component {
         <br />
         <img
           className="user-profile-photo"
-          src="https://orangenongjang-static.s3.ap-northeast-2.amazonaws.com/image/%EB%B3%80%EB%8B%A4%EB%B9%88_%EC%86%8C%EA%B0%9C_%EA%B1%B0%EB%B6%81%EC%9D%B4.png"
+          src="https://orangenongjang-static.s3.ap-northeast-2.amazonaws.com/image/Intro_Davin_turtle.png"
           alt="davin_profile"
           height="300"
           width="300"
@@ -55,7 +55,7 @@ class InfoPage extends Component {
         <br />
         <img
           className="user-profile-photo"
-          src="https://orangenongjang-static.s3.ap-northeast-2.amazonaws.com/image/%EB%B0%95%EC%83%81%ED%98%84_%EC%86%8C%EA%B0%9C_%EC%83%81%EC%96%B4.jpg"
+          src="https://orangenongjang-static.s3.ap-northeast-2.amazonaws.com/image/Intro_Sanghyeon_shark.jpg"
           alt="sanghyeon_profile"
           height="300"
           width="300"
@@ -71,7 +71,7 @@ class InfoPage extends Component {
         <span>
           안녕하세요. 오렌지농장 개발자 고영현입니다. 처음에는 Backend 개발을
           공부해보겠다고 시작했지만 정신차려보니 Server, Frontend 지식도 익힐 수
-          있었네요. 아래 사진은 제가 가장 좋아하는 동물인 고래인데요, 개발
+          있었네요. 아래 사진은 제가 가장 좋아하는 동물인 고래입니다. 개발
           공부를 하다보니 Docker라는, 이미지로부터 컨테이너를 구축하여 다수의
           프로세스들을 가상 머신으로 구동될 수 있게 해주는, 아주 중요한 오픈
           소스프로젝트를 알게 되었어요. Docker의 대표 이미지가 고래여서 저를
@@ -81,7 +81,7 @@ class InfoPage extends Component {
         <br />
         <img
           className="user-profile-photo"
-          src="https://orangenongjang-static.s3.ap-northeast-2.amazonaws.com/image/%EA%B3%A0%EC%98%81%ED%98%84_%EC%86%8C%EA%B0%9C_Docker+%EC%9D%B4%EB%AF%B8%EC%A7%80.png"
+          src="https://orangenongjang-static.s3.ap-northeast-2.amazonaws.com/image/Intro_Yeonghyeon_Docker.png"
           alt="yeonghyeon_profile"
           height="300"
           width="300"
@@ -139,6 +139,7 @@ class InfoPage extends Component {
           <br />
           <strong>오렌지농장</strong>
           은
+          {' '}
           <strong>공명반</strong>
           {' '}
           웹/앱 개발
@@ -183,7 +184,7 @@ class InfoPage extends Component {
               {' '}
               <strong>생필품</strong>
               을 추가할 수 있어요. 휴지나
-              지우개 연필은 물론 신선한 야채와 과일도 각 공간 안에 만들어 가격과
+              지우개, 연필은 물론 신선한 야채와 과일도 각 공간 안에 만들어 가격과
               수량을 편리하게 관리할 수 있어요.
             </li>
             <br />
@@ -192,6 +193,7 @@ class InfoPage extends Component {
               변경하고, 삭제하면
               {' '}
               <strong>타임라인</strong>
+              {' '}
               탭에서 그 기록을 확인할 수도 있어요.
             </li>
             <br />
