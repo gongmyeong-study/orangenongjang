@@ -1,34 +1,98 @@
-/* web fonts */
 @import url('http://fonts.googleapis.com/earlyaccess/notosanskr.css');
 
-/* custom variables */
-:root {
+/* web fonts */
+@media(min-width: 800px) {
+  /* custom variables */
+  :root {
   --deep-orange: #D9493D;
   --soft-orange: #F52423;
+  }
+  /* HTML tags */
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  main > div {
+    display: inline;
+    float: left;
+  }
+
+  .info-box{
+    display: flex;
+  }
+
+  /* classes */
+  .soft-orange {
+    color: var(--soft-orange);
+  }
+
+  .deep-orange {
+    color: var(--deep-orange);
+  }
+
+  .info-ui {
+    width: 80%;
+    margin: auto;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  .user-profiles {
+    padding-bottom: 5em;
+  }
+
+  .user-profile-box {
+    outline-style: double;
+  }
+
+  .user-profile {
+    padding: 0px 10px 10px 10px;
+  }
 }
 
-/* HTML tags */
-ul {
-  list-style: none;
-  padding-left: 0;
-}
+/* app fonts */
+@media(max-width: 800px) {
+  /* custom variables */
+  :root {
+  --deep-orange: #D9493D;
+  --soft-orange: #F52423;
+  }
+  /* HTML tags */
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
 
-main > div {
-  display: inline;
-  float: left;
-}
+  main > div {
+    display: inline;
+    float: left;
+  }
 
-/* classes */
-.soft-orange {
-  color: var(--soft-orange);
-}
+  /* classes */
+  .soft-orange {
+    color: var(--soft-orange);
+  }
 
-.deep-orange {
-  color: var(--deep-orange);
-}
+  .deep-orange {
+    color: var(--deep-orange);
+  }
 
-.info-ui {
-  width: 80%;
-  margin: auto;
-  font-family: 'Noto Sans KR', sans-serif;
+  .info-ui {
+    width: 80%;
+    margin: auto;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  .user-profiles {
+    padding-bottom: 5em;
+    padding-right: 2em;
+  }
+
+  .user-profile-box {
+    outline-style: double;
+  }
+
+  .user-profile {
+    padding: 0px 10px 10px 10px;
+  }
 }
