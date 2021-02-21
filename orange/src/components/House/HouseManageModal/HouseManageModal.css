@@ -6,3 +6,9 @@
   width: 180%;
   padding-bottom: 0.5em;
 }
+
+.member-box {
+  padding: 10px 15px 10px 15px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
