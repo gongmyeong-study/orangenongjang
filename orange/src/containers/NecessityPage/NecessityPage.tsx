@@ -61,6 +61,7 @@ function NecessityPage(props: Props) {
           slidesToShow={1.6}
           slidesToScroll={1}
           infinite={false}
+          arrows={false}
         >
           {Boolean(places)
             && places.map((place) => <PlaceBox place={place} key={place.id} />)}

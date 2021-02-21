@@ -1,11 +1,23 @@
 .PlaceBox {
     padding: 10px;
-    width: 30vw;
-    height: 50vh;
+    height: 40vh;
     border: 2px solid #e9ecef;
     border-radius: 16px;
     overflow-y: auto;
     font-family: 'Noto Sans KR', Helvetica, sans-serif;
+    margin-right: 24px;
+    background-color: white;
+    border: solid 1px rgba(0, 0, 0, 0.2);
+}
+
+.PlaceBox .title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin: 4px 0;
+}
+
+.PlaceBox h3 {
+    margin: 0;
 }
 
 .create-modal {
@@ -56,7 +68,6 @@
 }
 
 .place-delete-button {
-    position: relative;
     cursor: pointer;
     top: -80px;
     right: -93%;
@@ -65,4 +76,10 @@
     border: none;
     outline: none;
     transition:all 0.9s, color 0.3;
+}
+
+@media screen and (max-width: 540px) {
+    .PlaceBox {
+        width: 50vw;
+    }
 }
