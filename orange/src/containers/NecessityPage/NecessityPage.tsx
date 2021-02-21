@@ -31,10 +31,14 @@ function NecessityPage(props: Props) {
     dispatch(houseActions.getHouse(houseId));
   };
 
+  const closeModal = () => {
+    setModalOpen(false);
+  }
+
   useEffect(() => {
     onGetHouse(props.houseId);
     if (createPlaceStatus === necessityStatus.SUCCESS) {
-      setModalOpen(false);
+      closeModal();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createPlaceStatus]);
@@ -47,11 +51,11 @@ function NecessityPage(props: Props) {
     <>
       <Modal
         isOpen={isModalOpen}
-        onRequestClose={() => setModalOpen(false)}
+        onRequestClose={closeModal}
         className="create-modal"
         overlayClassName="create-modal-overlay"
       >
-        <PlaceCreateForm houseId={props.houseId} />
+        <PlaceCreateForm houseId={props.houseId} closeModal={closeModal}/>
       </Modal>
       <div className="placebox-wrapper">
         <h1 className="NecessityPageBlock">{house?.name}</h1>

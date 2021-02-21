@@ -13,17 +13,3 @@
 .create-form .fa-plus-circle {
   color: orange;
 }
-
-.create-modal .title-wrapper {
-  display: flex;
-  margin-top: 16px;
-}
-
-.create-modal .title-wrapper .close-button {
-  position: absolute;
-  right: 16px;
-  font-size: 21px;
-  background: none;
-  border: none;
-  outline: none;
-}

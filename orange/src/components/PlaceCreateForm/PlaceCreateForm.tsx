@@ -4,10 +4,11 @@ import { useDispatch } from 'react-redux';
 import { Button, InputAdornment, TextField } from '@material-ui/core';
 
 import { necessityActions } from '../../store/actions/index';
-import './PlaceCreateForm.css';
+import './PlaceCreateForm.scss';
 
 interface Props {
   houseId: number;
+  closeModal: () => void;
 }
 
 interface PlaceCreateFormData {
@@ -34,24 +35,29 @@ function PlaceCreateForm(props: Props) {
   };
 
   return (
-    <form className="create-place-form" onSubmit={handleSubmit(onSubmit)}>
-      <TextField
-        name="name"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <h3 style={{ marginRight: '3em' }}>새 공간 이름</h3>
-            </InputAdornment>
-          ),
-        }}
-        inputRef={register({ required: true })}
-        error={Boolean(errors.name)}
-        helperText={errors.name && '공간 이름을 입력해주세요!'}
-        className="text-input"
-      />
-      <Button type="submit">
-        <i className="fas fa-plus fa-4x" />
-      </Button>
+    <form className="create-place-form" onSubmit={handleSubmit(onSubmit)} onClick={props.closeModal}>
+      <button className="close-button" type="button">
+        <i className="fas fa-times" />
+      </button>
+      <div className="input-wrapper">
+        <TextField
+          name="name"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <h3 style={{ marginRight: '3em' }}>새 공간 이름</h3>
+              </InputAdornment>
+            ),
+          }}
+          inputRef={register({ required: true })}
+          error={Boolean(errors.name)}
+          helperText={errors.name && '공간 이름을 입력해주세요!'}
+          className="text-input"
+        />
+        <Button type="submit">
+          <i className="fas fa-plus fa-4x" />
+        </Button>
+      </div>
     </form>
   );
 }
