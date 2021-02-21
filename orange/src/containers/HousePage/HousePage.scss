@@ -47,6 +47,7 @@ button {
     align-items: center;
     margin: 0 24px;
     max-width: 600px;
+    width: 100%;
 
     .create-button {
       border: solid 1px $orange;
@@ -73,6 +74,7 @@ button {
     height: 50vw;
     color: white;
     max-width: 600px;
+    width: 100%;
     max-height: 300px;
     cursor: pointer;
 
@@ -187,7 +189,10 @@ button {
 @media(max-width: 800px) {
   .house-page-wrapper {
     section {
-      width: 100vw;
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
   .create-modal {
@@ -232,6 +237,9 @@ button {
   .house-page-wrapper {
     section {
       width: 50vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
   
