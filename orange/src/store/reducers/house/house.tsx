@@ -35,6 +35,12 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
       inviteHouseStatus: houseStatus.SUCCESS,
     };
   }
+  if (action.type === houseConstants.NULL) {
+    return {
+      ...state,
+      inviteHouseStatus: houseStatus.NONE,
+    };
+  }
   if (action.type === houseConstants.LEAVE_HOUSE_SUCCESS) {
     return {
       ...state,
