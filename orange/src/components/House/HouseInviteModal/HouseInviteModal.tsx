@@ -33,8 +33,9 @@ function HouseInviteModal(props: Props) {
   const dispatch = useDispatch();
 
   const onInviteHouse = (houseId: number, email: string) => {
-    dispatch(houseActions.inviteHouse(houseId, email));
     setIsMailSended(true);
+    dispatch(houseActions.inviteHouse(houseId, email));
+    dispatch(houseActions.inviteSetStateNull());
   };
 
   const onSubmitToInvite = (data: HouseInviteFormData) => onInviteHouse(
@@ -57,8 +58,6 @@ function HouseInviteModal(props: Props) {
   return (
     <>
       <h2>{formTitle}</h2>
-      {/* 상태변화 체크를 위한 console log */}
-      {console.log(isMailSended, inviteHouseStatus)}
       {isMailSended && <CircularProgress className="spinner" /> }
       <form onSubmit={handleSubmit(onSubmitToInvite)}>
         <h4>

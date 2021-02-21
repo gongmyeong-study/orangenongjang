@@ -52,6 +52,7 @@ export const necessityConstants = {
 };
 
 export const houseConstants = {
+  NULL: 'NULL',
   GET_HOUSE_SUCCESS: 'GET_HOUSE_SUCCESS',
   GET_HOUSE_FAILURE: 'GET_HOUSE_FAILURE',
 

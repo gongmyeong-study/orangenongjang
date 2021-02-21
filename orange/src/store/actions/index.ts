@@ -1,5 +1,6 @@
 import {
   getHouse,
+  inviteSetStateNull,
   inviteHouse,
   leaveHouse,
   reintroduceHouse,
@@ -26,6 +27,7 @@ import {
 } from './user/user';
 
 export const houseActions = {
+  inviteSetStateNull,
   getHouse,
   inviteHouse,
   leaveHouse,
