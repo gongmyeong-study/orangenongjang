@@ -90,7 +90,7 @@ function HousePage(props: Props) {
 
   const showUserHouses = houses?.map((house, index) => (
     <>
-      <div className="house-card" key={index}>
+      <div className="house-card" key={index} onClick={() => goToTheRoom(house.id)}>
         <div className="house-name-intro">
           <h1 className="house-name">
             {house.users.map((user) => (
@@ -158,7 +158,6 @@ function HousePage(props: Props) {
         </div>
         <div
           className="right-info"
-          onClick={() => goToTheRoom(house.id)}
         >
           <p>
             멤버
