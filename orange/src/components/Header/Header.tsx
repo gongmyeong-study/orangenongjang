@@ -59,6 +59,7 @@ class Header extends Component<Props, State> {
 
     const goToMainPage = () => {
       this.props.history.push('/');
+      toggleMenuModal();
     };
 
     const goToMainOrInfoPage = () => {
@@ -115,16 +116,30 @@ class Header extends Component<Props, State> {
     }
 
     return (
-      <>
+      <div className="header-wrapper">
+        <button className="logo-wrapper only-on-desktop" type="button" onClick={goToMainPage}>
+          <img
+            className="logo"
+            src="https://orangenongjang-static.s3.ap-northeast-2.amazonaws.com/image/orangenongjang_logo_1.png"
+            alt="orangenongjang_logo"
+          />
+        </button>
         <ul className="main-header only-on-desktop">
           {helloUser}
           <li className="main-header-li">
             <button
-              className="header-page-button"
               type="button"
               onClick={goToMainOrInfoPage}
             >
               {whereToGoDisplay}
+            </button>
+          </li>
+          <li className="main-header-li">
+            <button
+              type="button"
+              onClick={goToMainPage}
+            >
+              집 목록
             </button>
           </li>
           {logoutButton}
@@ -151,11 +166,18 @@ class Header extends Component<Props, State> {
           <ul className="menu-list">
             <li>
               <button
-                className="header-page-button"
                 type="button"
                 onClick={goToMainOrInfoPage}
               >
                 {whereToGoDisplay}
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                onClick={goToMainPage}
+              >
+                집 목록
               </button>
             </li>
             <li>
@@ -165,7 +187,7 @@ class Header extends Component<Props, State> {
             </li>
           </ul>
         </Modal>
-      </>
+      </div>
     );
   }
 }
