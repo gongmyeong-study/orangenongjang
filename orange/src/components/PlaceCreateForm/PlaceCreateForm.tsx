@@ -22,7 +22,7 @@ function PlaceCreateForm(props: Props) {
     name: string,
   ) => {
     dispatch(necessityActions.createPlace(houseId, name));
-    dispatch(necessityActions.SetStatusNull());
+    dispatch(necessityActions.setStatusNull());
   };
 
   const {

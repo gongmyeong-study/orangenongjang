@@ -9,7 +9,7 @@ const setStatusNullSuccess = () => {
     type: actionType,
   };
 };
-export const SetStatusNull = (() => (dispatch: Dispatch) => dispatch(
+export const setStatusNull = (() => (dispatch: Dispatch) => dispatch(
   setStatusNullSuccess(),
 ));
 

@@ -42,7 +42,7 @@ function NecessityCreateOrUpdateForm(props: Props) {
     dispatch(necessityActions.createNecessityPlace(
       placeId, name, option, description, price, count,
     ));
-    dispatch(necessityActions.SetStatusNull());
+    dispatch(necessityActions.setStatusNull());
   };
 
   const onUpdateNecessityPlace = (
@@ -55,7 +55,7 @@ function NecessityCreateOrUpdateForm(props: Props) {
     dispatch(necessityActions.updateNecessityPlace(
       placeId, necessityId, description, price, count,
     ));
-    dispatch(necessityActions.SetStatusNull());
+    dispatch(necessityActions.setStatusNull());
   };
 
   const onSubmitToCreate = (data: NecessityCreateOrUpdateFormData) => onCreateNecessityPlace(
