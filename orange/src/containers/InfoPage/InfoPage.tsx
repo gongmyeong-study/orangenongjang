@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
 
 import { StudyInfo } from '../../components';
@@ -8,7 +9,12 @@ class InfoPage extends Component {
   render() {
     const profiles = [
       <div className="user-profile">
-        <h2>다빈</h2>
+        <a
+          className="VisitLink"
+          onClick={() => window.open('https://github.com/davin111')}
+        >
+          <h2>다빈</h2>
+        </a>
         <span>
           안녕하세요, 주로 서버 개발을 하고 있는 다빈입니다. 저도 개발 경력이
           아직 짧지만, 2020년에는 개발을 처음 해보는 사람들의 시작을 함께할
@@ -29,7 +35,12 @@ class InfoPage extends Component {
         />
       </div>,
       <div className="user-profile">
-        <h2>상현</h2>
+        <a
+          className="VisitLink"
+          onClick={() => window.open('https://github.com/palpitate2015')}
+        >
+          <h2>상현</h2>
+        </a>
         <span>
           안녕하세요 병아리 기획자(?) 박상현입니다... 사실 초기 기획 단계에만
           참여했고 그 이후엔 별로 기여한 게 없는 터라 부끄럽긴 한데요 ㅎㅎ
@@ -51,7 +62,12 @@ class InfoPage extends Component {
         />
       </div>,
       <div className="user-profile">
-        <h2>영현</h2>
+        <a
+          className="VisitLink"
+          onClick={() => window.open('https://github.com/YeonghyeonKO')}
+        >
+          <h2>영현</h2>
+        </a>
         <span>
           안녕하세요. 오렌지농장 개발자 고영현입니다. 처음에는 Backend 개발을
           공부해보겠다고 시작했지만 정신차려보니 Server, Frontend 지식도 익힐 수
@@ -72,7 +88,12 @@ class InfoPage extends Component {
         />
       </div>,
       <div className="user-profile">
-        <h2>진섭</h2>
+        <a
+          className="VisitLink"
+          onClick={() => window.open('https://github.com/JSKeum')}
+        >
+          <h2>진섭</h2>
+        </a>
         <span>
           소프트웨어 개발과 UX/UI 디자인에 관심이 많습니다.
           <br />
