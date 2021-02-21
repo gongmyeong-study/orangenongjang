@@ -24,6 +24,7 @@ import {
   login,
   logout,
   signUp,
+  signUpSetStateNull,
 } from './user/user';
 
 export const houseActions = {
@@ -52,4 +53,5 @@ export const userActions = {
   login,
   logout,
   signUp,
+  signUpSetStateNull,
 };

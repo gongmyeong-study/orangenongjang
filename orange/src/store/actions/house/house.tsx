@@ -1,10 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
 
-import { useDispatch } from 'react-redux';
 import { houseConstants, necessityConstants } from '../actionTypes';
 import { House, UserHouse } from '../../../api';
-import { houseStatus } from '../../../constants/constants';
 
 const getHouseSuccess = (house: House) => ({
   type: necessityConstants.GET_HOUSE_SUCCESS,
@@ -80,7 +78,6 @@ const inviteStatusNull = () => {
     type: actionType,
   };
 };
-
 export const inviteSetStateNull = (() => (dispatch: Dispatch) => dispatch(
   inviteStatusNull(),
 ));

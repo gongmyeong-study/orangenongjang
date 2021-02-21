@@ -30,6 +30,7 @@ function HouseInviteModal(props: Props) {
   } = useSelector(
     (state: OrangeGlobalState) => state.house,
   );
+
   const dispatch = useDispatch();
 
   const onInviteHouse = (houseId: number, email: string) => {
