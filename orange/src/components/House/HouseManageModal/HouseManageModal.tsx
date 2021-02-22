@@ -77,10 +77,10 @@ function HouseManageModal(props: Props) {
             &emsp;
             {user.username}
             &emsp;
-            ( ~
-            {' '}
+            (
             {new Date(user.joined_at).toLocaleDateString()}
-            )
+            {' '}
+            ~ )
           </div>
         ))}
       </div>
