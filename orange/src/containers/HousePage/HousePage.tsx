@@ -1,11 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { AiFillCrown } from 'react-icons/ai';
+import { useSelector } from 'react-redux';
 import { History } from 'history';
 import Modal from 'react-modal';
 
 import { House, User } from '../../api';
 import { userActions } from '../../store/actions/index';
+import { OrangeGlobalState } from '../../store/state';
 import { HouseCreateForm, HouseInviteModal, HouseManageModal } from '../../components';
 
 import './HousePage.scss';
@@ -23,6 +26,7 @@ function HousePage(props: Props) {
   const [isCreateHouseModalOpen, setIsCreateHouseModalOpen] = useState(false);
   const [houseToBeManaged, setHouseToBeManaged] = useState<House>();
   const [houseToBeInvited, setHouseToBeInvited] = useState<House>();
+  const { getMeStatus, me } = useSelector((state: OrangeGlobalState) => state.user);
 
   const manageHouse = (e: any, house: House) => {
     e.stopPropagation();
@@ -59,7 +63,7 @@ function HousePage(props: Props) {
 
   useEffect(() => {
     userActions.getMe();
-  }, []);
+  }, [getMeStatus]);
 
   const goToTheRoom = (houseId: number) => {
     const url = `/main/${houseId}`;
@@ -81,6 +85,14 @@ function HousePage(props: Props) {
       <div className="house-card" key={index} onClick={() => goToTheRoom(house.id)}>
         <div className="house-name-intro">
           <h2 className="house-name">
+            {house.users.map((user) => (
+              user.username === me.username && user.is_leader)).includes(true)
+               && (
+               <div>
+                 <AiFillCrown />
+                 &emsp;
+               </div>
+               )}
             {house.name}
           </h2>
           <br />
