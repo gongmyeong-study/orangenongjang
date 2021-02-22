@@ -1,0 +1,75 @@
+.house-toss-leader-form {
+  display: grid;
+  width: 50%;
+}
+
+.house-modal-text {
+  text-align: center;
+}
+
+.house-user-container {
+  padding-bottom: 0.5em;
+}
+
+.member-box {
+  display: block;
+  padding: 10px 15px 10px 15px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.house-modal-name-intro {
+  margin: 20px 20px 0px 0px;
+}
+
+.house-modal-name {
+  display: flex;
+  margin: 10px 0px 0px 10px;
+
+  .house-modal-name-update-box {
+    display: flex;
+
+    div:last-child {
+      display: flex;
+      justify-content: center;
+      margin-top: 4px;
+    }
+
+    button {
+      width: 4vw;
+      height: 3vh;
+      border-radius: 5px;
+    }
+  }
+}
+
+.house-modal-name-update-input {
+  width: 100%;
+  height: 120%;
+}
+
+.house-modal-intro {
+  display: flex;
+  margin: 10px 0px 0px 10px;
+
+  .house-modal-intro-update-box {
+    display: flex;
+
+    div:last-child {
+      display: flex;
+      justify-content: center;
+      margin-top: 4px;
+    }
+
+    button {
+      width: 3vw;
+      height: 2.5vh;
+      border-radius: 5px;
+    }
+  }
+}
+
+.house-modal-intro-update-input {
+  width: 100%;
+  height: 120%;
+}
