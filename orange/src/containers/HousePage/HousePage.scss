@@ -92,6 +92,10 @@ button {
         display: flex;
         margin: 10px 0px 0px 5px;
 
+        .house-name-with-crown {
+          display:flex;
+        }
+
         .house-name-update-box {
           display: flex;
 
@@ -230,6 +234,13 @@ button {
     bottom: 0;
     display: flex;
     background: rgba(0, 0, 0, 0.5);
+  }
+
+  .house-intro {
+    position: absolute;
+    display: flex;
+    width: 250px;
+    margin: 10px 0px 0px 5px;
   }
 }
 

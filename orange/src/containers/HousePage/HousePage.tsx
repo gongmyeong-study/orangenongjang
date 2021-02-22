@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react';
 import EdiText from 'react-editext';
+import { AiFillCrown } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { History } from 'history';
@@ -97,29 +98,33 @@ function HousePage(props: Props) {
             {house.users.map((user) => (
               user.username === me.username && user.is_leader)).includes(true)
               ? (
-                <EdiText
-                  viewContainerClassName="house-name-update-box"
-                  editButtonContent={<i className="fas fa-pencil-alt" />}
-                  saveButtonContent={<i className="fas fa-check" />}
-                  cancelButtonContent={<i className="fas fa-times" />}
-                  hideIcons
-                  type="text"
-                  showButtonsOnHover
-                  submitOnUnfocus
-                  submitOnEnter
-                  cancelOnEscape
-                  inputProps={{
-                    className: 'house-name-update-input',
-                    placeholder: 'House 이름을 입력하세요.',
-                    style: { fontSize: 18 },
-                  }}
-                  validationMessage="한 글자 이상, 열 글자 이하로 입력하세요."
-                  validation={(val) => (val.length > 0 && val.length <= 10)}
-                  value={house.name}
-                  onSave={(houseName: string) => {
-                    onRenameHouse(house.id, houseName);
-                  }}
-                />
+                <div className="house-name-with-crown">
+                  <AiFillCrown />
+                  &emsp;
+                  <EdiText
+                    viewContainerClassName="house-name-update-box"
+                    editButtonContent={<i className="fas fa-pencil-alt" />}
+                    saveButtonContent={<i className="fas fa-check" />}
+                    cancelButtonContent={<i className="fas fa-times" />}
+                    hideIcons
+                    type="text"
+                    showButtonsOnHover
+                    submitOnUnfocus
+                    submitOnEnter
+                    cancelOnEscape
+                    inputProps={{
+                      className: 'house-name-update-input',
+                      placeholder: 'House 이름을 입력하세요.',
+                      style: { fontSize: 18 },
+                    }}
+                    validationMessage="한 글자 이상, 열 글자 이하로 입력하세요."
+                    validation={(val) => (val.length > 0 && val.length <= 10)}
+                    value={house.name}
+                    onSave={(houseName: string) => {
+                      onRenameHouse(house.id, houseName);
+                    }}
+                  />
+                </div>
               )
               : house.name}
           </h1>
