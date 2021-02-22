@@ -75,7 +75,7 @@ function HouseInviteModal(props: Props) {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <h4 style={{ marginRight: '2em' }}>Email</h4>
+                  <h4 style={{ marginRight: '1.5em' }}>Email</h4>
                 </InputAdornment>
               ),
             }}
