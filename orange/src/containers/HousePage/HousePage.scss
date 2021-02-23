@@ -15,7 +15,7 @@ button {
   justify-content: center;
   font-family: 'Noto Sans KR', Helvetica, sans-serif;
   background-color: $BACKGROUND_BEIGE;
-  min-height: calc(100vh - $HEADER_HEIGHT_ON_DESKTOP);
+  min-height: calc(100vh - #{$HEADER_HEIGHT_ON_DESKTOP});
 
   .initial-contents {
     margin-top: 30vh;
@@ -153,7 +153,7 @@ button {
 
 @media(max-width: 800px) {
   .house-page-wrapper {
-    min-height: calc(100vh - $HEADER_HEIGHT_ON_MOBILE);
+    min-height: calc(100vh - #{$HEADER_HEIGHT_ON_MOBILE});
 
     section {
       width: 90%;
