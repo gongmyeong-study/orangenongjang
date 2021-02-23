@@ -160,7 +160,8 @@ function HousePage(props: Props) {
         <div
           className="right-info"
         >
-          <a
+          <button
+            type="button"
             onClick={(e) => manageHouse(e, house)}
           >
             <p>
@@ -169,7 +170,7 @@ function HousePage(props: Props) {
               {house.users.length}
               명
             </p>
-          </a>
+          </button>
           <div className="button-wrapper">
             <button
               type="button"

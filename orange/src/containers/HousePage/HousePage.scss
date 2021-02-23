@@ -153,9 +153,15 @@ button {
       flex-direction: column;
       justify-content: space-between;
 
-      p {
-        text-align: center;
-        font-size: 1.125rem;
+      button {
+        background: none;
+        border: none;
+        
+        p {
+          text-align: center;
+          font-size: 1.125rem;
+          color: white;
+        }
       }
     }
 
