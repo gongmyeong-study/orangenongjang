@@ -49,8 +49,8 @@
     }
 
     button {
-      width: 4vw;
-      height: 3vh;
+      width: 3vw;
+      height: 2vh;
       border-radius: 5px;
     }
   }
@@ -70,17 +70,16 @@
     div:last-child {
       display: flex;
       justify-content: center;
-      margin-top: 4px;
     }
 
     button {
-      width: 3vw;
-      height: 2.5vh;
+      width: 2.5vw;
+      height: 2vh;
       border-radius: 5px;
     }
   }
 }
 
 .house-modal-intro-update-input {
-  padding: 5px 0px 0px 5px;
+  padding: 0px 0px 0px 5px;
 }
