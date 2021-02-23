@@ -148,9 +148,10 @@ $BACKGROUND_BEIGE: rgb(255, 245, 235);
                     border: solid 1px #ff7245;
                     font-size: 32px;
                     outline: none;
-                    padding: 32px 72px;
+                    padding: 32px 52px;
+                    justify-content: center;
+                    min-width: 220px;
                     display: flex;
-                    align-items: center;
                     cursor: pointer;
                 }
     
