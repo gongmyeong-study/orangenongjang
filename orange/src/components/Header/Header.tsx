@@ -50,7 +50,8 @@ class Header extends Component<Props, State> {
   }
 
   get introOrMain() {
-    return !this.isOnInfoPage ? '오렌지농장 소개' : '메인 페이지';
+    // eslint-disable-next-line no-nested-ternary
+    return !this.isOnInfoPage ? '오렌지농장 소개' : this.isOnLogin ? '집 목록' : '메인 페이지';
   }
 
   get isOnIntroPage() {
