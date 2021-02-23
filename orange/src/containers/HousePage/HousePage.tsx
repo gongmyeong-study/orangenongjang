@@ -7,9 +7,10 @@ import { History } from 'history';
 import Modal from 'react-modal';
 
 import { House, User } from '../../api';
+import { HouseCreateForm, HouseInviteModal, HouseManageModal } from '../../components';
+import { houseStatus } from '../../constants/constants';
 import { userActions } from '../../store/actions/index';
 import { OrangeGlobalState } from '../../store/state';
-import { HouseCreateForm, HouseInviteModal, HouseManageModal } from '../../components';
 
 import './HousePage.scss';
 
@@ -27,6 +28,9 @@ function HousePage(props: Props) {
   const [houseToBeManaged, setHouseToBeManaged] = useState<House>();
   const [houseToBeInvited, setHouseToBeInvited] = useState<House>();
   const { getMeStatus, me } = useSelector((state: OrangeGlobalState) => state.user);
+  const { reintroduceHouseStatus, renameHouseStatus } = useSelector((
+    state: OrangeGlobalState,
+  ) => state.house);
 
   const manageHouse = (e: any, house: House) => {
     e.stopPropagation();
