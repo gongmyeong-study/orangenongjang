@@ -87,65 +87,17 @@ button {
       font-size: 1.125rem;
     }
 
-      .house-name {
-        position: absolute;
-        display: flex;
-        margin: 10px 0px 0px 5px;
+    .house-name {
+      position: absolute;
+      display: flex;
+      margin: 10px 0px 0px 5px;
+    }
 
-        .house-name-update-box {
-          display: flex;
-
-          div:last-child {
-            display: flex;
-            justify-content: center;
-            margin-top: 4px;
-          }
-
-          button {
-            width: 4vw;
-            height: 3vh;
-            border-radius: 5px;
-          }
-        }
-
-        .house-name-update-input {
-          width: 40%;
-          height: 30%;
-          outline: none;
-        }
-      }
-
-      .house-intro {
-        position: absolute;
-        display: flex;
-        margin: 10px 0px 0px 5px;
-
-        .house-intro-update-box {
-          display: flex;
-
-          div:last-child {
-            display: flex;
-            justify-content: center;
-            margin-top: 4px;
-          }
-
-          button {
-            width: 3vw;
-            height: 2.5vh;
-            border-radius: 5px;
-          }
-        }
-      }
-
-      .house-intro-update-input {
-        width: 50%;
-        height: 30%;
-        outline: none;
-
-        div {
-          height: 30%;
-        }
-      }
+    .house-intro {
+      position: absolute;
+      display: flex;
+      margin: 10px 0px 0px 5px;
+    }
 
     .right-info {
       margin: 28px 21px 21px 21px;
@@ -207,7 +159,7 @@ button {
     width: 92vw;
     max-width: 500px;
     max-height: 500px;
-    height: 110vw;
+    height: 130vw;
     margin: auto;
     background: white;
     border-radius: 16px;
@@ -236,6 +188,18 @@ button {
     bottom: 0;
     display: flex;
     background: rgba(0, 0, 0, 0.5);
+  }
+
+  .house-name {
+    display: flex;
+    width: 250px;
+    margin: 10px 0px 0px 5px;
+  }
+
+  .house-intro {
+    display: flex;
+    width: 230px;
+    margin: 10px 0px 0px 5px;
   }
 }
 
