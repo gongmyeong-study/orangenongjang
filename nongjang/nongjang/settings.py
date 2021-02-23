@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'storages',
     'user.apps.UserConfig',
     'necessity.apps.NecessityConfig',
     'house.apps.HouseConfig',
@@ -175,7 +176,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/django_static/'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+
+AWS_S3_REGION_NAME = 'ap-northeast-2'
+AWS_ACCESS_KEY_ID = get_credential('prod/nongjang', 'AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = get_credential('prod/nongjang', 'AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = 'orangenongjang-static'
+AWS_LOCATION = 'django_staticfiles'
+AWS_DEFAULT_ACL = 'public-read'
 
 if USE_DEBUG_TOOLBAR:
     INSTALLED_APPS += (
