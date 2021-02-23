@@ -29,7 +29,9 @@ export interface HouseState {
   inviteHouseStatus?: string;
   leaveHouseStatus?: string;
   tossLeaderStatus?: string;
+  reintroduceHouseStatus: string;
   removeHouseStatus: string;
+  renameHouseStatus: string;
   house?: House;
   houses?: House[];
   userHouse?: UserHouse[];
