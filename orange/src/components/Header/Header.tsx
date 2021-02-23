@@ -62,6 +62,10 @@ class Header extends Component<Props, State> {
     return this.props.pathname === '/house';
   }
 
+  get isOnMainPage() {
+    return this.props.pathname === '/';
+  }
+
   get introOrInfoLink() {
     return !this.isOnInfoPage ? '/info' : '/intro';
   }
@@ -130,6 +134,10 @@ class Header extends Component<Props, State> {
     }
 
     if (this.isOnLogin && this.isOnIntroPage) {
+      this.props.history.push('/house');
+    }
+
+    if (this.isOnLogin && this.isOnMainPage) {
       this.props.history.push('/house');
     }
 
