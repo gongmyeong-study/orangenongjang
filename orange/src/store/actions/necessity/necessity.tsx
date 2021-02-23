@@ -23,7 +23,7 @@ const countNecessityPlaceFailure = (error: AxiosError) => {
     default:
       actionType = necessityConstants.COUNT_NECESSITYPLACE_FAILURE;
       alert(
-        `Necessity 수량 변경에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
+        `생필품 수량 변경에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
       );
       break;
   }
@@ -52,12 +52,12 @@ const createPlaceFailure = (error: AxiosError) => {
   switch (error.response?.status) {
     case 409:
       actionType = necessityConstants.CREATE_PLACE_FAILURE_NAME;
-      alert('같은 이름의 Place가 존재합니다.');
+      alert('같은 이름의 공간이 존재합니다.');
       break;
     default:
       actionType = necessityConstants.CREATE_PLACE_FAILURE;
       alert(
-        `Place 생성에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
+        `공간 생성에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
       );
       break;
   }
@@ -87,12 +87,12 @@ const createNecessityPlaceFailure = (error: AxiosError) => {
   switch (error.response?.status) {
     case 409:
       actionType = necessityConstants.CREATE_NECESSITYPLACE_FAILURE_NAME;
-      alert('이름과 설명이 같은 Necessity가 존재합니다.');
+      alert('이름과 설명이 같은 생필품이 존재합니다.');
       break;
     default:
       actionType = necessityConstants.CREATE_NECESSITYPLACE_FAILURE;
       alert(
-        `Necessity 생성에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
+        `생필품 생성에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
       );
   }
   return {
@@ -130,20 +130,20 @@ const removePlaceFailure = (error: AxiosError) => {
   switch (error.response?.status) {
     case 400:
       actionType = necessityConstants.REMOVE_PLACE_FAILURE_MEMBER;
-      alert('House 멤버만 Place를 삭제할 수 있습니다.');
+      alert('집 멤버만 공간을 삭제할 수 있습니다.');
       break;
     case 403:
       actionType = necessityConstants.REMOVE_PLACE_FAILURE_LEADER;
-      alert('Leader만 Place를 삭제할 수 있습니다.');
+      alert('리더만 공간을 삭제할 수 있습니다.');
       break;
     case 404:
       actionType = necessityConstants.REMOVE_PLACE_FAILURE_NOT_FOUND;
-      alert('존재하지 않는 Place입니다.');
+      alert('존재하지 않는 공간입니다.');
       break;
     default:
       actionType = necessityConstants.REMOVE_PLACE_FAILURE;
       alert(
-        `Place 삭제에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
+        `공간 삭제에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
       );
       break;
   }
@@ -172,7 +172,7 @@ const removeNecessityPlaceFailure = (error: AxiosError) => {
     default:
       actionType = necessityConstants.REMOVE_NECESSITYPLACE_FAILURE;
       alert(
-        `Necessity 삭제에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
+        `생필품 삭제에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
       );
       break;
   }
@@ -201,16 +201,16 @@ const renamePlaceFailure = (error: AxiosError) => {
   switch (error.response?.status) {
     case 404:
       actionType = necessityConstants.RENAME_PLACE_FAILURE_NOT_FOUND;
-      alert('존재하지 않는 Place입니다.');
+      alert('존재하지 않는 공간입니다.');
       break;
     case 403:
       actionType = necessityConstants.RENAME_PLACE_FAILURE_MEMBER;
-      alert('House 멤버만 Place 이름을 수정할 수 있습니다.');
+      alert('집 멤버만 공간 이름을 수정할 수 있습니다.');
       break;
     default:
       actionType = necessityConstants.RENAME_PLACE_FAILURE;
       alert(
-        `Place 이름 수정에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
+        `공간 이름 수정에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
       );
       break;
   }
@@ -246,7 +246,7 @@ const updateNecessityPlaceFailure = (error: AxiosError) => {
     default:
       actionType = necessityConstants.UPDATE_NECESSITYPLACE_FAILURE;
       alert(
-        `Necessity 수정에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
+        `생필품 수정에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`,
       );
       break;
   }
