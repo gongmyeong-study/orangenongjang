@@ -2,6 +2,8 @@ $ORANGE: rgb(255, 114, 69);
 $LIGHT_ORANGE: rgba(255, 114, 69, 0.7);
 $LIGHT_ORANGE-HOVER: rgba(255, 114, 69, 0.88);
 $BACKGROUND_BEIGE: rgb(255, 245, 235);
+$HEADER_HEIGHT_ON_MOBILE: 76px;
+$HEADER_HEIGHT_ON_DESKTOP: 104px;
 
 button {
   outline: none;
@@ -13,6 +15,7 @@ button {
   justify-content: center;
   font-family: 'Noto Sans KR', Helvetica, sans-serif;
   background-color: $BACKGROUND_BEIGE;
+  min-height: calc(100vh - $HEADER_HEIGHT_ON_DESKTOP);
 
   .initial-contents {
     margin-top: 30vh;
@@ -150,6 +153,8 @@ button {
 
 @media(max-width: 800px) {
   .house-page-wrapper {
+    min-height: calc(100vh - $HEADER_HEIGHT_ON_MOBILE);
+
     section {
       width: 90%;
       display: flex;
