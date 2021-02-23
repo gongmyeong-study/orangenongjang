@@ -1,6 +1,7 @@
 $HEADER_HEIGHT_ON_MOBILE: 76px;
 $HEADER_HEIGHT_ON_DESKTOP: 104px;
 $BACKGROUND_BEIGE: rgb(255, 245, 235);
+$TAB_ORANGE: rgba(255, 127, 80, 0.85);
 
 .main-page { 
     display: flex;
@@ -28,10 +29,10 @@ $BACKGROUND_BEIGE: rgb(255, 245, 235);
     }
     
     .main-tab:hover {
-        background-color: rgb(255, 165, 0);
+        background-color: $TAB_ORANGE;
     }
     .main-tab:active {
-        background-color: rgb(255, 150, 0);
+        background-color: $TAB_ORANGE;
     }
 }
 
