@@ -31,8 +31,6 @@ class InfoPage extends Component {
           className="user-profile-photo"
           src="https://orangenongjang-static.s3.ap-northeast-2.amazonaws.com/image/Intro_Davin_turtle.png"
           alt="davin_profile"
-          height="300"
-          width="300"
         />
       </div>,
       <div className="user-profile">
@@ -119,7 +117,7 @@ class InfoPage extends Component {
     return (
       <div className="info-ui">
         <div className="orangenongjang-introduction-box">
-          <h2>
+          <h2 style={{ margin: '0 0 0 0', padding: '24px 0 0 0' }}>
             <img
               className="orangenongjang_logo_3"
               src="https://orangenongjang-static.s3.ap-northeast-2.amazonaws.com/image/orangenongjang_logo_3.png"
@@ -234,10 +232,10 @@ class InfoPage extends Component {
           </ul>
         </div>
 
-        <main className="info-box">
+        <div className="info-box">
           <StudyInfo />
           <div className="user-profiles">{introduction}</div>
-        </main>
+        </div>
       </div>
     );
   }

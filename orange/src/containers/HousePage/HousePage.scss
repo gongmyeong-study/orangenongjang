@@ -1,6 +1,7 @@
-$orange: rgb(255, 114, 69);
-$light-orange: rgba(255, 114, 69, 0.7);
-$light-orange-hover: rgba(255, 114, 69, 0.88);
+$ORANGE: rgb(255, 114, 69);
+$LIGHT_ORANGE: rgba(255, 114, 69, 0.7);
+$LIGHT_ORANGE-HOVER: rgba(255, 114, 69, 0.88);
+$BACKGROUND_BEIGE: rgb(255, 245, 235);
 
 button {
   outline: none;
@@ -11,6 +12,7 @@ button {
   display: flex;
   justify-content: center;
   font-family: 'Noto Sans KR', Helvetica, sans-serif;
+  background-color: $BACKGROUND_BEIGE;
 
   .initial-contents {
     margin-top: 30vh;
@@ -27,21 +29,22 @@ button {
 
     .create-button {
       margin-top: 40px;
-      border: solid 1px $orange;
+      border: solid 1px $ORANGE;
       border-radius: 100px;
       font-size: 2rem;
       font-weight: bold;
       padding: 2rem 2.2rem;
-      color: $orange;
+      color: $ORANGE;
+      background-color: white;
 
       &:hover {
-        background-color: $orange;
+        background-color: $ORANGE;
         color: white;
       }
     }
   }
 
-  .header-wrapper {
+  .title-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -50,23 +53,24 @@ button {
     width: 100%;
 
     .create-button {
-      border: solid 1px $orange;
+      border: solid 1px $ORANGE;
       border-radius: 100px;
       font-size: 1rem;
       height: 2.2rem;
       width: 4rem;
-      color: $orange;
+      color: $ORANGE;
       cursor: pointer;
+      background-color: white;
 
       &:hover {
-        background-color: $orange;
+        background-color: $ORANGE;
         color: white;
       }
     }
   }
 
   .house-card {
-    background-color: $light-orange;
+    background-color: $LIGHT_ORANGE;
     border-radius: 12px;
     display: flex;
     margin: 0 21px 30px;
@@ -79,7 +83,7 @@ button {
     cursor: pointer;
 
     &:hover {
-      background-color: $light-orange-hover;
+      background-color: $LIGHT_ORANGE-HOVER;
     }
 
     .house-name-intro {
@@ -131,12 +135,12 @@ button {
         padding: 1rem;
         border: none;
         border-radius: 100px;
-        color: $orange;
+        color: $ORANGE;
         text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
         cursor: pointer;
 
         &:hover {
-          background-color: $orange;
+          background-color: $ORANGE;
           color: white;
         }
       }

@@ -39,7 +39,7 @@ function IntroPage() {
       </Modal>
       <img
         className="logo"
-        src="https://orangenongjang-static.s3.ap-northeast-2.amazonaws.com/image/orangenongjang_logo_1.png"
+        src="https://orangenongjang-static.s3.ap-northeast-2.amazonaws.com/image/orangenongjang_logo_2.png"
         alt="orangenongjang_logo"
       />
       <div className="main">

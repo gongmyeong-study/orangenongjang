@@ -140,7 +140,7 @@ function HousePage(props: Props) {
       {houses?.length
         ? (
           <section>
-            <div className="header-wrapper">
+            <div className="title-wrapper">
               <h1>집 목록</h1>
               <button className="create-button" type="button" onClick={() => setIsCreateHouseModalOpen(true)}>추가</button>
             </div>

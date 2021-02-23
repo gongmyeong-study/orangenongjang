@@ -1,10 +1,13 @@
+$BACKGROUND_BEIGE: rgb(255, 245, 235);
+
 @media screen and (min-width: 1080px)  {
   .header-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 80px;
-    margin-top: 24px;
+    padding-top: 24px;
+    background-color: $BACKGROUND_BEIGE;
 
     .hello-user {
       font: 400 1.14em 'Noto Sans KR', sans-serif;
@@ -56,9 +59,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 16px 21px 0 21px;
+    padding: 16px 21px 0 21px;
     height: 60px;
     position: relative;
+    background-color: $BACKGROUND_BEIGE;
   }
 
   .main-header {
@@ -74,7 +78,7 @@
 
   .header-wrapper .navbar-burger {
     position: absolute;
-    right: 0;
+    right: 21px;
     background: none;
     border: none;
     font-size: 24px;

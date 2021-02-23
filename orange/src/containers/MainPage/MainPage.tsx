@@ -6,7 +6,7 @@ import NecessityPage from '../NecessityPage/NecessityPage';
 import StatisticsPage from '../StatisticsPage/StatisticsPage';
 import TimelinePage from '../TimelinePage/TimelinePage';
 import WorkPage from '../WorkPage/WorkPage';
-import './MainPage.css';
+import './MainPage.scss';
 
 interface DetailParams {
   id: string;
@@ -22,6 +22,8 @@ interface State {
 }
 
 class MainPage extends Component<Props, State> {
+  readonly activeTabColor = 'rgba(255, 127, 80, 0.85)';
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -56,7 +58,7 @@ class MainPage extends Component<Props, State> {
             className="main-tab"
             id="necessity-tab"
             onClick={() => this.setState({ activeTab: 0 })}
-            style={this.state.activeTab === 0 ? { backgroundColor: 'orange' } : {}}
+            style={this.state.activeTab === 0 ? { backgroundColor: this.activeTabColor } : {}}
           >
             생필품
           </div>
@@ -64,7 +66,7 @@ class MainPage extends Component<Props, State> {
             className="main-tab"
             id="work-tab"
             onClick={() => this.setState({ activeTab: 1 })}
-            style={this.state.activeTab === 1 ? { backgroundColor: 'orange' } : {}}
+            style={this.state.activeTab === 1 ? { backgroundColor: this.activeTabColor } : {}}
           >
             가사노동
           </div>
@@ -72,7 +74,7 @@ class MainPage extends Component<Props, State> {
             className="main-tab"
             id="timeline-tab"
             onClick={() => this.setState({ activeTab: 2 })}
-            style={this.state.activeTab === 2 ? { backgroundColor: 'orange' } : {}}
+            style={this.state.activeTab === 2 ? { backgroundColor: this.activeTabColor } : {}}
           >
             타임라인
           </div>
@@ -80,7 +82,7 @@ class MainPage extends Component<Props, State> {
             className="main-tab"
             id="statistics-tab"
             onClick={() => this.setState({ activeTab: 3 })}
-            style={this.state.activeTab === 3 ? { backgroundColor: 'orange' } : {}}
+            style={this.state.activeTab === 3 ? { backgroundColor: this.activeTabColor } : {}}
           >
             통계
           </div>
