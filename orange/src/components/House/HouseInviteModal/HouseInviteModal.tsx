@@ -51,6 +51,7 @@ function HouseInviteModal(props: Props) {
   useEffect(() => {
     if (inviteHouseStatus === houseStatus.SUCCESS
       || inviteHouseStatus === houseStatus.FAILURE_EMAIL
+      || inviteHouseStatus === houseStatus.FAILURE_INVITE_LEADER
       || inviteHouseStatus === houseStatus.FAILURE_USERNAME
       || inviteHouseStatus === houseStatus.FAILURE_AUTHENTICATION) {
       setIsMailSended(false);
