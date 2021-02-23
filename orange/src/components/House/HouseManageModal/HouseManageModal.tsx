@@ -91,7 +91,7 @@ function HouseManageModal(props: Props) {
                 inputProps={{
                   className: 'house-modal-name-update-input',
                   placeholder: 'House 이름을 입력하세요.',
-                  style: { fontSize: 20 },
+                  style: { fontSize: 19 },
                 }}
                 validationMessage="한 글자 이상, 열 글자 이하로 입력하세요."
                 validation={(val) => (val.length > 0 && val.length <= 10)}

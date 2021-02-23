@@ -57,13 +57,12 @@
 }
 
 .house-modal-name-update-input {
-  width: 100%;
-  height: 120%;
+  margin: 5px 0px 0px 0px;
 }
 
 .house-modal-intro {
   display: flex;
-  margin: 10px 0px 0px 10px;
+  margin: 10px 0px 10px 10px;
 
   .house-modal-intro-update-box {
     display: flex;
@@ -83,6 +82,5 @@
 }
 
 .house-modal-intro-update-input {
-  width: 100%;
-  height: 120%;
+  padding: 5px 0px 0px 5px;
 }
