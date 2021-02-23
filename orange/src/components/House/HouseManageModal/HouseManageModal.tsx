@@ -135,7 +135,7 @@ function HouseManageModal(props: Props) {
         </div>
       </div>
       <div className="members-box">
-        <h4 className="house-modal-text">
+        <h4 className="members-box-title">
           집 멤버
         </h4>
         {props.house!.users?.map((user) => (

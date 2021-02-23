@@ -11,11 +11,24 @@
   padding-bottom: 0.5em;
 }
 
+.members-box-title {
+  position: sticky;
+  top: 0;
+  padding: 0px 0px 5px 0px;
+  text-align: center;
+  background: white;;
+}
+
+.members-box {
+  overflow: auto;
+  outline: 0.5mm;
+  outline-style: solid;
+  outline-color: darksalmon;
+  cursor: all-scroll;
+}
+
 .member-box {
-  display: block;
-  padding: 10px 15px 10px 15px;
-  flex-direction: row;
-  flex-wrap: wrap;
+  padding: 5px 15px 10px 15px;
 }
 
 .house-modal-name-intro {
