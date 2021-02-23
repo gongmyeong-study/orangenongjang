@@ -110,7 +110,7 @@ function HousePage(props: Props) {
                   cancelOnEscape
                   inputProps={{
                     className: 'house-name-update-input',
-                    placeholder: 'House 이름을 입력하세요.',
+                    placeholder: '집 이름을 입력하세요.',
                     style: { fontSize: 18 },
                   }}
                   validationMessage="한 글자 이상, 열 글자 이하로 입력하세요."
@@ -143,7 +143,7 @@ function HousePage(props: Props) {
                   cancelOnEscape
                   inputProps={{
                     className: 'house-intro-update-input',
-                    placeholder: 'House 소개를 입력하세요.',
+                    placeholder: '집 소개를 입력하세요.',
                     style: { fontSize: 15 },
                   }}
                   validationMessage="스무 글자 이하로 입력하세요."

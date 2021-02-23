@@ -93,7 +93,7 @@ function HouseManageModal(props: Props) {
               className="house-toss-leader-form"
             >
               <h4>
-                Leader 넘기기&emsp;
+                리더 넘기기&emsp;
               </h4>
               <div className="house-user-container">
                 <Select
@@ -116,7 +116,7 @@ function HouseManageModal(props: Props) {
 
             <form onSubmit={handleSubmit(onSubmitToRemove)}>
               <h4>
-                House 삭제하기
+                집 삭제하기
                 <Button type="submit">
                   {RemoveHouseIcon}
                 </Button>
@@ -127,7 +127,7 @@ function HouseManageModal(props: Props) {
         : (
           <form onSubmit={handleSubmit(onSubmitToLeave)}>
             <h4>
-              House 떠나기
+              집 떠나기
               <Button type="submit">
                 {LeaveHouseIcon}
               </Button>
