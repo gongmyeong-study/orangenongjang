@@ -122,7 +122,7 @@ function PlaceBox(props: Props) {
             cancelOnEscape
             inputProps={{
               className: 'place-update-input',
-              placeholder: 'Place 이름을 입력하세요.',
+              placeholder: '공간 이름을 입력하세요.',
               style: { fontSize: 18 },
             }}
             validationMessage="한 글자 이상 입력하세요."

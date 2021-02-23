@@ -90,7 +90,7 @@ function HouseManageModal(props: Props) {
                 cancelOnEscape
                 inputProps={{
                   className: 'house-modal-name-update-input',
-                  placeholder: 'House 이름을 입력하세요.',
+                  placeholder: '집 이름을 입력하세요.',
                   style: { fontSize: 19 },
                 }}
                 validationMessage="한 글자 이상, 열 글자 이하로 입력하세요."
@@ -120,7 +120,7 @@ function HouseManageModal(props: Props) {
                 cancelOnEscape
                 inputProps={{
                   className: 'house-modal-intro-update-input',
-                  placeholder: 'House 소개를 입력하세요.',
+                  placeholder: '집 소개를 입력하세요.',
                   style: { fontSize: 15 },
                 }}
                 validationMessage="스무 글자 이하로 입력하세요."
@@ -164,7 +164,7 @@ function HouseManageModal(props: Props) {
               className="house-toss-leader-form"
             >
               <h4 className="house-modal-text">
-                Leader 넘기기&emsp;
+                리더 넘기기&emsp;
               </h4>
               <div className="house-user-container">
                 <Select
@@ -187,7 +187,7 @@ function HouseManageModal(props: Props) {
 
             <form onSubmit={handleSubmit(onSubmitToRemove)}>
               <h4>
-                House 삭제하기
+                집 삭제하기
                 <Button type="submit">
                   {RemoveHouseIcon}
                 </Button>
@@ -198,7 +198,7 @@ function HouseManageModal(props: Props) {
         : (
           <form onSubmit={handleSubmit(onSubmitToLeave)}>
             <h4>
-              House 떠나기
+              집 떠나기
               <Button type="submit">
                 {LeaveHouseIcon}
               </Button>
