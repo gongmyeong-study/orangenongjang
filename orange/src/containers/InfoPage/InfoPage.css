@@ -1,11 +1,9 @@
-@import url('http://fonts.googleapis.com/earlyaccess/notosanskr.css');
-
 /* web fonts */
-@media(min-width: 800px) {
+@media (min-width: 800px) {
   /* custom variables */
   :root {
-  --deep-orange: #D9493D;
-  --soft-orange: #F52423;
+    --deep-orange: #d9493d;
+    --soft-orange: #f52423;
   }
   /* HTML tags */
   ul {
@@ -18,7 +16,7 @@
     float: left;
   }
 
-  .info-box{
+  .info-box {
     display: flex;
   }
 
@@ -35,7 +33,7 @@
     background-color: rgb(255, 245, 235);
     padding: 0 10%;
     margin: 0;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: "Noto Sans KR", sans-serif;
   }
 
   .orangenongjang-introduction-box {
@@ -56,11 +54,11 @@
 }
 
 /* app fonts */
-@media(max-width: 800px) {
+@media (max-width: 800px) {
   /* custom variables */
   :root {
-  --deep-orange: #D9493D;
-  --soft-orange: #F52423;
+    --deep-orange: #d9493d;
+    --soft-orange: #f52423;
   }
   /* HTML tags */
   ul {
@@ -86,7 +84,7 @@
     background-color: rgb(255, 245, 235);
     padding: 0 10%;
     margin: 0;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: "Noto Sans KR", sans-serif;
   }
 
   .user-profiles {

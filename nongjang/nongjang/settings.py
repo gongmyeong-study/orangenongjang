@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = get_credential('prod/nongjang', 'SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 USE_DEBUG_TOOLBAR = os.getenv('DEBUG_TOOLBAR', '').lower() == 'true'
 
 ALLOWED_HOSTS = [
