@@ -5,6 +5,7 @@ import { createBrowserHistory } from 'history';
 
 import rootReducer from './reducers/index';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const logger = (store: any) => (next: any) => (action: any) => {
   window.console.log('[Middleware] Dispatching', action);
   const result = next(action);
@@ -13,8 +14,11 @@ const logger = (store: any) => (next: any) => (action: any) => {
 };
 
 export const history = createBrowserHistory();
-export const middlewares = [logger, thunk, routerMiddleware(history)];
+export const middlewares = [thunk, routerMiddleware(history)];
 
-const store = createStore(rootReducer(history), applyMiddleware(...middlewares));
+const store = createStore(
+  rootReducer(history),
+  applyMiddleware(...middlewares),
+);
 
 export default store;
