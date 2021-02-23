@@ -4,7 +4,7 @@
     flex-direction: column;
     width: 60vw;
     border-radius: 18px;
-    background-color: rgba(0,0,0,0.02);
+    background-color: rgb(255, 245, 235);
 }
 
 .placebox-wrapper .NecessityPageBlock {

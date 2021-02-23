@@ -6,7 +6,7 @@ import NecessityPage from '../NecessityPage/NecessityPage';
 import StatisticsPage from '../StatisticsPage/StatisticsPage';
 import TimelinePage from '../TimelinePage/TimelinePage';
 import WorkPage from '../WorkPage/WorkPage';
-import './MainPage.css';
+import './MainPage.scss';
 
 interface DetailParams {
   id: string;

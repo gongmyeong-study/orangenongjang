@@ -32,8 +32,9 @@
   }
 
   .info-ui {
-    width: 80%;
-    margin: auto;
+    background-color: rgb(255, 245, 235);
+    padding: 0 10%;
+    margin: 0;
     font-family: 'Noto Sans KR', sans-serif;
   }
 
@@ -82,8 +83,9 @@
   }
 
   .info-ui {
-    width: 80%;
-    margin: auto;
+    background-color: rgb(255, 245, 235);
+    padding: 0 10%;
+    margin: 0;
     font-family: 'Noto Sans KR', sans-serif;
   }
 
@@ -98,5 +100,11 @@
 
   .user-profile {
     padding: 0px 10px 10px 10px;
+  }
+
+  .user-profile-photo {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
   }
 }
