@@ -176,7 +176,19 @@ class InfoPage extends Component {
               <strong>Place</strong>
               를 생성할 수 있어요.
               냉장고, 안방, 부엌, 책상 등 사용자가 관리하고 싶은 공간을 자유롭게
-              생성해보세요.
+              생성해보세요. 단, Place
+              {' '}
+              <strong>삭제</strong>
+              는 Leader만 가능하다는 점 유의해주세요.
+            </li>
+            <br />
+            <li>
+              • 혹시 House 이름/소개글을 수정하고 싶거나
+              Leader를 다른 House 멤버에게 양도하고 싶다면
+              {' '}
+              <strong>관리</strong>
+              {' '}
+              버튼을 통해 Leader가 손쉽게 관리할 수 있어요. Place의 이름을 변경하는 것은 Leader는 물론 일반 House 멤버도 가능하답니다!
             </li>
             <br />
             <li>
@@ -185,11 +197,7 @@ class InfoPage extends Component {
               <strong>생필품</strong>
               을 추가할 수 있어요. 휴지나
               지우개, 연필은 물론 신선한 야채와 과일도 각 공간 안에 만들어 가격과
-              수량을 편리하게 관리할 수 있어요.
-            </li>
-            <br />
-            <li>
-              • 또한, House에 함께 거주하는 누군가가 생필품을 추가하거나 수량을
+              수량을 편리하게 관리할 수 있어요. 이렇게 House에 함께 거주하는 누군가가 생필품을 추가하거나 수량을
               변경하고, 삭제하면
               {' '}
               <strong>타임라인</strong>
