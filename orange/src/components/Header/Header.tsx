@@ -40,8 +40,8 @@ class Header extends Component<Props, State> {
     };
   }
 
-  async componentDidMount() {
-    await this.props.onGetMe();
+  componentDidMount() {
+    this.props.onGetMe();
     this.listenRouteChange();
   }
 
@@ -100,10 +100,15 @@ class Header extends Component<Props, State> {
   }
 
   logout = async () => {
-    await this.props.onLogout();
+    try {
+      await this.props.onLogout();
 
-    if (this.props.logoutStatus === userStatus.SUCCESS) {
-      this.props.history.push('/intro');
+      if (this.props.logoutStatus === userStatus.SUCCESS) {
+        this.props.history.push('/intro');
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error(error);
       window.location.reload();
     }
   };

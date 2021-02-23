@@ -25,8 +25,13 @@ function Login(props: Props) {
   } = useForm<LoginFormData>();
 
   const onSubmit = async (data: LoginFormData) => {
-    await props.onLogin(data.username, data.password);
-    history.push('/house');
+    try {
+      await props.onLogin(data.username, data.password);
+      history.push('/house');
+    } catch (error) {
+      console.error(error);
+      window.location.reload();
+    }
   };
 
   return (
