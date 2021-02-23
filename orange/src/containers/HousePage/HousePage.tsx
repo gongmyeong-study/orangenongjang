@@ -90,7 +90,7 @@ function HousePage(props: Props) {
                && (
                <div>
                  <AiFillCrown />
-                 &emsp;
+                 &ensp;
                </div>
                )}
             {house.name}
