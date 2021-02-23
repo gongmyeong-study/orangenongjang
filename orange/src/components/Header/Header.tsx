@@ -109,7 +109,7 @@ class Header extends Component<Props, State> {
     if (this.props.pathname !== '/intro' && this.props.pathname !== '/info') {
       helloUser = (
         <p className="hello-user only-on-desktop">
-          {this.props.me.username}
+          <strong>{this.props.me.username}</strong>
           님 안녕하세요!&nbsp;&nbsp;
         </p>
       );

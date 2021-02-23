@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect, useState } from 'react';
-import EdiText from 'react-editext';
-import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { AiFillCrown } from 'react-icons/ai';
+import { useSelector } from 'react-redux';
 import { History } from 'history';
 import Modal from 'react-modal';
 
 import { House, User } from '../../api';
-import { houseActions, userActions } from '../../store/actions/index';
+import { userActions } from '../../store/actions/index';
 import { OrangeGlobalState } from '../../store/state';
 import { HouseCreateForm, HouseInviteModal, HouseManageModal } from '../../components';
 
@@ -27,7 +27,6 @@ function HousePage(props: Props) {
   const [houseToBeManaged, setHouseToBeManaged] = useState<House>();
   const [houseToBeInvited, setHouseToBeInvited] = useState<House>();
   const { getMeStatus, me } = useSelector((state: OrangeGlobalState) => state.user);
-  const dispatch = useDispatch();
 
   const manageHouse = (e: any, house: House) => {
     e.stopPropagation();
@@ -39,14 +38,6 @@ function HousePage(props: Props) {
     e.stopPropagation();
     setHouseToBeInvited(house);
     setIsInviteModalOpen(true);
-  };
-
-  const onRenameHouse = (houseId: number, houseName: string) => {
-    dispatch(houseActions.renameHouse(houseId, houseName));
-  };
-
-  const onReintroduceHouse = (houseId: number, houseIntroduction: string) => {
-    dispatch(houseActions.reintroduceHouse(houseId, houseIntroduction));
   };
 
   const closeModal = () => {
@@ -93,68 +84,22 @@ function HousePage(props: Props) {
     <>
       <div className="house-card" key={index} onClick={() => goToTheRoom(house.id)}>
         <div className="house-name-intro">
-          <h1 className="house-name">
+          <h2 className="house-name">
             {house.users.map((user) => (
               user.username === me.username && user.is_leader)).includes(true)
-              ? (
-                <EdiText
-                  viewContainerClassName="house-name-update-box"
-                  editButtonContent={<i className="fas fa-pencil-alt" />}
-                  saveButtonContent={<i className="fas fa-check" />}
-                  cancelButtonContent={<i className="fas fa-times" />}
-                  hideIcons
-                  type="text"
-                  showButtonsOnHover
-                  submitOnUnfocus
-                  submitOnEnter
-                  cancelOnEscape
-                  inputProps={{
-                    className: 'house-name-update-input',
-                    placeholder: '집 이름을 입력하세요.',
-                    style: { fontSize: 18 },
-                  }}
-                  validationMessage="한 글자 이상, 열 글자 이하로 입력하세요."
-                  validation={(val) => (val.length > 0 && val.length <= 10)}
-                  value={house.name}
-                  onSave={(houseName: string) => {
-                    onRenameHouse(house.id, houseName);
-                  }}
-                />
-              )
-              : house.name}
-          </h1>
+               && (
+               <div>
+                 <AiFillCrown />
+                 &emsp;
+               </div>
+               )}
+            {house.name}
+          </h2>
           <br />
           <br />
           <br />
           <div className="house-intro">
-            {house.users.map((user) => (
-              user.username === me.username && user.is_leader)).includes(true)
-              ? (
-                <EdiText
-                  viewContainerClassName="house-intro-update-box"
-                  editButtonContent={<i className="fas fa-pencil-alt" />}
-                  saveButtonContent={<i className="fas fa-check" />}
-                  cancelButtonContent={<i className="fas fa-times" />}
-                  hideIcons
-                  type="text"
-                  showButtonsOnHover
-                  submitOnUnfocus
-                  submitOnEnter
-                  cancelOnEscape
-                  inputProps={{
-                    className: 'house-intro-update-input',
-                    placeholder: '집 소개를 입력하세요.',
-                    style: { fontSize: 15 },
-                  }}
-                  validationMessage="스무 글자 이하로 입력하세요."
-                  validation={(val) => val.length <= 20}
-                  value={house.introduction}
-                  onSave={(houseIntroduction: string) => {
-                    onReintroduceHouse(house.id, houseIntroduction);
-                  }}
-                />
-              )
-              : house.introduction}
+            {house.introduction}
           </div>
         </div>
         <div
