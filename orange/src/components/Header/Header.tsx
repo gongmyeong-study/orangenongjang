@@ -27,9 +27,12 @@ interface NavMenu {
   name: string;
   linkTo: string;
   showingCondition: boolean;
+  key: number;
 }
 
 class Header extends Component<Props, State> {
+  readonly logoutKeyforList = 100;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -54,6 +57,10 @@ class Header extends Component<Props, State> {
     return this.props.pathname === '/intro';
   }
 
+  get isOnHousePage() {
+    return this.props.pathname === '/house';
+  }
+
   get introOrInfoLink() {
     return !this.isOnInfoPage ? '/info' : '/intro';
   }
@@ -72,11 +79,13 @@ class Header extends Component<Props, State> {
         name: this.introOrMain,
         linkTo: this.introOrInfoLink,
         showingCondition: true,
+        key: 1,
       },
       {
         name: '집 목록',
         linkTo: '/house',
-        showingCondition: this.isOnLogin,
+        showingCondition: this.isOnLogin && !this.isOnInfoPage && !this.isOnHousePage,
+        key: 2,
       },
     ];
   }
@@ -129,7 +138,7 @@ class Header extends Component<Props, State> {
           <ul className="main-header only-on-desktop">
             {this.menuList.map((menu) => (
               menu.showingCondition && (
-              <li className="main-header-li">
+              <li key={menu.key} className="main-header-li">
                 <Link to={menu.linkTo}>
                   {menu.name}
                 </Link>
@@ -137,7 +146,7 @@ class Header extends Component<Props, State> {
               )
             ))}
             {this.isOnLoginAndNotOnIntroPage && (
-              <li className="main-header-li">
+              <li key={this.logoutKeyforList} className="main-header-li">
                 <button type="button" onClick={this.logout}>
                   로그아웃
                 </button>
@@ -173,7 +182,7 @@ class Header extends Component<Props, State> {
           <ul className="menu-list">
             {this.menuList.map((menu) => (
               menu.showingCondition && (
-                <li className="main-header-li">
+                <li key={menu.key} className="main-header-li">
                   <Link to={menu.linkTo}>
                     {menu.name}
                   </Link>
@@ -181,7 +190,7 @@ class Header extends Component<Props, State> {
               )
             ))}
             {this.isOnLoginAndNotOnIntroPage && (
-            <li className="main-header-li">
+            <li key={this.logoutKeyforList} className="main-header-li">
               <button type="button" onClick={this.logout}>
                 로그아웃
               </button>
