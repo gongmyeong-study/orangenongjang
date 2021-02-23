@@ -38,7 +38,7 @@ $TAB_ORANGE: rgba(255, 127, 80, 0.85);
 
 @media screen and (max-width: 540px) {
     .main-page {
-        height: calc(100vh - #{$HEADER_HEIGHT_ON_MOBILE});
+        min-height: calc(100vh - #{$HEADER_HEIGHT_ON_MOBILE});
 
         .main-tabs {
             display: flex;
