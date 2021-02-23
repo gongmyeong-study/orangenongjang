@@ -16,6 +16,9 @@ class Necessity(models.Model):
             ('name', 'option'),
         )
 
+    def __str__(self):
+        return self.name
+
 
 class NecessityPlace(models.Model):
     place = models.ForeignKey(Place, related_name='necessity_places', on_delete=models.CASCADE)
