@@ -4,7 +4,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { useForm } from 'react-hook-form';
-
+import { useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import './Login.css';
 
@@ -18,11 +18,21 @@ interface LoginFormData {
 }
 
 function Login(props: Props) {
+  const history = useHistory();
+
   const {
     register, handleSubmit, errors,
   } = useForm<LoginFormData>();
 
-  const onSubmit = (data: LoginFormData) => props.onLogin(data.username, data.password);
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      await props.onLogin(data.username, data.password);
+      history.push('/house');
+    } catch (error) {
+      console.error(error);
+      window.location.reload();
+    }
+  };
 
   return (
     <>

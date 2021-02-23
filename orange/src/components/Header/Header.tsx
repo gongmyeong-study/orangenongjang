@@ -1,13 +1,12 @@
 import React, { Component, Dispatch } from 'react';
 import { connect } from 'react-redux';
 import { History } from 'history';
+import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import { userActions } from '../../store/actions';
 import { userStatus } from '../../constants/constants';
-import './Header.css';
+import './Header.scss';
 import { User } from '../../api';
-
-/* eslint-disable jsx-a11y/control-has-associated-label */
 
 interface Props {
   history: History;
@@ -24,7 +23,16 @@ interface State {
   isMenuModalOpen: boolean;
 }
 
+interface NavMenu {
+  name: string;
+  linkTo: string;
+  showingCondition: boolean;
+  key: number;
+}
+
 class Header extends Component<Props, State> {
+  readonly logoutKeyforList = 100;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -34,160 +42,177 @@ class Header extends Component<Props, State> {
 
   componentDidMount() {
     this.props.onGetMe();
+    this.listenRouteChange();
   }
 
-  render() {
-    let whereToGo = '/';
-    let whereToGoDisplay = '집 목록';
-    let logoutButton = null;
+  get isOnInfoPage() {
+    return this.props.pathname === '/info';
+  }
 
-    const isNotOnIntro = this.props.getMeStatus === userStatus.SUCCESS;
+  get introOrMain() {
+    // eslint-disable-next-line no-nested-ternary
+    return !this.isOnInfoPage ? '오렌지농장 소개' : this.isOnLogin ? '집 목록' : '메인 페이지';
+  }
 
-    const logout = () => {
-      this.props.onLogout()
-        .then(() => {
-          if (this.props.logoutStatus === userStatus.SUCCESS) {
-            this.props.history.push('/intro');
-            window.location.reload();
-          }
-        });
-    };
+  get isOnIntroPage() {
+    return this.props.pathname === '/intro';
+  }
 
-    const toggleMenuModal = () => {
-      this.setState((prevState) => ({ isMenuModalOpen: !prevState.isMenuModalOpen }));
-    };
+  get isOnHousePage() {
+    return this.props.pathname === '/house';
+  }
 
-    const goToMainPage = () => {
-      this.props.history.push('/');
-      toggleMenuModal();
-    };
+  get isOnMainPage() {
+    return this.props.pathname === '/';
+  }
 
-    const goToMainOrInfoPage = () => {
-      this.props.history.push(whereToGo);
-      toggleMenuModal();
-    };
+  get introOrInfoLink() {
+    return !this.isOnInfoPage ? '/info' : '/intro';
+  }
 
-    // if not logged-in, userStatus would be FAILURE
-    if (this.props.getMeStatus === userStatus.FAILURE) {
-      if (this.props.pathname === '/info') {
-        // anonymous user can access InfoPage
-        whereToGo = '/intro';
-        whereToGoDisplay = '로그인';
-      } else {
-        // force anonymous user to redirect to IntroPage
+  get isOnLogin() {
+    return this.props.getMeStatus === userStatus.SUCCESS;
+  }
+
+  get isOnLoginAndNotOnIntroPage() {
+    return !this.isOnIntroPage && this.isOnLogin;
+  }
+
+  get menuList(): NavMenu[] {
+    return [
+      {
+        name: this.introOrMain,
+        linkTo: this.introOrInfoLink,
+        showingCondition: true,
+        key: 1,
+      },
+      {
+        name: '집 목록',
+        linkTo: '/house',
+        showingCondition: this.isOnLogin && !this.isOnInfoPage && !this.isOnHousePage,
+        key: 2,
+      },
+    ];
+  }
+
+  get helloUser() {
+    return (
+      <>
+        <strong>{this.props.me.username}</strong>
+        님 안녕하세요!
+      </>
+    );
+  }
+
+  logout = async () => {
+    try {
+      await this.props.onLogout();
+
+      if (this.props.logoutStatus === userStatus.SUCCESS) {
         this.props.history.push('/intro');
+        window.location.reload();
       }
-    } else {
-      // if logged-in, there should be logout button
-      logoutButton = (
-        <li className="main-header-li">
-          <button
-            className="logout-button"
-            type="button"
-            onClick={() => this.props.onLogout()
-              .then(() => {
-                if (this.props.logoutStatus === userStatus.SUCCESS) {
-                  this.props.history.push('/intro');
-                  window.location.reload();
-                }
-              })}
-          >
-            로그아웃
-          </button>
-        </li>
-      );
-      if (this.props.pathname === '/intro') {
-      // force logged-in user to redirect to MainPage
-        this.props.history.push('/');
-      } else if (this.props.pathname !== '/info') {
-        whereToGo = '/info';
-        whereToGoDisplay = '오렌지농장 소개';
-      }
+    } catch (error) {
+      console.error(error);
+      window.location.reload();
+    }
+  };
+
+  toggleMenuModal = () => {
+    this.setState((prevState) => ({ isMenuModalOpen: !prevState.isMenuModalOpen }));
+  };
+
+  listenRouteChange = () => {
+    this.props.history.listen(() => {
+      this.setState({ isMenuModalOpen: false });
+    });
+  };
+
+  render() {
+    if (this.props.getMeStatus === userStatus.FAILURE && !this.isOnInfoPage && !this.isOnIntroPage) {
+      this.props.history.push('/intro');
     }
 
-    let helloUser = null;
-    if (this.props.pathname !== '/intro' && this.props.pathname !== '/info') {
-      helloUser = (
-        <p className="hello-user only-on-desktop">
-          <strong>{this.props.me.username}</strong>
-          님 안녕하세요!&nbsp;&nbsp;
-        </p>
-      );
+    if (this.isOnLogin && this.isOnIntroPage) {
+      this.props.history.push('/house');
+    }
+
+    if (this.isOnLogin && this.isOnMainPage) {
+      this.props.history.push('/house');
     }
 
     return (
-      <div className="header-wrapper">
-        <button className="logo-wrapper only-on-desktop" type="button" onClick={goToMainPage}>
-          <img
-            className="logo"
-            src="https://orangenongjang-static.s3.ap-northeast-2.amazonaws.com/image/orangenongjang_logo_1.png"
-            alt="orangenongjang_logo"
-          />
-        </button>
-        {helloUser}
-        <ul className="main-header only-on-desktop">
-          <li className="main-header-li">
-            <button
-              type="button"
-              onClick={goToMainOrInfoPage}
-            >
-              {whereToGoDisplay}
-            </button>
-          </li>
-          <li className="main-header-li">
-            <button
-              type="button"
-              onClick={goToMainPage}
-            >
-              집 목록
-            </button>
-          </li>
-          {logoutButton}
-        </ul>
-        {isNotOnIntro && (
-        <div className="main-header only-on-mobile">
-          <button type="button" onClick={goToMainPage}>
-            <img
-              className="logo"
-              src="https://orangenongjang-static.s3.ap-northeast-2.amazonaws.com/image/orangenongjang_logo_1.png"
-              alt="orangenongjang_logo"
-            />
+      <>
+        <div className="header-wrapper">
+          {this.isOnLoginAndNotOnIntroPage && (
+            <p className="hello-user only-on-desktop">
+              {this.helloUser}
+            </p>
+          )}
+          <ul className="main-header only-on-desktop">
+            {this.menuList.map((menu) => (
+              menu.showingCondition && (
+              <li key={menu.key} className="main-header-li">
+                <Link to={menu.linkTo}>
+                  {menu.name}
+                </Link>
+              </li>
+              )
+            ))}
+            {this.isOnLoginAndNotOnIntroPage && (
+              <li key={this.logoutKeyforList} className="main-header-li">
+                <button type="button" onClick={this.logout}>
+                  로그아웃
+                </button>
+              </li>
+            )}
+          </ul>
+          {!this.isOnIntroPage && (
+          <div className="logo-wrapper">
+            <Link to="/intro">
+              <img
+                className="logo"
+                src="https://orangenongjang-static.s3.ap-northeast-2.amazonaws.com/image/orangenongjang_logo_1.png"
+                alt="orangenongjang_logo"
+              />
+            </Link>
+          </div>
+          )}
+
+          <button className="navbar-burger only-on-mobile" type="button" onClick={this.toggleMenuModal}>
+            <i className="fas fa-bars" />
           </button>
-          <button className="navbar-burger" type="button" onClick={toggleMenuModal}><i className="fas fa-bars" /></button>
         </div>
-        )}
         <Modal
           isOpen={this.state.isMenuModalOpen}
           className="modal only-on-mobile"
-          onRequestClose={toggleMenuModal}
+          onRequestClose={this.toggleMenuModal}
           overlayClassName="overlay"
           shouldFocusAfterRender={false}
         >
+          <button className="close-button" type="button" onClick={this.toggleMenuModal}>
+            <i className="fas fa-times" />
+          </button>
           <ul className="menu-list">
-            <li>
-              <button
-                type="button"
-                onClick={goToMainOrInfoPage}
-              >
-                {whereToGoDisplay}
-              </button>
-            </li>
-            <li>
-              <button
-                type="button"
-                onClick={goToMainPage}
-              >
-                집 목록
-              </button>
-            </li>
-            <li>
-              <button type="button" onClick={logout}>
+            {this.menuList.map((menu) => (
+              menu.showingCondition && (
+                <li key={menu.key} className="main-header-li">
+                  <Link to={menu.linkTo}>
+                    {menu.name}
+                  </Link>
+                </li>
+              )
+            ))}
+            {this.isOnLoginAndNotOnIntroPage && (
+            <li key={this.logoutKeyforList} className="main-header-li">
+              <button type="button" onClick={this.logout}>
                 로그아웃
               </button>
             </li>
+            )}
           </ul>
         </Modal>
-      </div>
+      </>
     );
   }
 }
