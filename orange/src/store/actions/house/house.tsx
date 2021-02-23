@@ -13,7 +13,7 @@ const getHouseFailure = (error: AxiosError) => {
   switch (error.response?.status) {
     default:
       actionType = necessityConstants.GET_HOUSE_FAILURE;
-      alert('House 정보를 불러올 수 없습니다. 다시 시도해주세요.');
+      alert('정보를 불러올 수 없습니다. 다시 시도해주세요.');
       break;
   }
   return {
@@ -42,7 +42,7 @@ const inviteHouseFailure = (error: AxiosError) => {
       break;
     case 403:
       actionType = houseConstants.INVITE_HOUSE_FAILURE_LEADER;
-      alert('Leader만 멤버를 초대할 수 있습니다.');
+      alert('리더만 멤버를 초대할 수 있습니다.');
       break;
     case 404:
       actionType = houseConstants.INVITE_HOUSE_FAILURE_EMAIL;
@@ -58,7 +58,7 @@ const inviteHouseFailure = (error: AxiosError) => {
       break;
     default:
       actionType = houseConstants.INVITE_HOUSE_FAILURE;
-      alert(`House 초대에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
+      alert(`초대에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
       break;
   }
   return {
@@ -94,11 +94,11 @@ const leaveHouseFailure = (error: AxiosError) => {
   switch (error.response?.status) {
     case 403:
       actionType = houseConstants.LEAVE_HOUSE_FAILURE_LEADER;
-      alert('Leader는 House를 나갈 수 없습니다.');
+      alert('리더는 집을 나갈 수 없습니다.');
       break;
     default:
       actionType = houseConstants.LEAVE_HOUSE_FAILURE;
-      alert(`House 탈퇴에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
+      alert(`집 나가기 실패ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
       break;
   }
   return {
@@ -121,11 +121,11 @@ const reintroduceHouseFailure = (error: AxiosError) => {
   switch (error.response?.status) {
     case 403:
       actionType = houseConstants.REINTRODUCE_HOUSE_FAILURE_LEADER;
-      alert('House Leader만 House 소개를 변경할 수 있습니다.');
+      alert('리더만 집 소개를 변경할 수 있습니다.');
       break;
     default:
       actionType = houseConstants.REINTRODUCE_HOUSE_FAILURE;
-      alert(`House 소개 변경에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
+      alert(`집 소개 변경에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
       break;
   }
   return {
@@ -144,7 +144,7 @@ export const reintroduceHouse = (
   .catch((reintroduceHouseError) => dispatch(reintroduceHouseFailure(reintroduceHouseError)));
 
 const removeHouseSuccess = (houses: Array<House>) => {
-  alert('House가 삭제되었습니다.');
+  alert('집이 삭제되었습니다.');
   window.location.reload();
   return {
     type: houseConstants.TOSS_LEADER_SUCCESS,
@@ -156,15 +156,15 @@ const removeHouseFailure = (error: AxiosError) => {
   switch (error.response?.status) {
     case 400:
       actionType = houseConstants.REMOVE_HOUSE_FAILURE_MEMBER;
-      alert('House 멤버가 아닙니다.');
+      alert('멤버가 아닙니다.');
       break;
     case 403:
       actionType = houseConstants.REMOVE_HOUSE_FAILURE_LEADER;
-      alert('House Leader만 House를 삭제할 수 있습니다.');
+      alert('리더만 집을 삭제할 수 있습니다.');
       break;
     default:
       actionType = houseConstants.REMOVE_HOUSE_FAILURE;
-      alert(`House 삭제에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
+      alert(`집 삭제에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
   }
   return {
     type: actionType,
@@ -186,11 +186,11 @@ const renameHouseFailure = (error: AxiosError) => {
   switch (error.response?.status) {
     case 403:
       actionType = houseConstants.RENAME_HOUSE_FAILURE_LEADER;
-      alert('House Leader만 House 이름을 변경할 수 있습니다.');
+      alert('리더만 집 이름을 변경할 수 있습니다.');
       break;
     default:
       actionType = houseConstants.RENAME_HOUSE_FAILURE;
-      alert(`House 이름 변경에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
+      alert(`집 이름 변경에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
       break;
   }
   return {
@@ -209,7 +209,7 @@ export const renameHouse = (
   .catch((renameHouseError) => dispatch(renameHouseFailure(renameHouseError)));
 
 const tossLeaderSuccess = (userHouse: Array<UserHouse>) => {
-  alert('Leader가 변경되었습니다.');
+  alert('리더가 변경되었습니다.');
   window.location.reload();
   return {
     type: houseConstants.TOSS_LEADER_SUCCESS,
@@ -221,15 +221,15 @@ const tossLeaderFailure = (error: AxiosError) => {
   switch (error.response?.status) {
     case 400:
       actionType = houseConstants.TOSS_LEADER_FAILURE_ME;
-      alert('자기 자신에게는 Leader를 양도할 수 없습니다.');
+      alert('자기 자신에게는 리더를 양도할 수 없습니다.');
       break;
     case 403:
       actionType = houseConstants.TOSS_LEADER_FAILURE_LEADER;
-      alert('Leader만 다른 사람에게 Leader를 양도할 수 있습니다.');
+      alert('리더만 다른 사람에게 리더를 양도할 수 있습니다.');
       break;
     default:
       actionType = houseConstants.TOSS_LEADER_FAILURE;
-      alert(`Leader 양도에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
+      alert(`리더 양도에 실패했어요ㅠㅠ\n 에러 메시지 : ${error.response?.status}`);
       break;
   }
   return {

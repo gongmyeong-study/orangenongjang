@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable max-len */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
@@ -153,51 +154,51 @@ class InfoPage extends Component {
             <li>
               • 사용자들은 지인들과 함께
               {' '}
-              <strong>House</strong>
-              라는 공동 공간에서
+              <strong>집</strong>
+              이라는 공동 공간에서
               {' '}
               <strong>생필품 관리</strong>
               를 편리하게 할 수
-              있어요. House를 생성한 사용자가
+              있어요. 집을 생성한 사용자가
               {' '}
-              <strong>Leader</strong>
+              <strong>리더</strong>
               가 되고,
-              Leader는 오렌지농장에 가입한 사용자에 한해 이메일로
+              '리더'는 오렌지농장에 가입한 사용자에 한해 이메일로
               {' '}
-              <strong>House 초대장</strong>
+              <strong>집 초대장</strong>
               을 보낼 수 있어요. 어서 사용하고 싶은
-              마음은 충분히 이해하지만, House에 초대받고 싶다면 먼저
+              마음은 충분히 이해하지만, '집'에 초대받고 싶다면 먼저
               오렌지농장에 가입해야 한답니다.
             </li>
             <br />
             <li>
-              • House에 여러 가지
+              • '집'에 여러 가지
               {' '}
-              <strong>Place</strong>
-              를 생성할 수 있어요.
-              냉장고, 안방, 부엌, 책상 등 사용자가 관리하고 싶은 공간을 자유롭게
-              생성해보세요. 단, Place
+              <strong>공간</strong>
+              을 생성할 수 있어요.
+              냉장고, 안방, 부엌, 책상 등 사용자가 관리하고 싶은 '공간'을 자유롭게
+              생성해보세요. 단, '공간'
               {' '}
               <strong>삭제</strong>
-              는 Leader만 가능하다는 점 유의해주세요.
+              는 '리더'만 가능하다는 점 유의해주세요.
             </li>
             <br />
             <li>
-              • 혹시 House 이름/소개글을 수정하고 싶거나
-              Leader를 다른 House 멤버에게 양도하고 싶다면
+              • 혹시 '집' 이름/소개글을 수정하고 싶거나
+              '리더'를 다른 멤버에게 양도하고 싶다면
               {' '}
               <strong>관리</strong>
               {' '}
-              버튼을 통해 Leader가 손쉽게 관리할 수 있어요. Place의 이름을 변경하는 것은 Leader는 물론 일반 House 멤버도 가능하답니다!
+              버튼을 통해 '리더'가 손쉽게 관리할 수 있어요. '공간'의 이름을 변경하는 것은 일반 멤버도 가능하답니다!
             </li>
             <br />
             <li>
-              • 각 Place에
+              • 각 '공간'에
               {' '}
               <strong>생필품</strong>
               을 추가할 수 있어요. 휴지나
-              지우개, 연필은 물론 신선한 야채와 과일도 각 공간 안에 만들어 가격과
-              수량을 편리하게 관리할 수 있어요. 이렇게 House에 함께 거주하는 누군가가 생필품을 추가하거나 수량을
+              지우개, 연필은 물론 신선한 야채와 과일도 각 '공간' 안에 만들어 가격과
+              수량을 편리하게 관리할 수 있어요. 이렇게 '집'에 함께 거주하는 누군가가 생필품을 추가하거나 수량을
               변경하고, 삭제하면
               {' '}
               <strong>타임라인</strong>
