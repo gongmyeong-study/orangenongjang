@@ -124,7 +124,7 @@ class Header extends Component<Props, State> {
   };
 
   render() {
-    if (!this.isOnLogin && !this.isOnInfoPage && !this.isOnIntroPage) {
+    if (this.props.getMeStatus === userStatus.FAILURE && !this.isOnInfoPage && !this.isOnIntroPage) {
       this.props.history.push('/intro');
     }
 
