@@ -59,7 +59,7 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
   if (action.type === houseConstants.REINTRODUCE_HOUSE_SUCCESS) {
     return {
       ...state,
-      removeHouseStatus: houseStatus.SUCCESS,
+      reintroduceHouseStatus: houseStatus.SUCCESS,
       house,
     };
   }
@@ -73,7 +73,7 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
   if (action.type === houseConstants.RENAME_HOUSE_SUCCESS) {
     return {
       ...state,
-      removeHouseStatus: houseStatus.SUCCESS,
+      renameHouseStatus: houseStatus.SUCCESS,
       house,
     };
   }

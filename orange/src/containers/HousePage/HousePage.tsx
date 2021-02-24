@@ -69,6 +69,14 @@ function HousePage(props: Props) {
     userActions.getMe();
   }, [getMeStatus]);
 
+  useEffect(() => {
+    if (reintroduceHouseStatus === houseStatus.SUCCESS
+      || renameHouseStatus === houseStatus.SUCCESS) {
+      axios.get('/api/v1/house/')
+        .then((res) => setHouses(res.data));
+    }
+  }, [reintroduceHouseStatus, renameHouseStatus]);
+
   const goToTheRoom = (houseId: number) => {
     const url = `/main/${houseId}`;
     props.history.push(url);
