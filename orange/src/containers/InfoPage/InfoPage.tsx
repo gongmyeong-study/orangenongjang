@@ -229,6 +229,15 @@ class InfoPage extends Component {
               )
             </li>
             <br />
+            <br />
+            <li>
+              Special Thanks to
+              {' '}
+              <strong>종은</strong>
+              {' '}
+              for designing Logos
+            </li>
+            <br />
           </ul>
         </div>
 
