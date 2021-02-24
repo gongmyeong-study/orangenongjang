@@ -35,51 +35,92 @@
   margin: 20px 20px 0px 0px;
 }
 
-.house-modal-name {
-  display: flex;
-  margin: 10px 0px 0px 10px;
-
-  .house-modal-name-update-box {
+@media(min-width: 800px) {
+  .house-modal-name {
     display: flex;
+    margin: 10px 0px 0px 10px;
 
-    div:last-child {
+    .house-modal-name-update-box {
       display: flex;
-      justify-content: center;
-      margin-top: 4px;
-    }
 
-    button {
-      width: 3vw;
-      height: 2vh;
-      border-radius: 5px;
+      div:last-child {
+        display: flex;
+        justify-content: center;
+        margin-top: 4px;
+      }
+
+      button {
+        width: 3vw;
+        height: 2vh;
+        border-radius: 5px;
+        padding-top: 5px
+      }
+    }
+  }
+
+  .house-modal-intro {
+    display: flex;
+    margin: 10px 0px 10px 10px;
+
+    .house-modal-intro-update-box {
+      display: flex;
+
+      div:last-child {
+        display: flex;
+        justify-content: center;
+      }
+
+      button {
+        width: 2.5vw;
+        height: 2vh;
+        border-radius: 5px;
+        padding-top: 5px
+      }
     }
   }
 }
 
-.house-modal-name-update-input {
-  margin: 5px 0px 0px 0px;
-}
-
-.house-modal-intro {
-  display: flex;
-  margin: 10px 0px 10px 10px;
-
-  .house-modal-intro-update-box {
+@media(max-width: 800px) {
+  .house-modal-name {
     display: flex;
+    margin: 10px 0px 0px 10px;
 
-    div:last-child {
+    .house-modal-name-update-box {
       display: flex;
-      justify-content: center;
-    }
 
-    button {
-      width: 2.5vw;
-      height: 2vh;
-      border-radius: 5px;
+      div:last-child {
+        display: flex;
+        justify-content: center;
+        margin-top: 4px;
+      }
+
+      button {
+        width: 3vw;
+        height: 2vh;
+        border-radius: 5px;
+        padding-top: 3px
+      }
     }
   }
-}
 
-.house-modal-intro-update-input {
-  padding: 0px 0px 0px 5px;
+  .house-modal-intro {
+    display: flex;
+    margin: 10px 0px 10px 10px;
+
+    .house-modal-intro-update-box {
+      display: flex;
+
+      div:last-child {
+        display: flex;
+        justify-content: center;
+      }
+
+      button {
+        width: 2.5vw;
+        height: 2vh;
+        border-radius: 5px;
+        padding-top: 3px
+      }
+    }
+  }
 }
