@@ -28,7 +28,7 @@ function SignUpForm() {
   const onSignUp = (email: string, username: string, password: string) => {
     setIsMailSended(true);
     dispatch(userActions.signUp(email, username, password));
-    dispatch(userActions.signUpSetStatusNull());
+    dispatch(userActions.setUserStatusNull());
   };
 
   const {

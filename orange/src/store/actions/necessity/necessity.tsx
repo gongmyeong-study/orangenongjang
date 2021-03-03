@@ -3,14 +3,14 @@ import { Dispatch } from 'redux';
 import { necessityConstants } from '../actionTypes';
 import { Necessity, Place } from '../../../api';
 
-const setStatusNullSuccess = () => {
+const setNecessityStatusNullSuccess = () => {
   const actionType = necessityConstants.NULL;
   return {
     type: actionType,
   };
 };
-export const setStatusNull = (() => (dispatch: Dispatch) => dispatch(
-  setStatusNullSuccess(),
+export const setNecessityStatusNull = (() => (dispatch: Dispatch) => dispatch(
+  setNecessityStatusNullSuccess(),
 ));
 
 const countNecessityPlaceSuccess = (necessity: Necessity) => ({
