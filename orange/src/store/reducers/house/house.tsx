@@ -14,7 +14,9 @@ const initialState: HouseState = {
   inviteHouseStatus: houseStatus.NONE,
   leaveHouseStatus: houseStatus.NONE,
   tossLeaderStatus: houseStatus.NONE,
+  reintroduceHouseStatus: houseStatus.NONE,
   removeHouseStatus: houseStatus.NONE,
+  renameHouseStatus: houseStatus.NONE,
 };
 
 const houseReducer = (state = initialState, action: Action): HouseState => {
@@ -54,11 +56,25 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
       userHouse,
     };
   }
+  if (action.type === houseConstants.REINTRODUCE_HOUSE_SUCCESS) {
+    return {
+      ...state,
+      reintroduceHouseStatus: houseStatus.SUCCESS,
+      house,
+    };
+  }
   if (action.type === houseConstants.REMOVE_HOUSE_SUCCESS) {
     return {
       ...state,
       removeHouseStatus: houseStatus.SUCCESS,
       houses,
+    };
+  }
+  if (action.type === houseConstants.RENAME_HOUSE_SUCCESS) {
+    return {
+      ...state,
+      renameHouseStatus: houseStatus.SUCCESS,
+      house,
     };
   }
 
@@ -91,12 +107,22 @@ const houseReducer = (state = initialState, action: Action): HouseState => {
     case houseConstants.TOSS_LEADER_FAILURE_LEADER:
       return { ...state, tossLeaderStatus: houseStatus.FAILURE_TOSS_LEADER };
 
+    case houseConstants.REINTRODUCE_HOUSE_FAILURE:
+      return { ...state, reintroduceHouseStatus: houseStatus.FAILURE };
+    case houseConstants.REINTRODUCE_HOUSE_FAILURE_LEADER:
+      return { ...state, reintroduceHouseStatus: houseStatus.FAILURE_REINTRODUCE_LEADER };
+
     case houseConstants.REMOVE_HOUSE_FAILURE:
       return { ...state, removeHouseStatus: houseStatus.FAILURE };
     case houseConstants.REMOVE_HOUSE_FAILURE_MEMBER:
       return { ...state, removeHouseStatus: houseStatus.FAILURE_REMOVE_MEMBER };
     case houseConstants.REMOVE_HOUSE_FAILURE_LEADER:
       return { ...state, removeHouseStatus: houseStatus.FAILURE_REMOVE_LEADER };
+
+    case houseConstants.RENAME_HOUSE_FAILURE:
+      return { ...state, renameHouseStatus: houseStatus.FAILURE };
+    case houseConstants.RENAME_HOUSE_FAILURE_LEADER:
+      return { ...state, renameHouseStatus: houseStatus.FAILURE_RENAME_LEADER };
     default:
       return { ...state };
   }

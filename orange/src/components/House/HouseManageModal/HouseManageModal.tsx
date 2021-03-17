@@ -84,7 +84,6 @@ function HouseManageModal(props: Props) {
                 cancelButtonContent={<i className="fas fa-times" />}
                 hideIcons
                 type="text"
-                showButtonsOnHover
                 submitOnUnfocus
                 submitOnEnter
                 cancelOnEscape
@@ -114,7 +113,6 @@ function HouseManageModal(props: Props) {
                 cancelButtonContent={<i className="fas fa-times" />}
                 hideIcons
                 type="text"
-                showButtonsOnHover
                 submitOnUnfocus
                 submitOnEnter
                 cancelOnEscape

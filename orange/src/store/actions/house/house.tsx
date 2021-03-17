@@ -4,6 +4,16 @@ import { Dispatch } from 'redux';
 import { houseConstants, necessityConstants } from '../actionTypes';
 import { House, UserHouse } from '../../../api';
 
+const setHouseStatusNullSuccess = () => {
+  const actionType = houseConstants.NULL;
+  return {
+    type: actionType,
+  };
+};
+export const setHouseStatusNull = (() => (dispatch: Dispatch) => dispatch(
+  setHouseStatusNullSuccess(),
+));
+
 const getHouseSuccess = (house: House) => ({
   type: necessityConstants.GET_HOUSE_SUCCESS,
   target: house,
@@ -71,16 +81,6 @@ export const inviteHouse = (
 ) => (dispatch: Dispatch) => axios.post(`/api/v1/house/${houseId}/invitation/`, { email })
   .then(() => dispatch(inviteHouseSuccess()))
   .catch((inviteError) => dispatch(inviteHouseFailure(inviteError)));
-
-const inviteStatusNull = () => {
-  const actionType = houseConstants.NULL;
-  return {
-    type: actionType,
-  };
-};
-export const inviteSetStatusNull = (() => (dispatch: Dispatch) => dispatch(
-  inviteStatusNull(),
-));
 
 const leaveHouseSuccess = () => {
   alert('Dobby is Free!');
