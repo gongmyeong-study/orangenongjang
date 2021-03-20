@@ -1,11 +1,11 @@
 import {
   getHouse,
-  inviteSetStatusNull,
   inviteHouse,
   leaveHouse,
   reintroduceHouse,
   removeHouse,
   renameHouse,
+  setHouseStatusNull,
   tossLeader,
 } from './house/house';
 
@@ -16,7 +16,7 @@ import {
   removePlace,
   removeNecessityPlace,
   renamePlace,
-  setStatusNull,
+  setNecessityStatusNull,
   updateNecessityPlace,
 } from './necessity/necessity';
 
@@ -25,17 +25,17 @@ import {
   login,
   logout,
   signUp,
-  signUpSetStatusNull,
+  setUserStatusNull,
 } from './user/user';
 
 export const houseActions = {
-  inviteSetStatusNull,
   getHouse,
   inviteHouse,
   leaveHouse,
   reintroduceHouse,
   removeHouse,
   renameHouse,
+  setHouseStatusNull,
   tossLeader,
 };
 
@@ -46,7 +46,7 @@ export const necessityActions = {
   removePlace,
   removeNecessityPlace,
   renamePlace,
-  setStatusNull,
+  setNecessityStatusNull,
   updateNecessityPlace,
 };
 
@@ -55,5 +55,5 @@ export const userActions = {
   login,
   logout,
   signUp,
-  signUpSetStatusNull,
+  setUserStatusNull,
 };

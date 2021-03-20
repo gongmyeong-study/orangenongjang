@@ -37,7 +37,7 @@ function HouseInviteModal(props: Props) {
   const onInviteHouse = (houseId: number, email: string) => {
     setIsMailSended(true);
     dispatch(houseActions.inviteHouse(houseId, email));
-    dispatch(houseActions.inviteSetStatusNull());
+    dispatch(houseActions.setHouseStatusNull());
   };
 
   const onSubmitToInvite = (data: HouseInviteFormData) => onInviteHouse(
