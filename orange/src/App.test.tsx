@@ -12,6 +12,8 @@ const mockStore = getMockStore({
   necessity: {
     necessities: [],
   },
+  house: {
+  },
 });
 
 test('renders app with mock store', () => {
