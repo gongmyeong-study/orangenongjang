@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { AiFillCrown } from 'react-icons/ai';
@@ -8,6 +7,7 @@ import Modal from 'react-modal';
 
 import { House, User } from '../../api';
 import { HouseCreateForm, HouseInviteModal, HouseManageModal } from '../../components';
+import { houseStatus } from '../../constants/constants';
 import { userActions } from '../../store/actions/index';
 import { OrangeGlobalState } from '../../store/state';
 
@@ -26,7 +26,14 @@ function HousePage(props: Props) {
   const [isCreateHouseModalOpen, setIsCreateHouseModalOpen] = useState(false);
   const [houseToBeManaged, setHouseToBeManaged] = useState<House>();
   const [houseToBeInvited, setHouseToBeInvited] = useState<House>();
-  const { getMeStatus, me } = useSelector((state: OrangeGlobalState) => state.user);
+  const {
+    getMeStatus, me, reintroduceHouseStatus, renameHouseStatus,
+  } = useSelector((state: OrangeGlobalState) => ({
+    getMeStatus: state.user.getMeStatus,
+    me: state.user.me,
+    reintroduceHouseStatus: state.house.reintroduceHouseStatus,
+    renameHouseStatus: state.house.renameHouseStatus,
+  }));
 
   const manageHouse = (e: any, house: House) => {
     e.stopPropagation();
@@ -64,6 +71,14 @@ function HousePage(props: Props) {
   useEffect(() => {
     userActions.getMe();
   }, [getMeStatus]);
+
+  useEffect(() => {
+    if (reintroduceHouseStatus === houseStatus.SUCCESS
+      || renameHouseStatus === houseStatus.SUCCESS) {
+      axios.get('/api/v1/house/')
+        .then((res) => setHouses(res.data));
+    }
+  }, [reintroduceHouseStatus, renameHouseStatus]);
 
   const goToTheRoom = (houseId: number) => {
     const url = `/main/${houseId}`;
