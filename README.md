@@ -5,7 +5,7 @@
 ![Node.js CI](https://github.com/gongmyeong-study/orangenongjang/workflows/Node.js%20CI/badge.svg)
 ![Django CI](https://github.com/gongmyeong-study/orangenongjang/workflows/Django%20CI/badge.svg)
 
-https://orangenongjang.com
+~https://orangenongjang.com~ (2022년 5월부로 도메인 해지되었습니다.)
 
 ‘오렌지농장’은 공명반 개발 공부모임에서 공부에 목적을 두고 바닥부터 개발한 웹서비스입니다.
 
